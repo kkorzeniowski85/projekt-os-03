@@ -8,9 +8,12 @@ frontend/   Next.js (App Router) jako PWA
 docs/adr/   decyzje architektoniczne
 ```
 
-Stan: **działający szkielet end-to-end** dla jednego użytkownika i jednego
-urządzenia, z importem wieloformatowym i warstwą statystyk. Bez synchronizacji
-między urządzeniami — ta wchodzi później.
+Stan: **przebudowa na wersję local-first** ([ADR 0006](docs/adr/0006-local-first-bez-synchronizacji.md))
+— aplikacja ma działać w całości w telefonie (Android), bez serwera, bez kont
+i bez synchronizacji. Warstwa danych (IndexedDB) i planowanie (ts-fsrs, FSRS-6,
+fuzzing włączony) są gotowe i przetestowane; ekrany wciąż mówią do backendu
+FastAPI, który po migracji zniknie. Backend pozostaje w repozytorium jako
+źródło portowanej logiki — nie wymaga uruchamiania.
 
 ---
 
@@ -80,7 +83,13 @@ Aplikacja: <http://localhost:3000>
 
 ### 4. Sprawdzenie, że wszystko działa
 
-Testy importerów nie potrzebują bazy:
+Warstwa lokalna (docelowa — IndexedDB + ts-fsrs):
+
+```bash
+cd frontend && npm test
+```
+
+Testy backendu (importery, scheduler) nie potrzebują bazy:
 
 ```bash
 cd backend && python -m pytest -q
@@ -146,11 +155,13 @@ Uproszczenia są spisane w [docs/adr/0003-znane-uproszczenia.md](docs/adr/0003-z
 - [0003 — Znane uproszczenia](docs/adr/0003-znane-uproszczenia.md)
 - [0004 — Import wieloformatowy](docs/adr/0004-import-wieloformatowy.md)
 - [0005 — Statystyki i decyzje o powtórkach](docs/adr/0005-statystyki-i-decyzje.md)
+- [0006 — Local-first bez synchronizacji](docs/adr/0006-local-first-bez-synchronizacji.md)
+  — **obowiązujący kierunek**; unieważnia założenie ADR 0002
 
-## Następne kroki
+## Następne kroki (migracja local-first, wg ADR 0006)
 
-1. Backup bazy (`pg_dump` + kopia poza serwerem) — **zanim wejdą prawdziwe dane**
-2. Deploy na VPS: Caddy + HTTPS, `COOKIE_SECURE=true`, sekrety w środowisku
-3. Synchronizacja wielourządzeniowa wg ADR 0002
-4. Optymalizacja parametrów FSRS na własnej historii (po ~512 powtórkach)
-5. Przypomnienia mailem o zaległych powtórkach
+1. Przepięcie ekranów (talie, nauka, notatki) na dane lokalne
+2. Import w przeglądarce: fiszki/v1, CSV/TSV, tekst (Anki `.apkg` później)
+3. Statystyki liczone lokalnie
+4. Kopia zapasowa do pliku i przywracanie — **warunek wejścia prawdziwych danych**
+5. Hosting statyczny + instalacja na telefonie (Android/Chrome)

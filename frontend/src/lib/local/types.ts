@@ -1,0 +1,97 @@
+/**
+ * Rekordy warstwy lokalnej (IndexedDB).
+ *
+ * Daty trzymamy jako ISO string, nie Date: indeksy IndexedDB sortuja ISO
+ * poprawnie, eksport do JSON nie wymaga konwersji, a jedyna zamiana na Date
+ * dzieje sie na granicy z ts-fsrs (scheduler.ts). Patrz docs/adr/0006.
+ */
+
+import type { ItemKind, NoteType, Rating } from "@/lib/types";
+
+export interface DeckRecord {
+  id: string;
+  name: string;
+  description: string;
+  newPerDay: number;
+  maxReviewsPerDay: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface NoteRecord {
+  id: string;
+  deckId: string;
+  noteType: NoteType;
+  /** {"Front": "...", "Back": "...", "Example": "..."} - jak w formacie fiszki/v1. */
+  fields: Record<string, string>;
+  tags: string[];
+  itemKind: ItemKind;
+  /** Identyfikator w zrodle importu - do rozpoznania pozycji przy ponownym imporcie. */
+  sourceRef: string | null;
+  /** sha256 znormalizowanego przodu i tylu - deduplikacja miedzy importami. */
+  contentHash: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Zserializowana karta ts-fsrs (daty jako ISO). Traktowana jako calosc
+ * nieprzezroczysta - pola naleza do biblioteki, my tylko je przechowujemy.
+ * state: 0=New 1=Learning 2=Review 3=Relearning (inaczej niz py-fsrs,
+ * ktore nie mialo stanu New).
+ */
+export interface FsrsSnapshot {
+  due: string;
+  stability: number;
+  difficulty: number;
+  elapsed_days: number;
+  scheduled_days: number;
+  learning_steps: number;
+  reps: number;
+  lapses: number;
+  state: number;
+  last_review?: string;
+}
+
+export interface CardRecord {
+  id: string;
+  noteId: string;
+  deckId: string;
+  /** 0 = Front->Back, 1 = Back->Front */
+  templateOrd: 0 | 1;
+  fsrs: FsrsSnapshot;
+  /** Kopia fsrs.due - IndexedDB nie indeksuje pol zagniezdzonych. */
+  due: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/**
+ * Log powtorek - append-only zrodlo prawdy o nauce.
+ *
+ * deckId i itemKind sa zdenormalizowane celowo: skasowanie notatki nie moze
+ * dziurawic statystyk, a rozbicie na kategorie materialu ma dzialac takze
+ * dla materialu, ktorego juz nie ma.
+ */
+export interface ReviewLogRecord {
+  id: string;
+  cardId: string;
+  deckId: string;
+  itemKind: ItemKind;
+  rating: Rating;
+  reviewDatetime: string;
+  /** Wymagane (ADR 0005) - bez tego optymalizacja parametrow bylaby zamknieta. */
+  durationMs: number;
+  stateBefore: FsrsSnapshot;
+  stateAfter: FsrsSnapshot;
+  scheduler: string;
+}
+
+export interface SettingsRecord {
+  id: "app";
+  desiredRetention: number;
+  /** null = wagi domyslne; wlasne pojawia sie po optymalizacji na historii. */
+  fsrsParameters: number[] | null;
+  createdAt: string;
+  updatedAt: string;
+}

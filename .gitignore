@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.pytest_cache/
+
+# Sekrety i konfiguracja lokalna
+.env
+.env.local
+!.env.example
+!.env.local.example
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+next-env.d.ts
+.vercel
+
+# Narzedzia
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Zrzuty bazy
+*.sql.gz
+backups/

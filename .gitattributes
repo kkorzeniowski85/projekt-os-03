@@ -1,0 +1,14 @@
+# Repozytorium trzyma zakonczenia linii jako LF, niezaleznie od systemu.
+# Bez tego ten sam plik edytowany na Windowsie i na Linuksie pokazywalby sie
+# jako zmieniony w calosci - a talie i kod beda ruszane z kilku urzadzen.
+* text=auto eol=lf
+
+# Binaria - bez zadnej konwersji.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.webp binary
+*.apkg binary
+*.colpkg binary
+*.gz binary

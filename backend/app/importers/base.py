@@ -8,6 +8,7 @@ a nie kolejna sciezka zapisu do bazy.
 """
 
 import hashlib
+import html
 import re
 import unicodedata
 from dataclasses import dataclass, field
@@ -40,6 +41,10 @@ class SourceRow:
     source_deck: str | None = None
     #: Tagi, ktore zrodlo podaje wprost (Anki), poza mapowaniem kolumn.
     tags: list[str] = field(default_factory=list)
+    #: Typ notatki narzucony przez zrodlo dla tej jednej pozycji.
+    #: Ma znaczenie przy talii mieszanej: pojedyncze slowo warto pytac w obie
+    #: strony, calego zdania juz nie. None = uzyj typu wybranego przy imporcie.
+    note_type: NoteType | None = None
 
 
 @dataclass
@@ -56,6 +61,59 @@ class ParseResult:
 
 class ImportError_(Exception):
     """Blad, ktory da sie pokazac uzytkownikowi wprost."""
+
+
+#: Ile ostrzezen ma sens pokazac. Przy imporcie calej kolekcji wadliwych pozycji
+#: moga byc tysiace, a lista tej dlugosci i tak jest nie do przeczytania - za to
+#: potrafi rozdac odpowiedz API i wpis w bazie.
+WARNING_LIMIT = 50
+
+
+def cap_warnings(warnings: list[str], limit: int = WARNING_LIMIT) -> list[str]:
+    if len(warnings) <= limit:
+        return warnings
+    hidden = len(warnings) - limit
+    return warnings[:limit] + [f"…i jeszcze {hidden} podobnych ostrzezen."]
+
+
+# --- tekst z HTML ----------------------------------------------------------
+#
+# Eksporty fiszek prawie zawsze niosa HTML: Anki trzyma tak pola z definicji,
+# a arkusze i eksporty z kursow potrafia miec w komorkach cale <div style=...>.
+# Ekran nauki renderuje tresc doslownie, wiec znacznik zostawiony w polu widac
+# jako smiec - i wchodzi jeszcze do odcisku tresci, wiec ta sama fiszka raz
+# z HTML-em, raz bez, przestaje byc rozpoznawana jako duplikat.
+
+_SOUND = re.compile(r"\[sound:[^\]]*\]", re.IGNORECASE)
+_BREAK = re.compile(r"<\s*(br|/div|/p|/li|/tr)\s*/?\s*>", re.IGNORECASE)
+_ANY_TAG = re.compile(r"<[^>]+>")
+
+#: Znaczniki, ktore uznajemy za dowod, ze to naprawde HTML.
+_REAL_TAG = re.compile(
+    r"</?(?:br|div|p|span|b|i|u|em|strong|li|ul|ol|table|tr|td|th|font|a|img"
+    r"|h[1-6]|hr|sub|sup|code|pre|blockquote)\b[^>]*>",
+    re.IGNORECASE,
+)
+
+
+def looks_like_html(value: str) -> bool:
+    """Czy wartosc ma prawdziwe znaczniki, czy tylko ostre nawiasy.
+
+    Wymagamy nazwy znanego znacznika, bo komorka "a < b" HTML-em nie jest,
+    a potraktowana jak HTML stracilaby polowe tresci. Ten sam wybor co przy
+    wykrywaniu naglowka: przy watpliwosci nie ruszamy danych.
+    """
+    return bool(_REAL_TAG.search(value or ""))
+
+
+def to_plain_text(raw: str) -> str:
+    """Sprowadza pole w HTML do czystego tekstu, zachowujac podzial na linie."""
+    without_sound = _SOUND.sub("", raw or "")
+    with_newlines = _BREAK.sub("\n", without_sound)
+    plain = html.unescape(_ANY_TAG.sub("", with_newlines))
+    # Anki lubi twarde spacje; zostawione zafalszowalyby porownania i hashe.
+    lines = [line.strip() for line in plain.replace("\xa0", " ").splitlines()]
+    return "\n".join(line for line in lines if line).strip()
 
 
 # --- sugerowanie mapowania -------------------------------------------------

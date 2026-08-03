@@ -18,12 +18,14 @@ from app.importers import (
     TARGET_IGNORE,
     TARGET_TAGS,
     ImportError_,
+    SourceRow,
+    cap_warnings,
     content_hash,
     detect_format,
     guess_item_kind,
     parse,
 )
-from app.models import ItemKind
+from app.models import ItemKind, NoteType
 from app.services.importing import normalize
 
 # --- heurystyki ------------------------------------------------------------
@@ -447,3 +449,167 @@ def test_normalize_is_stable_for_deduplication(apkg):
     )
     anki_hash = next(d["content_hash"] for d in from_anki if d["fields"][FIELD_FRONT] == "ubiquitous")
     assert anki_hash == from_csv[0]["content_hash"]
+
+
+# --- typ notatki per pozycja ------------------------------------------------
+#
+# Talia z prawdziwej kolekcji jest mieszana: pojedyncze slowo warto pytac w obie
+# strony, calego zdania juz nie. Jeden typ narzucony na caly plik oznaczalby albo
+# bezuzyteczne karty wsteczne przy zdaniach, albo brak kierunku produkcji przy
+# slowach - dlatego format kanoniczny pozwala ustawic typ przy pojedynczej
+# pozycji, a te testy pilnuja, ze nie ginie po drodze.
+
+
+def _canonical(notes: list[dict], **envelope) -> bytes:
+    payload = {"format": "fiszki/v1", "notes": notes, **envelope}
+    return json.dumps(payload, ensure_ascii=False).encode("utf-8")
+
+
+def test_canonical_reads_note_type_per_item():
+    data = _canonical(
+        [
+            {"front": "ubiquitous", "back": "wszechobecny", "note_type": "basic_reversed"},
+            {"front": "Where is the station?", "back": "Gdzie jest dworzec?",
+             "note_type": "basic"},
+            {"front": "kot", "back": "cat"},
+        ]
+    )
+    result = parse("talia.json", data)
+
+    assert [row.note_type for row in result.rows] == [
+        NoteType.BASIC_REVERSED,
+        NoteType.BASIC,
+        None,  # brak wartosci = typ wybrany przy imporcie
+    ]
+
+
+def test_canonical_unknown_note_type_falls_back_with_warning():
+    data = _canonical([{"front": "kot", "back": "cat", "note_type": "trojstronna"}])
+    result = parse("talia.json", data)
+
+    assert result.rows[0].note_type is None
+    assert any("trojstronna" in w for w in result.warnings)
+
+
+def test_normalize_carries_note_type():
+    data = _canonical(
+        [
+            {"front": "kot", "back": "cat", "note_type": "basic_reversed"},
+            {"front": "pies", "back": "dog"},
+        ]
+    )
+    result = parse("talia.json", data)
+    drafts = normalize(result, result.suggested_mapping)
+
+    assert drafts[0]["note_type"] == "basic_reversed"
+    assert drafts[1]["note_type"] is None
+
+
+def test_note_type_survives_round_trip_through_job():
+    """Faza analizy zapisuje wiersze, faza zatwierdzenia je odtwarza.
+
+    Gdyby typ gubil sie w tym przejsciu, podglad pokazywalby jedno, a import
+    robil drugie - i nikt by tego nie zauwazyl.
+    """
+    data = _canonical([{"front": "kot", "back": "cat", "note_type": "basic_reversed"}])
+    result = parse("talia.json", data)
+
+    stored = [
+        {
+            "values": row.values,
+            "source_ref": row.source_ref,
+            "source_deck": row.source_deck,
+            "tags": row.tags,
+            "note_type": row.note_type.value if row.note_type else None,
+        }
+        for row in result.rows
+    ]
+    restored = [
+        SourceRow(
+            values=item["values"],
+            source_ref=item["source_ref"],
+            source_deck=item["source_deck"],
+            tags=item["tags"],
+            note_type=NoteType(item["note_type"]) if item["note_type"] else None,
+        )
+        for item in stored
+    ]
+
+    assert restored[0].note_type is NoteType.BASIC_REVERSED
+
+
+# --- limit ostrzezen --------------------------------------------------------
+
+
+def test_cap_warnings_leaves_short_list_alone():
+    warnings = [f"ostrzezenie {i}" for i in range(5)]
+    assert cap_warnings(warnings, limit=50) == warnings
+
+
+def test_cap_warnings_truncates_and_says_how_many_zostalo():
+    warnings = [f"ostrzezenie {i}" for i in range(120)]
+    capped = cap_warnings(warnings, limit=50)
+
+    assert len(capped) == 51
+    assert capped[:50] == warnings[:50]
+    assert "70" in capped[-1]
+
+
+def test_broken_file_does_not_produce_thousands_of_warnings():
+    """Import calej kolekcji z wieloma wadliwymi pozycjami nie moze rozdac odpowiedzi."""
+    notes = [{"front": "", "back": ""} for _ in range(500)]
+    notes.append({"front": "kot", "back": "cat"})
+    result = parse("talia.json", _canonical(notes))
+
+    assert len(result.rows) == 1
+    assert len(result.warnings) == 500  # parser nie ucina...
+    assert len(cap_warnings(result.warnings)) == 51  # ...ale warstwa API juz tak
+
+
+# --- czyszczenie HTML -------------------------------------------------------
+#
+# Eksporty niosa HTML: Anki trzyma tak pola z definicji, a arkusze i trackery
+# potrafia miec w komorkach cale <div style=...>. Ekran nauki renderuje tresc
+# doslownie, wiec znacznik zostawiony w polu widac jako smiec.
+
+
+def test_html_cells_are_reduced_to_text():
+    data = (
+        "front\tback\n"
+        "to chase up<br><span style='color:#888'>/tʃeɪz ʌp/</span>\t"
+        "<div style='border:2px solid #16a34a'>ponaglić</div>"
+        "<div>📖 to follow up on</div>\n"
+    ).encode("utf-8")
+    result = parse("tracker.tsv", data)
+
+    assert result.rows[0].values["front"] == "to chase up\n/tʃeɪz ʌp/"
+    # Emoji zostaje: to tresc, a nie znacznik. Importer nie ma prawa zgadywac,
+    # ze akurat ten znak byl ozdoba interfejsu zrodla.
+    assert result.rows[0].values["back"] == "ponaglić\n📖 to follow up on"
+    assert any("HTML" in w for w in result.warnings)
+
+
+def test_plain_cells_with_angle_brackets_survive():
+    """"a < b" nie jest HTML-em - zdjecie z niej "znacznika" zjadloby tresc."""
+    data = "front,back\na < b,mniejsze niz\n".encode("utf-8")
+    result = parse("matma.csv", data)
+
+    assert result.rows[0].values["front"] == "a < b"
+    assert not any("HTML" in w for w in result.warnings)
+
+
+def test_entities_are_unescaped():
+    data = "front,back\n<b>R&amp;D</b>,badania i rozwój\n".encode("utf-8")
+    result = parse("dane.csv", data)
+    assert result.rows[0].values["front"] == "R&D"
+
+
+def test_html_and_plain_version_of_the_same_note_are_one_note():
+    """Znacznik w tresci nie moze robic z tej samej fiszki dwoch roznych."""
+    with_html = parse("a.csv", "front,back\n<b>kot</b>,cat\n".encode("utf-8"))
+    without = parse("b.csv", "front,back\nkot,cat\n".encode("utf-8"))
+
+    left = normalize(with_html, with_html.suggested_mapping)
+    right = normalize(without, without.suggested_mapping)
+
+    assert left[0]["content_hash"] == right[0]["content_hash"]

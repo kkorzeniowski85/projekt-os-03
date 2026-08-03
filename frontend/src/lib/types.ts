@@ -135,6 +135,8 @@ export interface NoteDraft {
   tags: string[];
   item_kind: ItemKind;
   source_deck: string | null;
+  /** Typ narzucony przez zrodlo dla tej pozycji. null = typ wybrany przy imporcie. */
+  note_type: NoteType | null;
 }
 
 export interface DuplicateSummary {

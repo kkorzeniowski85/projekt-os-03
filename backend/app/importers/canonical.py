@@ -101,6 +101,7 @@ def parse(data: bytes, options: dict | None = None) -> ParseResult:
                 source_ref=_as_text(note.get("source_ref")) or None,
                 source_deck=_as_text(note.get("deck")) or deck_name,
                 tags=[str(t) for t in tags] if isinstance(tags, list) else [],
+                note_type=_optional_note_type(note.get("note_type"), index, warnings),
             )
         )
 
@@ -117,6 +118,23 @@ def parse(data: bytes, options: dict | None = None) -> ParseResult:
         source_decks=sorted({r.source_deck for r in rows if r.source_deck}),
         suggested_note_type=default_note_type,
     )
+
+
+def _optional_note_type(value: Any, index: int, warnings: list[str]) -> NoteType | None:
+    """Typ notatki podany przy pojedynczej pozycji.
+
+    None oznacza "uzyj typu wybranego przy imporcie" - inaczej niz w kopercie,
+    gdzie brak wartosci oznacza wprost typ jednostronny.
+    """
+    if value is None or not str(value).strip():
+        return None
+    try:
+        return NoteType(str(value).strip())
+    except ValueError:
+        warnings.append(
+            f"Pozycja {index}: nieznany typ notatki '{value}' - uzyto typu z importu."
+        )
+        return None
 
 
 def _note_type(value: Any, warnings: list[str]) -> NoteType:

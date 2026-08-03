@@ -8,9 +8,9 @@ from sqlalchemy.orm import Session
 from app.api.decks import get_owned_deck
 from app.core.security import get_current_user
 from app.db import get_db
-from app.importers import FORMATS, MAPPING_TARGETS, ImportError_
+from app.importers import FORMATS, MAPPING_TARGETS, ImportError_, cap_warnings
 from app.importers import parse as parse_source
-from app.models import ImportJob, ImportStatus, User
+from app.models import ImportJob, ImportStatus, NoteType, User
 from app.schemas.importing import (
     AnalyzeOut,
     CommitIn,
@@ -76,6 +76,8 @@ async def analyze(
     except ImportError_ as exc:
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(exc))
 
+    warnings = cap_warnings(result.warnings)
+
     drafts = importing.normalize(result, result.suggested_mapping)
     if not drafts:
         raise HTTPException(
@@ -91,7 +93,7 @@ async def analyze(
         status=ImportStatus.ANALYZED,
         analysis={
             "columns": result.columns,
-            "warnings": result.warnings,
+            "warnings": warnings,
             "source_decks": result.source_decks,
             "suggested_note_type": result.suggested_note_type.value,
         },
@@ -105,6 +107,7 @@ async def analyze(
                 "source_ref": row.source_ref,
                 "source_deck": row.source_deck,
                 "tags": row.tags,
+                "note_type": row.note_type.value if row.note_type else None,
             }
             for row in result.rows
         ],
@@ -122,7 +125,7 @@ async def analyze(
         mapping_targets=list(MAPPING_TARGETS),
         suggested_note_type=result.suggested_note_type,
         source_decks=result.source_decks,
-        warnings=result.warnings,
+        warnings=warnings,
         total_items=len(drafts),
         preview=[NoteDraftOut(**_draft_out(d)) for d in importing.preview(drafts)],
         duplicates=DuplicateSummary(**importing.duplicate_summary(db, user, drafts)),
@@ -219,11 +222,21 @@ def _result_from_job(job: ImportJob):
                 source_ref=item.get("source_ref"),
                 source_deck=item.get("source_deck"),
                 tags=list(item.get("tags") or []),
+                note_type=_note_type_or_none(item.get("note_type")),
             )
             for item in (job.items or [])
         ],
         suggested_mapping=job.mapping or {},
     )
+
+
+def _note_type_or_none(value: str | None) -> NoteType | None:
+    if not value:
+        return None
+    try:
+        return NoteType(value)
+    except ValueError:
+        return None
 
 
 def _draft_out(draft: dict) -> dict:
@@ -232,4 +245,5 @@ def _draft_out(draft: dict) -> dict:
         "tags": draft["tags"],
         "item_kind": draft["item_kind"],
         "source_deck": draft.get("source_deck"),
+        "note_type": draft.get("note_type"),
     }

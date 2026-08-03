@@ -34,7 +34,7 @@ mapowania.
 | `example` | nie | Zdanie przykładowe. Pokazywane razem z odpowiedzią, nie wchodzi do wykrywania duplikatów |
 | `tags` | nie | Lista tagów |
 | `kind` | nie | `word` \| `phrase` \| `expression` \| `sentence` \| `other`. Bez tego kategoria jest zgadywana z treści `front` |
-| `note_type` | nie | `basic` (1 karta) albo `basic_reversed` (2 karty). Bez tego obowiązuje `default_note_type` |
+| `note_type` | nie | `basic` (1 karta) albo `basic_reversed` (2 karty). **Wygrywa z typem wybranym na ekranie importu** — patrz niżej. Bez tego obowiązuje typ z importu |
 | `source_ref` | nie | Identyfikator w źródle — pozwala rozpoznać tę samą pozycję przy ponownym imporcie |
 | `deck` | nie | Nadpisuje `deck` z koperty (informacyjnie — import i tak trafia do jednej wybranej talii) |
 
@@ -61,6 +61,22 @@ Heurystyka rozpozna `word`, `phrase` i `sentence` z samej treści. **`expression
 (idiom, zwrot stały) musi być podane wprost** — po treści nie da się go odróżnić
 od zwykłej frazy, a błędna etykieta zafałszowałaby statystyki bardziej niż jej
 brak.
+
+## Typ notatki: jeden na plik czy osobno dla pozycji
+
+Talia z prawdziwej kolekcji jest mieszana, a te dwa przypadki chcą różnych rzeczy:
+
+- **słowo lub fraza** → `basic_reversed`. Rozpoznawanie (obce → polskie) i produkcja
+  (polskie → obce) to dwie różne umiejętności i utrwalają się osobno.
+- **całe zdanie** → `basic`. Odtwarzanie pełnego zdania z tłumaczenia jest zadaniem
+  nieporównanie trudniejszym niż jego rozpoznanie i zwykle nie o to chodzi.
+
+Dlatego `note_type` przy pojedynczej pozycji **nadpisuje** typ wybrany na ekranie
+importu. Jeden typ narzucony na cały plik oznaczałby albo bezużyteczne karty
+wsteczne przy zdaniach, albo utratę kierunku produkcji przy słowach.
+
+Kolejność decyzji: `note_type` pozycji → typ wybrany przy imporcie →
+`default_note_type` z koperty → `basic`.
 
 ## Deduplikacja
 

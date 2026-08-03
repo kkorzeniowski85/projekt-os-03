@@ -318,6 +318,7 @@ function Importer() {
                     <th className="py-1 pr-3 font-normal">Przód</th>
                     <th className="py-1 pr-3 font-normal">Tył</th>
                     <th className="py-1 pr-3 font-normal">Kategoria</th>
+                    <th className="py-1 pr-3 font-normal">Karty</th>
                     <th className="py-1 font-normal">Tagi</th>
                   </tr>
                 </thead>
@@ -328,6 +329,14 @@ function Importer() {
                       <td className="py-1 pr-3">{draft.fields.Back}</td>
                       <td className="py-1 pr-3 opacity-70">
                         {ITEM_KIND_LABELS[draft.item_kind]}
+                      </td>
+                      {/* Zrodlo moze narzucic typ osobno dla pozycji - wtedy
+                          wybor obok nie ma dla niej znaczenia i trzeba to widziec. */}
+                      <td className="py-1 pr-3 opacity-70">
+                        {(draft.note_type ?? noteType) === "basic_reversed" ? "2" : "1"}
+                        {draft.note_type && (
+                          <span className="ml-1 text-xs opacity-60">z pliku</span>
+                        )}
                       </td>
                       <td className="py-1 opacity-70">{draft.tags.join(", ")}</td>
                     </tr>

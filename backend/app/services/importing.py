@@ -89,11 +89,29 @@ def normalize(
                 "item_kind": kind.value,
                 "source_ref": row.source_ref,
                 "source_deck": row.source_deck,
+                # None = typ wybrany przy imporcie. Zrodlo moze go nadpisac
+                # dla pojedynczej pozycji (patrz SourceRow.note_type).
+                "note_type": row.note_type.value if row.note_type else None,
                 "content_hash": content_hash(clean),
             }
         )
 
     return drafts
+
+
+def _resolve_note_type(from_source: str | None, fallback: NoteType) -> NoteType:
+    """Typ ze zrodla wygrywa z typem wybranym przy imporcie.
+
+    Talia bywa mieszana: pojedyncze slowo warto pytac w obie strony, calego
+    zdania juz nie. Jeden typ narzucony na caly plik oznaczalby albo bezuzyteczne
+    karty wsteczne przy zdaniach, albo brak kierunku produkcji przy slowach.
+    """
+    if not from_source:
+        return fallback
+    try:
+        return NoteType(from_source)
+    except ValueError:
+        return fallback
 
 
 def preview(drafts: list[dict]) -> list[dict]:
@@ -174,7 +192,7 @@ def commit(
         note = Note(
             user_id=user.id,
             deck_id=deck.id,
-            note_type=note_type,
+            note_type=_resolve_note_type(draft.get("note_type"), note_type),
             fields={k: v for k, v in fields.items() if k in KNOWN_FIELDS},
             tags=list(draft.get("tags") or []),
             item_kind=kind,

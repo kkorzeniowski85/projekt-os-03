@@ -8,7 +8,9 @@ from app.importers.base import (
     ParseResult,
     SourceRow,
     is_known_header,
+    looks_like_html,
     suggest_mapping,
+    to_plain_text,
 )
 
 #: Separatory, ktore realnie wystepuja w eksportach fiszek.
@@ -111,9 +113,15 @@ def parse(data: bytes, options: dict | None = None) -> ParseResult:
         body = body[:MAX_ROWS]
 
     rows = [
-        SourceRow(values={columns[i]: (row[i] if i < len(row) else "").strip() for i in range(len(columns))})
+        SourceRow(values={columns[i]: _cell(row[i] if i < len(row) else "") for i in range(len(columns))})
         for row in body
     ]
+
+    if any(looks_like_html(cell) for row in body for cell in row):
+        warnings.append(
+            "Komorki zawieraly znaczniki HTML (typowe dla eksportu z Anki) - "
+            "zostaly sprowadzone do czystego tekstu."
+        )
 
     return ParseResult(
         source_format="csv",
@@ -122,3 +130,12 @@ def parse(data: bytes, options: dict | None = None) -> ParseResult:
         suggested_mapping=suggest_mapping(columns),
         warnings=warnings,
     )
+
+
+def _cell(raw: str) -> str:
+    """Komorka z eksportu potrafi zawierac cale <div style=...> - ekran nauki
+    renderuje tresc doslownie, wiec znaczniki trzeba zdjac. Czyscimy tylko
+    komorki z prawdziwym HTML-em, zeby nie zjesc tresci w rodzaju "a < b".
+    """
+    value = raw or ""
+    return to_plain_text(value) if looks_like_html(value) else value.strip()

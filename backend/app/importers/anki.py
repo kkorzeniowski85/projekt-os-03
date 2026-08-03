@@ -19,7 +19,6 @@ Czego NIE przenosimy (swiadomie):
     Karty startuja jako nowe.
 """
 
-import html
 import io
 import json
 import re
@@ -29,26 +28,19 @@ import zipfile
 from collections import Counter
 from pathlib import Path
 
-from app.importers.base import ImportError_, ParseResult, SourceRow, suggest_mapping
+from app.importers.base import (
+    ImportError_,
+    ParseResult,
+    SourceRow,
+    suggest_mapping,
+    to_plain_text,
+)
 
 MAX_ROWS = 50_000
 
 _DB_CANDIDATES = ("collection.anki21b", "collection.anki21", "collection.anki2")
 
 _MEDIA_MARKER = re.compile(r"\[sound:|<img\s", re.IGNORECASE)
-_BREAK = re.compile(r"<\s*(br|/div|/p|/li)\s*/?\s*>", re.IGNORECASE)
-_TAG = re.compile(r"<[^>]+>")
-_SOUND = re.compile(r"\[sound:[^\]]*\]", re.IGNORECASE)
-
-
-def _to_text(raw: str) -> str:
-    """Pole Anki to HTML - sprowadzamy je do czystego tekstu."""
-    without_sound = _SOUND.sub("", raw)
-    with_newlines = _BREAK.sub("\n", without_sound)
-    plain = html.unescape(_TAG.sub("", with_newlines))
-    # Anki lubi twarde spacje; zostawione zafalszowalyby porownania i hashe.
-    lines = [line.strip() for line in plain.replace("\xa0", " ").splitlines()]
-    return "\n".join(line for line in lines if line).strip()
 
 
 def _extract_db(data: bytes) -> bytes:
@@ -178,7 +170,7 @@ def parse(data: bytes, options: dict | None = None) -> ParseResult:
             media_notes += 1
 
         values = {
-            columns[i]: _to_text(raw_fields[i]) if i < len(raw_fields) else ""
+            columns[i]: to_plain_text(raw_fields[i]) if i < len(raw_fields) else ""
             for i in range(len(columns))
         }
         if not any(value.strip() for value in values.values()):

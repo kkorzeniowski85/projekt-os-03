@@ -17,6 +17,8 @@ class NoteDraftOut(BaseModel):
     tags: list[str]
     item_kind: ItemKind
     source_deck: str | None = None
+    #: Typ narzucony przez zrodlo dla tej pozycji. None = typ wybrany przy imporcie.
+    note_type: NoteType | None = None
 
 
 class DuplicateSummary(BaseModel):

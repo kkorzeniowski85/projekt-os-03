@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 
 import { AppShell, ErrorBanner } from "@/components/AppShell";
-import { api } from "@/lib/api";
-import { useAuth } from "@/lib/auth";
-import type { Deck } from "@/lib/types";
+import { createDeck, listDecks, type DeckCounts } from "@/lib/local/repo";
+import type { DeckRecord } from "@/lib/local/types";
+
+type DeckWithCounts = DeckRecord & { counts: DeckCounts };
 
 export default function DecksPage() {
   return (
@@ -17,23 +18,22 @@ export default function DecksPage() {
 }
 
 function DeckList() {
-  const { user } = useAuth();
-  const [decks, setDecks] = useState<Deck[] | null>(null);
+  const [decks, setDecks] = useState<DeckWithCounts[] | null>(null);
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   const load = useCallback(async () => {
     try {
-      setDecks(await api<Deck[]>("/decks"));
+      setDecks(await listDecks());
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udalo sie wczytac talii");
     }
   }, []);
 
   useEffect(() => {
-    if (user) void load();
-  }, [user, load]);
+    void load();
+  }, [load]);
 
   async function addDeck(event: FormEvent) {
     event.preventDefault();
@@ -41,7 +41,7 @@ function DeckList() {
     setBusy(true);
     setError(null);
     try {
-      await api<Deck>("/decks", { method: "POST", body: { name: name.trim() } });
+      await createDeck({ name: name.trim() });
       setName("");
       await load();
     } catch (caught) {
@@ -76,7 +76,10 @@ function DeckList() {
       {decks === null ? (
         <p className="text-sm opacity-70">Wczytywanie…</p>
       ) : decks.length === 0 ? (
-        <p className="text-sm opacity-70">Nie masz jeszcze zadnej talii.</p>
+        <p className="text-sm opacity-70">
+          Nie masz jeszcze zadnej talii. Dodaj pierwsza powyzej - dane zostaja
+          na tym urzadzeniu.
+        </p>
       ) : (
         <ul className="space-y-2">
           {decks.map((deck) => (
@@ -89,14 +92,14 @@ function DeckList() {
                   <p className="font-medium">{deck.name}</p>
                   <p className="mt-0.5 text-sm opacity-70">
                     <span className="text-blue-600 dark:text-blue-400">
-                      {deck.counts?.new ?? 0} nowych
+                      {deck.counts.new} nowych
                     </span>
                     {" · "}
                     <span className="text-emerald-600 dark:text-emerald-400">
-                      {deck.counts?.due ?? 0} do powtorki
+                      {deck.counts.due} do powtorki
                     </span>
                     {" · "}
-                    {deck.counts?.total ?? 0} kart
+                    {deck.counts.total} kart
                   </p>
                 </div>
                 <div className="flex gap-2">

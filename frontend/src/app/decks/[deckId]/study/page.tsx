@@ -2,12 +2,19 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { FSRS } from "ts-fsrs";
 
 import { AppShell, ErrorBanner } from "@/components/AppShell";
-import { api } from "@/lib/api";
-import { useAuth } from "@/lib/auth";
-import { RATING_LABELS, type Rating, type ReviewResult, type StudyQueue } from "@/lib/types";
+import { makeScheduler, previewIntervals } from "@/lib/local/scheduler";
+import { exampleOf, renderCard, templateLabel } from "@/lib/local/render";
+import {
+  getSettings,
+  studyQueue,
+  submitReview,
+  type StudyQueueResult,
+} from "@/lib/local/repo";
+import { RATING_LABELS, type Rating } from "@/lib/types";
 
 const RATINGS: Rating[] = [1, 2, 3, 4];
 
@@ -27,24 +34,27 @@ export default function StudyPage() {
 }
 
 function StudySession() {
-  const { user } = useAuth();
   const params = useParams<{ deckId: string }>();
   const deckId = params.deckId;
 
-  const [queue, setQueue] = useState<StudyQueue | null>(null);
+  const [queue, setQueue] = useState<StudyQueueResult | null>(null);
+  const [scheduler, setScheduler] = useState<FSRS | null>(null);
   const [index, setIndex] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [reviewedCount, setReviewedCount] = useState(0);
 
-  //  Do pomiaru, ile czasu zajela odpowiedz - FSRS moze to pozniej wykorzystac
-  //  przy optymalizacji parametrow.
+  //  Czas odpowiedzi - wymagany w logu (ADR 0005), mierzony od pokazania karty.
   const shownAt = useRef<number>(Date.now());
 
   const loadQueue = useCallback(async () => {
     try {
-      const data = await api<StudyQueue>(`/study/queue?deck_id=${deckId}&limit=20`);
+      const [settings, data] = await Promise.all([
+        getSettings(),
+        studyQueue(deckId, { limit: 20 }),
+      ]);
+      setScheduler(makeScheduler(settings));
       setQueue(data);
       setIndex(0);
       setRevealed(false);
@@ -55,27 +65,29 @@ function StudySession() {
   }, [deckId]);
 
   useEffect(() => {
-    if (user) void loadQueue();
-  }, [user, loadQueue]);
+    void loadQueue();
+  }, [loadQueue]);
 
-  const card = queue?.cards[index] ?? null;
+  const entry = queue?.cards[index] ?? null;
+
+  // Podglad liczony przy odsloneciu karty, nie przy ladowaniu kolejki -
+  // etykiety na przyciskach dotycza dokladnie tego momentu.
+  const preview = useMemo(() => {
+    if (!entry || !scheduler) return null;
+    return previewIntervals(scheduler, entry.card.fsrs, new Date());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [entry?.card.id, scheduler]);
 
   const rate = useCallback(
     async (rating: Rating) => {
-      if (!card || busy) return;
+      if (!entry || busy) return;
       setBusy(true);
       setError(null);
       try {
-        await api<ReviewResult>("/study/review", {
-          method: "POST",
-          body: {
-            card_id: card.card_id,
-            rating,
-            // UUID generowany po stronie klienta: ponowienie po zerwaniu sieci
-            // nie zapisze tej samej powtorki dwa razy.
-            client_event_id: crypto.randomUUID(),
-            duration_ms: Date.now() - shownAt.current,
-          },
+        await submitReview({
+          cardId: entry.card.id,
+          rating,
+          durationMs: Date.now() - shownAt.current,
         });
         setReviewedCount((n) => n + 1);
 
@@ -85,8 +97,8 @@ function StudySession() {
           setRevealed(false);
           shownAt.current = Date.now();
         } else {
-          // Karty w trakcie nauki wracaja po kilku minutach - dociagamy kolejke
-          // zamiast konczyc sesje przedwczesnie.
+          // Karty w trakcie nauki wracaja po kilku minutach - dociagamy
+          // kolejke zamiast konczyc sesje przedwczesnie.
           await loadQueue();
         }
       } catch (caught) {
@@ -95,14 +107,14 @@ function StudySession() {
         setBusy(false);
       }
     },
-    [card, busy, index, queue, loadQueue],
+    [entry, busy, index, queue, loadQueue],
   );
 
-  // Skroty klawiszowe: spacja odslania, 1-4 ocenia. Na desktopie to roznica
-  // miedzy sesja na 5 minut a sesja na 15.
+  // Skroty klawiszowe: spacja odslania, 1-4 ocenia. Na telefonie bez
+  // znaczenia, na komputerze roznica miedzy sesja na 5 minut a na 15.
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
-      if (!card) return;
+      if (!entry) return;
       if (event.code === "Space" || event.code === "Enter") {
         event.preventDefault();
         if (!revealed) setRevealed(true);
@@ -116,13 +128,13 @@ function StudySession() {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [card, revealed, rate]);
+  }, [entry, revealed, rate]);
 
   if (queue === null) {
     return <p className="text-sm opacity-70">Wczytywanie…</p>;
   }
 
-  if (!card) {
+  if (!entry) {
     return (
       <div className="space-y-4">
         <h1 className="text-xl font-semibold tracking-tight">Na dzis gotowe</h1>
@@ -150,6 +162,10 @@ function StudySession() {
     );
   }
 
+  const { question, answer } = renderCard(entry.note, entry.card.templateOrd);
+  const example = exampleOf(entry.note);
+  const isNewCard = entry.card.fsrs.state === 0;
+
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between text-sm opacity-70">
@@ -157,36 +173,38 @@ function StudySession() {
           ← Talie
         </Link>
         <span>
-          <span className="text-blue-600 dark:text-blue-400">{queue.new_remaining} nowych</span>
+          <span className="text-blue-600 dark:text-blue-400">
+            {queue.newRemaining} nowych
+          </span>
           {" · "}
           <span className="text-emerald-600 dark:text-emerald-400">
-            {queue.due_remaining} do powtorki
+            {queue.dueRemaining} do powtorki
           </span>
         </span>
       </div>
 
       <article className="rounded-xl border border-black/10 p-6 dark:border-white/15">
         <p className="text-xs uppercase tracking-wide opacity-50">
-          {card.template_label}
-          {card.is_new && " · nowa"}
+          {templateLabel(entry.card.templateOrd)}
+          {isNewCard && " · nowa"}
         </p>
-        <p className="mt-4 whitespace-pre-wrap text-xl">{card.question}</p>
+        <p className="mt-4 whitespace-pre-wrap text-xl">{question}</p>
 
         {revealed && (
           <>
             <hr className="my-5 border-black/10 dark:border-white/15" />
-            <p className="whitespace-pre-wrap text-xl">{card.answer}</p>
-            {card.example && (
+            <p className="whitespace-pre-wrap text-xl">{answer}</p>
+            {example && (
               <p className="mt-3 whitespace-pre-wrap border-l-2 border-indigo-500/40 pl-3 text-base italic opacity-75">
-                {card.example}
+                {example}
               </p>
             )}
           </>
         )}
 
-        {card.tags.length > 0 && (
+        {entry.note.tags.length > 0 && (
           <p className="mt-4 flex flex-wrap gap-1.5">
-            {card.tags.map((tag) => (
+            {entry.note.tags.map((tag) => (
               <span
                 key={tag}
                 className="rounded-full bg-black/5 px-2 py-0.5 text-xs opacity-70 dark:bg-white/10"
@@ -222,7 +240,7 @@ function StudySession() {
                 {rating}. {RATING_LABELS[rating]}
               </span>
               <span className="block text-xs font-normal opacity-80">
-                {card.interval_preview[String(rating)] ?? "—"}
+                {preview?.[rating] ?? "—"}
               </span>
             </button>
           ))}

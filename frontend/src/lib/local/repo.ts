@@ -107,6 +107,12 @@ export async function updateDeck(
   return deck;
 }
 
+export async function getDeck(id: string): Promise<DeckRecord> {
+  const deck = await (await db()).get("decks", id);
+  if (!deck) throw new Error("Nie znaleziono talii");
+  return deck;
+}
+
 export async function listDecks(
   now: Date = new Date(),
 ): Promise<Array<DeckRecord & { counts: DeckCounts }>> {

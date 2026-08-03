@@ -5,9 +5,15 @@ import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 
 import { AppShell, ErrorBanner } from "@/components/AppShell";
-import { api } from "@/lib/api";
-import { useAuth } from "@/lib/auth";
-import type { Deck, Note, NoteList, NoteType } from "@/lib/types";
+import {
+  createNote,
+  deleteNote,
+  getDeck,
+  listNotes,
+  updateNote,
+} from "@/lib/local/repo";
+import type { CardRecord, DeckRecord, NoteRecord } from "@/lib/local/types";
+import type { NoteType } from "@/lib/types";
 
 const inputClass =
   "w-full rounded-md border border-black/15 bg-transparent px-3 py-2 text-sm outline-none focus:border-indigo-500 dark:border-white/20";
@@ -15,18 +21,20 @@ const inputClass =
 interface Draft {
   front: string;
   back: string;
+  example: string;
   tags: string;
   noteType: NoteType;
 }
 
-const EMPTY: Draft = { front: "", back: "", tags: "", noteType: "basic" };
+const EMPTY: Draft = { front: "", back: "", example: "", tags: "", noteType: "basic" };
 
-function toDraft(note: Note): Draft {
+function toDraft(note: NoteRecord): Draft {
   return {
     front: note.fields.Front ?? "",
     back: note.fields.Back ?? "",
+    example: note.fields.Example ?? "",
     tags: note.tags.join(", "),
-    noteType: note.note_type,
+    noteType: note.noteType,
   };
 }
 
@@ -46,12 +54,13 @@ export default function NotesPage() {
 }
 
 function NotesManager() {
-  const { user } = useAuth();
   const params = useParams<{ deckId: string }>();
   const deckId = params.deckId;
 
-  const [deck, setDeck] = useState<Deck | null>(null);
-  const [notes, setNotes] = useState<Note[] | null>(null);
+  const [deck, setDeck] = useState<DeckRecord | null>(null);
+  const [notes, setNotes] = useState<Array<{ note: NoteRecord; cards: CardRecord[] }> | null>(
+    null,
+  );
   const [draft, setDraft] = useState<Draft>(EMPTY);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -59,20 +68,17 @@ function NotesManager() {
 
   const load = useCallback(async () => {
     try {
-      const [deckData, noteData] = await Promise.all([
-        api<Deck>(`/decks/${deckId}`),
-        api<NoteList>(`/notes?deck_id=${deckId}&limit=200`),
-      ]);
+      const [deckData, noteData] = await Promise.all([getDeck(deckId), listNotes(deckId)]);
       setDeck(deckData);
-      setNotes(noteData.items);
+      setNotes(noteData);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udalo sie wczytac fiszek");
     }
   }, [deckId]);
 
   useEffect(() => {
-    if (user) void load();
-  }, [user, load]);
+    void load();
+  }, [load]);
 
   function resetForm() {
     setDraft(EMPTY);
@@ -88,15 +94,16 @@ function NotesManager() {
     setBusy(true);
     setError(null);
     try {
-      const body = {
-        note_type: draft.noteType,
-        fields: { Front: draft.front.trim(), Back: draft.back.trim() },
-        tags: parseTags(draft.tags),
+      const fields = {
+        Front: draft.front.trim(),
+        Back: draft.back.trim(),
+        Example: draft.example.trim(),
       };
+      const tags = parseTags(draft.tags);
       if (editingId) {
-        await api<Note>(`/notes/${editingId}`, { method: "PATCH", body });
+        await updateNote(editingId, { fields, tags, noteType: draft.noteType });
       } else {
-        await api<Note>("/notes", { method: "POST", body: { ...body, deck_id: deckId } });
+        await createNote({ deckId, noteType: draft.noteType, fields, tags });
       }
       resetForm();
       await load();
@@ -111,7 +118,7 @@ function NotesManager() {
     if (!confirm("Usunac te fiszke? Historia powtorek zostanie zachowana.")) return;
     setError(null);
     try {
-      await api<void>(`/notes/${noteId}`, { method: "DELETE" });
+      await deleteNote(noteId);
       if (editingId === noteId) resetForm();
       await load();
     } catch (caught) {
@@ -162,6 +169,18 @@ function NotesManager() {
             rows={2}
             value={draft.back}
             onChange={(e) => setDraft({ ...draft, back: e.target.value })}
+            className={inputClass}
+          />
+        </label>
+
+        <label className="block space-y-1">
+          <span className="text-sm">
+            Przyklad <span className="opacity-50">(opcjonalny, pokazywany z odpowiedzia)</span>
+          </span>
+          <textarea
+            rows={2}
+            value={draft.example}
+            onChange={(e) => setDraft({ ...draft, example: e.target.value })}
             className={inputClass}
           />
         </label>
@@ -222,7 +241,7 @@ function NotesManager() {
           <p className="text-sm opacity-70">Ta talia jest jeszcze pusta.</p>
         ) : (
           <ul className="space-y-2">
-            {notes.map((note) => (
+            {notes.map(({ note, cards }) => (
               <li
                 key={note.id}
                 className="rounded-lg border border-black/10 p-3 text-sm dark:border-white/15"
@@ -232,7 +251,7 @@ function NotesManager() {
                     <p className="font-medium break-words">{note.fields.Front}</p>
                     <p className="opacity-70 break-words">{note.fields.Back}</p>
                     <p className="text-xs opacity-50">
-                      {note.cards.length} {note.cards.length === 1 ? "karta" : "karty"}
+                      {cards.length} {cards.length === 1 ? "karta" : "karty"}
                       {note.tags.length > 0 && ` · ${note.tags.join(", ")}`}
                     </p>
                   </div>

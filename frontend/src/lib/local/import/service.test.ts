@@ -5,7 +5,7 @@ import "fake-indexeddb/auto";
 import { beforeEach, expect, it } from "vitest";
 
 import { closeAndDeleteDb, db } from "../db";
-import { createDeck, listNotes } from "../repo";
+import { createDeck, listNotes, studyQueue } from "../repo";
 import { parseSource } from "./index";
 import { commitImport, duplicateSummary, normalize } from "./service";
 
@@ -146,4 +146,20 @@ it("prawdziwa talia OET przechodzi w calosci", async () => {
   expect(kinds.get("exacerbation")).toBe("word");
   expect(kinds.get("In keeping with")).toBe("expression");
   expect(notes.every(({ note }) => note.sourceRef?.startsWith("oet-terminy/"))).toBe(true);
+});
+
+it("import zachowuje kolejnosc fiszek z pliku", async () => {
+  // Autor talii uklada ja w przemyslanej kolejnosci - nauka ma isc tak samo,
+  // a nie w porzadku wyznaczonym przez baze.
+  const deck = await createDeck({ name: "Kolejnosc" }, NOW);
+  const kolejnosc = ["pierwsza", "druga", "trzecia", "czwarta", "piata"];
+  const drafts = await draftsFrom(
+    "talia.json",
+    JSON.stringify({ format: "fiszki/v1", notes: kolejnosc.map((f) => ({ front: f, back: "x" })) }),
+  );
+
+  await commitImport(deck.id, drafts, { noteType: "basic", now: NOW });
+
+  const queue = await studyQueue(deck.id, { now: NOW, limit: 10 });
+  expect(queue.cards.map((e) => e.note.fields.Front)).toEqual(kolejnosc);
 });

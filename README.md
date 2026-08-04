@@ -21,6 +21,18 @@ statystyki i kopia zapasowa (IndexedDB + ts-fsrs, FSRS-6). Backend FastAPI
 pozostaje w repozytorium jako źródło portowanej logiki — nie wymaga
 uruchamiania i nie jest częścią działającej aplikacji.
 
+### Nauka z wielu talii
+
+Na liście talii można **zaznaczyć**, z których chce się materiał — albo nie
+zaznaczać nic i uczyć się ze wszystkiego. Karty przeplatają się między taliami
+(nie idą blokami), a **dzienne limity zostają przy swoich taliach**, więc jedna
+nie zjada przydziału nowych kart innej.
+
+Zaznaczone talie można też **trwale połączyć** w jedną. Stan powtórek każdej
+karty i cała historia nauki przechodzą razem z materiałem. Operacja jest
+nieodwracalna inaczej niż z kopii zapasowej — duplikaty treści są zliczane,
+ale nigdy nie usuwane automatycznie.
+
 > **Dane żyją tylko w tej przeglądarce.** Zanim wejdzie prawdziwa nauka, zrób
 > kopię (Ustawienia → Pobierz kopię) i trzymaj ją poza urządzeniem.
 

@@ -164,6 +164,13 @@ export async function commitImport(
   let skippedDuplicates = 0;
   let skippedInvalid = 0;
 
+  // Kolejne pozycje dostaja rosnacy znacznik czasu (co milisekunde). Kolejka
+  // nauki porzadkuje nowe karty wlasnie po nim, wiec bez tego caly import
+  // mialby jeden czas i kolejnosc ulozona przez autora talii przepadalaby
+  // na rzecz przypadkowej. Roznica milisekund jest zgodna z prawda: notatki
+  // powstaja jedna po drugiej.
+  let offset = 0;
+
   for (const draft of drafts) {
     if (!draft.fields[FIELD_FRONT] || !draft.fields[FIELD_BACK]) {
       skippedInvalid += 1;
@@ -176,6 +183,9 @@ export async function commitImport(
     seenInBatch.add(draft.contentHash);
 
     const noteType = resolveNoteType(draft.noteType, options.noteType);
+    const stamp = new Date(now.getTime() + offset).toISOString();
+    offset += 1;
+
     const note: NoteRecord = {
       id: crypto.randomUUID(),
       deckId,
@@ -185,8 +195,8 @@ export async function commitImport(
       itemKind: draft.itemKind,
       sourceRef: draft.sourceRef,
       contentHash: draft.contentHash,
-      createdAt: iso,
-      updatedAt: iso,
+      createdAt: stamp,
+      updatedAt: stamp,
     };
     notes.push(note);
     for (let ord = 0; ord < CARDS_PER_NOTE_TYPE[noteType]; ord += 1) {
@@ -198,8 +208,8 @@ export async function commitImport(
         templateOrd: ord as 0 | 1,
         fsrs: snapshot,
         due: snapshot.due,
-        createdAt: iso,
-        updatedAt: iso,
+        createdAt: stamp,
+        updatedAt: stamp,
       });
     }
   }

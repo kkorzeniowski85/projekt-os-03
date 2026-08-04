@@ -12,6 +12,7 @@ import {
   getSettings,
   studyQueue,
   submitReview,
+  type DeckSelection,
   type StudyQueueResult,
 } from "@/lib/local/repo";
 import { RATING_LABELS, type Rating } from "@/lib/types";
@@ -38,7 +39,12 @@ export default function StudyPage() {
 }
 
 function StudySession() {
-  const deckId = useSearchParams().get("talia") ?? "";
+  const param = useSearchParams().get("talia") ?? "";
+  // "wszystko" = cala kolekcja, lista po przecinku = wybrane talie.
+  const selection: DeckSelection =
+    param === "wszystko" ? "all" : param.includes(",") ? param.split(",") : param;
+  // Dokad wracac po "Dodaj fiszki" - tylko przy jednej talii ma to sens.
+  const singleDeckId = param.includes(",") || param === "wszystko" ? null : param;
 
   const [queue, setQueue] = useState<StudyQueueResult | null>(null);
   const [scheduler, setScheduler] = useState<FSRS | null>(null);
@@ -52,14 +58,14 @@ function StudySession() {
   const shownAt = useRef<number>(Date.now());
 
   const loadQueue = useCallback(async () => {
-    if (!deckId) {
+    if (!param) {
       setError("Brak talii w adresie");
       return;
     }
     try {
       const [settings, data] = await Promise.all([
         getSettings(),
-        studyQueue(deckId, { limit: 20 }),
+        studyQueue(selection, { limit: 20 }),
       ]);
       setScheduler(makeScheduler(settings));
       setQueue(data);
@@ -69,7 +75,9 @@ function StudySession() {
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udalo sie pobrac kolejki");
     }
-  }, [deckId]);
+    // selection powstaje z param przy kazdym renderze - zalezymy od param.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param]);
 
   useEffect(() => {
     void loadQueue();
@@ -168,12 +176,14 @@ function StudySession() {
           >
             Wroc do talii
           </Link>
-          <Link
-            href={`/fiszki?talia=${deckId}`}
-            className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
-          >
-            Dodaj fiszki
-          </Link>
+          {singleDeckId && (
+            <Link
+              href={`/fiszki?talia=${singleDeckId}`}
+              className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
+            >
+              Dodaj fiszki
+            </Link>
+          )}
         </div>
       </div>
     );
@@ -202,6 +212,14 @@ function StudySession() {
 
       <article className="rounded-xl border border-black/10 p-6 dark:border-white/15">
         <p className="text-xs uppercase tracking-wide opacity-50">
+          {/* Przy nauce z kilku talii trzeba widziec, skad karta - inaczej
+              nie da sie ocenic, czy material sie miesza sensownie. */}
+          {!singleDeckId && entry.deckName && (
+            <span className="text-indigo-600 dark:text-indigo-400">
+              {entry.deckName}
+              {" · "}
+            </span>
+          )}
           {templateLabel(entry.card.templateOrd)}
           {isNewCard && " · nowa"}
         </p>

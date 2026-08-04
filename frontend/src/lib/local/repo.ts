@@ -305,79 +305,243 @@ export async function deleteNote(id: string): Promise<void> {
   await tx.done;
 }
 
+// --- laczenie talii ---------------------------------------------------------
+
+export interface MergeResult {
+  /** Talia, ktora zostala. */
+  deckId: string;
+  deckName: string;
+  movedNotes: number;
+  movedCards: number;
+  movedReviews: number;
+  removedDecks: number;
+  /** Ile przeniesionych fiszek ma tresc juz obecna w talii docelowej. */
+  duplicates: number;
+}
+
+/**
+ * Przenosi cala zawartosc talii zrodlowych do docelowej i kasuje puste
+ * zrodla. Stan powtorek kazdej karty zostaje nietkniety.
+ *
+ * Historia w logu takze jest przepinana na talie docelowa. Bez tego
+ * statystyki scalonej talii nie objelyby nauki sprzed polaczenia - liczyly by
+ * sie do talii, ktora juz nie istnieje. To jedyne miejsce, gdzie ruszamy
+ * zapisany log; kategoria materialu w logu zostaje bez zmian.
+ *
+ * Duplikaty tresci sa PRZENOSZONE, nie kasowane - tylko policzone. Karta ma
+ * wlasny stan nauki, a wybor "ktora wersje zachowac" nalezy do uzytkownika,
+ * nie do funkcji laczacej talie.
+ */
+export async function mergeDecks(
+  targetId: string,
+  sourceIds: string[],
+  now: Date = new Date(),
+): Promise<MergeResult> {
+  const sources = sourceIds.filter((id) => id !== targetId);
+  if (sources.length === 0) throw new Error("Wskaz co najmniej jedna inna talie do polaczenia");
+
+  const database = await db();
+  const target = await database.get("decks", targetId);
+  if (!target) throw new Error("Nie znaleziono talii docelowej");
+
+  const iso = now.toISOString();
+  const tx = database.transaction(["decks", "notes", "cards", "reviewLog"], "readwrite");
+
+  const existingHashes = new Set(
+    (await tx.objectStore("notes").index("by-deck").getAll(targetId)).map((n) => n.contentHash),
+  );
+
+  let movedNotes = 0;
+  let movedCards = 0;
+  let movedReviews = 0;
+  let duplicates = 0;
+  let removedDecks = 0;
+
+  for (const sourceId of sources) {
+    const deck = await tx.objectStore("decks").get(sourceId);
+    if (!deck) continue;
+
+    for (const note of await tx.objectStore("notes").index("by-deck").getAll(sourceId)) {
+      if (existingHashes.has(note.contentHash)) duplicates += 1;
+      else existingHashes.add(note.contentHash);
+      await tx.objectStore("notes").put({ ...note, deckId: targetId, updatedAt: iso });
+      movedNotes += 1;
+    }
+
+    for (const card of await tx.objectStore("cards").index("by-deck").getAll(sourceId)) {
+      await tx.objectStore("cards").put({ ...card, deckId: targetId, updatedAt: iso });
+      movedCards += 1;
+    }
+
+    for (const entry of await tx.objectStore("reviewLog").index("by-deck-time").getAll(
+      IDBKeyRange.bound([sourceId, ""], [sourceId, "￿"]),
+    )) {
+      await tx.objectStore("reviewLog").put({ ...entry, deckId: targetId });
+      movedReviews += 1;
+    }
+
+    await tx.objectStore("decks").delete(sourceId);
+    removedDecks += 1;
+  }
+
+  await tx.objectStore("decks").put({ ...target, updatedAt: iso });
+  await tx.done;
+
+  return {
+    deckId: targetId,
+    deckName: target.name,
+    movedNotes,
+    movedCards,
+    movedReviews,
+    removedDecks,
+    duplicates,
+  };
+}
+
 // --- kolejka nauki ---------------------------------------------------------
 
+/** Talie do nauki: jedna, kilka wybranych albo wszystkie. */
+export type DeckSelection = string | string[] | "all";
+
+export interface StudyQueueEntry {
+  card: CardRecord;
+  note: NoteRecord;
+  /** Nazwa talii - przy nauce z kilku talii warto wiedziec, skad karta. */
+  deckName: string;
+}
+
 export interface StudyQueueResult {
-  deckId: string;
-  cards: Array<{ card: CardRecord; note: NoteRecord }>;
+  deckIds: string[];
+  cards: StudyQueueEntry[];
   newRemaining: number;
   dueRemaining: number;
 }
 
+export async function resolveDecks(selection: DeckSelection): Promise<DeckRecord[]> {
+  const database = await db();
+  if (selection === "all") {
+    return (await database.getAll("decks")).sort((a, b) => a.name.localeCompare(b.name, "pl"));
+  }
+  const ids = Array.isArray(selection) ? selection : [selection];
+  const decks: DeckRecord[] = [];
+  for (const id of ids) {
+    const deck = await database.get("decks", id);
+    if (deck) decks.push(deck);
+  }
+  if (decks.length === 0) throw new Error("Nie znaleziono talii");
+  return decks;
+}
+
+/**
+ * Kolejka nauki dla jednej talii, kilku wybranych albo wszystkich.
+ *
+ * Limity dzienne sa liczone OSOBNO dla kazdej talii, bo do niej naleza -
+ * wspolna kolejka nie moze pozwolic, zeby jedna talia zjadla dzienny przydzial
+ * nowych kart innej. Dopiero to, co przeszlo przez limity, jest mieszane
+ * w jeden strumien: zalegle wg terminu, nowe wg kolejnosci dodania.
+ */
 export async function studyQueue(
-  deckId: string,
+  selection: DeckSelection,
   options?: { limit?: number; now?: Date },
 ): Promise<StudyQueueResult> {
   const limit = options?.limit ?? 20;
   const now = options?.now ?? new Date();
   const nowIso = now.toISOString();
+  const since = dayStart(now).toISOString();
 
   const database = await db();
-  const deck = await database.get("decks", deckId);
-  if (!deck) throw new Error("Nie znaleziono talii");
+  const decks = await resolveDecks(selection);
 
-  // Dzisiejsze liczniki z logu: powtorki ogolem oraz karty widziane dzis po
-  // raz pierwszy (stateBefore.state === New) - jak w backendzie.
-  const since = dayStart(now).toISOString();
-  const today = await database.getAllFromIndex(
-    "reviewLog",
-    "by-deck-time",
-    IDBKeyRange.bound([deckId, since], [deckId, "￿"]),
-  );
-  const reviewsToday = today.length;
-  const newToday = new Set(
-    today.filter((entry) => entry.stateBefore.state === 0).map((entry) => entry.cardId),
-  ).size;
+  const dueParts: CardRecord[] = [];
+  const newParts: CardRecord[] = [];
+  let newRemaining = 0;
+  let dueRemaining = 0;
 
-  const newAllowance = Math.max(deck.newPerDay - newToday, 0);
-  const reviewAllowance = Math.max(deck.maxReviewsPerDay - reviewsToday, 0);
-
-  // Zalegle: widziane (state != New) z terminem, ktory minal. Indeks zwraca
-  // je posortowane po due.
-  const dueAll = (
-    await database.getAllFromIndex(
-      "cards",
-      "by-deck-due",
-      IDBKeyRange.bound([deckId, ""], [deckId, nowIso]),
-    )
-  ).filter((card) => !isNew(card.fsrs));
-  const due = dueAll.slice(0, Math.min(limit, reviewAllowance));
-
-  // Nowe: nigdy nie widziane, w kolejnosci dodania.
-  const newAll = (await database.getAllFromIndex("cards", "by-deck", deckId))
-    .filter((card) => isNew(card.fsrs))
-    .sort(
-      (a, b) => a.createdAt.localeCompare(b.createdAt) || a.templateOrd - b.templateOrd,
+  for (const deck of decks) {
+    // Dzisiejsze liczniki z logu: powtorki ogolem oraz karty widziane dzis
+    // po raz pierwszy (stateBefore.state === New).
+    const today = await database.getAllFromIndex(
+      "reviewLog",
+      "by-deck-time",
+      IDBKeyRange.bound([deck.id, since], [deck.id, "￿"]),
     );
-  const slots = Math.max(limit - due.length, 0);
-  const fresh = newAll.slice(0, Math.min(slots, newAllowance));
+    const newToday = new Set(
+      today.filter((entry) => entry.stateBefore.state === 0).map((entry) => entry.cardId),
+    ).size;
 
+    const newAllowance = Math.max(deck.newPerDay - newToday, 0);
+    const reviewAllowance = Math.max(deck.maxReviewsPerDay - today.length, 0);
+
+    // Zalegle: widziane (state != New) z terminem, ktory minal.
+    const dueAll = (
+      await database.getAllFromIndex(
+        "cards",
+        "by-deck-due",
+        IDBKeyRange.bound([deck.id, ""], [deck.id, nowIso]),
+      )
+    ).filter((card) => !isNew(card.fsrs));
+
+    const newAll = (await database.getAllFromIndex("cards", "by-deck", deck.id))
+      .filter((card) => isNew(card.fsrs))
+      .sort(
+        (a, b) =>
+          a.createdAt.localeCompare(b.createdAt) ||
+          a.templateOrd - b.templateOrd ||
+          // Ostateczny rozjemca: bez niego karty o identycznym znaczniku
+          // czasu wracaja w kolejnosci, w jakiej odda je baza - czyli
+          // przypadkowej i zmiennej miedzy wywolaniami.
+          a.id.localeCompare(b.id),
+      );
+
+    dueParts.push(...dueAll.slice(0, reviewAllowance));
+    newParts.push(...newAll.slice(0, newAllowance));
+    dueRemaining += Math.min(dueAll.length, reviewAllowance);
+    newRemaining += Math.min(newAll.length, newAllowance);
+  }
+
+  // Zalegle: wg terminu - najstarszy dlug pierwszy, niezaleznie od talii.
+  dueParts.sort((a, b) => a.due.localeCompare(b.due));
+
+  // Nowe: PRZEPLATANE miedzy taliami, nie sortowane globalnie po dacie
+  // dodania. Import idzie talia po talii, wiec globalne sortowanie ustawia
+  // kolejke w bloki i "wspolna kolejka" niczym nie rozni sie od nauki po
+  // kolei. W obrebie jednej talii kolejnosc dodania zostaje zachowana.
+  const byDeck = decks.map((deck) =>
+    newParts
+      .filter((card) => card.deckId === deck.id)
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt) || a.templateOrd - b.templateOrd),
+  );
+  const interleaved: CardRecord[] = [];
+  const longest = Math.max(0, ...byDeck.map((cards) => cards.length));
+  for (let i = 0; i < longest; i += 1) {
+    for (const cards of byDeck) {
+      if (i < cards.length) interleaved.push(cards[i]);
+    }
+  }
+
+  const chosen = [...dueParts, ...interleaved].slice(0, limit);
+
+  const deckNames = new Map(decks.map((deck) => [deck.id, deck.name]));
   const notes = new Map<string, NoteRecord>();
-  const joined = [];
-  for (const card of [...due, ...fresh]) {
+  const joined: StudyQueueEntry[] = [];
+  for (const card of chosen) {
     if (!notes.has(card.noteId)) {
       const note = await database.get("notes", card.noteId);
       if (!note) continue; // osierocona karta - nie wysadzaj kolejki
       notes.set(card.noteId, note);
     }
-    joined.push({ card, note: notes.get(card.noteId)! });
+    joined.push({
+      card,
+      note: notes.get(card.noteId)!,
+      deckName: deckNames.get(card.deckId) ?? "",
+    });
   }
 
   return {
-    deckId,
+    deckIds: decks.map((deck) => deck.id),
     cards: joined,
-    newRemaining: Math.min(newAll.length, newAllowance),
-    dueRemaining: Math.min(dueAll.length, reviewAllowance),
+    newRemaining,
+    dueRemaining,
   };
 }
 

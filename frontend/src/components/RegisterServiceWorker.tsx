@@ -3,19 +3,20 @@
 import { useEffect } from "react";
 
 /**
- * Rejestruje service workera - bez niego przegladarka nie uzna aplikacji za
- * instalowalna.
+ * Rejestruje service workera - bez niego nie ma ani instalacji na ekranie
+ * glownym, ani pracy offline.
  *
- * Uwaga: obecny SW cache'uje tylko powloke aplikacji. Dane (talie, fiszki) nie
- * dzialaja offline - to swiadomie odlozone, patrz docs/adr/0002.
+ * Sciezka musi uwzgledniac prefiks hostingu: na GitHub Pages aplikacja stoi
+ * w podkatalogu, wiec /sw.js wskazywaloby na korzen cudzej domeny.
  */
 export function RegisterServiceWorker() {
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") return;
     if (!("serviceWorker" in navigator)) return;
 
-    navigator.serviceWorker.register("/sw.js").catch(() => {
-      /* brak SW to degradacja, nie blad krytyczny */
+    const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+    navigator.serviceWorker.register(`${base}/sw.js`, { scope: `${base}/` }).catch(() => {
+      /* brak SW to degradacja (dziala online), nie blad krytyczny */
     });
   }, []);
 

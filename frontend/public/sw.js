@@ -18,9 +18,18 @@ const VERSION = "v2";
 const SHELL = `fiszki-shell-${VERSION}`;
 const ASSETS = `fiszki-assets-${VERSION}`;
 
+//: Prefiks hostingu odczytany z wlasnego zasiegu - na GitHub Pages aplikacja
+//: stoi w podkatalogu, lokalnie w korzeniu. Dzieki temu nazwa repozytorium
+//: nie jest zaszyta w tym pliku.
+const BASE = new URL(self.registration.scope).pathname.replace(/\/$/, "");
+
 //: Strony aplikacji - wszystkie musza byc dostepne offline.
-const ROUTES = ["/", "/nauka/", "/fiszki/", "/import/", "/stats/", "/ustawienia/"];
-const EXTRAS = ["/manifest.webmanifest", "/icon-192.png", "/icon-512.png"];
+const ROUTES = ["/", "/nauka/", "/fiszki/", "/import/", "/stats/", "/ustawienia/"].map(
+  (path) => `${BASE}${path}`,
+);
+const EXTRAS = ["/manifest.webmanifest", "/icon-192.png", "/icon-512.png"].map(
+  (path) => `${BASE}${path}`,
+);
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
@@ -72,7 +81,7 @@ self.addEventListener("fetch", (event) => {
           const cached =
             (await caches.match(url.pathname)) ??
             (await caches.match(request, { ignoreSearch: true })) ??
-            (await caches.match("/"));
+            (await caches.match(`${BASE}/`));
           return cached ?? Response.error();
         }),
     );
@@ -80,7 +89,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   // Pliki z hashem w nazwie sa niezmienne - pamiec ma pierwszenstwo.
-  const immutable = url.pathname.startsWith("/_next/static/");
+  const immutable = url.pathname.startsWith(`${BASE}/_next/static/`);
   event.respondWith(
     caches.match(request).then((cached) => {
       if (cached && immutable) return cached;

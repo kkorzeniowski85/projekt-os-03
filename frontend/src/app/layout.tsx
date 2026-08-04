@@ -7,10 +7,19 @@ import { RegisterServiceWorker } from "@/components/RegisterServiceWorker";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin-ext"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin-ext"] });
 
+// Sciezki podane recznie w metadanych NIE sa prefiksowane przez Next -
+// w odroznieniu od <Link> i assetow. Na hostingu w podkatalogu manifest
+// bez prefiksu wskazuje na korzen cudzej domeny i telefon go nie znajduje,
+// wiec nie proponuje instalacji.
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const metadata: Metadata = {
   title: "Fiszki",
   description: "Fiszki z powtorkami rozlozonymi w czasie (FSRS)",
-  manifest: "/manifest.webmanifest",
+  manifest: `${BASE}/manifest.webmanifest`,
+  icons: {
+    apple: `${BASE}/apple-touch-icon.png`,
+  },
   // iOS nie czyta manifestu przy dodawaniu do ekranu glownego - potrzebuje
   // wlasnych metatagow, zeby aplikacja odpalila sie bez paska Safari.
   appleWebApp: {

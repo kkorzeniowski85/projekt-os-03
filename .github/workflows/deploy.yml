@@ -40,7 +40,11 @@ jobs:
       # Testy przed wdrozeniem - zepsuta wersja nie ma trafiac na telefon.
       - run: npm test
 
+      # Pages serwuje projekt z podkatalogu /<repo>/ - bez tego prefiksu
+      # wszystkie odwolania do plikow trafiaja w korzen domeny, czyli w pustke.
       - run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

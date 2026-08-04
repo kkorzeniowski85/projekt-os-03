@@ -28,6 +28,9 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Link href="/import" className="text-sm opacity-70 hover:opacity-100">
               Import
             </Link>
+            <Link href="/ustawienia" className="text-sm opacity-70 hover:opacity-100">
+              Ustawienia
+            </Link>
           </nav>
         </div>
       </header>

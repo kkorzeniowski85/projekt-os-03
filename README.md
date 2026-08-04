@@ -11,10 +11,14 @@ docs/adr/   decyzje architektoniczne
 Stan: **przebudowa na wersję local-first** ([ADR 0006](docs/adr/0006-local-first-bez-synchronizacji.md))
 — aplikacja ma działać w całości w telefonie (Android), bez serwera, bez kont
 i bez synchronizacji. **Talie, nauka, import (fiszki/v1, CSV/TSV, zwykły
-tekst) i statystyki działają już w całości lokalnie** (IndexedDB + ts-fsrs,
-FSRS-6, fuzzing włączony; logowania nie ma). Talie OET z katalogu `talie/`
-wchodzą przez ekran Import bez mapowania. Backend pozostaje w repozytorium
-jako źródło portowanej logiki — nie wymaga uruchamiania.
+tekst), statystyki i kopia zapasowa działają już w całości lokalnie**
+(IndexedDB + ts-fsrs, FSRS-6, fuzzing włączony; logowania nie ma). Talie OET
+z katalogu `talie/` wchodzą przez ekran Import bez mapowania. Zostało
+wystawienie tego jako strony i instalacja na telefonie. Backend pozostaje
+w repozytorium jako źródło portowanej logiki — nie wymaga uruchamiania.
+
+> **Dane żyją tylko w tej przeglądarce.** Zanim wejdzie prawdziwa nauka, zrób
+> kopię (Ustawienia → Pobierz kopię) i trzymaj ją poza urządzeniem.
 
 ---
 
@@ -164,5 +168,5 @@ Uproszczenia są spisane w [docs/adr/0003-znane-uproszczenia.md](docs/adr/0003-z
 1. ~~Przepięcie ekranów (talie, nauka, notatki) na dane lokalne~~ ✓
 2. ~~Import w przeglądarce: fiszki/v1, CSV/TSV, tekst~~ ✓ (Anki `.apkg` później)
 3. ~~Statystyki liczone lokalnie~~ ✓
-4. Kopia zapasowa do pliku i przywracanie — **warunek wejścia prawdziwych danych**
+4. ~~Kopia zapasowa do pliku i przywracanie~~ ✓ (ekran **Ustawienia**)
 5. Hosting statyczny + instalacja na telefonie (Android/Chrome)

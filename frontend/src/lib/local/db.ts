@@ -77,8 +77,31 @@ export async function closeAndDeleteDb(): Promise<void> {
 export async function requestPersistentStorage(): Promise<boolean> {
   if (typeof navigator === "undefined" || !navigator.storage?.persist) return false;
   try {
+    // persisted() nie pyta uzytkownika; persist() moze. Gdy zgoda juz jest,
+    // nie zaczepiamy go ponownie.
+    if (await navigator.storage.persisted?.()) return true;
     return await navigator.storage.persist();
   } catch {
     return false;
+  }
+}
+
+/** Stan pamieci na potrzeby ekranu ustawien. */
+export async function storageEstimate(): Promise<{
+  persisted: boolean;
+  usageMb: number | null;
+}> {
+  if (typeof navigator === "undefined" || !navigator.storage) {
+    return { persisted: false, usageMb: null };
+  }
+  try {
+    const persisted = (await navigator.storage.persisted?.()) ?? false;
+    const usage = (await navigator.storage.estimate?.())?.usage ?? null;
+    return {
+      persisted,
+      usageMb: usage === null ? null : Math.round((usage / (1024 * 1024)) * 10) / 10,
+    };
+  } catch {
+    return { persisted: false, usageMb: null };
   }
 }

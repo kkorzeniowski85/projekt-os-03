@@ -20,7 +20,13 @@ import {
   normalize,
   preview,
 } from "@/lib/local/import/service";
-import { createDeck, listDecks } from "@/lib/local/repo";
+import {
+  DICTIONARY_DECK_ID,
+  createDeck,
+  ensureDictionary,
+  isDictionary,
+  listDecks,
+} from "@/lib/local/repo";
 import type { DeckRecord } from "@/lib/local/types";
 import {
   ITEM_KIND_LABELS,
@@ -58,7 +64,9 @@ function Importer() {
 
   // --- decyzje importu ---
   const [decks, setDecks] = useState<DeckRecord[]>([]);
-  const [deckChoice, setDeckChoice] = useState("");
+  // Material z zewnatrz trafia domyslnie do Slownika (bazy glownej) -
+  // osobna talia to swiadomy wybor, nie efekt uboczny wgrania pliku.
+  const [deckChoice, setDeckChoice] = useState<string>(DICTIONARY_DECK_ID);
   const [newDeckName, setNewDeckName] = useState("");
   const [noteType, setNoteType] = useState<NoteType>("basic");
   const [defaultKind, setDefaultKind] = useState<ItemKind | "">("");
@@ -69,7 +77,10 @@ function Importer() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    void listDecks().then((all) => setDecks(all));
+    void (async () => {
+      await ensureDictionary();
+      setDecks(await listDecks());
+    })();
   }, [done]);
 
   // Normalizacja przy kazdej zmianie mapowania - podglad na zywo, bez serwera.
@@ -112,18 +123,10 @@ function Importer() {
         setMapping(result.suggestedMapping);
         setNoteType(result.suggestedNoteType);
 
-        // Talia z pliku: jesli istnieje o tej nazwie, wybierz ja; inaczej
-        // zaproponuj utworzenie.
-        const suggested = result.sourceDecks[0];
-        if (suggested) {
-          const existing = decks.find((deck) => deck.name === suggested);
-          if (existing) {
-            setDeckChoice(existing.id);
-          } else {
-            setDeckChoice(NEW_DECK);
-            setNewDeckName(suggested);
-          }
-        }
+        // Nazwa talii z pliku NIE tworzy nowej grupy - material domyslnie
+        // rozplywa sie w Slowniku. Zostaje tylko jako podpowiedz, gdyby
+        // uzytkownik swiadomie wybral "+ nowa talia".
+        setNewDeckName(result.sourceDecks[0] ?? "");
       } catch (caught) {
         setParsed(null);
         setDrafts([]);
@@ -164,6 +167,9 @@ function Importer() {
 
       const stats = await commitImport(deckId, drafts, { noteType, skipDuplicates });
       setDone({ ...stats, deckId });
+      // Nastepny import znow celuje w baze glowna - "+ osobna talia" nie ma
+      // sie utrwalac jako nowy stan domyslny.
+      setDeckChoice(DICTIONARY_DECK_ID);
       setParsed(null);
       setDrafts([]);
       setSummary(null);
@@ -386,13 +392,12 @@ function Importer() {
                   onChange={(e) => setDeckChoice(e.target.value)}
                   className={inputClass}
                 >
-                  <option value="">— wybierz —</option>
                   {decks.map((deck) => (
                     <option key={deck.id} value={deck.id}>
-                      {deck.name}
+                      {isDictionary(deck.id) ? `${deck.name} — baza główna` : deck.name}
                     </option>
                   ))}
-                  <option value={NEW_DECK}>+ nowa talia…</option>
+                  <option value={NEW_DECK}>+ osobna talia…</option>
                 </select>
                 {deckChoice === NEW_DECK && (
                   <input

@@ -53,6 +53,42 @@ export interface DeckCounts {
   total: number;
 }
 
+// --- Slownik: baza glowna ---------------------------------------------------
+//
+// Centralne miejsce na caly material. Import z zewnatrz i talie generowane
+// przez Claude'a trafiaja tu domyslnie, zamiast mnozyc osobne grupy. Osobna
+// talia to swiadomy wybor, nie efekt uboczny wgrania pliku.
+//
+// Identyfikator jest staly (nie UUID): dzieki temu ochrona przed skasowaniem
+// nie zalezy od niczego poza id, a Slownik odtworzony po przywroceniu starej
+// kopii to wciaz "ten sam" Slownik.
+
+export const DICTIONARY_DECK_ID = "slownik";
+export const DICTIONARY_NAME = "Słownik";
+
+export function isDictionary(deckId: string): boolean {
+  return deckId === DICTIONARY_DECK_ID;
+}
+
+/** Zwraca Slownik, tworzac go przy pierwszym uzyciu. */
+export async function ensureDictionary(now: Date = new Date()): Promise<DeckRecord> {
+  const database = await db();
+  const existing = await database.get("decks", DICTIONARY_DECK_ID);
+  if (existing) return existing;
+  const iso = now.toISOString();
+  const deck: DeckRecord = {
+    id: DICTIONARY_DECK_ID,
+    name: DICTIONARY_NAME,
+    description: "Baza główna — tu trafia materiał z importu.",
+    newPerDay: 20,
+    maxReviewsPerDay: 200,
+    createdAt: iso,
+    updatedAt: iso,
+  };
+  await database.put("decks", deck);
+  return deck;
+}
+
 export async function createDeck(
   input: { name: string; description?: string },
   now: Date = new Date(),
@@ -121,7 +157,13 @@ export async function listDecks(
   const nowIso = now.toISOString();
 
   const out = [];
-  for (const deck of decks.sort((a, b) => a.name.localeCompare(b.name, "pl"))) {
+  // Slownik zawsze na poczatku - to baza glowna, reszta alfabetycznie.
+  const sorted = decks.sort(
+    (a, b) =>
+      Number(isDictionary(b.id)) - Number(isDictionary(a.id)) ||
+      a.name.localeCompare(b.name, "pl"),
+  );
+  for (const deck of sorted) {
     const cards = await database.getAllFromIndex("cards", "by-deck", deck.id);
     const counts: DeckCounts = { new: 0, due: 0, total: cards.length };
     for (const card of cards) {
@@ -135,6 +177,12 @@ export async function listDecks(
 
 /** Kasuje talie z notatkami i kartami. Log powtorek zostaje (ADR 0006). */
 export async function deleteDeck(id: string): Promise<void> {
+  if (isDictionary(id)) {
+    // Nienaruszalnosc bazy glownej: kasowac mozna pojedyncze fiszki, nigdy
+    // calosc. Ta linia ma chronic takze przed przyszlym kodem, nie tylko
+    // przed dzisiejszym interfejsem.
+    throw new Error("Słownik jest bazą główną i nie można go usunąć — kasuj pojedyncze fiszki");
+  }
   const database = await db();
   const tx = database.transaction(["decks", "notes", "cards"], "readwrite");
   const notes = await tx.objectStore("notes").index("by-deck").getAllKeys(id);
@@ -339,6 +387,12 @@ export async function mergeDecks(
 ): Promise<MergeResult> {
   const sources = sourceIds.filter((id) => id !== targetId);
   if (sources.length === 0) throw new Error("Wskaz co najmniej jedna inna talie do polaczenia");
+  if (sources.some(isDictionary)) {
+    // Laczenie kasuje talie zrodlowe - a Slownik zniknac nie moze. W druga
+    // strone wolno zawsze: wchlanianie talii do Slownika to wlasnie glowny
+    // sposob "znikania osobnych czesci" w bazie glownej.
+    throw new Error("Słownik nie może zniknąć — wybierz go jako talię docelową");
+  }
 
   const database = await db();
   const target = await database.get("decks", targetId);

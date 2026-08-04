@@ -10,9 +10,11 @@ import { beforeEach, expect, it } from "vitest";
 import { contentHash } from "./content";
 import { closeAndDeleteDb } from "./db";
 import {
+  DICTIONARY_DECK_ID,
   createDeck,
   createNote,
   deleteDeck,
+  ensureDictionary,
   deleteNote,
   findDuplicateByHash,
   listDecks,
@@ -464,4 +466,55 @@ it("laczenie talii ze soba samą jest odrzucane", async () => {
   const deck = await deckWithNotes("Jedyna", ["a"]);
   await expect(mergeDecks(deck.id, [deck.id], NOW)).rejects.toThrow("co najmniej jedna");
   expect(await listDecks(NOW)).toHaveLength(1);
+});
+
+// --- Slownik: baza glowna ---------------------------------------------------
+
+it("slownik powstaje raz i kolejne wywolania zwracaja ten sam", async () => {
+  const first = await ensureDictionary(NOW);
+  const second = await ensureDictionary(at(5));
+
+  expect(first.id).toBe(DICTIONARY_DECK_ID);
+  expect(second.id).toBe(first.id);
+  expect(second.createdAt).toBe(first.createdAt); // nie zostal nadpisany
+  expect((await listDecks(NOW)).filter((d) => d.id === DICTIONARY_DECK_ID)).toHaveLength(1);
+});
+
+it("slownika nie da sie skasowac, pojedyncze fiszki tak", async () => {
+  await ensureDictionary(NOW);
+  const { note } = await createNote(
+    { deckId: DICTIONARY_DECK_ID, noteType: "basic", fields: { Front: "kot", Back: "cat" } },
+    NOW,
+  );
+
+  await expect(deleteDeck(DICTIONARY_DECK_ID)).rejects.toThrow("bazą główną");
+
+  // Pojedynczy element - wolno. Calosc - nigdy.
+  await deleteNote(note.id);
+  expect(await listNotes(DICTIONARY_DECK_ID)).toHaveLength(0);
+  expect((await listDecks(NOW)).some((d) => d.id === DICTIONARY_DECK_ID)).toBe(true);
+});
+
+it("slownik nie moze zniknac przez laczenie, ale moze wchlaniac", async () => {
+  await ensureDictionary(NOW);
+  const other = await deckWithNotes("OET", ["a", "b"]);
+
+  // Slownik jako zrodlo = zniknalby. Zabronione.
+  await expect(mergeDecks(other.id, [DICTIONARY_DECK_ID], NOW)).rejects.toThrow(
+    "nie może zniknąć",
+  );
+
+  // Slownik jako cel = wchlanianie osobnych czesci do bazy glownej.
+  const wynik = await mergeDecks(DICTIONARY_DECK_ID, [other.id], NOW);
+  expect(wynik.movedNotes).toBe(2);
+  expect((await listDecks(NOW)).map((d) => d.name)).toEqual(["Słownik"]);
+  expect(await listNotes(DICTIONARY_DECK_ID)).toHaveLength(2);
+});
+
+it("slownik stoi na poczatku listy talii", async () => {
+  await deckWithNotes("Aaa pierwsza alfabetycznie", ["x"]);
+  await ensureDictionary(NOW);
+
+  const decks = await listDecks(NOW);
+  expect(decks[0].id).toBe(DICTIONARY_DECK_ID);
 });

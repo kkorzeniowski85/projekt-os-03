@@ -21,6 +21,15 @@ statystyki i kopia zapasowa (IndexedDB + ts-fsrs, FSRS-6). Backend FastAPI
 pozostaje w repozytorium jako źródło portowanej logiki — nie wymaga
 uruchamiania i nie jest częścią działającej aplikacji.
 
+### Słownik — baza główna
+
+Aplikacja ma jedną nienaruszalną bazę: **Słownik**. Istnieje od pierwszego
+otwarcia, nie da się go usunąć ani „scalić w nicość" — kasować można wyłącznie
+pojedyncze fiszki. Import trafia do niego domyślnie: wgrany plik **rozpływa się
+w bazie** zamiast tworzyć osobną grupę (nazwa talii z pliku jest tylko
+podpowiedzią przy świadomym wyborze „+ osobna talia"). Istniejące talie można
+wchłonąć do Słownika przez łączenie — z pełną historią nauki.
+
 ### Nauka z wielu talii
 
 Na liście talii można **zaznaczyć**, z których chce się materiał — albo nie

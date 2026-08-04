@@ -43,7 +43,7 @@ mapowania.
 | Pole | Wymagane | Opis |
 |---|---|---|
 | `format` | nie | `"fiszki/v1"`. Inna wartość daje ostrzeżenie, nie błąd |
-| `deck` | nie | Sugerowana nazwa talii |
+| `deck` | nie | Informacyjna nazwa źródła. **Nie tworzy talii** — materiał trafia domyślnie do Słownika (bazy głównej); nazwa służy tylko jako podpowiedź, gdy użytkownik świadomie wybierze osobną talię |
 | `default_note_type` | nie | Domyślny typ notatki. Domyślnie `basic` |
 | `notes` | **tak** | Lista notatek |
 
@@ -83,6 +83,13 @@ Kolejność decyzji: `note_type` pozycji → typ wybrany przy imporcie →
 Import porównuje odcisk treści (`front` + `back`, bez uwzględniania wielkości
 liter i białych znaków). Ta sama fiszka z dwóch różnych źródeł zostanie
 rozpoznana jako jedna. Dopisanie `example` nie czyni fiszki nową.
+
+## Dokąd trafia import
+
+Domyślnym celem importu jest **Słownik** — baza główna aplikacji, która
+istnieje zawsze i której nie można usunąć w całości. Wgrany materiał rozpływa
+się w niej zamiast tworzyć osobną grupę. Generując plik, **nie wymyślaj nazw
+talii** — pole `deck` zostaw puste albo czysto informacyjne.
 
 ## Jak zamówić talię w tym formacie
 

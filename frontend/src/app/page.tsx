@@ -4,7 +4,15 @@ import Link from "next/link";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 
 import { AppShell, ErrorBanner } from "@/components/AppShell";
-import { createDeck, listDecks, mergeDecks, type DeckCounts } from "@/lib/local/repo";
+import {
+  DICTIONARY_DECK_ID,
+  createDeck,
+  ensureDictionary,
+  isDictionary,
+  listDecks,
+  mergeDecks,
+  type DeckCounts,
+} from "@/lib/local/repo";
 import type { DeckRecord } from "@/lib/local/types";
 
 type DeckWithCounts = DeckRecord & { counts: DeckCounts };
@@ -40,6 +48,8 @@ function DeckList() {
 
   const load = useCallback(async () => {
     try {
+      // Slownik ma istniec od pierwszego otwarcia - to baza glowna.
+      await ensureDictionary();
       setDecks(await listDecks());
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udalo sie wczytac talii");
@@ -72,8 +82,10 @@ function DeckList() {
       const next = new Set(current);
       if (next.has(deckId)) next.delete(deckId);
       else next.add(deckId);
-      // Talia docelowa musi zostac wsrod zaznaczonych.
-      if (!next.has(mergeInto)) setMergeInto("");
+      // Talia docelowa musi zostac wsrod zaznaczonych; a gdy w grze jest
+      // Slownik, celem moze byc tylko on - zniknac mu nie wolno.
+      if (next.has(DICTIONARY_DECK_ID)) setMergeInto(DICTIONARY_DECK_ID);
+      else if (!next.has(mergeInto)) setMergeInto("");
       return next;
     });
   }
@@ -185,6 +197,10 @@ function DeckList() {
                   <option value="">— zostaw nazwę talii —</option>
                   {decks
                     .filter((deck) => selected.has(deck.id))
+                    // Slownik wsrod zaznaczonych = tylko on moze byc celem.
+                    .filter(
+                      (deck) => !selected.has(DICTIONARY_DECK_ID) || isDictionary(deck.id),
+                    )
                     .map((deck) => (
                       <option key={deck.id} value={deck.id}>
                         {deck.name}
@@ -261,7 +277,14 @@ function DeckList() {
                     />
                   )}
                   <div className="min-w-0">
-                    <p className="font-medium break-words">{deck.name}</p>
+                    <p className="font-medium break-words">
+                      {deck.name}
+                      {isDictionary(deck.id) && (
+                        <span className="ml-2 rounded-full bg-indigo-500/15 px-2 py-0.5 text-xs font-normal text-indigo-700 dark:text-indigo-300">
+                          baza główna
+                        </span>
+                      )}
+                    </p>
                     <p className="mt-0.5 text-sm opacity-70">
                       <span className="text-blue-600 dark:text-blue-400">
                         {deck.counts.new} nowych

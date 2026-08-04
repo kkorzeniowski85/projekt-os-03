@@ -6,7 +6,7 @@ name: Wdrozenie
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   # Pozwala wypchnac wdrozenie recznie z zakladki Actions.
   workflow_dispatch:
 

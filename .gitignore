@@ -28,3 +28,7 @@ Thumbs.db
 # Zrzuty bazy
 *.sql.gz
 backups/
+
+# Osobisty material do nauki - zostaje lokalnie, nie w publicznym repo.
+# Kopie robi sie przez ekran Ustawienia.
+talie/

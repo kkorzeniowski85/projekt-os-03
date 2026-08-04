@@ -8,6 +8,14 @@
       "cwd": "frontend",
       "port": 3000,
       "autoPort": true
+    },
+    {
+      "name": "fiszki-static",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4173"],
+      "cwd": "frontend/out",
+      "port": 4173,
+      "autoPort": true
     }
   ]
 }

@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { FSRS } from "ts-fsrs";
 
 import { AppShell, ErrorBanner } from "@/components/AppShell";
@@ -28,14 +28,17 @@ const RATING_STYLE: Record<Rating, string> = {
 export default function StudyPage() {
   return (
     <AppShell>
-      <StudySession />
+      {/* useSearchParams wymaga granicy Suspense przy eksporcie statycznym -
+          strona jest prerenderowana bez znajomosci adresu. */}
+      <Suspense fallback={<p className="text-sm opacity-70">Wczytywanie…</p>}>
+        <StudySession />
+      </Suspense>
     </AppShell>
   );
 }
 
 function StudySession() {
-  const params = useParams<{ deckId: string }>();
-  const deckId = params.deckId;
+  const deckId = useSearchParams().get("talia") ?? "";
 
   const [queue, setQueue] = useState<StudyQueueResult | null>(null);
   const [scheduler, setScheduler] = useState<FSRS | null>(null);
@@ -49,6 +52,10 @@ function StudySession() {
   const shownAt = useRef<number>(Date.now());
 
   const loadQueue = useCallback(async () => {
+    if (!deckId) {
+      setError("Brak talii w adresie");
+      return;
+    }
     try {
       const [settings, data] = await Promise.all([
         getSettings(),
@@ -70,8 +77,8 @@ function StudySession() {
 
   const entry = queue?.cards[index] ?? null;
 
-  // Podglad liczony przy odsloneciu karty, nie przy ladowaniu kolejki -
-  // etykiety na przyciskach dotycza dokladnie tego momentu.
+  // Podglad liczony dla biezacej karty - etykiety na przyciskach dotycza
+  // dokladnie tego momentu.
   const preview = useMemo(() => {
     if (!entry || !scheduler) return null;
     return previewIntervals(scheduler, entry.card.fsrs, new Date());
@@ -110,8 +117,7 @@ function StudySession() {
     [entry, busy, index, queue, loadQueue],
   );
 
-  // Skroty klawiszowe: spacja odslania, 1-4 ocenia. Na telefonie bez
-  // znaczenia, na komputerze roznica miedzy sesja na 5 minut a na 15.
+  // Skroty klawiszowe: spacja odslania, 1-4 ocenia.
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
       if (!entry) return;
@@ -129,6 +135,17 @@ function StudySession() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [entry, revealed, rate]);
+
+  if (error && !queue) {
+    return (
+      <div className="space-y-4">
+        <ErrorBanner message={error} />
+        <Link href="/" className="text-sm underline opacity-70 hover:opacity-100">
+          ← Wroc do talii
+        </Link>
+      </div>
+    );
+  }
 
   if (queue === null) {
     return <p className="text-sm opacity-70">Wczytywanie…</p>;
@@ -152,7 +169,7 @@ function StudySession() {
             Wroc do talii
           </Link>
           <Link
-            href={`/decks/${deckId}/notes`}
+            href={`/fiszki?talia=${deckId}`}
             className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
           >
             Dodaj fiszki

@@ -15,6 +15,7 @@ __pycache__/
 node_modules/
 .next/
 out/
+.turbo/
 next-env.d.ts
 .vercel
 

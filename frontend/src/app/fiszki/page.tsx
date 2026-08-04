@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useEffect, useState, type FormEvent } from "react";
 
 import { AppShell, ErrorBanner } from "@/components/AppShell";
 import {
@@ -48,14 +48,16 @@ function parseTags(value: string): string[] {
 export default function NotesPage() {
   return (
     <AppShell>
-      <NotesManager />
+      {/* Granica Suspense - useSearchParams przy eksporcie statycznym. */}
+      <Suspense fallback={<p className="text-sm opacity-70">Wczytywanie…</p>}>
+        <NotesManager />
+      </Suspense>
     </AppShell>
   );
 }
 
 function NotesManager() {
-  const params = useParams<{ deckId: string }>();
-  const deckId = params.deckId;
+  const deckId = useSearchParams().get("talia") ?? "";
 
   const [deck, setDeck] = useState<DeckRecord | null>(null);
   const [notes, setNotes] = useState<Array<{ note: NoteRecord; cards: CardRecord[] }> | null>(
@@ -67,6 +69,10 @@ function NotesManager() {
   const [busy, setBusy] = useState(false);
 
   const load = useCallback(async () => {
+    if (!deckId) {
+      setError("Brak talii w adresie");
+      return;
+    }
     try {
       const [deckData, noteData] = await Promise.all([getDeck(deckId), listNotes(deckId)]);
       setDeck(deckData);
@@ -138,7 +144,7 @@ function NotesManager() {
           </h1>
         </div>
         <Link
-          href={`/decks/${deckId}/study`}
+          href={`/nauka?talia=${deckId}`}
           className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
         >
           Ucz sie

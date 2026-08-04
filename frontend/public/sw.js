@@ -1,20 +1,38 @@
 /*
- * Minimalny service worker: cache'uje wylacznie powloke aplikacji.
+ * Service worker: aplikacja ma dzialac bez sieci.
  *
- * Czego tu CELOWO nie ma: cache'owania odpowiedzi z /api. Fiszki i stan
- * powtorek nie dzialaja offline - pokazanie nieaktualnej kolejki i przyjecie
- * ocen, ktorych nie ma jak wyslac, bylo by gorsze niz uczciwy blad sieci.
- * Offline wchodzi razem z modelem synchronizacji (docs/adr/0002).
+ * Po zwrocie na local-first (ADR 0006) nie ma juz zadnego API - dane i
+ * planowanie zyja w IndexedDB w przegladarce. Do pelnej pracy offline
+ * wystarczy wiec zapamietac same pliki aplikacji. Poprzednia wersja tego
+ * pliku celowo tego nie robila, bo wtedy fiszki mieszkaly na serwerze.
  *
- * Rola tego pliku na dzis: spelnic warunek instalowalnosci PWA.
+ * Strategie:
+ *   - nawigacje  -> najpierw siec, przy braku zasiegu wersja z pamieci
+ *                   (swieza wersja po wdrozeniu, ale offline zawsze dziala)
+ *   - /_next/static -> najpierw pamiec; te pliki maja hash w nazwie, wiec
+ *                   ich tresc nigdy sie nie zmienia
+ *   - reszta     -> najpierw pamiec, w tle odswiezenie
  */
 
-const CACHE = "fiszki-shell-v1";
+const VERSION = "v2";
+const SHELL = `fiszki-shell-${VERSION}`;
+const ASSETS = `fiszki-assets-${VERSION}`;
+
+//: Strony aplikacji - wszystkie musza byc dostepne offline.
+const ROUTES = ["/", "/nauka/", "/fiszki/", "/import/", "/stats/", "/ustawienia/"];
+const EXTRAS = ["/manifest.webmanifest", "/icon-192.png", "/icon-512.png"];
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll(["/manifest.webmanifest", "/icon-192.png"])),
+    caches.open(SHELL).then((cache) =>
+      // Pojedynczy brak nie moze wysadzic instalacji - stad addAll po jednym.
+      Promise.all(
+        [...ROUTES, ...EXTRAS].map((path) =>
+          cache.add(path).catch(() => undefined),
+        ),
+      ),
+    ),
   );
 });
 
@@ -22,27 +40,60 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key))))
+      .then((keys) =>
+        Promise.all(
+          keys.filter((key) => key !== SHELL && key !== ASSETS).map((key) => caches.delete(key)),
+        ),
+      )
       .then(() => self.clients.claim()),
   );
 });
 
 self.addEventListener("fetch", (event) => {
   const request = event.request;
-
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
-  // Cudze originy (w tym backend API) zostawiamy sieci bez posrednika.
   if (url.origin !== self.location.origin) return;
 
+  // Nawigacje: siec ma pierwszenstwo, zeby nowa wersja wchodzila sama.
+  // Bez zasiegu - wersja z pamieci; gdy i tej nie ma, strona glowna.
+  if (request.mode === "navigate") {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(SHELL).then((cache) => cache.put(request, copy));
+          return response;
+        })
+        .catch(async () => {
+          // Parametry zapytania nie zmieniaja pliku strony (/nauka?talia=x
+          // to ten sam dokument co /nauka/), wiec szukamy po samej sciezce.
+          const cached =
+            (await caches.match(url.pathname)) ??
+            (await caches.match(request, { ignoreSearch: true })) ??
+            (await caches.match("/"));
+          return cached ?? Response.error();
+        }),
+    );
+    return;
+  }
+
+  // Pliki z hashem w nazwie sa niezmienne - pamiec ma pierwszenstwo.
+  const immutable = url.pathname.startsWith("/_next/static/");
   event.respondWith(
-    fetch(request)
-      .then((response) => {
-        const copy = response.clone();
-        caches.open(CACHE).then((cache) => cache.put(request, copy));
-        return response;
-      })
-      .catch(() => caches.match(request)),
+    caches.match(request).then((cached) => {
+      if (cached && immutable) return cached;
+      const network = fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(ASSETS).then((cache) => cache.put(request, copy));
+          }
+          return response;
+        })
+        .catch(() => cached ?? Response.error());
+      return cached ?? network;
+    }),
   );
 });

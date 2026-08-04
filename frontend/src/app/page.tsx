@@ -104,13 +104,13 @@ function DeckList() {
                 </div>
                 <div className="flex gap-2">
                   <Link
-                    href={`/decks/${deck.id}/notes`}
+                    href={`/fiszki?talia=${deck.id}`}
                     className="rounded-md border border-black/15 px-3 py-1.5 text-sm hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10"
                   >
                     Fiszki
                   </Link>
                   <Link
-                    href={`/decks/${deck.id}/study`}
+                    href={`/nauka?talia=${deck.id}`}
                     className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
                   >
                     Ucz sie

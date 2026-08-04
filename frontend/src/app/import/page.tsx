@@ -195,13 +195,13 @@ function Importer() {
           </p>
           <div className="flex gap-2">
             <Link
-              href={`/decks/${done.deckId}/study`}
+              href={`/nauka?talia=${done.deckId}`}
               className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
             >
               Ucz sie
             </Link>
             <Link
-              href={`/decks/${done.deckId}/notes`}
+              href={`/fiszki?talia=${done.deckId}`}
               className="rounded-md border border-black/15 px-3 py-1.5 text-sm hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10"
             >
               Zobacz fiszki

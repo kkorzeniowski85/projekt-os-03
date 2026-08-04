@@ -8,14 +8,18 @@ frontend/   Next.js (App Router) jako PWA
 docs/adr/   decyzje architektoniczne
 ```
 
-Stan: **przebudowa na wersję local-first** ([ADR 0006](docs/adr/0006-local-first-bez-synchronizacji.md))
-— aplikacja ma działać w całości w telefonie (Android), bez serwera, bez kont
-i bez synchronizacji. **Talie, nauka, import (fiszki/v1, CSV/TSV, zwykły
-tekst), statystyki i kopia zapasowa działają już w całości lokalnie**
-(IndexedDB + ts-fsrs, FSRS-6, fuzzing włączony; logowania nie ma). Talie OET
-z katalogu `talie/` wchodzą przez ekran Import bez mapowania. Zostało
-wystawienie tego jako strony i instalacja na telefonie. Backend pozostaje
-w repozytorium jako źródło portowanej logiki — nie wymaga uruchamiania.
+## 📱 Aplikacja działa: **[kkorzeniowski85.github.io/projekt-os-03](https://kkorzeniowski85.github.io/projekt-os-03/)**
+
+Otwórz ten adres w Chrome na telefonie → menu ⋮ → **„Dodaj do ekranu głównego"**.
+Aplikacja instaluje się jak zwykła, działa bez zasięgu, a nowe wersje wchodzą
+same po każdym wdrożeniu.
+
+Stan: **wersja local-first gotowa** ([ADR 0006](docs/adr/0006-local-first-bez-synchronizacji.md))
+— całość działa w przeglądarce urządzenia: bez serwera, bez kont, bez
+synchronizacji. Talie, nauka, import (fiszki/v1, CSV/TSV, zwykły tekst),
+statystyki i kopia zapasowa (IndexedDB + ts-fsrs, FSRS-6). Backend FastAPI
+pozostaje w repozytorium jako źródło portowanej logiki — nie wymaga
+uruchamiania i nie jest częścią działającej aplikacji.
 
 > **Dane żyją tylko w tej przeglądarce.** Zanim wejdzie prawdziwa nauka, zrób
 > kopię (Ustawienia → Pobierz kopię) i trzymaj ją poza urządzeniem.
@@ -169,4 +173,7 @@ Uproszczenia są spisane w [docs/adr/0003-znane-uproszczenia.md](docs/adr/0003-z
 2. ~~Import w przeglądarce: fiszki/v1, CSV/TSV, tekst~~ ✓ (Anki `.apkg` później)
 3. ~~Statystyki liczone lokalnie~~ ✓
 4. ~~Kopia zapasowa do pliku i przywracanie~~ ✓ (ekran **Ustawienia**)
-5. Hosting statyczny + instalacja na telefonie (Android/Chrome)
+5. ~~Hosting statyczny + instalacja na telefonie~~ ✓
+
+Migracja zakończona. Dalej: Anki `.apkg` w przeglądarce (wymaga SQLite/WASM)
+i optymalizacja parametrów FSRS na własnej historii (po ~512 powtórkach).

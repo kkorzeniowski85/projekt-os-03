@@ -41,6 +41,45 @@ const inputClass =
 
 const NEW_DECK = "__new__";
 
+/**
+ * Instrukcja do wklejenia w rozmowie z Claude'em (albo w innym generatorze).
+ *
+ * Aplikacja niesie wlasna specyfikacje formatu, bo czat na telefonie to
+ * osobne srodowisko - nie ma dostepu do pamieci ani do repozytorium i sam
+ * z siebie nie wie, czego oczekuje import. Zamiast liczyc na to, ze
+ * uzytkownik zapamieta format, dajemy mu go pod przyciskiem.
+ *
+ * Trzymane w kodzie, nie w pliku - ma dzialac offline.
+ */
+const CLAUDE_PROMPT = `Zrób z tego fiszki w formacie JSON "fiszki/v1". Zasady:
+
+{
+  "format": "fiszki/v1",
+  "notes": [
+    {
+      "front": "strona pytania (obcy język)",
+      "back": "strona odpowiedzi (polski)",
+      "example": "zdanie przykładowe — opcjonalne",
+      "tags": ["tag1", "tag2"],
+      "kind": "word | phrase | expression | sentence",
+      "note_type": "basic | basic_reversed"
+    }
+  ]
+}
+
+- Wymagane są tylko "front" i "back". Nigdy puste.
+- NIE dodawaj pola "deck" ani nie wymyślaj nazw talii — materiał trafia do
+  jednej wspólnej bazy.
+- "kind": pojedyncze słowo → word; kilka słów dosłownie → phrase; idiom albo
+  zwrot, którego znaczenia nie da się złożyć ze słów → expression; pełne
+  zdanie → sentence. Oznacz "expression" sam — tego nie da się zgadnąć
+  automatycznie, a ma znaczenie dla statystyk.
+- "note_type": słowa i frazy → basic_reversed (uczę się w obie strony);
+  zdania i zwroty do rozpoznawania → basic.
+- Odpowiedz SAMYM JSON-em, bez komentarza i bez ogrodzeń \`\`\`.
+- Korzystaj wyłącznie z treści, którą podaję. Czego nie ma — nie zgaduj,
+  tylko wypisz na końcu, czego nie dało się przenieść.`;
+
 export default function ImportPage() {
   return (
     <AppShell>
@@ -83,6 +122,20 @@ function Importer() {
   const [done, setDone] = useState<(CommitStats & { deckId: string }) | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [promptCopied, setPromptCopied] = useState(false);
+  const [promptVisible, setPromptVisible] = useState(false);
+
+  async function copyPrompt() {
+    try {
+      await navigator.clipboard.writeText(CLAUDE_PROMPT);
+      setPromptCopied(true);
+      setTimeout(() => setPromptCopied(false), 3000);
+    } catch {
+      // Schowek bywa niedostepny (brak zgody, stara przegladarka) - wtedy
+      // pokazujemy tresc do recznego zaznaczenia zamiast udawac sukces.
+      setPromptVisible(true);
+    }
+  }
 
   useEffect(() => {
     void (async () => {
@@ -242,6 +295,40 @@ function Importer() {
           </div>
         </section>
       )}
+
+      <section className="space-y-2 rounded-lg border border-indigo-600/30 bg-indigo-500/5 p-4">
+        <h2 className="font-medium">Nowe fiszki od Claude&apos;a</h2>
+        <p className="text-sm opacity-70">
+          Czat na telefonie nie zna formatu tej aplikacji. Skopiuj instrukcję,
+          wklej ją w rozmowie razem ze zdjęciem albo listą słówek — wynik wróci
+          tu gotowy do importu.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => void copyPrompt()}
+            className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
+          >
+            {promptCopied ? "Skopiowano ✓" : "Skopiuj instrukcję dla Claude'a"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setPromptVisible((v) => !v)}
+            className="rounded-md border border-black/15 px-3 py-1.5 text-sm hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10"
+          >
+            {promptVisible ? "Ukryj" : "Pokaż treść"}
+          </button>
+        </div>
+        {promptVisible && (
+          <textarea
+            readOnly
+            rows={10}
+            value={CLAUDE_PROMPT}
+            onFocus={(e) => e.currentTarget.select()}
+            className={`${inputClass} font-mono text-xs`}
+          />
+        )}
+      </section>
 
       <section className="space-y-3 rounded-lg border border-black/10 p-4 dark:border-white/15">
         <h2 className="font-medium">Zrodlo</h2>

@@ -32,6 +32,12 @@ wchłonąć do Słownika przez łączenie — z pełną historią nauki.
 
 ### Dodawanie z telefonu
 
+> **Czat Claude nie zna formatu tej aplikacji** — to osobne środowisko,
+> bez dostępu do repozytorium i bez pamięci o projekcie. Na ekranie **Import**
+> jest przycisk **„Skopiuj instrukcję dla Claude'a"**: wklej ją w rozmowie
+> razem ze zdjęciem lub listą słówek, a wynik wróci gotowy do importu.
+> Instrukcja jest wbudowana w aplikację, więc działa też bez zasięgu.
+
 Trzy drogi, od najszybszej:
 
 - **Udostępnij** — w dowolnej aplikacji (np. Claude po wygenerowaniu fiszek)

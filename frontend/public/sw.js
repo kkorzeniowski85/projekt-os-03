@@ -14,7 +14,7 @@
  *   - reszta     -> najpierw pamiec, w tle odswiezenie
  */
 
-const VERSION = "v2";
+const VERSION = "v3";
 const SHELL = `fiszki-shell-${VERSION}`;
 const ASSETS = `fiszki-assets-${VERSION}`;
 

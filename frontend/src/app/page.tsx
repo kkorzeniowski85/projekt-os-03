@@ -145,7 +145,17 @@ function DeckList() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-semibold tracking-tight">Talie</h1>
+      <div className="flex items-center justify-between gap-3">
+        <h1 className="text-xl font-semibold tracking-tight">Talie</h1>
+        {/* Najkrotsza droga do dopisania slowka w biegu: formularz Slownika,
+            bez szukania talii. Staly id Slownika robi z tego zwykly link. */}
+        <Link
+          href={`/fiszki?talia=${DICTIONARY_DECK_ID}`}
+          className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
+        >
+          + Dodaj fiszkę
+        </Link>
+      </div>
 
       {decks !== null && decks.length > 1 && (
         <section className="space-y-3 rounded-lg border border-indigo-600/30 bg-indigo-500/5 p-4">

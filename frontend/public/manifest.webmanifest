@@ -7,6 +7,15 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
+  "share_target": {
+    "action": "./import/",
+    "method": "GET",
+    "params": {
+      "title": "tytul",
+      "text": "udostepnione",
+      "url": "adres"
+    }
+  },
   "background_color": "#ffffff",
   "theme_color": "#4338ca",
   "icons": [

@@ -30,6 +30,20 @@ w bazie** zamiast tworzyć osobną grupę (nazwa talii z pliku jest tylko
 podpowiedzią przy świadomym wyborze „+ osobna talia"). Istniejące talie można
 wchłonąć do Słownika przez łączenie — z pełną historią nauki.
 
+### Dodawanie z telefonu
+
+Trzy drogi, od najszybszej:
+
+- **Udostępnij** — w dowolnej aplikacji (np. Claude po wygenerowaniu fiszek)
+  wybierz *Udostępnij → Fiszki*: treść ląduje od razu w ekranie Import,
+  przeanalizowana, z celem ustawionym na Słownik. Wymaga zainstalowanej
+  aplikacji (Android/Chrome); przy większych partiach (setki fiszek) użyj
+  wklejenia. Nowa opcja pojawia się w menu po ponownym otwarciu aplikacji.
+- **+ Dodaj fiszkę** na liście talii — formularz Słownika, dla pojedynczych
+  słówek w biegu.
+- **Import → wklej treść** — dowolna ilość, dowolny format (fiszki/v1,
+  CSV/TSV, tekst `słowo - tłumaczenie`).
+
 ### Nauka z wielu talii
 
 Na liście talii można **zaznaczyć**, z których chce się materiał — albo nie

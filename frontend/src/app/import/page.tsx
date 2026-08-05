@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 
 import { AppShell, ErrorBanner } from "@/components/AppShell";
 import {
@@ -43,12 +44,19 @@ const NEW_DECK = "__new__";
 export default function ImportPage() {
   return (
     <AppShell>
-      <Importer />
+      {/* Granica Suspense - useSearchParams przy eksporcie statycznym. */}
+      <Suspense fallback={<p className="text-sm opacity-70">Wczytywanie…</p>}>
+        <Importer />
+      </Suspense>
     </AppShell>
   );
 }
 
 function Importer() {
+  // Tresc z systemowego "Udostepnij" (Android share target, manifest) -
+  // np. fiszki wygenerowane w aplikacji Claude, wyslane tu jednym kliknieciem.
+  const shared = useSearchParams().get("udostepnione");
+
   // --- zrodlo ---
   const [pasted, setPasted] = useState("");
   const [fileName, setFileName] = useState<string | null>(null);
@@ -99,15 +107,20 @@ function Importer() {
   }, [parsed, mapping, defaultKind]);
 
   const analyze = useCallback(
-    (override?: boolean | null) => {
+    (options?: { header?: boolean | null; content?: string }) => {
       setError(null);
       setDone(null);
-      const data = fileData.current ?? new TextEncoder().encode(pasted);
+      // `content` pozwala analizowac tresc, ktora dopiero co trafila do stanu
+      // (auto-analiza po "Udostepnij") - setPasted nie zdazyloby jej domknac.
+      const data =
+        options?.content !== undefined
+          ? new TextEncoder().encode(options.content)
+          : (fileData.current ?? new TextEncoder().encode(pasted));
       // Schowek celowo bez rozszerzenia: o formacie wklejonej tresci ma
       // decydowac zawartosc, nie zmyslona nazwa pliku. Z ".txt" wklejony
       // CSV szedlby sciezka zwyklego tekstu i rozpadal sie na pierwszym
       // sredniku.
-      const name = fileName ?? "schowek";
+      const name = options?.content !== undefined ? "schowek" : (fileName ?? "schowek");
       if (data.length === 0) {
         setError("Nie przeslano ani pliku, ani tresci");
         return;
@@ -117,7 +130,7 @@ function Importer() {
           name,
           data,
           formatKey === "auto" ? null : formatKey,
-          { hasHeader: override === undefined ? hasHeader : override },
+          { hasHeader: options?.header === undefined ? hasHeader : options.header },
         );
         setParsed(result);
         setMapping(result.suggestedMapping);
@@ -150,8 +163,22 @@ function Importer() {
 
   function toggleHeader(value: boolean | null) {
     setHasHeader(value);
-    analyze(value);
+    analyze({ header: value });
   }
+
+  // Tresc z "Udostepnij" wchodzi do pola i od razu do analizy - uzytkownik
+  // widzi podglad i sam decyduje o imporcie. Auto-importu celowo nie ma:
+  // podsumowanie duplikatow ma byc widoczne PRZED zapisem.
+  const sharedHandled = useRef(false);
+  useEffect(() => {
+    if (!shared || sharedHandled.current) return;
+    sharedHandled.current = true;
+    setPasted(shared);
+    fileData.current = null;
+    setFileName(null);
+    analyze({ content: shared });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shared]);
 
   async function commit() {
     if (!parsed || drafts.length === 0) return;

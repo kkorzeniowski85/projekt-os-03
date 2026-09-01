@@ -1,26 +1,97 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * Jedno zrodlo prawdy dla kolorow (design/Jezyk.dc.html).
+ *
+ * Hierarchia tekstu stoi na trzech stopniach szarosci, nie na
+ * przezroczystosci - opacity mieszalo tekst z tlem i dawalo wrazenie
+ * wyblaklego interfejsu.
+ *
+ * Kolor niesie znaczenie tylko przy ocenach. Reszta aplikacji jest cicha,
+ * zeby nic nie konkurowalo z trescia fiszki.
+ */
+@theme {
+  --color-canvas: #fbfaf8;
+  --color-surface: #ffffff;
+  --color-ink: #1a1a19;
+  --color-ink-2: #5c5b58;
+  --color-ink-3: #8a8985;
+  --color-ink-4: #a8a6a1;
+  --color-line: #e8e6e1;
+  --color-line-soft: #eeece7;
+  --color-field: #ddd9d2;
+  --color-accent: #3d5a80;
+  --color-accent-hover: #2c4460;
+  --color-accent-soft: #eef2f7;
+  /* Tekst NA akcencie musi byc kontrastowy do niego, a nie zawsze bialy:
+     w nocy akcent jest jasny, wiec biala etykieta na nim znika. */
+  --color-on-accent: #ffffff;
+  --color-chip: #f2f0ec;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Oceny - jedyny kolor niosacy znaczenie. Etykieta zawsze obok koloru:
+     para bursztyn/zielen jest na granicy rozroznialnosci przy daltonizmie. */
+  --color-again: #be123c;
+  --color-again-bg: #fdf5f6;
+  --color-again-line: #f0c8d0;
+  --color-hard: #b45309;
+  --color-hard-bg: #fdf9f3;
+  --color-hard-line: #f2ddc0;
+  --color-good: #047857;
+  --color-good-bg: #f3faf6;
+  --color-good-line: #bfe3d2;
+  --color-easy: #0369a1;
+  --color-easy-bg: #f4f9fd;
+  --color-easy-line: #c3ddef;
+
   --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-literata);
   --font-mono: var(--font-geist-mono);
 }
 
+/* Noc ma wlasny zestaw wartosci, nie odwrocone dzienne: cieple czernie
+   zamiast czystej i przygaszone kolory ocen - jaskrawe raza po ciemku. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --color-canvas: #12100e;
+    --color-surface: #1a1815;
+    --color-ink: #ebe9e4;
+    --color-ink-2: #a19f9a;
+    --color-ink-3: #7d7a74;
+    --color-ink-4: #6b6862;
+    --color-line: #2a2724;
+    --color-line-soft: #232019;
+    --color-field: #363330;
+    --color-accent: #8fb0d4;
+    --color-accent-hover: #a8c4e2;
+    --color-accent-soft: #1c232b;
+    --color-on-accent: #12100e;
+    --color-chip: #221f1c;
+
+    --color-again: #e8879b;
+    --color-again-bg: #1e1518;
+    --color-again-line: #4a2c35;
+    --color-hard: #e0aa62;
+    --color-hard-bg: #1e1a13;
+    --color-hard-line: #4a3a22;
+    --color-good: #6cc9a0;
+    --color-good-bg: #131e19;
+    --color-good-line: #234438;
+    --color-easy: #6fb3dd;
+    --color-easy-bg: #131a1e;
+    --color-easy-line: #23394a;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-canvas);
+  color: var(--color-ink);
   font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tresc fiszki i pola, ktore ja zbieraja - szeryfowa, jak w ksiazce.
+   Material do nauki ma wygladac jak tekst do czytania, a nie jak
+   kolejny element interfejsu. */
+.tresc {
+  font-family: var(--font-serif), Georgia, serif;
 }

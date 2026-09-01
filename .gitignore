@@ -32,3 +32,7 @@ backups/
 # Osobisty material do nauki - zostaje lokalnie, nie w publicznym repo.
 # Kopie robi sie przez ekran Ustawienia.
 talie/
+
+# Zaziarniona kanwa projektowa - ~2 MB edytora w kazdym pliku.
+# Zrodlem sa artboardy .dc.html, ktore zostaja w repozytorium.
+design/*.html

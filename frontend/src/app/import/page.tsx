@@ -4,7 +4,13 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 
-import { AppShell, ErrorBanner } from "@/components/AppShell";
+import {
+  AppShell,
+  ErrorBanner,
+  buttonClass,
+  inputClass,
+  secondaryButtonClass,
+} from "@/components/AppShell";
 import {
   FORMATS,
   ImportParseError,
@@ -35,9 +41,6 @@ import {
   type ItemKind,
   type NoteType,
 } from "@/lib/types";
-
-const inputClass =
-  "w-full rounded-md border border-black/15 bg-transparent px-3 py-2 text-sm outline-none focus:border-indigo-500 dark:border-white/20";
 
 const NEW_DECK = "__new__";
 
@@ -84,7 +87,7 @@ export default function ImportPage() {
   return (
     <AppShell>
       {/* Granica Suspense - useSearchParams przy eksporcie statycznym. */}
-      <Suspense fallback={<p className="text-sm opacity-70">Wczytywanie…</p>}>
+      <Suspense fallback={<p className="text-sm text-ink-2">Wczytywanie…</p>}>
         <Importer />
       </Suspense>
     </AppShell>
@@ -175,7 +178,7 @@ function Importer() {
       // sredniku.
       const name = options?.content !== undefined ? "schowek" : (fileName ?? "schowek");
       if (data.length === 0) {
-        setError("Nie przeslano ani pliku, ani tresci");
+        setError("Nie przesłano ani pliku, ani treści");
         return;
       }
       try {
@@ -200,7 +203,7 @@ function Importer() {
         setError(
           caught instanceof ImportParseError || caught instanceof Error
             ? caught.message
-            : "Nie udalo sie odczytac zrodla",
+            : "Nie udało się odczytać źródła",
         );
       }
     },
@@ -240,10 +243,10 @@ function Importer() {
     try {
       let deckId = deckChoice;
       if (deckChoice === NEW_DECK) {
-        if (!newDeckName.trim()) throw new Error("Podaj nazwe nowej talii");
+        if (!newDeckName.trim()) throw new Error("Podaj nazwę nowej talii");
         deckId = (await createDeck({ name: newDeckName.trim() })).id;
       }
-      if (!deckId) throw new Error("Wybierz talie");
+      if (!deckId) throw new Error("Wybierz talię");
 
       const stats = await commitImport(deckId, drafts, { noteType, skipDuplicates });
       setDone({ ...stats, deckId });
@@ -258,7 +261,7 @@ function Importer() {
       fileData.current = null;
       setHasHeader(null);
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Import sie nie powiodl");
+      setError(caught instanceof Error ? caught.message : "Import się nie powiódł");
     } finally {
       setBusy(false);
     }
@@ -272,23 +275,23 @@ function Importer() {
       <h1 className="text-xl font-semibold tracking-tight">Import</h1>
 
       {done && (
-        <section className="space-y-2 rounded-lg border border-emerald-600/40 bg-emerald-500/10 p-4">
+        <section className="space-y-2 rounded-xl border border-good-line bg-good-bg p-4">
           <p className="text-sm font-medium">
             Zaimportowano {done.imported}{" "}
-            {done.imported === 1 ? "fiszke" : "fiszek"}
-            {done.skippedDuplicates > 0 && ` · pominieto duplikatow: ${done.skippedDuplicates}`}
+            {done.imported === 1 ? "fiszkę" : "fiszek"}
+            {done.skippedDuplicates > 0 && ` · pominięto duplikatów: ${done.skippedDuplicates}`}
             {done.skippedInvalid > 0 && ` · niekompletnych: ${done.skippedInvalid}`}
           </p>
           <div className="flex gap-2">
             <Link
               href={`/nauka?talia=${done.deckId}`}
-              className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
+              className="rounded-lg bg-accent px-3 py-2 text-sm font-medium text-on-accent hover:bg-accent-hover"
             >
-              Ucz sie
+              Ucz się
             </Link>
             <Link
               href={`/fiszki?talia=${done.deckId}`}
-              className="rounded-md border border-black/15 px-3 py-1.5 text-sm hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10"
+              className="rounded-lg border border-line bg-surface px-3 py-2 text-sm hover:border-field"
             >
               Zobacz fiszki
             </Link>
@@ -296,10 +299,10 @@ function Importer() {
         </section>
       )}
 
-      <section className="space-y-2 rounded-lg border border-indigo-600/30 bg-indigo-500/5 p-4">
+      <section className="space-y-2 rounded-xl border border-line bg-accent-soft p-4">
         <h2 className="font-medium">Nowe fiszki od Claude&apos;a</h2>
-        <p className="text-sm opacity-70">
-          Czat na telefonie nie zna formatu tej aplikacji. Skopiuj instrukcję,
+        <p className="text-sm text-ink-2">
+          Czat nie zna formatu tej aplikacji. Skopiuj instrukcję,
           wklej ją w rozmowie razem ze zdjęciem albo listą słówek — wynik wróci
           tu gotowy do importu.
         </p>
@@ -307,14 +310,14 @@ function Importer() {
           <button
             type="button"
             onClick={() => void copyPrompt()}
-            className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
+            className="rounded-lg bg-accent px-3 py-2 text-sm font-medium text-on-accent hover:bg-accent-hover"
           >
             {promptCopied ? "Skopiowano ✓" : "Skopiuj instrukcję dla Claude'a"}
           </button>
           <button
             type="button"
             onClick={() => setPromptVisible((v) => !v)}
-            className="rounded-md border border-black/15 px-3 py-1.5 text-sm hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10"
+            className="rounded-lg border border-line bg-surface px-3 py-2 text-sm hover:border-field"
           >
             {promptVisible ? "Ukryj" : "Pokaż treść"}
           </button>
@@ -330,8 +333,8 @@ function Importer() {
         )}
       </section>
 
-      <section className="space-y-3 rounded-lg border border-black/10 p-4 dark:border-white/15">
-        <h2 className="font-medium">Zrodlo</h2>
+      <section className="space-y-3 rounded-xl border border-line bg-surface p-4">
+        <h2 className="font-medium">Źródło</h2>
 
         <label className="block space-y-1">
           <span className="text-sm">Plik (fiszki/v1, CSV/TSV, tekst)</span>
@@ -339,13 +342,13 @@ function Importer() {
             type="file"
             accept=".json,.csv,.tsv,.txt,.md"
             onChange={(e) => void pickFile(e.target.files?.[0] ?? null)}
-            className="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-indigo-600 file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-white hover:file:bg-indigo-500"
+            className="block w-full text-sm file:mr-3 file:rounded-lg file:border file:border-line file:bg-canvas file:px-3 file:py-2 file:text-[13px] file:font-medium file:text-ink hover:file:border-field"
           />
-          {fileName && <span className="block text-xs opacity-60">Wybrano: {fileName}</span>}
+          {fileName && <span className="block text-xs text-ink-3">Wybrano: {fileName}</span>}
         </label>
 
         <label className="block space-y-1">
-          <span className="text-sm">…albo wklej tresc</span>
+          <span className="text-sm">…albo wklej treść</span>
           <textarea
             rows={5}
             value={pasted}
@@ -378,7 +381,7 @@ function Importer() {
           <button
             type="button"
             onClick={() => analyze()}
-            className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500"
+            className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-on-accent hover:bg-accent-hover"
           >
             Analizuj
           </button>
@@ -389,16 +392,16 @@ function Importer() {
 
       {parsed && (
         <>
-          <section className="space-y-3 rounded-lg border border-black/10 p-4 dark:border-white/15">
+          <section className="space-y-3 rounded-xl border border-line bg-surface p-4">
             <h2 className="font-medium">
               Rozpoznano: {FORMATS.find((f) => f.key === parsed.sourceFormat)?.label ?? parsed.sourceFormat}
-              <span className="ml-2 text-sm font-normal opacity-60">
+              <span className="ml-2 text-sm font-normal text-ink-3">
                 pozycji: {drafts.length}
               </span>
             </h2>
 
             {parsed.warnings.length > 0 && (
-              <ul className="space-y-1 text-sm text-amber-700 dark:text-amber-300">
+              <ul className="space-y-1 text-[13px] text-hard">
                 {parsed.warnings.map((warning, i) => (
                   <li key={i}>⚠ {warning}</li>
                 ))}
@@ -412,22 +415,22 @@ function Importer() {
                   checked={hasHeader ?? parsed.warnings.some((w) => w.includes("naglowek:"))}
                   onChange={(e) => toggleHeader(e.target.checked)}
                 />
-                Pierwszy wiersz to naglowek, nie fiszka
+                Pierwszy wiersz to nagłówek, nie fiszka
               </label>
             )}
 
             {parsed.sourceFormat !== "fiszki-json" && (
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
-                  <thead className="opacity-60">
+                  <thead className="text-ink-3">
                     <tr>
-                      <th className="py-1 pr-3 font-normal">Kolumna zrodla</th>
-                      <th className="py-1 font-normal">Pole aplikacji</th>
+                      <th className="py-1.5 pr-3 font-normal">Kolumna źródła</th>
+                      <th className="py-1.5 font-normal">Pole aplikacji</th>
                     </tr>
                   </thead>
                   <tbody>
                     {parsed.columns.map((column) => (
-                      <tr key={column} className="border-t border-black/5 dark:border-white/10">
+                      <tr key={column} className="border-t border-line-soft">
                         <td className="py-1.5 pr-3">{column}</td>
                         <td className="py-1.5">
                           <select
@@ -452,50 +455,50 @@ function Importer() {
             )}
           </section>
 
-          <section className="space-y-3 rounded-lg border border-black/10 p-4 dark:border-white/15">
-            <h2 className="font-medium">Podglad</h2>
+          <section className="space-y-3 rounded-xl border border-line bg-surface p-4">
+            <h2 className="font-medium">Podgląd</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
-                <thead className="opacity-60">
+                <thead className="text-ink-3">
                   <tr>
-                    <th className="py-1 pr-3 font-normal">Przod</th>
-                    <th className="py-1 pr-3 font-normal">Tyl</th>
-                    <th className="py-1 pr-3 font-normal">Kategoria</th>
-                    <th className="py-1 pr-3 font-normal">Karty</th>
-                    <th className="py-1 font-normal">Tagi</th>
+                    <th className="py-1.5 pr-3 font-normal">Przod</th>
+                    <th className="py-1.5 pr-3 font-normal">Tyl</th>
+                    <th className="py-1.5 pr-3 font-normal">Kategoria</th>
+                    <th className="py-1.5 pr-3 font-normal">Karty</th>
+                    <th className="py-1.5 font-normal">Tagi</th>
                   </tr>
                 </thead>
                 <tbody>
                   {preview(drafts).map((draft, index) => (
-                    <tr key={index} className="border-t border-black/5 dark:border-white/10">
-                      <td className="max-w-56 truncate py-1 pr-3">{draft.fields.Front}</td>
-                      <td className="max-w-56 truncate py-1 pr-3">{draft.fields.Back}</td>
-                      <td className="py-1 pr-3 opacity-70">
+                    <tr key={index} className="border-t border-line-soft">
+                      <td className="max-w-56 truncate py-1.5 pr-3">{draft.fields.Front}</td>
+                      <td className="max-w-56 truncate py-1.5 pr-3">{draft.fields.Back}</td>
+                      <td className="py-1.5 pr-3 text-ink-2">
                         {ITEM_KIND_LABELS[draft.itemKind]}
                       </td>
-                      <td className="py-1 pr-3 opacity-70">
+                      <td className="py-1.5 pr-3 text-ink-2">
                         {(draft.noteType ?? noteType) === "basic_reversed" ? "2" : "1"}
                         {draft.noteType && (
-                          <span className="ml-1 text-xs opacity-60">z pliku</span>
+                          <span className="ml-1 text-xs text-ink-3">z pliku</span>
                         )}
                       </td>
-                      <td className="py-1 opacity-70">{draft.tags.join(", ")}</td>
+                      <td className="py-1.5 text-ink-2">{draft.tags.join(", ")}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
             {drafts.length === 0 && (
-              <p className="text-sm opacity-70">Przy tym mapowaniu nie powstaje zadna fiszka.</p>
+              <p className="text-sm text-ink-2">Przy tym mapowaniu nie powstaje żadna fiszka.</p>
             )}
             {drafts.length > preview(drafts).length && (
-              <p className="text-xs opacity-50">
+              <p className="text-xs text-ink-4">
                 …i jeszcze {drafts.length - preview(drafts).length} pozycji.
               </p>
             )}
           </section>
 
-          <section className="space-y-3 rounded-lg border border-black/10 p-4 dark:border-white/15">
+          <section className="space-y-3 rounded-xl border border-line bg-surface p-4">
             <h2 className="font-medium">Zapis</h2>
 
             <div className="grid gap-3 sm:grid-cols-2">
@@ -530,30 +533,30 @@ function Importer() {
                   onChange={(e) => setNoteType(e.target.value as NoteType)}
                   className={inputClass}
                 >
-                  <option value="basic">Jednostronna (Przod → Tyl)</option>
+                  <option value="basic">Jednostronna (przód → tył)</option>
                   <option value="basic_reversed">Dwustronna (oba kierunki)</option>
                 </select>
-                <span className="block text-xs opacity-60">
+                <span className="block text-xs text-ink-3">
                   Typ podany przy pozycji w pliku wygrywa z tym ustawieniem.
                 </span>
               </label>
 
               <label className="block space-y-1">
-                <span className="text-sm">Kategoria materialu</span>
+                <span className="text-sm">Kategoria materiału</span>
                 <select
                   value={defaultKind}
                   onChange={(e) => setDefaultKind(e.target.value as ItemKind | "")}
                   className={inputClass}
                 >
-                  <option value="">Rozpoznaj z tresci</option>
+                  <option value="">Rozpoznaj z treści</option>
                   {(Object.keys(ITEM_KIND_LABELS) as ItemKind[]).map((kind) => (
                     <option key={kind} value={kind}>
                       wszystko jako: {ITEM_KIND_LABELS[kind]}
                     </option>
                   ))}
                 </select>
-                <span className="block text-xs opacity-60">
-                  Wyrazen (idiomow) heurystyka nie rozpozna — ustaw recznie albo zmapuj kolumne.
+                <span className="block text-xs text-ink-3">
+                  Wyrażeń (idiomów) heurystyka nie rozpozna — ustaw ręcznie albo zmapuj kolumnę.
                 </span>
               </label>
 
@@ -568,13 +571,13 @@ function Importer() {
             </div>
 
             {summary && (
-              <p className="text-sm opacity-70">
+              <p className="text-sm text-ink-2">
                 Pozycji: {summary.total} · unikalnych: {summary.unique}
-                {summary.duplicatesInFile > 0 && ` · powtorzen w pliku: ${summary.duplicatesInFile}`}
+                {summary.duplicatesInFile > 0 && ` · powtórzeń w pliku: ${summary.duplicatesInFile}`}
                 {summary.alreadyInCollection > 0 && (
-                  <span className="text-amber-700 dark:text-amber-300">
+                  <span className="text-hard">
                     {" "}
-                    · juz w kolekcji: {summary.alreadyInCollection}
+                    · już w kolekcji: {summary.alreadyInCollection}
                   </span>
                 )}
               </p>
@@ -584,13 +587,13 @@ function Importer() {
               type="button"
               disabled={!canCommit || busy}
               onClick={() => void commit()}
-              className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
+              className="rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-on-accent hover:bg-accent-hover disabled:opacity-40"
             >
               Importuj{drafts.length > 0 ? ` (${drafts.length})` : ""}
             </button>
             {!canCommit && drafts.length > 0 && (
-              <p className="text-sm text-amber-700 dark:text-amber-300">
-                Wybierz talie, do ktorej maja trafic fiszki.
+              <p className="text-[13px] text-hard">
+                Wybierz talię, do której mają trafić fiszki.
               </p>
             )}
           </section>

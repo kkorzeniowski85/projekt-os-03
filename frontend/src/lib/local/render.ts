@@ -23,5 +23,5 @@ export function exampleOf(note: NoteRecord): string {
 }
 
 export function templateLabel(templateOrd: number): string {
-  return templateOrd === 0 ? "Przod → Tyl" : "Tyl → Przod";
+  return templateOrd === 0 ? "przód → tył" : "tył → przód";
 }

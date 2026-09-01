@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { AppShell, ErrorBanner } from "@/components/AppShell";
+import { AppShell, ErrorBanner, buttonClass, secondaryButtonClass } from "@/components/AppShell";
 import {
   backupCounts,
   backupFilename,
@@ -14,11 +14,14 @@ import {
   type BackupFile,
 } from "@/lib/local/backup";
 import { storageEstimate } from "@/lib/local/db";
+import { odmien } from "@/lib/types";
 
 function describe(counts: BackupCounts): string {
   return (
-    `${counts.decks} ${counts.decks === 1 ? "talia" : "talii"} · ` +
-    `${counts.notes} fiszek · ${counts.cards} kart · ${counts.reviews} powtórek`
+    `${counts.decks} ${odmien(counts.decks, "talia", "talie", "talii")} · ` +
+    `${counts.notes} ${odmien(counts.notes, "fiszka", "fiszki", "fiszek")} · ` +
+    `${counts.cards} ${odmien(counts.cards, "karta", "karty", "kart")} · ` +
+    `${counts.reviews} ${odmien(counts.reviews, "powtórka", "powtórki", "powtórek")}`
   );
 }
 
@@ -101,53 +104,97 @@ function Settings() {
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-xl font-semibold tracking-tight">Ustawienia</h1>
+    <div className="space-y-4">
+      <h1 className="text-[22px] font-semibold tracking-[-0.02em]">Ustawienia</h1>
 
-      <section className="space-y-3 rounded-lg border border-black/10 p-4 dark:border-white/15">
-        <h2 className="font-medium">Twoje dane</h2>
-        <p className="text-sm opacity-70">{counts ? describe(counts) : "Liczenie…"}</p>
+      <section className="rounded-xl border border-line bg-surface p-4">
+        <p className="text-xs tracking-[0.01em] text-ink-3">TWOJE DANE</p>
+        <p className="mt-1.5 text-[15px] leading-relaxed">
+          {counts ? describe(counts) : "Liczenie…"}
+        </p>
         {storage && (
-          <p className="text-xs opacity-60">
-            Pamięć trwała:{" "}
+          <p className="mt-2.5 flex items-center gap-2 border-t border-line-soft pt-3 text-[13px] text-ink-2">
             {storage.persisted ? (
-              <strong className="text-emerald-700 dark:text-emerald-300">włączona</strong>
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-good"
+              >
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
             ) : (
-              <strong className="text-amber-700 dark:text-amber-300">niepotwierdzona</strong>
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-hard"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4M12 16h.01" />
+              </svg>
             )}
-            {storage.usageMb !== null && ` · zajęte: ${storage.usageMb} MB`}
+            Pamięć trwała {storage.persisted ? "włączona" : "niepotwierdzona"}
+            {storage.usageMb !== null && ` · ${String(storage.usageMb).replace(".", ",")} MB`}
           </p>
         )}
-        <p className="rounded-md border border-amber-600/40 bg-amber-500/10 px-3 py-2 text-sm">
-          Wszystko, czego się nauczysz, jest zapisane <strong>wyłącznie w tej
-          przeglądarce</strong>. Wyczyszczenie danych aplikacji albo utrata urządzenia
-          bez świeżej kopii oznacza utratę całej historii nauki. Rób kopię regularnie
-          i trzymaj ją poza telefonem — na przykład na Dysku Google.
+      </section>
+
+      {/* Jedyne miejsce, gdzie aplikacja podnosi glos. */}
+      <section className="flex gap-3 rounded-xl border border-hard-line bg-hard-bg p-4">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="mt-0.5 shrink-0 text-hard"
+        >
+          <path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+        </svg>
+        <p className="text-[13px] leading-relaxed text-ink-2">
+          Wszystko, czego się uczysz, jest zapisane{" "}
+          <strong className="font-medium text-ink">wyłącznie w tej przeglądarce</strong>.
+          Wyczyszczenie danych albo utrata urządzenia bez świeżej kopii oznacza utratę całej
+          historii nauki. Rób kopię regularnie i trzymaj ją poza telefonem.
         </p>
       </section>
 
-      <section className="space-y-3 rounded-lg border border-black/10 p-4 dark:border-white/15">
-        <h2 className="font-medium">Kopia zapasowa</h2>
-        <p className="text-sm opacity-70">
-          Zapisuje wszystko do jednego pliku: talie, fiszki, stan powtórek i całą
-          historię nauki. Ten sam plik przenosi dane na inne urządzenie.
+      <section className="rounded-xl border border-line bg-surface p-4">
+        <p className="text-xs tracking-[0.01em] text-ink-3">KOPIA ZAPASOWA</p>
+        <p className="mt-1.5 text-[13px] leading-relaxed text-ink-2">
+          Jeden plik z taliami, fiszkami, stanem powtórek i całą historią nauki. Ten sam plik
+          przenosi dane na inne urządzenie.
         </p>
         <button
           type="button"
           disabled={busy}
           onClick={() => void download()}
-          className="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
+          className={`${buttonClass} mt-3 w-full py-3`}
         >
           Pobierz kopię
         </button>
       </section>
 
-      <section className="space-y-3 rounded-lg border border-black/10 p-4 dark:border-white/15">
-        <h2 className="font-medium">Przywracanie</h2>
-        <p className="text-sm opacity-70">
-          Wczytanie kopii <strong>zastąpi</strong> wszystkie obecne dane. Nie scala
-          kolekcji — jeśli masz tu coś, czego nie ma w kopii, najpierw pobierz kopię
-          bieżącego stanu.
+      <section className="rounded-xl border border-line bg-surface p-4">
+        <p className="text-sm font-medium">Przywracanie</p>
+        <p className="mt-1 text-[13px] leading-relaxed text-ink-2">
+          Wczytanie kopii <strong className="font-medium text-ink">zastąpi</strong> wszystkie
+          obecne dane. Nie scala kolekcji — jeśli masz tu coś, czego nie ma w kopii, najpierw
+          pobierz kopię bieżącego stanu.
         </p>
 
         <input
@@ -155,28 +202,29 @@ function Settings() {
           type="file"
           accept=".json,application/json"
           onChange={(e) => void pickFile(e.target.files?.[0] ?? null)}
-          className="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-black/5 file:px-3 file:py-1.5 file:text-sm file:font-medium hover:file:bg-black/10 dark:file:bg-white/10 dark:hover:file:bg-white/20"
+          className="mt-3 block w-full text-[13px] text-ink-2 file:mr-3 file:rounded-lg file:border file:border-line file:bg-canvas file:px-3 file:py-2 file:text-[13px] file:font-medium file:text-ink hover:file:border-field"
         />
 
         {pending && (
-          <div className="space-y-2 rounded-md border border-amber-600/40 bg-amber-500/10 px-3 py-2">
-            <p className="text-sm">
-              <strong>{pending.name}</strong> — kopia z{" "}
-              {new Date(pending.file.exportedAt).toLocaleString("pl-PL")}
+          <div className="mt-3 space-y-2.5 rounded-lg border border-hard-line bg-hard-bg p-3">
+            <p className="text-[13px] leading-relaxed">
+              <strong className="font-medium">{pending.name}</strong>
+              <br />
+              <span className="text-ink-2">
+                kopia z {new Date(pending.file.exportedAt).toLocaleString("pl-PL")}
+              </span>
               <br />
               Zawiera: {describe(backupCounts(pending.file))}
             </p>
             {counts && (
-              <p className="text-sm">
-                Zostanie zastąpione: {describe(counts)}
-              </p>
+              <p className="text-[13px] text-ink-2">Zostanie zastąpione: {describe(counts)}</p>
             )}
             <div className="flex gap-2">
               <button
                 type="button"
                 disabled={busy}
                 onClick={() => void confirmRestore()}
-                className="rounded-md bg-rose-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-rose-500 disabled:opacity-50"
+                className="rounded-lg bg-again px-3 py-2 text-sm font-medium text-white hover:opacity-90 disabled:opacity-40"
               >
                 Zastąp moje dane
               </button>
@@ -186,7 +234,7 @@ function Settings() {
                   setPending(null);
                   if (fileInput.current) fileInput.current.value = "";
                 }}
-                className="rounded-md border border-black/15 px-3 py-1.5 text-sm hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10"
+                className={secondaryButtonClass}
               >
                 Anuluj
               </button>
@@ -197,7 +245,7 @@ function Settings() {
 
       <ErrorBanner message={error} />
       {message && (
-        <p className="rounded-md border border-emerald-600/40 bg-emerald-500/10 px-3 py-2 text-sm">
+        <p className="rounded-lg border border-good-line bg-good-bg px-3 py-2.5 text-sm text-good">
           {message}
         </p>
       )}

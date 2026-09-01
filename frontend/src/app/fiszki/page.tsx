@@ -4,19 +4,16 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState, type FormEvent } from "react";
 
-import { AppShell, ErrorBanner } from "@/components/AppShell";
 import {
-  createNote,
-  deleteNote,
-  getDeck,
-  listNotes,
-  updateNote,
-} from "@/lib/local/repo";
+  AppShell,
+  ErrorBanner,
+  buttonClass,
+  inputClass,
+  secondaryButtonClass,
+} from "@/components/AppShell";
+import { createNote, deleteNote, getDeck, listNotes, updateNote } from "@/lib/local/repo";
 import type { CardRecord, DeckRecord, NoteRecord } from "@/lib/local/types";
-import type { NoteType } from "@/lib/types";
-
-const inputClass =
-  "w-full rounded-md border border-black/15 bg-transparent px-3 py-2 text-sm outline-none focus:border-indigo-500 dark:border-white/20";
+import { odmien, type NoteType } from "@/lib/types";
 
 interface Draft {
   front: string;
@@ -48,8 +45,7 @@ function parseTags(value: string): string[] {
 export default function NotesPage() {
   return (
     <AppShell>
-      {/* Granica Suspense - useSearchParams przy eksporcie statycznym. */}
-      <Suspense fallback={<p className="text-sm opacity-70">Wczytywanie…</p>}>
+      <Suspense fallback={<p className="text-sm text-ink-2">Wczytywanie…</p>}>
         <NotesManager />
       </Suspense>
     </AppShell>
@@ -78,7 +74,7 @@ function NotesManager() {
       setDeck(deckData);
       setNotes(noteData);
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Nie udalo sie wczytac fiszek");
+      setError(caught instanceof Error ? caught.message : "Nie udało się wczytać fiszek");
     }
   }, [deckId]);
 
@@ -94,7 +90,7 @@ function NotesManager() {
   async function submit(event: FormEvent) {
     event.preventDefault();
     if (!draft.front.trim() || !draft.back.trim()) {
-      setError("Przod i tyl fiszki nie moga byc puste");
+      setError("Przód i tył fiszki nie mogą być puste");
       return;
     }
     setBusy(true);
@@ -114,171 +110,185 @@ function NotesManager() {
       resetForm();
       await load();
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Nie udalo sie zapisac fiszki");
+      setError(caught instanceof Error ? caught.message : "Nie udało się zapisać fiszki");
     } finally {
       setBusy(false);
     }
   }
 
   async function remove(noteId: string) {
-    if (!confirm("Usunac te fiszke? Historia powtorek zostanie zachowana.")) return;
+    if (!confirm("Usunąć tę fiszkę? Historia powtórek zostanie zachowana.")) return;
     setError(null);
     try {
       await deleteNote(noteId);
       if (editingId === noteId) resetForm();
       await load();
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Nie udalo sie usunac fiszki");
+      setError(caught instanceof Error ? caught.message : "Nie udało się usunąć fiszki");
     }
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <Link href="/" className="text-sm underline opacity-70 hover:opacity-100">
-            ← Talie
-          </Link>
-          <h1 className="mt-1 text-xl font-semibold tracking-tight">
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <Link href="/" aria-label="Wróć do talii" className="text-ink-3 hover:text-ink-2">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </Link>
+        <div className="min-w-0 flex-1">
+          <h1 className="truncate text-lg font-semibold tracking-[-0.01em]">
             {deck?.name ?? "Fiszki"}
           </h1>
+          {notes && (
+            <p className="text-xs text-ink-3">
+              {notes.length} {odmien(notes.length, "fiszka", "fiszki", "fiszek")}
+            </p>
+          )}
         </div>
         <Link
           href={`/nauka?talia=${deckId}`}
-          className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
+          className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-on-accent hover:bg-accent-hover"
         >
-          Ucz sie
+          Ucz się
         </Link>
       </div>
 
       <form
         onSubmit={submit}
-        className="space-y-3 rounded-lg border border-black/10 p-4 dark:border-white/15"
+        className="space-y-2.5 rounded-xl border border-line bg-surface p-4"
       >
-        <h2 className="text-sm font-medium">
-          {editingId ? "Edytuj fiszke" : "Nowa fiszka"}
-        </h2>
+        <p className="text-[13px] font-medium text-ink-2">
+          {editingId ? "Edytuj fiszkę" : "Nowa fiszka"}
+        </p>
 
-        <label className="block space-y-1">
-          <span className="text-sm">Przod</span>
-          <textarea
-            rows={2}
-            value={draft.front}
-            onChange={(e) => setDraft({ ...draft, front: e.target.value })}
-            className={inputClass}
+        <textarea
+          rows={2}
+          value={draft.front}
+          onChange={(e) => setDraft({ ...draft, front: e.target.value })}
+          placeholder="przód fiszki"
+          className={`${inputClass} tresc text-[15px]`}
+        />
+        <textarea
+          rows={2}
+          value={draft.back}
+          onChange={(e) => setDraft({ ...draft, back: e.target.value })}
+          placeholder="tył fiszki"
+          className={`${inputClass} tresc text-[15px]`}
+        />
+        <textarea
+          rows={2}
+          value={draft.example}
+          onChange={(e) => setDraft({ ...draft, example: e.target.value })}
+          placeholder="przykład (opcjonalnie)"
+          className={`${inputClass} text-[13px]`}
+        />
+
+        <div className="grid gap-2 sm:grid-cols-2">
+          <input
+            value={draft.tags}
+            onChange={(e) => setDraft({ ...draft, tags: e.target.value })}
+            placeholder="tagi (po przecinku)"
+            className={`${inputClass} text-[13px]`}
           />
-        </label>
-
-        <label className="block space-y-1">
-          <span className="text-sm">Tyl</span>
-          <textarea
-            rows={2}
-            value={draft.back}
-            onChange={(e) => setDraft({ ...draft, back: e.target.value })}
-            className={inputClass}
-          />
-        </label>
-
-        <label className="block space-y-1">
-          <span className="text-sm">
-            Przyklad <span className="opacity-50">(opcjonalny, pokazywany z odpowiedzia)</span>
-          </span>
-          <textarea
-            rows={2}
-            value={draft.example}
-            onChange={(e) => setDraft({ ...draft, example: e.target.value })}
-            className={inputClass}
-          />
-        </label>
-
-        <div className="grid gap-3 sm:grid-cols-2">
-          <label className="block space-y-1">
-            <span className="text-sm">Tagi (po przecinku)</span>
-            <input
-              value={draft.tags}
-              onChange={(e) => setDraft({ ...draft, tags: e.target.value })}
-              className={inputClass}
-            />
-          </label>
-
-          <label className="block space-y-1">
-            <span className="text-sm">Typ</span>
-            <select
-              value={draft.noteType}
-              onChange={(e) => setDraft({ ...draft, noteType: e.target.value as NoteType })}
-              className={inputClass}
-            >
-              <option value="basic">Jednostronna (Przod → Tyl)</option>
-              <option value="basic_reversed">Dwustronna (oba kierunki)</option>
-            </select>
-          </label>
+          <select
+            value={draft.noteType}
+            onChange={(e) => setDraft({ ...draft, noteType: e.target.value as NoteType })}
+            className={`${inputClass} text-[13px]`}
+          >
+            <option value="basic">Jednostronna</option>
+            <option value="basic_reversed">Dwustronna (oba kierunki)</option>
+          </select>
         </div>
 
         <ErrorBanner message={error} />
 
-        <div className="flex gap-2">
-          <button
-            type="submit"
-            disabled={busy}
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-500 disabled:opacity-50"
-          >
-            {editingId ? "Zapisz zmiany" : "Dodaj fiszke"}
+        <div className="flex gap-2 pt-0.5">
+          <button type="submit" disabled={busy} className={`${buttonClass} flex-1`}>
+            {editingId ? "Zapisz zmiany" : "Dodaj fiszkę"}
           </button>
           {editingId && (
-            <button
-              type="button"
-              onClick={resetForm}
-              className="rounded-md border border-black/15 px-3 py-2 text-sm hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10"
-            >
+            <button type="button" onClick={resetForm} className={secondaryButtonClass}>
               Anuluj
             </button>
           )}
         </div>
       </form>
 
-      <section className="space-y-2">
-        <h2 className="text-sm font-medium opacity-70">
-          Fiszki {notes ? `(${notes.length})` : ""}
-        </h2>
+      <section>
+        <p className="mb-1 text-xs tracking-[0.01em] text-ink-3">OSTATNIO DODANE</p>
 
         {notes === null ? (
-          <p className="text-sm opacity-70">Wczytywanie…</p>
+          <p className="text-sm text-ink-2">Wczytywanie…</p>
         ) : notes.length === 0 ? (
-          <p className="text-sm opacity-70">Ta talia jest jeszcze pusta.</p>
+          <p className="text-sm text-ink-2">Ta talia jest jeszcze pusta.</p>
         ) : (
-          <ul className="space-y-2">
-            {notes.map(({ note, cards }) => (
+          <ul>
+            {notes.map(({ note, cards }, i) => (
               <li
                 key={note.id}
-                className="rounded-lg border border-black/10 p-3 text-sm dark:border-white/15"
+                className={`py-3.5 ${i < notes.length - 1 ? "border-b border-line-soft" : ""}`}
               >
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div className="min-w-0 space-y-1">
-                    <p className="font-medium break-words">{note.fields.Front}</p>
-                    <p className="opacity-70 break-words">{note.fields.Back}</p>
-                    <p className="text-xs opacity-50">
-                      {cards.length} {cards.length === 1 ? "karta" : "karty"}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="tresc break-words text-base">{note.fields.Front}</p>
+                    <p className="mt-1 break-words text-sm text-ink-2">{note.fields.Back}</p>
+                    <p className="mt-1.5 text-xs text-ink-4">
+                      {cards.length} {odmien(cards.length, "karta", "karty", "kart")}
                       {note.tags.length > 0 && ` · ${note.tags.join(", ")}`}
                     </p>
                   </div>
-                  <div className="flex shrink-0 gap-2">
+                  <div className="flex shrink-0 gap-1">
                     <button
                       type="button"
+                      aria-label="Edytuj"
                       onClick={() => {
                         setDraft(toDraft(note));
                         setEditingId(note.id);
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
-                      className="rounded-md border border-black/15 px-2.5 py-1 hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10"
+                      className="rounded-lg p-2 text-ink-3 hover:bg-chip hover:text-ink"
                     >
-                      Edytuj
+                      <svg
+                        width="17"
+                        height="17"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z" />
+                      </svg>
                     </button>
                     <button
                       type="button"
+                      aria-label="Usuń"
                       onClick={() => void remove(note.id)}
-                      className="rounded-md border border-red-500/40 px-2.5 py-1 text-red-700 hover:bg-red-500/10 dark:text-red-300"
+                      className="rounded-lg p-2 text-ink-3 hover:bg-again-bg hover:text-again"
                     >
-                      Usun
+                      <svg
+                        width="17"
+                        height="17"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                      </svg>
                     </button>
                   </div>
                 </div>

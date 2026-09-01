@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { FSRS } from "ts-fsrs";
 
-import { AppShell, ErrorBanner } from "@/components/AppShell";
+import { ErrorBanner, FocusShell, buttonClass, secondaryButtonClass } from "@/components/AppShell";
 import { makeScheduler, previewIntervals } from "@/lib/local/scheduler";
 import { exampleOf, renderCard, templateLabel } from "@/lib/local/render";
 import {
@@ -19,22 +19,22 @@ import { RATING_LABELS, type Rating } from "@/lib/types";
 
 const RATINGS: Rating[] = [1, 2, 3, 4];
 
+/** Kolor niesie znaczenie tylko tutaj - i nigdy sam, zawsze z etykieta. */
 const RATING_STYLE: Record<Rating, string> = {
-  1: "bg-rose-600 hover:bg-rose-500",
-  2: "bg-amber-600 hover:bg-amber-500",
-  3: "bg-emerald-600 hover:bg-emerald-500",
-  4: "bg-sky-600 hover:bg-sky-500",
+  1: "border-again-line bg-again-bg text-again",
+  2: "border-hard-line bg-hard-bg text-hard",
+  3: "border-good-line bg-good-bg text-good",
+  4: "border-easy-line bg-easy-bg text-easy",
 };
 
 export default function StudyPage() {
   return (
-    <AppShell>
-      {/* useSearchParams wymaga granicy Suspense przy eksporcie statycznym -
-          strona jest prerenderowana bez znajomosci adresu. */}
-      <Suspense fallback={<p className="text-sm opacity-70">Wczytywanie…</p>}>
+    <FocusShell>
+      {/* Granica Suspense - useSearchParams przy eksporcie statycznym. */}
+      <Suspense fallback={<p className="p-5 text-sm text-ink-2">Wczytywanie…</p>}>
         <StudySession />
       </Suspense>
-    </AppShell>
+    </FocusShell>
   );
 }
 
@@ -53,6 +53,8 @@ function StudySession() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [reviewedCount, setReviewedCount] = useState(0);
+  // Ile kart mialo byc na starcie sesji - do paska postepu.
+  const sessionSize = useRef(0);
 
   //  Czas odpowiedzi - wymagany w logu (ADR 0005), mierzony od pokazania karty.
   const shownAt = useRef<number>(Date.now());
@@ -69,11 +71,12 @@ function StudySession() {
       ]);
       setScheduler(makeScheduler(settings));
       setQueue(data);
+      if (sessionSize.current === 0) sessionSize.current = data.cards.length;
       setIndex(0);
       setRevealed(false);
       shownAt.current = Date.now();
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Nie udalo sie pobrac kolejki");
+      setError(caught instanceof Error ? caught.message : "Nie udało się pobrać kolejki");
     }
     // selection powstaje z param przy kazdym renderze - zalezymy od param.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,8 +88,6 @@ function StudySession() {
 
   const entry = queue?.cards[index] ?? null;
 
-  // Podglad liczony dla biezacej karty - etykiety na przyciskach dotycza
-  // dokladnie tego momentu.
   const preview = useMemo(() => {
     if (!entry || !scheduler) return null;
     return previewIntervals(scheduler, entry.card.fsrs, new Date());
@@ -117,7 +118,7 @@ function StudySession() {
           await loadQueue();
         }
       } catch (caught) {
-        setError(caught instanceof Error ? caught.message : "Nie udalo sie zapisac oceny");
+        setError(caught instanceof Error ? caught.message : "Nie udało się zapisać oceny");
       } finally {
         setBusy(false);
       }
@@ -146,41 +147,37 @@ function StudySession() {
 
   if (error && !queue) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 p-5">
         <ErrorBanner message={error} />
-        <Link href="/" className="text-sm underline opacity-70 hover:opacity-100">
-          ← Wroc do talii
+        <Link href="/" className="text-sm text-accent">
+          ← Wróć do talii
         </Link>
       </div>
     );
   }
 
   if (queue === null) {
-    return <p className="text-sm opacity-70">Wczytywanie…</p>;
+    return <p className="p-5 text-sm text-ink-2">Wczytywanie…</p>;
   }
 
   if (!entry) {
     return (
-      <div className="space-y-4">
-        <h1 className="text-xl font-semibold tracking-tight">Na dzis gotowe</h1>
-        <p className="text-sm opacity-70">
-          {reviewedCount > 0
-            ? `Powtorzono kart: ${reviewedCount}. Kolejne karty pojawia sie zgodnie z harmonogramem FSRS.`
-            : "W tej talii nie ma teraz nic do powtorzenia."}
-        </p>
+      <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center justify-center gap-5 px-6 text-center">
+        <div>
+          <h1 className="text-xl font-semibold tracking-tight">Na dziś gotowe</h1>
+          <p className="mt-2 text-sm text-ink-2">
+            {reviewedCount > 0
+              ? `Powtórzono kart: ${reviewedCount}. Kolejne pojawią się zgodnie z harmonogramem.`
+              : "W tej talii nie ma teraz nic do powtórzenia."}
+          </p>
+        </div>
         <ErrorBanner message={error} />
         <div className="flex gap-2">
-          <Link
-            href="/"
-            className="rounded-md border border-black/15 px-3 py-1.5 text-sm hover:bg-black/5 dark:border-white/20 dark:hover:bg-white/10"
-          >
-            Wroc do talii
+          <Link href="/" className={secondaryButtonClass}>
+            Wróć do talii
           </Link>
           {singleDeckId && (
-            <Link
-              href={`/fiszki?talia=${singleDeckId}`}
-              className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-500"
-            >
+            <Link href={`/fiszki?talia=${singleDeckId}`} className={buttonClass}>
               Dodaj fiszki
             </Link>
           )}
@@ -192,95 +189,109 @@ function StudySession() {
   const { question, answer } = renderCard(entry.note, entry.card.templateOrd);
   const example = exampleOf(entry.note);
   const isNewCard = entry.card.fsrs.state === 0;
+  const total = Math.max(sessionSize.current, reviewedCount + queue.cards.length - index);
+  const done = Math.min(reviewedCount, total);
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-center justify-between text-sm opacity-70">
-        <Link href="/" className="underline hover:opacity-100">
-          ← Talie
+    <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col">
+      {/* Pasek postepu zamiast licznikow - mniej cyfr do przetworzenia. */}
+      <div className="flex items-center gap-3.5 px-5 pt-4">
+        <Link href="/" aria-label="Wróć do talii" className="text-ink-3 hover:text-ink-2">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
         </Link>
-        <span>
-          <span className="text-blue-600 dark:text-blue-400">
-            {queue.newRemaining} nowych
-          </span>
-          {" · "}
-          <span className="text-emerald-600 dark:text-emerald-400">
-            {queue.dueRemaining} do powtorki
-          </span>
+        <div className="h-[3px] flex-1 overflow-hidden rounded-full bg-line">
+          <div
+            className="h-full rounded-full bg-accent transition-[width] duration-300"
+            style={{ width: `${total > 0 ? (done / total) * 100 : 0}%` }}
+          />
+        </div>
+        <span className="text-[13px] tabular-nums text-ink-3">
+          {done} / {total}
         </span>
       </div>
 
-      <article className="rounded-xl border border-black/10 p-6 dark:border-white/15">
-        <p className="text-xs uppercase tracking-wide opacity-50">
-          {/* Przy nauce z kilku talii trzeba widziec, skad karta - inaczej
-              nie da sie ocenic, czy material sie miesza sensownie. */}
-          {!singleDeckId && entry.deckName && (
-            <span className="text-indigo-600 dark:text-indigo-400">
-              {entry.deckName}
-              {" · "}
-            </span>
-          )}
+      {/* Srodek ekranu nalezy do fiszki. */}
+      <div className="flex flex-1 flex-col justify-center px-7 py-6 text-center">
+        <p className="mb-5 text-[11px] uppercase tracking-[0.08em] text-ink-4">
+          {entry.deckName && !singleDeckId ? `${entry.deckName} · ` : ""}
           {templateLabel(entry.card.templateOrd)}
           {isNewCard && " · nowa"}
         </p>
-        <p className="mt-4 whitespace-pre-wrap text-xl">{question}</p>
 
-        {revealed && (
+        {!revealed ? (
+          <p className="tresc whitespace-pre-wrap text-[34px] leading-[1.25] tracking-[-0.01em]">
+            {question}
+          </p>
+        ) : (
           <>
-            <hr className="my-5 border-black/10 dark:border-white/15" />
-            <p className="whitespace-pre-wrap text-xl">{answer}</p>
+            <p className="tresc whitespace-pre-wrap text-[26px] leading-[1.3] text-ink-2">
+              {question}
+            </p>
+            <div className="mx-auto my-5 h-px w-9 bg-field" />
+            <p className="tresc whitespace-pre-wrap text-[30px] leading-[1.28] tracking-[-0.01em]">
+              {answer}
+            </p>
             {example && (
-              <p className="mt-3 whitespace-pre-wrap border-l-2 border-indigo-500/40 pl-3 text-base italic opacity-75">
+              <p className="tresc mt-5 whitespace-pre-wrap border-l-2 border-line pl-3.5 text-left text-[15px] italic leading-[1.55] text-ink-2">
                 {example}
+              </p>
+            )}
+            {entry.note.tags.length > 0 && (
+              <p className="mt-5 flex flex-wrap justify-center gap-1.5">
+                {entry.note.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded bg-chip px-2 py-1 text-[11px] text-ink-3"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </p>
             )}
           </>
         )}
+      </div>
 
-        {entry.note.tags.length > 0 && (
-          <p className="mt-4 flex flex-wrap gap-1.5">
-            {entry.note.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-black/5 px-2 py-0.5 text-xs opacity-70 dark:bg-white/10"
+      <div className="px-5 pb-8">
+        <ErrorBanner message={error} />
+        {!revealed ? (
+          <button
+            type="button"
+            onClick={() => setRevealed(true)}
+            className="mt-2 w-full rounded-[10px] bg-accent px-3 py-4 text-base font-medium text-on-accent hover:bg-accent-hover"
+          >
+            Pokaż odpowiedź
+          </button>
+        ) : (
+          <div className="mt-2 grid grid-cols-4 gap-1.5">
+            {RATINGS.map((rating) => (
+              <button
+                key={rating}
+                type="button"
+                disabled={busy}
+                onClick={() => void rate(rating)}
+                className={`rounded-[10px] border px-1 py-3 disabled:opacity-40 ${RATING_STYLE[rating]}`}
               >
-                {tag}
-              </span>
+                <span className="block text-sm font-medium">{RATING_LABELS[rating]}</span>
+                <span className="mt-0.5 block text-[11px] tabular-nums opacity-70">
+                  {preview?.[rating] ?? "—"}
+                </span>
+              </button>
             ))}
-          </p>
+          </div>
         )}
-      </article>
-
-      <ErrorBanner message={error} />
-
-      {!revealed ? (
-        <button
-          type="button"
-          onClick={() => setRevealed(true)}
-          className="w-full rounded-md bg-indigo-600 px-3 py-3 text-sm font-medium text-white hover:bg-indigo-500"
-        >
-          Pokaz odpowiedz <span className="opacity-60">(spacja)</span>
-        </button>
-      ) : (
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          {RATINGS.map((rating) => (
-            <button
-              key={rating}
-              type="button"
-              disabled={busy}
-              onClick={() => void rate(rating)}
-              className={`rounded-md px-3 py-3 text-sm font-medium text-white disabled:opacity-50 ${RATING_STYLE[rating]}`}
-            >
-              <span className="block">
-                {rating}. {RATING_LABELS[rating]}
-              </span>
-              <span className="block text-xs font-normal opacity-80">
-                {preview?.[rating] ?? "—"}
-              </span>
-            </button>
-          ))}
-        </div>
-      )}
+      </div>
     </div>
   );
 }

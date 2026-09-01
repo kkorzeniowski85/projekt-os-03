@@ -1,0 +1,37 @@
+{
+  "artboards": [
+    { "file": "Nauka.dc.html", "x": 0, "y": 0, "w": 390, "h": 844, "title": "Nauka — pytanie" },
+    { "file": "NaukaOdpowiedz.dc.html", "x": 470, "y": 0, "w": 390, "h": 844, "title": "Nauka — odpowiedź" },
+    { "file": "NaukaNoc.dc.html", "x": 940, "y": 0, "w": 390, "h": 844, "title": "Nauka — po zmroku" },
+    { "file": "Main.dc.html", "x": 1410, "y": 0, "w": 390, "h": 844, "title": "Talie" },
+    { "file": "Fiszki.dc.html", "x": 0, "y": 964, "w": 390, "h": 844, "title": "Fiszki w Słowniku" },
+    { "file": "Import.dc.html", "x": 470, "y": 964, "w": 390, "h": 844, "title": "Import" },
+    { "file": "Statystyki.dc.html", "x": 940, "y": 964, "w": 390, "h": 844, "title": "Statystyki" },
+    { "file": "Ustawienia.dc.html", "x": 1410, "y": 964, "w": 390, "h": 844, "title": "Ustawienia" },
+    { "file": "Jezyk.dc.html", "x": 0, "y": 1928, "w": 720, "h": 860, "title": "Język wizualny" }
+  ],
+  "annotations": [
+    {
+      "id": "brief",
+      "x": 0,
+      "y": -150,
+      "w": 500,
+      "text": "Ekran nauki nie ma dolnej nawigacji ani nagłówka — jedyne wyjście to strzałka wstecz. To celowe: nic nie konkuruje z treścią fiszki."
+    },
+    {
+      "id": "kolor",
+      "x": 940,
+      "y": -150,
+      "w": 390,
+      "text": "Wariant nocny to własny zestaw wartości, nie odwrócenie dziennych. Kolory ocen przygaszone — jaskrawe rażą po ciemku."
+    },
+    {
+      "id": "jezyk-nota",
+      "x": 780,
+      "y": 1928,
+      "w": 420,
+      "text": "Ostatni artboard to ściąga do przeniesienia w kod: wszystkie wartości kolorów, skala typograficzna i promienie."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,500&display=swap">
+  <style>
+    body { margin: 0; font-family: Geist, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #3d5a80; text-decoration: none; } a:hover { color: #2c4460; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<!-- Ekran nauki: zero dolnej nawigacji. Jedyne wyjscie to strzalka wstecz.
+     Nic tu nie konkuruje z trescia fiszki. -->
+<div style="width: 390px; height: 844px; background: #fbfaf8; color: #1a1a19; display: flex; flex-direction: column;">
+
+  <!-- pasek postepu sesji -->
+  <div style="padding: 16px 20px 0; display: flex; align-items: center; gap: 14px;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8a8985" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <div style="flex-grow: 1; height: 3px; background: #e8e6e1; border-radius: 2px; overflow: hidden;">
+      <div style="width: 35%; height: 100%; background: #3d5a80; border-radius: 2px;"></div>
+    </div>
+    <div style="font-size: 13px; color: #8a8985; font-variant-numeric: tabular-nums;">7 / 20</div>
+  </div>
+
+  <!-- tresc fiszki: caly srodek ekranu nalezy do niej -->
+  <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 28px; text-align: center;">
+    <div style="font-size: 11px; letter-spacing: 0.08em; color: #a8a6a1; text-transform: uppercase; margin-bottom: 28px;">Słownik · nowa</div>
+    <div style="font-family: Literata, Georgia, serif; font-size: 34px; line-height: 1.25; font-weight: 400; letter-spacing: -0.01em;">to rule out</div>
+  </div>
+
+  <!-- akcja -->
+  <div style="padding: 0 20px 34px;">
+    <div style="background: #3d5a80; color: #ffffff; text-align: center; font-size: 16px; font-weight: 500; padding: 17px; border-radius: 10px;">Pokaż odpowiedź</div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

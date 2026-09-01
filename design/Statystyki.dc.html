@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Literata:opsz,wght@7..72,400&display=swap">
+  <style>
+    body { margin: 0; font-family: Geist, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #3d5a80; text-decoration: none; } a:hover { color: #2c4460; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #fbfaf8; color: #1a1a19; display: flex; flex-direction: column;">
+
+  <div style="padding: 20px 20px 14px; display: flex; align-items: baseline; justify-content: space-between;">
+    <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em;">Statystyki</div>
+    <div style="font-size: 13px; color: #5c5b58; display: flex; align-items: center; gap: 5px;">
+      30 dni
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1; overflow: hidden; padding: 0 20px; display: flex; flex-direction: column; gap: 14px;">
+
+    <!-- liczba, ktora naprawde ma znaczenie -->
+    <div style="background: #ffffff; border: 1px solid #e8e6e1; border-radius: 12px; padding: 18px;">
+      <div style="font-size: 12px; color: #8a8985; letter-spacing: 0.01em;">SKUTECZNOŚĆ</div>
+      <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 6px;">
+        <div style="font-size: 40px; font-weight: 500; letter-spacing: -0.03em; font-variant-numeric: tabular-nums;">87,4%</div>
+        <div style="font-size: 13px; color: #8a8985;">próba: 412</div>
+      </div>
+      <div style="display: flex; gap: 20px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #eeece7;">
+        <div>
+          <div style="font-size: 12px; color: #8a8985;">świeże</div>
+          <div style="font-size: 17px; margin-top: 2px; font-variant-numeric: tabular-nums;">81,2%</div>
+        </div>
+        <div>
+          <div style="font-size: 12px; color: #8a8985;">utrwalone</div>
+          <div style="font-size: 17px; margin-top: 2px; font-variant-numeric: tabular-nums;">94,1%</div>
+        </div>
+        <div>
+          <div style="font-size: 12px; color: #8a8985;">passa</div>
+          <div style="font-size: 17px; margin-top: 2px; font-variant-numeric: tabular-nums;">12 dni</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- sedno: podzial na kategorie materialu -->
+    <div>
+      <div style="font-size: 12px; color: #8a8985; letter-spacing: 0.01em; margin-bottom: 8px;">WEDŁUG RODZAJU MATERIAŁU</div>
+      <div style="background: #ffffff; border: 1px solid #e8e6e1; border-radius: 12px; overflow: hidden;">
+
+        <div style="padding: 13px 16px; border-bottom: 1px solid #eeece7; display: flex; align-items: center; gap: 12px;">
+          <div style="width: 88px; font-size: 14px;">słowa</div>
+          <div style="flex-grow: 1; height: 6px; background: #f0eee9; border-radius: 3px; overflow: hidden;">
+            <div style="width: 94%; height: 100%; background: #3d5a80; border-radius: 3px;"></div>
+          </div>
+          <div style="width: 46px; text-align: right; font-size: 14px; font-variant-numeric: tabular-nums;">94%</div>
+        </div>
+
+        <div style="padding: 13px 16px; border-bottom: 1px solid #eeece7; display: flex; align-items: center; gap: 12px;">
+          <div style="width: 88px; font-size: 14px;">frazy</div>
+          <div style="flex-grow: 1; height: 6px; background: #f0eee9; border-radius: 3px; overflow: hidden;">
+            <div style="width: 88%; height: 100%; background: #3d5a80; border-radius: 3px;"></div>
+          </div>
+          <div style="width: 46px; text-align: right; font-size: 14px; font-variant-numeric: tabular-nums;">88%</div>
+        </div>
+
+        <div style="padding: 13px 16px; border-bottom: 1px solid #eeece7; display: flex; align-items: center; gap: 12px;">
+          <div style="width: 88px; font-size: 14px;">wyrażenia</div>
+          <div style="flex-grow: 1; height: 6px; background: #f0eee9; border-radius: 3px; overflow: hidden;">
+            <div style="width: 71%; height: 100%; background: #3d5a80; border-radius: 3px;"></div>
+          </div>
+          <div style="width: 46px; text-align: right; font-size: 14px; font-variant-numeric: tabular-nums;">71%</div>
+        </div>
+
+        <div style="padding: 13px 16px; display: flex; align-items: center; gap: 12px;">
+          <div style="width: 88px; font-size: 14px; color: #8a8985;">zdania</div>
+          <div style="flex-grow: 1; height: 6px; background: #f0eee9; border-radius: 3px;"></div>
+          <div style="width: 46px; text-align: right; font-size: 13px; color: #a8a6a1;">—</div>
+        </div>
+
+      </div>
+      <div style="font-size: 11px; color: #a8a6a1; margin-top: 7px; line-height: 1.5;">Skuteczność pojawia się od 20 powtórek — mniejsza próba to szum.</div>
+    </div>
+
+    <!-- aktywnosc -->
+    <div>
+      <div style="font-size: 12px; color: #8a8985; letter-spacing: 0.01em; margin-bottom: 8px;">POWTÓRKI DZIENNIE</div>
+      <div style="background: #ffffff; border: 1px solid #e8e6e1; border-radius: 12px; padding: 16px 14px 12px;">
+        <div style="display: flex; align-items: flex-end; gap: 3px; height: 62px;">
+          <div style="flex-grow: 1; height: 34%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 52%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 41%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 68%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 88%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 24%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 57%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 73%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 45%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 62%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 95%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 38%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 79%; background: #cdd8e4; border-radius: 2px 2px 0 0;"></div>
+          <div style="flex-grow: 1; height: 100%; background: #3d5a80; border-radius: 2px 2px 0 0;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 11px; color: #a8a6a1;">
+          <span>22.07</span><span>dziś</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="border-top: 1px solid #e8e6e1; background: #ffffff; display: flex; padding: 8px 0 20px;">
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #8a8985;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="16" rx="2"/><path d="M8 2h11a2 2 0 0 1 2 2v13"/></svg>
+      <span style="font-size: 11px;">Talie</span>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #3d5a80;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>
+      <span style="font-size: 11px; font-weight: 500;">Statystyki</span>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #8a8985;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M8 12l4 4 4-4M4 21h16"/></svg>
+      <span style="font-size: 11px;">Import</span>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #8a8985;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span style="font-size: 11px;">Ustawienia</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

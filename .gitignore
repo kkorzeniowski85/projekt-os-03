@@ -34,5 +34,6 @@ backups/
 talie/
 
 # Zaziarniona kanwa projektowa - ~2 MB edytora w kazdym pliku.
-# Zrodlem sa artboardy .dc.html, ktore zostaja w repozytorium.
+# Zrodlem sa artboardy .dc.html i canvas.json - te zostaja w repozytorium.
 design/*.html
+!design/*.dc.html

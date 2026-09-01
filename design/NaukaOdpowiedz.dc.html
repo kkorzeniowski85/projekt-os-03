@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,400italic;7..72,500&display=swap">
+  <style>
+    body { margin: 0; font-family: Geist, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #3d5a80; text-decoration: none; } a:hover { color: #2c4460; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #fbfaf8; color: #1a1a19; display: flex; flex-direction: column;">
+
+  <div style="padding: 16px 20px 0; display: flex; align-items: center; gap: 14px;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8a8985" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <div style="flex-grow: 1; height: 3px; background: #e8e6e1; border-radius: 2px; overflow: hidden;">
+      <div style="width: 35%; height: 100%; background: #3d5a80; border-radius: 2px;"></div>
+    </div>
+    <div style="font-size: 13px; color: #8a8985; font-variant-numeric: tabular-nums;">7 / 20</div>
+  </div>
+
+  <!-- pytanie zostaje na gorze, odpowiedz pod cienka linia -->
+  <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; padding: 20px 28px; text-align: center; overflow: hidden;">
+    <div style="font-size: 11px; letter-spacing: 0.08em; color: #a8a6a1; text-transform: uppercase; margin-bottom: 20px;">Słownik · nowa</div>
+
+    <div style="font-family: Literata, Georgia, serif; font-size: 26px; line-height: 1.3; color: #5c5b58;">to rule out</div>
+
+    <div style="width: 36px; height: 1px; background: #d6d3cd; margin: 20px auto;"></div>
+
+    <div style="font-family: Literata, Georgia, serif; font-size: 30px; line-height: 1.28; letter-spacing: -0.01em;">wykluczyć<br>(rozpoznanie)</div>
+
+    <div style="font-family: Literata, Georgia, serif; font-style: italic; font-size: 15px; line-height: 1.55; color: #6b6a66; margin-top: 22px; text-align: left; padding-left: 14px; border-left: 2px solid #e0ddd7;">
+      We need to rule out a bleed before giving pain relief.
+    </div>
+
+    <div style="display: flex; gap: 6px; justify-content: center; margin-top: 22px;">
+      <span style="font-size: 11px; color: #8a8985; background: #f2f0ec; padding: 4px 9px; border-radius: 4px;">oet</span>
+      <span style="font-size: 11px; color: #8a8985; background: #f2f0ec; padding: 4px 9px; border-radius: 4px;">nhs</span>
+    </div>
+  </div>
+
+  <!-- oceny: jedyne miejsce w aplikacji, gdzie kolor niesie znaczenie -->
+  <div style="padding: 0 20px 34px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px;">
+    <div style="border: 1px solid #f0c8d0; background: #fdf5f6; border-radius: 10px; padding: 12px 4px; text-align: center;">
+      <div style="font-size: 14px; font-weight: 500; color: #be123c;">Znowu</div>
+      <div style="font-size: 11px; color: #a1758a; margin-top: 3px; font-variant-numeric: tabular-nums;">1 min</div>
+    </div>
+    <div style="border: 1px solid #f2ddc0; background: #fdf9f3; border-radius: 10px; padding: 12px 4px; text-align: center;">
+      <div style="font-size: 14px; font-weight: 500; color: #b45309;">Trudne</div>
+      <div style="font-size: 11px; color: #9c7f5c; margin-top: 3px; font-variant-numeric: tabular-nums;">6 min</div>
+    </div>
+    <div style="border: 1px solid #bfe3d2; background: #f3faf6; border-radius: 10px; padding: 12px 4px; text-align: center;">
+      <div style="font-size: 14px; font-weight: 500; color: #047857;">Dobre</div>
+      <div style="font-size: 11px; color: #6b9484; margin-top: 3px; font-variant-numeric: tabular-nums;">10 min</div>
+    </div>
+    <div style="border: 1px solid #c3ddef; background: #f4f9fd; border-radius: 10px; padding: 12px 4px; text-align: center;">
+      <div style="font-size: 14px; font-weight: 500; color: #0369a1;">Łatwe</div>
+      <div style="font-size: 11px; color: #6e93ac; margin-top: 3px; font-variant-numeric: tabular-nums;">7 dni</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

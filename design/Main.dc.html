@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,500&display=swap">
+  <style>
+    body { margin: 0; font-family: Geist, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #3d5a80; text-decoration: none; } a:hover { color: #2c4460; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #fbfaf8; color: #1a1a19; display: flex; flex-direction: column;">
+
+  <!-- naglowek -->
+  <div style="padding: 20px 20px 14px; display: flex; align-items: baseline; justify-content: space-between;">
+    <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em;">Talie</div>
+    <div style="display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; color: #3d5a80;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      Dodaj fiszkę
+    </div>
+  </div>
+
+  <div style="flex-grow: 1; overflow: hidden; padding: 0 20px; display: flex; flex-direction: column; gap: 10px;">
+
+    <!-- wspolna kolejka -->
+    <div style="background: #ffffff; border: 1px solid #e8e6e1; border-radius: 12px; padding: 16px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <div>
+          <div style="font-size: 15px; font-weight: 500;">Wszystko razem</div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-top: 6px; font-size: 13px; color: #5c5b58;">
+            <span style="display: flex; align-items: center; gap: 5px;">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #3d5a80; display: inline-block;"></span>
+              18 nowych
+            </span>
+            <span style="display: flex; align-items: center; gap: 5px;">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #059669; display: inline-block;"></span>
+              42 do powtórki
+            </span>
+          </div>
+        </div>
+        <div style="background: #3d5a80; color: #ffffff; font-size: 14px; font-weight: 500; padding: 11px 18px; border-radius: 8px; white-space: nowrap;">Ucz się</div>
+      </div>
+    </div>
+
+    <div style="font-size: 12px; color: #8a8985; padding: 6px 2px 2px; letter-spacing: 0.01em;">TWOJE TALIE</div>
+
+    <!-- Slownik -->
+    <div style="background: #ffffff; border: 1px solid #e8e6e1; border-radius: 12px; padding: 14px 16px;">
+      <div style="display: flex; align-items: flex-start; gap: 12px;">
+        <div style="width: 18px; height: 18px; border: 1.5px solid #d6d3cd; border-radius: 5px; margin-top: 2px; flex-shrink: 0;"></div>
+        <div style="flex-grow: 1; min-width: 0;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 15px; font-weight: 500;">Słownik</span>
+            <span style="font-size: 11px; color: #3d5a80; background: #eef2f7; padding: 2px 7px; border-radius: 4px; font-weight: 500;">baza główna</span>
+          </div>
+          <div style="font-size: 13px; color: #5c5b58; margin-top: 5px;">12 nowych · 31 do powtórki · 284 karty</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 12px;">
+        <div style="flex-grow: 1; text-align: center; font-size: 14px; font-weight: 500; padding: 10px; border: 1px solid #e8e6e1; border-radius: 8px; color: #1a1a19;">Fiszki</div>
+        <div style="flex-grow: 1; text-align: center; font-size: 14px; font-weight: 500; padding: 10px; background: #3d5a80; color: #ffffff; border-radius: 8px;">Ucz się</div>
+      </div>
+    </div>
+
+    <!-- pozostale talie -->
+    <div style="background: #ffffff; border: 1px solid #e8e6e1; border-radius: 12px; padding: 14px 16px;">
+      <div style="display: flex; align-items: flex-start; gap: 12px;">
+        <div style="width: 18px; height: 18px; border: 1.5px solid #d6d3cd; border-radius: 5px; margin-top: 2px; flex-shrink: 0;"></div>
+        <div style="flex-grow: 1; min-width: 0;">
+          <div style="font-size: 15px; font-weight: 500;">OET — terminologia</div>
+          <div style="font-size: 13px; color: #5c5b58; margin-top: 5px;">4 nowe · 8 do powtórki · 34 karty</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px; margin-top: 12px;">
+        <div style="flex-grow: 1; text-align: center; font-size: 14px; font-weight: 500; padding: 10px; border: 1px solid #e8e6e1; border-radius: 8px;">Fiszki</div>
+        <div style="flex-grow: 1; text-align: center; font-size: 14px; font-weight: 500; padding: 10px; background: #3d5a80; color: #ffffff; border-radius: 8px;">Ucz się</div>
+      </div>
+    </div>
+
+    <div style="background: #ffffff; border: 1px solid #e8e6e1; border-radius: 12px; padding: 14px 16px;">
+      <div style="display: flex; align-items: flex-start; gap: 12px;">
+        <div style="width: 18px; height: 18px; border: 1.5px solid #d6d3cd; border-radius: 5px; margin-top: 2px; flex-shrink: 0;"></div>
+        <div style="flex-grow: 1; min-width: 0;">
+          <div style="font-size: 15px; font-weight: 500;">OET — NHS i oddział</div>
+          <div style="font-size: 13px; color: #5c5b58; margin-top: 5px;">2 nowe · 3 do powtórki · 56 kart</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- dolna nawigacja -->
+  <div style="border-top: 1px solid #e8e6e1; background: #ffffff; display: flex; padding: 8px 0 20px;">
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #3d5a80;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="16" rx="2"/><path d="M8 2h11a2 2 0 0 1 2 2v13"/></svg>
+      <span style="font-size: 11px; font-weight: 500;">Talie</span>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #8a8985;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>
+      <span style="font-size: 11px;">Statystyki</span>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #8a8985;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M8 12l4 4 4-4M4 21h16"/></svg>
+      <span style="font-size: 11px;">Import</span>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #8a8985;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span style="font-size: 11px;">Ustawienia</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

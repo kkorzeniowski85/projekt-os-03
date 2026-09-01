@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,500&display=swap">
+  <style>
+    body { margin: 0; font-family: Geist, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #3d5a80; text-decoration: none; } a:hover { color: #2c4460; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<!-- Sciaga: wszystko, co trzeba przeniesc do kodu. -->
+<div style="width: 720px; height: 860px; background: #fbfaf8; color: #1a1a19; padding: 36px 40px;">
+
+  <div style="font-size: 24px; font-weight: 600; letter-spacing: -0.02em;">Język wizualny</div>
+  <div style="font-size: 14px; color: #5c5b58; margin-top: 5px;">Kolor tylko tam, gdzie coś znaczy. Hierarchia z typografii, nie z przezroczystości.</div>
+
+  <!-- kolory -->
+  <div style="margin-top: 28px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px;">
+
+    <div>
+      <div style="font-size: 12px; color: #8a8985; letter-spacing: 0.01em; margin-bottom: 10px;">DZIEŃ</div>
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #fbfaf8; border: 1px solid #e0ddd7;"></div>
+          <div style="font-size: 13px;">#fbfaf8 <span style="color: #8a8985;">tło (ciepła biel)</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #ffffff; border: 1px solid #e0ddd7;"></div>
+          <div style="font-size: 13px;">#ffffff <span style="color: #8a8985;">karta</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #1a1a19;"></div>
+          <div style="font-size: 13px;">#1a1a19 <span style="color: #8a8985;">tekst główny</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #5c5b58;"></div>
+          <div style="font-size: 13px;">#5c5b58 <span style="color: #8a8985;">tekst drugi</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #8a8985;"></div>
+          <div style="font-size: 13px;">#8a8985 <span style="color: #8a8985;">tekst cichy</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #e8e6e1;"></div>
+          <div style="font-size: 13px;">#e8e6e1 <span style="color: #8a8985;">linia</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #3d5a80;"></div>
+          <div style="font-size: 13px;">#3d5a80 <span style="color: #8a8985;">akcent</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="font-size: 12px; color: #8a8985; letter-spacing: 0.01em; margin-bottom: 10px;">NOC</div>
+      <div style="display: flex; flex-direction: column; gap: 7px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #12100e;"></div>
+          <div style="font-size: 13px;">#12100e <span style="color: #8a8985;">tło</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #1a1815;"></div>
+          <div style="font-size: 13px;">#1a1815 <span style="color: #8a8985;">karta</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #ebe9e4;"></div>
+          <div style="font-size: 13px;">#ebe9e4 <span style="color: #8a8985;">tekst główny</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #a19f9a;"></div>
+          <div style="font-size: 13px;">#a19f9a <span style="color: #8a8985;">tekst drugi</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #7d7a74;"></div>
+          <div style="font-size: 13px;">#7d7a74 <span style="color: #8a8985;">tekst cichy</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #2a2724;"></div>
+          <div style="font-size: 13px;">#2a2724 <span style="color: #8a8985;">linia</span></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 30px; height: 30px; border-radius: 6px; background: #8fb0d4;"></div>
+          <div style="font-size: 13px;">#8fb0d4 <span style="color: #8a8985;">akcent</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- oceny -->
+  <div style="margin-top: 30px;">
+    <div style="font-size: 12px; color: #8a8985; letter-spacing: 0.01em; margin-bottom: 10px;">OCENY — jedyny kolor niosący znaczenie</div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px;">
+      <div style="border: 1px solid #f0c8d0; background: #fdf5f6; border-radius: 10px; padding: 12px; text-align: center;">
+        <div style="font-size: 14px; font-weight: 500; color: #be123c;">Znowu</div>
+        <div style="font-size: 11px; color: #8a8985; margin-top: 4px;">#be123c</div>
+      </div>
+      <div style="border: 1px solid #f2ddc0; background: #fdf9f3; border-radius: 10px; padding: 12px; text-align: center;">
+        <div style="font-size: 14px; font-weight: 500; color: #b45309;">Trudne</div>
+        <div style="font-size: 11px; color: #8a8985; margin-top: 4px;">#b45309</div>
+      </div>
+      <div style="border: 1px solid #bfe3d2; background: #f3faf6; border-radius: 10px; padding: 12px; text-align: center;">
+        <div style="font-size: 14px; font-weight: 500; color: #047857;">Dobre</div>
+        <div style="font-size: 11px; color: #8a8985; margin-top: 4px;">#047857</div>
+      </div>
+      <div style="border: 1px solid #c3ddef; background: #f4f9fd; border-radius: 10px; padding: 12px; text-align: center;">
+        <div style="font-size: 14px; font-weight: 500; color: #0369a1;">Łatwe</div>
+        <div style="font-size: 11px; color: #8a8985; margin-top: 4px;">#0369a1</div>
+      </div>
+    </div>
+    <div style="font-size: 12px; color: #8a8985; margin-top: 8px; line-height: 1.5;">Etykieta zawsze obok koloru — para bursztyn/zieleń jest na granicy rozróżnialności przy daltonizmie.</div>
+  </div>
+
+  <!-- typografia -->
+  <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px;">
+    <div>
+      <div style="font-size: 12px; color: #8a8985; letter-spacing: 0.01em; margin-bottom: 10px;">TREŚĆ FISZKI — Literata</div>
+      <div style="font-family: Literata, Georgia, serif; font-size: 30px; line-height: 1.28;">wykluczyć</div>
+      <div style="font-family: Literata, Georgia, serif; font-style: italic; font-size: 15px; color: #6b6a66; margin-top: 8px;">We need to rule out a bleed.</div>
+      <div style="font-size: 12px; color: #8a8985; margin-top: 10px; line-height: 1.5;">Szeryfowa, zaprojektowana do czytania na ekranie. Oddziela materiał od interfejsu.</div>
+    </div>
+    <div>
+      <div style="font-size: 12px; color: #8a8985; letter-spacing: 0.01em; margin-bottom: 10px;">INTERFEJS — Geist</div>
+      <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em;">Statystyki</div>
+      <div style="font-size: 15px; margin-top: 4px;">15px — treść</div>
+      <div style="font-size: 13px; color: #5c5b58; margin-top: 3px;">13px — opis</div>
+      <div style="font-size: 11px; color: #8a8985; margin-top: 3px; letter-spacing: 0.08em;">11px — ETYKIETA</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 26px; padding-top: 16px; border-top: 1px solid #e8e6e1; display: flex; gap: 26px; font-size: 12px; color: #5c5b58;">
+    <div><strong style="font-weight: 500; color: #1a1a19;">Promienie</strong> · 8px kontrolki · 10px przyciski · 12px karty</div>
+    <div><strong style="font-weight: 500; color: #1a1a19;">Dotyk</strong> · min. 44px</div>
+    <div><strong style="font-weight: 500; color: #1a1a19;">Cienie</strong> · brak</div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

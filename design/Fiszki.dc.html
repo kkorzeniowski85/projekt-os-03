@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,500&display=swap">
+  <style>
+    body { margin: 0; font-family: Geist, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #3d5a80; text-decoration: none; } a:hover { color: #2c4460; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #fbfaf8; color: #1a1a19; display: flex; flex-direction: column;">
+
+  <div style="padding: 16px 20px 12px; border-bottom: 1px solid #e8e6e1;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8a8985" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <div style="flex-grow: 1;">
+        <div style="font-size: 18px; font-weight: 600; letter-spacing: -0.01em;">Słownik</div>
+        <div style="font-size: 12px; color: #8a8985; margin-top: 1px;">284 fiszki</div>
+      </div>
+      <div style="background: #3d5a80; color: #ffffff; font-size: 14px; font-weight: 500; padding: 9px 15px; border-radius: 8px;">Ucz się</div>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1; overflow: hidden; display: flex; flex-direction: column;">
+
+    <!-- formularz nowej fiszki -->
+    <div style="padding: 16px 20px; background: #ffffff; border-bottom: 1px solid #e8e6e1; display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-size: 13px; font-weight: 500; color: #5c5b58;">Nowa fiszka</div>
+
+      <div style="border: 1px solid #ddd9d2; border-radius: 8px; padding: 11px 12px; font-family: Literata, Georgia, serif; font-size: 15px;">to bear in mind</div>
+      <div style="border: 1px solid #ddd9d2; border-radius: 8px; padding: 11px 12px; font-family: Literata, Georgia, serif; font-size: 15px; color: #8a8985;">tył fiszki</div>
+      <div style="border: 1px solid #ddd9d2; border-radius: 8px; padding: 11px 12px; font-size: 13px; color: #a8a6a1;">przykład (opcjonalnie)</div>
+
+      <div style="display: flex; gap: 8px;">
+        <div style="flex-grow: 1; border: 1px solid #ddd9d2; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: #a8a6a1;">tagi</div>
+        <div style="flex-grow: 1; border: 1px solid #ddd9d2; border-radius: 8px; padding: 10px 12px; font-size: 13px; display: flex; align-items: center; justify-content: space-between;">
+          <span>Dwustronna</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8a8985" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <div style="background: #3d5a80; color: #ffffff; text-align: center; font-size: 15px; font-weight: 500; padding: 12px; border-radius: 8px;">Dodaj fiszkę</div>
+    </div>
+
+    <!-- lista -->
+    <div style="padding: 14px 20px 0; font-size: 12px; color: #8a8985; letter-spacing: 0.01em;">OSTATNIO DODANE</div>
+
+    <div style="padding: 8px 20px; display: flex; flex-direction: column;">
+      <div style="padding: 13px 0; border-bottom: 1px solid #eeece7;">
+        <div style="font-family: Literata, Georgia, serif; font-size: 16px;">exacerbation</div>
+        <div style="font-size: 14px; color: #5c5b58; margin-top: 3px;">zaostrzenie (choroby)</div>
+        <div style="font-size: 12px; color: #a8a6a1; margin-top: 6px;">2 karty · oet, terminologia</div>
+      </div>
+      <div style="padding: 13px 0; border-bottom: 1px solid #eeece7;">
+        <div style="font-family: Literata, Georgia, serif; font-size: 16px;">In keeping with</div>
+        <div style="font-size: 14px; color: #5c5b58; margin-top: 3px;">Zgodnie z… / Sugerujący</div>
+        <div style="font-size: 12px; color: #a8a6a1; margin-top: 6px;">2 karty · oet, raport</div>
+      </div>
+      <div style="padding: 13px 0;">
+        <div style="font-family: Literata, Georgia, serif; font-size: 16px;">to chase up</div>
+        <div style="font-size: 14px; color: #5c5b58; margin-top: 3px;">ponaglić / sprawdzić status</div>
+        <div style="font-size: 12px; color: #a8a6a1; margin-top: 6px;">2 karty · oet, nhs</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

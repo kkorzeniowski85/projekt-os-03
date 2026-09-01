@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Literata:opsz,wght@7..72,400&display=swap">
+  <style>
+    body { margin: 0; font-family: Geist, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #3d5a80; text-decoration: none; } a:hover { color: #2c4460; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width: 390px; height: 844px; background: #fbfaf8; color: #1a1a19; display: flex; flex-direction: column;">
+
+  <div style="padding: 20px 20px 14px;">
+    <div style="font-size: 22px; font-weight: 600; letter-spacing: -0.02em;">Import</div>
+  </div>
+
+  <div style="flex-grow: 1; overflow: hidden; padding: 0 20px; display: flex; flex-direction: column; gap: 14px;">
+
+    <!-- instrukcja dla Claude'a -->
+    <div style="background: #f4f6f9; border: 1px solid #dde3eb; border-radius: 12px; padding: 15px;">
+      <div style="font-size: 14px; font-weight: 500;">Nowe fiszki od Claude'a</div>
+      <div style="font-size: 13px; color: #5c5b58; line-height: 1.5; margin-top: 5px;">Czat nie zna formatu tej aplikacji. Skopiuj instrukcję i wklej ją w rozmowie razem ze zdjęciem.</div>
+      <div style="display: flex; gap: 8px; margin-top: 12px;">
+        <div style="background: #3d5a80; color: #ffffff; font-size: 13px; font-weight: 500; padding: 10px 14px; border-radius: 8px;">Skopiuj instrukcję</div>
+        <div style="border: 1px solid #ccd4de; font-size: 13px; padding: 10px 14px; border-radius: 8px; color: #3d5a80;">Pokaż treść</div>
+      </div>
+    </div>
+
+    <!-- zrodlo -->
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="font-size: 12px; color: #8a8985; letter-spacing: 0.01em;">ŹRÓDŁO</div>
+
+      <div style="border: 1px dashed #ccc8c1; border-radius: 12px; padding: 22px; text-align: center; background: #ffffff;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8a8985" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 8px;"><path d="M12 3v13M8 12l4 4 4-4M4 21h16"/></svg>
+        <div style="font-size: 14px; color: #5c5b58;">Wybierz plik</div>
+        <div style="font-size: 12px; color: #a8a6a1; margin-top: 3px;">fiszki/v1, CSV, TSV, tekst</div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="flex-grow: 1; height: 1px; background: #e8e6e1;"></div>
+        <div style="font-size: 12px; color: #a8a6a1;">albo wklej</div>
+        <div style="flex-grow: 1; height: 1px; background: #e8e6e1;"></div>
+      </div>
+
+      <div style="border: 1px solid #ddd9d2; border-radius: 10px; padding: 12px; background: #ffffff; min-height: 74px; font-family: 'Geist Mono', ui-monospace, monospace; font-size: 12px; color: #a8a6a1; line-height: 1.6;">to chase up - ponaglić<br>obs - parametry życiowe</div>
+    </div>
+
+    <!-- podglad wyniku -->
+    <div>
+      <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px;">
+        <div style="font-size: 12px; color: #8a8985; letter-spacing: 0.01em;">PODGLĄD</div>
+        <div style="font-size: 12px; color: #5c5b58;">3 pozycje · 1 duplikat</div>
+      </div>
+      <div style="background: #ffffff; border: 1px solid #e8e6e1; border-radius: 12px; overflow: hidden;">
+        <div style="padding: 11px 14px; border-bottom: 1px solid #eeece7; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <div style="min-width: 0;">
+            <div style="font-family: Literata, Georgia, serif; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">to chase up</div>
+            <div style="font-size: 12px; color: #8a8985; margin-top: 2px;">ponaglić</div>
+          </div>
+          <div style="font-size: 11px; color: #8a8985; background: #f2f0ec; padding: 3px 8px; border-radius: 4px; white-space: nowrap;">wyrażenie</div>
+        </div>
+        <div style="padding: 11px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+          <div style="min-width: 0;">
+            <div style="font-family: Literata, Georgia, serif; font-size: 14px;">obs</div>
+            <div style="font-size: 12px; color: #8a8985; margin-top: 2px;">parametry życiowe</div>
+          </div>
+          <div style="font-size: 11px; color: #8a8985; background: #f2f0ec; padding: 3px 8px; border-radius: 4px; white-space: nowrap;">słowo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- cel -->
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 15px; background: #ffffff; border: 1px solid #e8e6e1; border-radius: 12px;">
+      <div>
+        <div style="font-size: 12px; color: #8a8985;">Trafi do</div>
+        <div style="font-size: 15px; font-weight: 500; margin-top: 2px;">Słownik</div>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8a8985" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="padding: 14px 20px 0;">
+    <div style="background: #3d5a80; color: #ffffff; text-align: center; font-size: 15px; font-weight: 500; padding: 14px; border-radius: 10px;">Importuj 3 fiszki</div>
+  </div>
+
+  <div style="border-top: 1px solid #e8e6e1; background: #ffffff; display: flex; padding: 8px 0 20px; margin-top: 14px;">
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #8a8985;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="16" rx="2"/><path d="M8 2h11a2 2 0 0 1 2 2v13"/></svg>
+      <span style="font-size: 11px;">Talie</span>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #8a8985;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>
+      <span style="font-size: 11px;">Statystyki</span>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #3d5a80;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M8 12l4 4 4-4M4 21h16"/></svg>
+      <span style="font-size: 11px; font-weight: 500;">Import</span>
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 0; color: #8a8985;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span style="font-size: 11px;">Ustawienia</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

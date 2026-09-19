@@ -78,11 +78,28 @@ wsteczne przy zdaniach, albo utratę kierunku produkcji przy słowach.
 Kolejność decyzji: `note_type` pozycji → typ wybrany przy imporcie →
 `default_note_type` z koperty → `basic`.
 
+## Pełna instrukcja tworzenia pliku
+
+[jak-tworzyc-fiszki.md](jak-tworzyc-fiszki.md) — wersja do dania Claude'owi:
+z przykładami, typowymi błędami i tym, co robić przy kolejnych wersjach
+materiału. Ten dokument jest specyfikacją formatu, tamten — poradnikiem.
+
 ## Deduplikacja
 
 Import porównuje odcisk treści (`front` + `back`, bez uwzględniania wielkości
 liter i białych znaków). Ta sama fiszka z dwóch różnych źródeł zostanie
 rozpoznana jako jedna. Dopisanie `example` nie czyni fiszki nową.
+
+Gdy pozycja już jest w kolekcji, ekran importu daje trzy wyjścia:
+
+| Tryb | Co robi |
+|---|---|
+| **Pomiń** (domyślnie) | Nie rusza istniejącej. Import tylko dokłada nowy materiał |
+| **Uzupełnij** | Dopisuje `example`, `tags` i `kind` do istniejącej fiszki. Nie kasuje tego, czego plik nie ma; tagi się sumują; kategoria zgadnięta nie nadpisze ustawionej ręcznie. **Stan powtórek i liczba kart bez zmian** |
+| **Dodaj** | Tworzy drugą fiszkę o tej samej treści — zwykle niepożądane |
+
+Aktualizacja celowo nie zmienia `note_type`: zmiana typu oznacza skasowanie
+karty razem z jej stanem FSRS, więc robi się to świadomie przez „Edytuj".
 
 ## Dokąd trafia import
 

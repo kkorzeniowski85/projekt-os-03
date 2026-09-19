@@ -20,6 +20,7 @@ import {
 } from "@/lib/local/import";
 import {
   type CommitStats,
+  type DuplicateMode,
   type DuplicateSummary,
   type NoteDraft,
   commitImport,
@@ -38,6 +39,7 @@ import type { DeckRecord } from "@/lib/local/types";
 import {
   ITEM_KIND_LABELS,
   MAPPING_TARGET_LABELS,
+  odmien,
   type ItemKind,
   type NoteType,
 } from "@/lib/types";
@@ -81,7 +83,12 @@ const CLAUDE_PROMPT = `Zrób z tego fiszki w formacie JSON "fiszki/v1". Zasady:
   zdania i zwroty do rozpoznawania → basic.
 - Odpowiedz SAMYM JSON-em, bez komentarza i bez ogrodzeń \`\`\`.
 - Korzystaj wyłącznie z treści, którą podaję. Czego nie ma — nie zgaduj,
-  tylko wypisz na końcu, czego nie dało się przenieść.`;
+  tylko wypisz na końcu, czego nie dało się przenieść.
+
+Jeśli to poprawiona wersja materiału, który już mam: wygeneruj CAŁY plik od
+nowa (nie tylko zmiany). Przy imporcie wybiorę „Uzupełnij o to, co jest
+w pliku" — istniejące fiszki dostaną nowe przykłady i tagi, a ich stan
+powtórek zostanie nietknięty.`;
 
 export default function ImportPage() {
   return (
@@ -120,7 +127,9 @@ function Importer() {
   const [newDeckName, setNewDeckName] = useState("");
   const [noteType, setNoteType] = useState<NoteType>("basic");
   const [defaultKind, setDefaultKind] = useState<ItemKind | "">("");
-  const [skipDuplicates, setSkipDuplicates] = useState(true);
+  // Domyslnie "skip": import tylko dokłada nowy material. Aktualizacja
+  // istniejacych to swiadomy wybor, bo nadpisuje tresc.
+  const [onDuplicate, setOnDuplicate] = useState<DuplicateMode>("skip");
 
   const [done, setDone] = useState<(CommitStats & { deckId: string }) | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -248,7 +257,7 @@ function Importer() {
       }
       if (!deckId) throw new Error("Wybierz talię");
 
-      const stats = await commitImport(deckId, drafts, { noteType, skipDuplicates });
+      const stats = await commitImport(deckId, drafts, { noteType, onDuplicate });
       setDone({ ...stats, deckId });
       // Nastepny import znow celuje w baze glowna - "+ osobna talia" nie ma
       // sie utrwalac jako nowy stan domyslny.
@@ -277,8 +286,12 @@ function Importer() {
       {done && (
         <section className="space-y-2 rounded-xl border border-good-line bg-good-bg p-4">
           <p className="text-sm font-medium">
-            Zaimportowano {done.imported}{" "}
-            {done.imported === 1 ? "fiszkę" : "fiszek"}
+            {done.imported > 0 &&
+              `Dodano ${done.imported} ${odmien(done.imported, "fiszkę", "fiszki", "fiszek")}`}
+            {done.imported > 0 && done.updated > 0 && " · "}
+            {done.updated > 0 &&
+              `uzupełniono ${done.updated} ${odmien(done.updated, "fiszkę", "fiszki", "fiszek")}`}
+            {done.imported === 0 && done.updated === 0 && "Nic nie wymagało zmiany"}
             {done.skippedDuplicates > 0 && ` · pominięto duplikatów: ${done.skippedDuplicates}`}
             {done.skippedInvalid > 0 && ` · niekompletnych: ${done.skippedInvalid}`}
           </p>
@@ -560,13 +573,24 @@ function Importer() {
                 </span>
               </label>
 
-              <label className="flex items-center gap-2 self-end text-sm">
-                <input
-                  type="checkbox"
-                  checked={skipDuplicates}
-                  onChange={(e) => setSkipDuplicates(e.target.checked)}
-                />
-                Pomijaj duplikaty
+              <label className="block space-y-1">
+                <span className="text-sm">Gdy fiszka już jest w kolekcji</span>
+                <select
+                  value={onDuplicate}
+                  onChange={(e) => setOnDuplicate(e.target.value as DuplicateMode)}
+                  className={inputClass}
+                >
+                  <option value="skip">Pomiń — nie ruszaj istniejącej</option>
+                  <option value="update">Uzupełnij o to, co jest w pliku</option>
+                  <option value="add">Dodaj jako osobną fiszkę</option>
+                </select>
+                <span className="block text-xs text-ink-3">
+                  {onDuplicate === "update"
+                    ? "Dopisuje przykład, tagi i kategorię. Nie kasuje tego, czego plik nie ma, i nie rusza stanu powtórek ani liczby kart."
+                    : onDuplicate === "add"
+                      ? "Powstanie druga fiszka o tej samej treści — zwykle niepożądane."
+                      : "Duplikaty rozpoznawane po przodzie i tyle, niezależnie od formatowania."}
+                </span>
               </label>
             </div>
 

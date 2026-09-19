@@ -5,7 +5,7 @@ import "fake-indexeddb/auto";
 import { beforeEach, expect, it } from "vitest";
 
 import { closeAndDeleteDb, db } from "../db";
-import { createDeck, listNotes, studyQueue } from "../repo";
+import { createDeck, listNotes, studyQueue, submitReview } from "../repo";
 import { parseSource } from "./index";
 import { commitImport, duplicateSummary, normalize } from "./service";
 
@@ -29,7 +29,7 @@ it("import tworzy notatki i karty, ponowny import wszystko pomija", async () => 
   );
 
   const first = await commitImport(deck.id, drafts, { noteType: "basic_reversed", now: NOW });
-  expect(first).toEqual({ imported: 2, skippedDuplicates: 0, skippedInvalid: 0 });
+  expect(first).toEqual({ imported: 2, updated: 0, skippedDuplicates: 0, skippedInvalid: 0 });
 
   const listed = await listNotes(deck.id);
   expect(listed).toHaveLength(2);
@@ -40,7 +40,7 @@ it("import tworzy notatki i karty, ponowny import wszystko pomija", async () => 
 
   // Deduplikacja po tresci: ten sam plik drugi raz nie tworzy niczego.
   const again = await commitImport(deck.id, drafts, { noteType: "basic_reversed", now: NOW });
-  expect(again).toEqual({ imported: 0, skippedDuplicates: 2, skippedInvalid: 0 });
+  expect(again).toEqual({ imported: 0, updated: 0, skippedDuplicates: 2, skippedInvalid: 0 });
   expect(await listNotes(deck.id)).toHaveLength(2);
 });
 
@@ -139,7 +139,7 @@ it("prawdziwa talia OET przechodzi w calosci", async () => {
 
   const drafts = await normalize(result, result.suggestedMapping);
   const stats = await commitImport(deck.id, drafts, { noteType: result.suggestedNoteType, now: NOW });
-  expect(stats).toEqual({ imported: 2, skippedDuplicates: 0, skippedInvalid: 0 });
+  expect(stats).toEqual({ imported: 2, updated: 0, skippedDuplicates: 0, skippedInvalid: 0 });
 
   const notes = await listNotes(deck.id);
   const kinds = new Map(notes.map((n) => [n.note.fields.Front, n.note.itemKind]));
@@ -162,4 +162,164 @@ it("import zachowuje kolejnosc fiszek z pliku", async () => {
 
   const queue = await studyQueue(deck.id, { now: NOW, limit: 10 });
   expect(queue.cards.map((e) => e.note.fields.Front)).toEqual(kolejnosc);
+});
+
+// --- aktualizacja istniejacych ---------------------------------------------
+//
+// Ponowny import wzbogaconego pliku ma uzupelniac to, co juz jest, zamiast
+// odbijac sie od deduplikacji. Zasada: uzupelnia, nigdy nie zubaza i nigdy
+// nie rusza stanu nauki.
+
+it("tryb update dopisuje przyklad do istniejacej fiszki", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  await commitImport(deck.id, await draftsFrom("a.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "to rule out", back: "wykluczyć" }],
+  })), { noteType: "basic", now: NOW });
+
+  const wzbogacony = await draftsFrom("b.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "to rule out", back: "wykluczyć", example: "Rule out a bleed first." }],
+  }));
+
+  // Domyslnie (skip) nic sie nie dzieje - to dotychczasowe zachowanie.
+  const pominiete = await commitImport(deck.id, wzbogacony, { noteType: "basic", now: NOW });
+  expect(pominiete).toEqual({ imported: 0, updated: 0, skippedDuplicates: 1, skippedInvalid: 0 });
+  expect((await listNotes(deck.id))[0].note.fields.Example).toBeUndefined();
+
+  const zaktualizowane = await commitImport(deck.id, wzbogacony, {
+    noteType: "basic",
+    onDuplicate: "update",
+    now: NOW,
+  });
+  expect(zaktualizowane).toEqual({ imported: 0, updated: 1, skippedDuplicates: 0, skippedInvalid: 0 });
+
+  const notes = await listNotes(deck.id);
+  expect(notes).toHaveLength(1); // nie powstala druga fiszka
+  expect(notes[0].note.fields.Example).toBe("Rule out a bleed first.");
+});
+
+it("aktualizacja nie rusza stanu nauki", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  await commitImport(deck.id, await draftsFrom("a.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "obs", back: "parametry" }],
+  })), { noteType: "basic", now: NOW });
+
+  const karta = (await studyQueue(deck.id, { now: NOW })).cards[0].card;
+  const po = await submitReview({ cardId: karta.id, rating: 4, durationMs: 2000, now: NOW });
+
+  await commitImport(deck.id, await draftsFrom("b.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "obs", back: "parametry", example: "Keep an eye on his obs." }],
+  })), { noteType: "basic", onDuplicate: "update", now: NOW });
+
+  const database = await db();
+  const nadal = (await database.get("cards", karta.id))!;
+  expect(nadal.fsrs.reps).toBe(1);
+  expect(nadal.fsrs.state).toBe(po.card.fsrs.state);
+  expect(nadal.due).toBe(po.card.due);
+  // Historia tez nietknieta.
+  expect(await database.count("reviewLog")).toBe(1);
+});
+
+it("aktualizacja uzupelnia, ale nigdy nie zubaza", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  await commitImport(deck.id, await draftsFrom("a.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "kot", back: "cat", example: "The cat is asleep.", tags: ["zwierzeta"] }],
+  })), { noteType: "basic", now: NOW });
+
+  // Ubozsza wersja: bez przykladu, z innym tagiem.
+  await commitImport(deck.id, await draftsFrom("b.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "kot", back: "cat", tags: ["domowe"] }],
+  })), { noteType: "basic", onDuplicate: "update", now: NOW });
+
+  const note = (await listNotes(deck.id))[0].note;
+  expect(note.fields.Example).toBe("The cat is asleep."); // przyklad przezyl
+  expect(note.tags).toEqual(["domowe", "zwierzeta"]); // tagi sie zsumowaly
+});
+
+it("zgadnieta kategoria nie nadpisuje recznie ustawionej", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  // Zrodlo podaje wprost "expression".
+  await commitImport(deck.id, await draftsFrom("a.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "kick the bucket", back: "kopnąć w kalendarz", kind: "expression" }],
+  })), { noteType: "basic", now: NOW });
+  expect((await listNotes(deck.id))[0].note.itemKind).toBe("expression");
+
+  // Ten sam material bez kategorii - heurystyka zgadnie "phrase".
+  const bezKategorii = await draftsFrom("b.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "kick the bucket", back: "kopnąć w kalendarz", example: "He kicked the bucket." }],
+  }));
+  expect(bezKategorii[0].itemKind).toBe("phrase");
+  expect(bezKategorii[0].kindExplicit).toBe(false);
+
+  await commitImport(deck.id, bezKategorii, { noteType: "basic", onDuplicate: "update", now: NOW });
+
+  const note = (await listNotes(deck.id))[0].note;
+  expect(note.itemKind).toBe("expression"); // kategoria obroniona
+  expect(note.fields.Example).toBe("He kicked the bucket."); // reszta uzupelniona
+});
+
+it("jawna kategoria ze zrodla nadpisuje poprzednia", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  await commitImport(deck.id, await draftsFrom("a.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "to chase up", back: "ponaglić", kind: "phrase" }],
+  })), { noteType: "basic", now: NOW });
+
+  await commitImport(deck.id, await draftsFrom("b.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "to chase up", back: "ponaglić", kind: "expression" }],
+  })), { noteType: "basic", onDuplicate: "update", now: NOW });
+
+  expect((await listNotes(deck.id))[0].note.itemKind).toBe("expression");
+});
+
+it("aktualizacja nie zmienia liczby kart", async () => {
+  // Zmiana typu = skasowanie karty razem ze stanem FSRS. Aktualizacja
+  // dotyczy tresci, nie struktury - typ zmienia sie swiadomie przez "Edytuj".
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  await commitImport(deck.id, await draftsFrom("a.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "kot", back: "cat", note_type: "basic_reversed" }],
+  })), { noteType: "basic", now: NOW });
+  expect((await listNotes(deck.id))[0].cards).toHaveLength(2);
+
+  await commitImport(deck.id, await draftsFrom("b.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "kot", back: "cat", note_type: "basic", example: "Nowy przykład." }],
+  })), { noteType: "basic", onDuplicate: "update", now: NOW });
+
+  const listed = (await listNotes(deck.id))[0];
+  expect(listed.cards).toHaveLength(2); // typ bez zmian
+  expect(listed.note.fields.Example).toBe("Nowy przykład."); // tresc uzupelniona
+});
+
+it("brak zmian nie liczy sie jako aktualizacja", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  const drafts = await draftsFrom("a.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "kot", back: "cat", example: "The cat." }],
+  }));
+  await commitImport(deck.id, drafts, { noteType: "basic", now: NOW });
+
+  const bezZmian = await commitImport(deck.id, drafts, {
+    noteType: "basic",
+    onDuplicate: "update",
+    now: NOW,
+  });
+  expect(bezZmian).toEqual({ imported: 0, updated: 0, skippedDuplicates: 1, skippedInvalid: 0 });
+});
+
+it("tryb add nadal tworzy osobna fiszke", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  const drafts = await draftsFrom("a.csv", "front,back\nkot,cat\n");
+  await commitImport(deck.id, drafts, { noteType: "basic", now: NOW });
+  await commitImport(deck.id, drafts, { noteType: "basic", onDuplicate: "add", now: NOW });
+  expect(await listNotes(deck.id)).toHaveLength(2);
 });

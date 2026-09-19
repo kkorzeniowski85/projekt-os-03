@@ -27,6 +27,15 @@ export interface NoteDraft {
   fields: Record<string, string>;
   tags: string[];
   itemKind: ItemKind;
+  /**
+   * Czy kategoria pochodzi WPROST ze zrodla, czy zostala zgadnieta.
+   *
+   * Ma znaczenie przy aktualizacji istniejacych fiszek: zgadnieta kategoria
+   * nie moze nadpisac tej, ktora uzytkownik ustawil recznie. Heurystyka nie
+   * odrozni idiomu od zwyklej frazy, wiec ponowny import zepsulby recznie
+   * poprawione "wyrazenie" na "fraze".
+   */
+  kindExplicit: boolean;
   sourceRef: string | null;
   sourceDeck: string | null;
   /** Typ narzucony przez zrodlo dla tej pozycji. null = typ wybrany przy imporcie. */
@@ -85,6 +94,9 @@ export async function normalize(
       fields: clean,
       tags: [...new Set(tags.filter(Boolean))].sort(),
       itemKind: kind ?? defaultKind ?? guessItemKind(clean[FIELD_FRONT]),
+      // Kolumna zrodla albo jawny wybor przy imporcie to decyzja czlowieka;
+      // heurystyka nie.
+      kindExplicit: kind !== null || defaultKind != null,
       sourceRef: row.sourceRef,
       sourceDeck: row.sourceDeck,
       noteType: row.noteType,
@@ -129,9 +141,20 @@ export async function duplicateSummary(drafts: NoteDraft[]): Promise<DuplicateSu
 
 export interface CommitStats {
   imported: number;
+  /** Uzupelnione istniejace fiszki (tryb "update"). */
+  updated: number;
   skippedDuplicates: number;
   skippedInvalid: number;
 }
+
+/**
+ * Co zrobic z pozycja, ktora juz jest w kolekcji (ten sam odcisk tresci).
+ *
+ * - `skip`   - pomin (domyslne; import tylko dokłada nowy material)
+ * - `update` - uzupelnij istniejaca fiszke o to, co przynosi plik
+ * - `add`    - dodaj mimo wszystko, jako osobna fiszke
+ */
+export type DuplicateMode = "skip" | "update" | "add";
 
 const CARDS_PER_NOTE_TYPE: Record<NoteType, number> = { basic: 1, basic_reversed: 2 };
 
@@ -141,26 +164,77 @@ function resolveNoteType(fromSource: NoteType | null, fallback: NoteType): NoteT
 }
 
 /**
+ * Scala istniejaca fiszke z tym, co przynosi plik.
+ *
+ * Zasada: UZUPELNIA, nie kasuje. Brak wartosci w pliku nigdy nie usuwa tego,
+ * co juz jest - ponowny import ubozszej wersji nie moze zubozyc kolekcji.
+ *
+ * Czego NIE rusza: typu notatki. Zmiana typu zmienia liczbe kart, a to
+ * znaczy skasowanie karty razem z jej stanem FSRS. Aktualizacja dotyczy
+ * tresci, nigdy stanu nauki. Zmiane typu robi sie swiadomie przez "Edytuj".
+ */
+function mergeNote(existing: NoteRecord, draft: NoteDraft, iso: string): NoteRecord {
+  const fields = { ...existing.fields };
+  for (const name of KNOWN_FIELDS) {
+    const incoming = draft.fields[name]?.trim();
+    if (incoming) fields[name] = incoming;
+  }
+
+  return {
+    ...existing,
+    fields,
+    // Tagi sie sumuja - zadna etykieta nie ginie przy ponownym imporcie.
+    tags: [...new Set([...existing.tags, ...draft.tags])].sort(),
+    // Zgadnieta kategoria nie moze nadpisac recznie ustawionej.
+    itemKind: draft.kindExplicit ? draft.itemKind : existing.itemKind,
+    sourceRef: draft.sourceRef ?? existing.sourceRef,
+    updatedAt: iso,
+  };
+}
+
+/** Czy scalenie cokolwiek zmienilo - bez tego liczylibysmy puste zapisy. */
+function differs(before: NoteRecord, after: NoteRecord): boolean {
+  return (
+    JSON.stringify(before.fields) !== JSON.stringify(after.fields) ||
+    before.tags.join("") !== after.tags.join("") ||
+    before.itemKind !== after.itemKind ||
+    before.sourceRef !== after.sourceRef
+  );
+}
+
+/**
  * Tworzy notatki i karty jedna transakcja - import jest w calosci albo wcale.
  */
 export async function commitImport(
   deckId: string,
   drafts: NoteDraft[],
-  options: { noteType: NoteType; skipDuplicates?: boolean; now?: Date },
+  options: {
+    noteType: NoteType;
+    /** Domyslnie "skip". `skipDuplicates: false` zostaje jako alias "add". */
+    onDuplicate?: DuplicateMode;
+    skipDuplicates?: boolean;
+    now?: Date;
+  },
 ): Promise<CommitStats> {
   const now = options.now ?? new Date();
-  const skipDuplicates = options.skipDuplicates ?? true;
+  const mode: DuplicateMode =
+    options.onDuplicate ?? (options.skipDuplicates === false ? "add" : "skip");
   const iso = now.toISOString();
 
   const database = await db();
   const deck = await database.get("decks", deckId);
   if (!deck) throw new Error("Nie znaleziono talii");
 
-  const existing = await existingHashes();
+  // Przy aktualizacji potrzebujemy calych rekordow, nie samych odciskow.
+  const byHash = new Map<string, NoteRecord>();
+  for (const note of await database.getAll("notes")) {
+    if (!byHash.has(note.contentHash)) byHash.set(note.contentHash, note);
+  }
   const seenInBatch = new Set<string>();
 
   const notes: NoteRecord[] = [];
   const cards: CardRecord[] = [];
+  const updates: NoteRecord[] = [];
   let skippedDuplicates = 0;
   let skippedInvalid = 0;
 
@@ -176,8 +250,23 @@ export async function commitImport(
       skippedInvalid += 1;
       continue;
     }
-    if (skipDuplicates && (existing.has(draft.contentHash) || seenInBatch.has(draft.contentHash))) {
-      skippedDuplicates += 1;
+    const known = byHash.get(draft.contentHash);
+    const duplicate = known !== undefined || seenInBatch.has(draft.contentHash);
+
+    if (duplicate && mode !== "add") {
+      // Powtorzenie w samym pliku zawsze pomijamy - nie ma czego aktualizowac
+      // rekordem, ktory dopiero powstaje w tej samej transakcji.
+      if (mode === "update" && known) {
+        const merged = mergeNote(known, draft, iso);
+        if (differs(known, merged)) {
+          updates.push(merged);
+          byHash.set(draft.contentHash, merged); // kolejne powtorzenia widza nowy stan
+        } else {
+          skippedDuplicates += 1;
+        }
+      } else {
+        skippedDuplicates += 1;
+      }
       continue;
     }
     seenInBatch.add(draft.contentHash);
@@ -216,8 +305,14 @@ export async function commitImport(
 
   const tx = database.transaction(["notes", "cards"], "readwrite");
   for (const note of notes) await tx.objectStore("notes").put(note);
+  for (const note of updates) await tx.objectStore("notes").put(note);
   for (const card of cards) await tx.objectStore("cards").put(card);
   await tx.done;
 
-  return { imported: notes.length, skippedDuplicates, skippedInvalid };
+  return {
+    imported: notes.length,
+    updated: updates.length,
+    skippedDuplicates,
+    skippedInvalid,
+  };
 }

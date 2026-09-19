@@ -68,6 +68,12 @@ export interface CardRecord {
   fsrs: FsrsSnapshot;
   /** Kopia fsrs.due - IndexedDB nie indeksuje pol zagniezdzonych. */
   due: string;
+  /**
+   * Karta odlozona na bok: nie wchodzi do kolejki, ale zachowuje caly stan
+   * nauki. Sluzy do wyciszenia materialu, ktorego teraz nie chcemy widziec,
+   * bez kasowania go razem z historia. Brak pola = karta czynna.
+   */
+  suspended?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -96,6 +102,12 @@ export interface ReviewLogRecord {
 export interface SettingsRecord {
   id: "app";
   desiredRetention: number;
+  /**
+   * Data egzaminu (YYYY-MM-DD). Pozwala policzyc, ile nowych fiszek
+   * dziennie trzeba wziac, zeby zdazyc przerobic material z zapasem na
+   * utrwalenie. null = brak terminu, tempo nie jest liczone.
+   */
+  examDate?: string | null;
   /** null = wagi domyslne; wlasne pojawia sie po optymalizacji na historii. */
   fsrsParameters: number[] | null;
   createdAt: string;

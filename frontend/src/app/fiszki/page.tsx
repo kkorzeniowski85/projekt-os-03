@@ -11,7 +11,7 @@ import {
   inputClass,
   secondaryButtonClass,
 } from "@/components/AppShell";
-import { createNote, deleteNote, getDeck, listNotes, updateNote } from "@/lib/local/repo";
+import { createNote, deleteNote, getDeck, listNotes, updateNote, setNoteSuspended } from "@/lib/local/repo";
 import type { CardRecord, DeckRecord, NoteRecord } from "@/lib/local/types";
 import { odmien, type NoteType } from "@/lib/types";
 
@@ -62,6 +62,8 @@ function NotesManager() {
   const [draft, setDraft] = useState<Draft>(EMPTY);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  //: Przy kilkuset fiszkach przewijanie listy przestaje byc wyszukiwaniem.
+  const [szukaj, setSzukaj] = useState("");
   const [busy, setBusy] = useState(false);
 
   const load = useCallback(async () => {
@@ -115,6 +117,27 @@ function NotesManager() {
       setBusy(false);
     }
   }
+
+  async function przywroc(noteId: string) {
+    setError(null);
+    try {
+      await setNoteSuspended(noteId, false);
+      await load();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Nie udało się przywrócić fiszki");
+    }
+  }
+
+  //: Szukamy po wszystkim, co widac na fiszce - tak samo jak czlowiek
+  //: szukajacy "tego slowka o obchodzie".
+  const widoczne = (notes ?? []).filter(({ note }) => {
+    const fraza = szukaj.trim().toLowerCase();
+    if (!fraza) return true;
+    return [note.fields.Front, note.fields.Back, note.fields.Example ?? "", ...note.tags]
+      .join(" ")
+      .toLowerCase()
+      .includes(fraza);
+  });
 
   async function remove(noteId: string) {
     if (!confirm("Usunąć tę fiszkę? Historia powtórek zostanie zachowana.")) return;
@@ -225,18 +248,39 @@ function NotesManager() {
       </form>
 
       <section>
-        <p className="mb-1 text-xs tracking-[0.01em] text-ink-3">OSTATNIO DODANE</p>
+        <div className="mb-2 flex items-baseline justify-between gap-3">
+          <p className="text-xs tracking-[0.01em] text-ink-3">
+            {szukaj.trim() ? "ZNALEZIONE" : "OSTATNIO DODANE"}
+          </p>
+          {notes !== null && notes.length > 0 && (
+            <span className="text-xs tabular-nums text-ink-4">
+              {widoczne.length} / {notes.length}
+            </span>
+          )}
+        </div>
+
+        {notes !== null && notes.length > 8 && (
+          <input
+            type="search"
+            value={szukaj}
+            onChange={(e) => setSzukaj(e.target.value)}
+            placeholder="Szukaj w przodzie, tyle, przykładzie i tagach…"
+            className={`${inputClass} mb-3`}
+          />
+        )}
 
         {notes === null ? (
           <p className="text-sm text-ink-2">Wczytywanie…</p>
         ) : notes.length === 0 ? (
           <p className="text-sm text-ink-2">Ta talia jest jeszcze pusta.</p>
+        ) : widoczne.length === 0 ? (
+          <p className="text-sm text-ink-2">Nic nie pasuje do „{szukaj.trim()}”.</p>
         ) : (
           <ul>
-            {notes.map(({ note, cards }, i) => (
+            {widoczne.map(({ note, cards }, i) => (
               <li
                 key={note.id}
-                className={`py-3.5 ${i < notes.length - 1 ? "border-b border-line-soft" : ""}`}
+                className={`py-3.5 ${i < widoczne.length - 1 ? "border-b border-line-soft" : ""}`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
@@ -246,6 +290,15 @@ function NotesManager() {
                       {cards.length} {odmien(cards.length, "karta", "karty", "kart")}
                       {note.tags.length > 0 && ` · ${note.tags.join(", ")}`}
                     </p>
+                    {cards.length > 0 && cards.every((c) => c.suspended) && (
+                      <button
+                        type="button"
+                        onClick={() => void przywroc(note.id)}
+                        className="mt-1.5 rounded bg-chip px-2 py-1 text-[11px] text-ink-3 hover:text-ink"
+                      >
+                        odłożona — przywróć
+                      </button>
+                    )}
                   </div>
                   <div className="flex shrink-0 gap-1">
                     <button

@@ -2,7 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { AppShell, ErrorBanner, buttonClass, secondaryButtonClass } from "@/components/AppShell";
+import {
+  AppShell,
+  ErrorBanner,
+  buttonClass,
+  inputClass,
+  secondaryButtonClass,
+} from "@/components/AppShell";
 import {
   backupCounts,
   backupFilename,
@@ -15,7 +21,11 @@ import {
 } from "@/lib/local/backup";
 import { BUNDLED_EVENT, applyBundled, bundledState } from "@/lib/local/bundled";
 import { storageEstimate } from "@/lib/local/db";
+import { BUFOR_DNI, examPace, type PaceInfo } from "@/lib/local/pace";
+import { getSettings, updateSettings } from "@/lib/local/repo";
 import type { BundledStateRecord } from "@/lib/local/types";
+import { DEFAULT_PREFS, loadPrefs, savePrefs, type StudyPrefs } from "@/lib/prefs";
+import { englishVoiceReady, speak, speechAvailable } from "@/lib/speech";
 import { odmien } from "@/lib/types";
 
 function describe(counts: BackupCounts): string {
@@ -42,6 +52,14 @@ function Settings() {
   );
   const [pending, setPending] = useState<{ file: BackupFile; name: string } | null>(null);
   const [bundled, setBundled] = useState<BundledStateRecord | null>(null);
+  const [examDate, setExamDate] = useState("");
+  const [pace, setPace] = useState<PaceInfo | null>(null);
+  const [prefs, setPrefs] = useState<StudyPrefs>(DEFAULT_PREFS);
+  //: Sprawdzane w przegladarce, nie w renderze - patrz ekran nauki.
+  const [mowa, setMowa] = useState<{ dostepna: boolean; angielski: boolean }>({
+    dostepna: false,
+    angielski: false,
+  });
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -52,9 +70,24 @@ function Settings() {
       setCounts(await currentCounts());
       setStorage(await storageEstimate());
       setBundled(await bundledState());
+      const settings = await getSettings();
+      setExamDate(settings.examDate ?? "");
+      setPace(await examPace(settings.examDate));
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udało się odczytać danych");
     }
+  }, []);
+
+  // Preferencje i dostepnosc mowy - osobno od danych, bo lista glosow bywa
+  // doczytywana asynchronicznie i trzeba jej sluchac.
+  useEffect(() => {
+    setPrefs(loadPrefs());
+    const sprawdz = () =>
+      setMowa({ dostepna: speechAvailable(), angielski: englishVoiceReady() });
+    sprawdz();
+    if (!speechAvailable()) return;
+    window.speechSynthesis.addEventListener("voiceschanged", sprawdz);
+    return () => window.speechSynthesis.removeEventListener("voiceschanged", sprawdz);
   }, []);
 
   useEffect(() => {
@@ -65,6 +98,23 @@ function Settings() {
     window.addEventListener(BUNDLED_EVENT, onBundled);
     return () => window.removeEventListener(BUNDLED_EVENT, onBundled);
   }, [refresh]);
+
+  function setPref<K extends keyof StudyPrefs>(key: K, value: StudyPrefs[K]) {
+    const next = { ...prefs, [key]: value };
+    setPrefs(next);
+    savePrefs(next);
+  }
+
+  async function saveExamDate(value: string) {
+    setExamDate(value);
+    setError(null);
+    try {
+      await updateSettings({ examDate: value || null });
+      setPace(await examPace(value || null));
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Nie udało się zapisać daty");
+    }
+  }
 
   async function updateDictionary() {
     setBusy(true);
@@ -150,6 +200,114 @@ function Settings() {
   return (
     <div className="space-y-4">
       <h1 className="text-[22px] font-semibold tracking-[-0.02em]">Ustawienia</h1>
+
+      <section className="rounded-xl border border-line bg-surface p-4">
+        <p className="text-xs tracking-[0.01em] text-ink-3">TERMIN EGZAMINU</p>
+        <p className="mt-1.5 text-[13px] leading-relaxed text-ink-2">
+          Aplikacja policzy, ile nowych fiszek dziennie trzeba brać, żeby zdążyć przerobić
+          materiał — z zapasem {BUFOR_DNI} dni na samo utrwalanie.
+        </p>
+        <input
+          type="date"
+          value={examDate}
+          onChange={(e) => void saveExamDate(e.target.value)}
+          className={`${inputClass} mt-3`}
+        />
+        {pace && !pace.past && (
+          <div className="mt-3 border-t border-line-soft pt-3 text-[13px] leading-relaxed">
+            <p className="text-ink-2">
+              Zostało {pace.daysLeft} {odmien(pace.daysLeft, "dzień", "dni", "dni")} ·{" "}
+              {pace.newCards} {odmien(pace.newCards, "nowa fiszka", "nowe fiszki", "nowych fiszek")}{" "}
+              do wzięcia
+            </p>
+            <p className={`mt-1 font-medium ${pace.onTrack ? "text-good" : "text-hard"}`}>
+              {pace.newCards === 0
+                ? "Cały materiał jest już w nauce."
+                : `Potrzeba ${pace.needPerDay} nowych dziennie · ustawione ${pace.currentPerDay}`}
+            </p>
+            {!pace.onTrack && pace.newCards > 0 && (
+              <p className="mt-1 text-ink-3">
+                Przy obecnym tempie materiał się nie skończy przed egzaminem. Zwiększ dzienny
+                limit nowych kart w talii albo licz się z tym, że części nie zobaczysz.
+              </p>
+            )}
+          </div>
+        )}
+        {pace?.past && (
+          <p className="mt-3 border-t border-line-soft pt-3 text-[13px] text-ink-2">
+            Ta data już minęła. Wpisz nową albo wyczyść pole.
+          </p>
+        )}
+      </section>
+
+      <section className="rounded-xl border border-line bg-surface p-4">
+        <p className="text-xs tracking-[0.01em] text-ink-3">NAUKA</p>
+        <div className="mt-2.5 space-y-3">
+          <label className="flex items-start gap-2.5 text-[13px] leading-relaxed">
+            <input
+              type="checkbox"
+              checked={prefs.autoSpeak}
+              onChange={(e) => setPref("autoSpeak", e.target.checked)}
+              disabled={!mowa.dostepna}
+              className="mt-0.5"
+            />
+            <span>
+              <span className="text-ink">Czytaj na głos po odsłonięciu</span>
+              <br />
+              <span className="text-ink-3">
+                {mowa.dostepna
+                  ? mowa.angielski
+                    ? "Głos brytyjski, jeśli jest w systemie. Przycisk 🔊 działa zawsze."
+                    : "Ta przeglądarka nie ma głosu angielskiego — sprawdź ustawienia systemu."
+                  : "Ta przeglądarka nie obsługuje syntezy mowy."}
+              </span>
+            </span>
+          </label>
+          {mowa.dostepna && (
+            <button
+              type="button"
+              onClick={() => speak("We need to rule out a bleed.")}
+              className={secondaryButtonClass}
+            >
+              Posłuchaj próbki
+            </button>
+          )}
+
+          <label className="flex items-start gap-2.5 text-[13px] leading-relaxed">
+            <input
+              type="checkbox"
+              checked={prefs.typeAnswer}
+              onChange={(e) => setPref("typeAnswer", e.target.checked)}
+              className="mt-0.5"
+            />
+            <span>
+              <span className="text-ink">Wpisuj odpowiedź przy produkcji</span>
+              <br />
+              <span className="text-ink-3">
+                Przy kierunku polski → angielski. Ćwiczy brytyjską pisownię, której samo
+                rozpoznanie nie utrwala. Ocenę nadal wybierasz sam.
+              </span>
+            </span>
+          </label>
+
+          <label className="flex items-start gap-2.5 text-[13px] leading-relaxed">
+            <input
+              type="checkbox"
+              checked={prefs.showCloze}
+              onChange={(e) => setPref("showCloze", e.target.checked)}
+              className="mt-0.5"
+            />
+            <span>
+              <span className="text-ink">Pokazuj zdanie z luką</span>
+              <br />
+              <span className="text-ink-3">
+                Przy produkcji: zdanie przykładowe z wyciętym zwrotem daje kontekst, nie
+                zdradzając odpowiedzi.
+              </span>
+            </span>
+          </label>
+        </div>
+      </section>
 
       <section className="rounded-xl border border-line bg-surface p-4">
         <p className="text-xs tracking-[0.01em] text-ink-3">TWOJE DANE</p>

@@ -5,16 +5,22 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { FSRS } from "ts-fsrs";
 
-import { ErrorBanner, FocusShell, buttonClass, secondaryButtonClass } from "@/components/AppShell";
+import { ErrorBanner, FocusShell, buttonClass, inputClass, secondaryButtonClass } from "@/components/AppShell";
+import { compareAnswer } from "@/lib/local/answer";
+import { firstClozeLine, splitOnPhrase } from "@/lib/local/phrase";
 import { makeScheduler, previewIntervals } from "@/lib/local/scheduler";
 import { exampleOf, renderCard, templateLabel } from "@/lib/local/render";
 import {
   getSettings,
+  setNoteSuspended,
   studyQueue,
   submitReview,
+  undoLastReview,
   type DeckSelection,
   type StudyQueueResult,
 } from "@/lib/local/repo";
+import { DEFAULT_PREFS, loadPrefs, type StudyPrefs } from "@/lib/prefs";
+import { speak, speechAvailable, stopSpeaking } from "@/lib/speech";
 import { RATING_LABELS, type Rating } from "@/lib/types";
 
 const RATINGS: Rating[] = [1, 2, 3, 4];
@@ -39,7 +45,10 @@ export default function StudyPage() {
 }
 
 function StudySession() {
-  const param = useSearchParams().get("talia") ?? "";
+  const params = useSearchParams();
+  const param = params.get("talia") ?? "";
+  //: Krotka sesja "w kolejce do gabinetu" - inny limit, ta sama kolejka.
+  const limit = Number(params.get("ile")) || 20;
   // "wszystko" = cala kolekcja, lista po przecinku = wybrane talie.
   const selection: DeckSelection =
     param === "wszystko" ? "all" : param.includes(",") ? param.split(",") : param;
@@ -56,10 +65,24 @@ function StudySession() {
   // Ile kart mialo byc na starcie sesji - do paska postepu. Stan, nie ref:
   // wartosc jest czytana w renderze.
   const [sessionSize, setSessionSize] = useState(0);
+  const [prefs, setPrefs] = useState<StudyPrefs>(DEFAULT_PREFS);
+  //: Czy ostatnia ocene da sie jeszcze cofnac (tylko w obrebie tej sesji).
+  const [canUndo, setCanUndo] = useState(false);
+  const [typed, setTyped] = useState("");
+  //: Dostepnosc mowy sprawdzamy po stronie przegladarki - w renderze na
+  //: serwerze nie ma window, a rozbiezny wynik rozjechalby hydracje.
+  const [canSpeak, setCanSpeak] = useState(false);
 
   //  Czas odpowiedzi - wymagany w logu (ADR 0005), mierzony od pokazania karty.
   // Ustawiane przy pokazaniu karty (loadQueue/rate), nie w renderze.
   const shownAt = useRef<number>(0);
+
+  useEffect(() => {
+    setPrefs(loadPrefs());
+    setCanSpeak(speechAvailable());
+    // Wyjscie z ekranu ucina wypowiedz - inaczej telefon mowi do pustego pokoju.
+    return () => stopSpeaking();
+  }, []);
 
   const loadQueue = useCallback(async () => {
     if (!param) {
@@ -69,20 +92,21 @@ function StudySession() {
     try {
       const [settings, data] = await Promise.all([
         getSettings(),
-        studyQueue(selection, { limit: 20 }),
+        studyQueue(selection, { limit }),
       ]);
       setScheduler(makeScheduler(settings));
       setQueue(data);
       setSessionSize((size) => (size === 0 ? data.cards.length : size));
       setIndex(0);
       setRevealed(false);
+      setTyped("");
       shownAt.current = Date.now();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udało się pobrać kolejki");
     }
     // selection powstaje z param przy kazdym renderze - zalezymy od param.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [param]);
+  }, [param, limit]);
 
   useEffect(() => {
     void loadQueue();
@@ -96,6 +120,26 @@ function StudySession() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entry?.card.id, scheduler]);
 
+  //: Angielska strona fiszki - niezaleznie od kierunku karty czytamy to samo.
+  const englishText = entry?.note.fields.Front ?? "";
+  //: Przy produkcji (polski -> angielski) zdanie z luka daje kontekst, ale nie
+  //: zdradza odpowiedzi - sam zwrot jest z niego wyciety.
+  const cloze = useMemo(() => {
+    if (!entry || entry.card.templateOrd !== 1 || !prefs.showCloze) return null;
+    const example = exampleOf(entry.note);
+    return example ? firstClozeLine(example, englishText) : null;
+  }, [entry, prefs.showCloze, englishText]);
+
+  //: Wpisywanie odpowiedzi ma sens tylko tam, gdzie cwiczy sie produkcje -
+  //: i tylko gdy odpowiedz jest jednym zwrotem, nie akapitem.
+  const wantsTyping =
+    prefs.typeAnswer && entry?.card.templateOrd === 1 && englishText.length <= 60;
+
+  const reveal = useCallback(() => {
+    setRevealed(true);
+    if (prefs.autoSpeak) speak(englishText);
+  }, [prefs.autoSpeak, englishText]);
+
   const rate = useCallback(
     async (rating: Rating) => {
       if (!entry || busy) return;
@@ -108,11 +152,13 @@ function StudySession() {
           durationMs: Date.now() - shownAt.current,
         });
         setReviewedCount((n) => n + 1);
+        setCanUndo(true);
 
         const next = index + 1;
         if (queue && next < queue.cards.length) {
           setIndex(next);
           setRevealed(false);
+          setTyped("");
           shownAt.current = Date.now();
         } else {
           // Karty w trakcie nauki wracaja po kilku minutach - dociagamy
@@ -128,6 +174,43 @@ function StudySession() {
     [entry, busy, index, queue, loadQueue],
   );
 
+  async function undo() {
+    if (busy) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const cofniete = await undoLastReview();
+      if (!cofniete) {
+        setCanUndo(false);
+        return;
+      }
+      setReviewedCount((n) => Math.max(0, n - 1));
+      setCanUndo(false);
+      await loadQueue();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Nie udało się cofnąć oceny");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function suspend() {
+    if (!entry || busy) return;
+    if (!confirm(`Odłożyć „${entry.note.fields.Front}” na bok? Wróci dopiero, gdy ją przywrócisz.`)) {
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    try {
+      await setNoteSuspended(entry.note.id, true);
+      await loadQueue();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Nie udało się odłożyć fiszki");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   // Skroty klawiszowe: spacja odslania, 1-4 ocenia.
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -136,16 +219,16 @@ function StudySession() {
       if (event.repeat) return;
       // Spacja i Enter na przycisku albo linku maja robic to, co przycisk -
       // inaczej Enter na "Znowu" zapisywalby "Dobre", a strzalka wstecz
-      // odslanialaby odpowiedz zamiast wracac.
-      if (
-        event.target instanceof HTMLElement &&
-        event.target.closest("button, a, input, textarea, select")
-      ) {
-        return;
+      // odslanialaby odpowiedz zamiast wracac. Wyjatek: pole odpowiedzi,
+      // gdzie Enter ma odslaniac.
+      const target = event.target;
+      if (target instanceof HTMLElement) {
+        const control = target.closest("button, a, select, textarea, input");
+        if (control && control.getAttribute("data-odpowiedz") === null) return;
       }
       if (event.code === "Space" || event.code === "Enter") {
         event.preventDefault();
-        if (!revealed) setRevealed(true);
+        if (!revealed) reveal();
         else void rate(3);
         return;
       }
@@ -156,7 +239,7 @@ function StudySession() {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [entry, revealed, rate]);
+  }, [entry, revealed, rate, reveal]);
 
   if (error && !queue) {
     return (
@@ -187,10 +270,15 @@ function StudySession() {
           </p>
         </div>
         <ErrorBanner message={error} />
-        <div className="flex gap-2">
+        <div className="flex flex-wrap justify-center gap-2">
           <Link href="/" className={secondaryButtonClass}>
             Wróć do talii
           </Link>
+          {canUndo && (
+            <button type="button" onClick={() => void undo()} className={secondaryButtonClass}>
+              Cofnij ostatnią ocenę
+            </button>
+          )}
           {singleDeckId && (
             <Link href={`/fiszki?talia=${singleDeckId}`} className={buttonClass}>
               Dodaj fiszki
@@ -206,6 +294,7 @@ function StudySession() {
   const isNewCard = entry.card.fsrs.state === 0;
   const total = Math.max(sessionSize, reviewedCount + queue.cards.length - index);
   const done = Math.min(reviewedCount, total);
+  const ocena = wantsTyping && revealed ? compareAnswer(typed, englishText) : null;
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col">
@@ -245,30 +334,116 @@ function StudySession() {
         </p>
 
         {!revealed ? (
-          <p className="tresc whitespace-pre-wrap text-[34px] leading-[1.25] tracking-[-0.01em]">
-            {question}
-          </p>
+          <>
+            <p className="tresc whitespace-pre-wrap text-[34px] leading-[1.25] tracking-[-0.01em]">
+              {question}
+            </p>
+            {/* Kontekst bez podpowiedzi: sam zwrot jest ze zdania wyciety. */}
+            {cloze && (
+              <p className="tresc mx-auto mt-5 max-w-md whitespace-pre-wrap border-l-2 border-line pl-3.5 text-left text-[15px] italic leading-[1.55] text-ink-3">
+                {cloze}
+              </p>
+            )}
+            {wantsTyping && (
+              <input
+                data-odpowiedz=""
+                autoFocus
+                value={typed}
+                onChange={(e) => setTyped(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    reveal();
+                  }
+                }}
+                placeholder="Wpisz po angielsku…"
+                autoCapitalize="off"
+                autoCorrect="off"
+                spellCheck={false}
+                className={`${inputClass} mx-auto mt-6 max-w-md text-center text-lg`}
+              />
+            )}
+          </>
         ) : (
           <>
             <p className="tresc whitespace-pre-wrap text-[26px] leading-[1.3] text-ink-2">
               {question}
             </p>
             <div className="mx-auto my-5 h-px w-9 bg-field" />
-            <p className="tresc whitespace-pre-wrap text-[30px] leading-[1.28] tracking-[-0.01em]">
-              {answer}
-            </p>
+
+            {/* Co naprawde wpisano - litera po literze, zanim padnie ocena. */}
+            {ocena && (
+              <p className="mb-3 text-[19px] tracking-[-0.01em]">
+                {typed.trim() === "" ? (
+                  <span className="text-ink-4">(brak odpowiedzi)</span>
+                ) : (
+                  ocena.parts.map((part, i) => (
+                    <span
+                      key={i}
+                      className={part.ok ? "text-good" : "text-again line-through decoration-1"}
+                    >
+                      {part.text}
+                    </span>
+                  ))
+                )}
+              </p>
+            )}
+
+            <div className="flex items-center justify-center gap-2.5">
+              <p className="tresc whitespace-pre-wrap text-[30px] leading-[1.28] tracking-[-0.01em]">
+                {answer}
+              </p>
+              {canSpeak && (
+                <button
+                  type="button"
+                  onClick={() => speak(englishText)}
+                  aria-label="Przeczytaj na głos"
+                  className="shrink-0 text-ink-3 hover:text-accent"
+                >
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.7"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                    <path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14" />
+                  </svg>
+                </button>
+              )}
+            </div>
+
+            {ocena && !ocena.exact && ocena.close && (
+              <p className="mt-2 text-[13px] text-hard">Prawie — różnica w pisowni.</p>
+            )}
+
             {example && (
               <p className="tresc mt-5 whitespace-pre-wrap border-l-2 border-line pl-3.5 text-left text-[15px] italic leading-[1.55] text-ink-2">
-                {example}
+                {/* Zwrot wyrozniony - widac, jak siedzi w zdaniu. */}
+                {example.split("\n").map((linia, i) => (
+                  <span key={i}>
+                    {i > 0 && "\n"}
+                    {splitOnPhrase(linia, englishText).map((frag, j) =>
+                      frag.zwrot ? (
+                        <strong key={j} className="font-semibold not-italic text-ink">
+                          {frag.tekst}
+                        </strong>
+                      ) : (
+                        <span key={j}>{frag.tekst}</span>
+                      ),
+                    )}
+                  </span>
+                ))}
               </p>
             )}
             {entry.note.tags.length > 0 && (
               <p className="mt-5 flex flex-wrap justify-center gap-1.5">
                 {entry.note.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded bg-chip px-2 py-1 text-[11px] text-ink-3"
-                  >
+                  <span key={tag} className="rounded bg-chip px-2 py-1 text-[11px] text-ink-3">
                     {tag}
                   </span>
                 ))}
@@ -283,7 +458,7 @@ function StudySession() {
         {!revealed ? (
           <button
             type="button"
-            onClick={() => setRevealed(true)}
+            onClick={reveal}
             className="mt-2 w-full rounded-[10px] bg-accent px-3 py-4 text-base font-medium text-on-accent hover:bg-accent-hover"
           >
             Pokaż odpowiedź
@@ -306,6 +481,26 @@ function StudySession() {
             ))}
           </div>
         )}
+
+        {/* Rzadkie akcje - male, na uboczu, zeby nie konkurowaly z ocenami. */}
+        <div className="mt-3 flex items-center justify-center gap-4 text-[12px] text-ink-4">
+          <button
+            type="button"
+            disabled={!canUndo || busy}
+            onClick={() => void undo()}
+            className="hover:text-ink-2 disabled:opacity-40"
+          >
+            ↶ Cofnij ocenę
+          </button>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={() => void suspend()}
+            className="hover:text-ink-2 disabled:opacity-40"
+          >
+            Odłóż na bok
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import {
   byTag,
   forecast,
   leeches,
+  type DailyPoint,
   overview,
   studyDay,
   type ForecastPoint,
@@ -198,6 +199,11 @@ function Dashboard() {
       </section>
 
       <section>
+        <p className="mb-2 text-xs tracking-[0.01em] text-ink-3">MAPA DNI</p>
+        <Heatmap points={ov.daily} today={today} />
+      </section>
+
+      <section>
         <p className="mb-2 text-xs tracking-[0.01em] text-ink-3">POWTÓRKI DZIENNIE</p>
         {ov.daily.length === 0 ? (
           <p className="text-sm text-ink-2">W tym okresie nie było powtórek.</p>
@@ -347,6 +353,53 @@ function Bars({
         <span>{shortDay(points[0].day)}</span>
         {points.length > 1 && <span>{shortDay(points[points.length - 1].day)}</span>}
       </div>
+    </div>
+  );
+}
+
+/**
+ * Kalendarz nauki: jedna kropka na dzien, im ciemniejsza tym wiecej powtorek.
+ *
+ * Bez punktow, odznak i serii - to ma pokazac rytm pracy, a nie nagradzac za
+ * jego utrzymanie. Jedyna liczba obok to dni z rzedu, bo przerwa w nauce jest
+ * informacja, ktora warto zauwazyc.
+ */
+function Heatmap({ points, today }: { points: DailyPoint[]; today: string }) {
+  if (points.length === 0) {
+    return <p className="text-sm text-ink-2">Jeszcze nic tu nie ma.</p>;
+  }
+  const max = Math.max(...points.map((p) => p.reviews), 1);
+
+  // Dni z rzedu, liczone wstecz od dzis (albo od wczoraj - dzien jeszcze trwa).
+  let seria = 0;
+  for (let i = points.length - 1; i >= 0; i -= 1) {
+    if (points[i].reviews > 0) seria += 1;
+    else if (points[i].day !== today) break;
+  }
+
+  return (
+    <div>
+      <div className="flex flex-wrap gap-[3px]">
+        {points.map((p) => {
+          const moc = p.reviews === 0 ? 0 : 0.25 + 0.75 * Math.min(1, p.reviews / max);
+          return (
+            <span
+              key={p.day}
+              title={`${p.day}: ${p.reviews} ${odmien(p.reviews, "powtórka", "powtórki", "powtórek")}`}
+              className={`h-[13px] w-[13px] rounded-[3px] ${p.day === today ? "ring-1 ring-accent" : ""}`}
+              style={{
+                backgroundColor:
+                  p.reviews === 0 ? "var(--color-chip)" : `color-mix(in oklab, var(--color-accent) ${Math.round(moc * 100)}%, transparent)`,
+              }}
+            />
+          );
+        })}
+      </div>
+      {seria > 1 && (
+        <p className="mt-2 text-[13px] text-ink-2">
+          {seria} {odmien(seria, "dzień", "dni", "dni")} z rzędu
+        </p>
+      )}
     </div>
   );
 }

@@ -14,6 +14,10 @@ import {
   createDeck,
   createNote,
   deleteDeck,
+  getSettings,
+  setCardSuspended,
+  undoLastReview,
+  updateSettings,
   ensureDictionary,
   deleteNote,
   findDuplicateByHash,
@@ -542,4 +546,115 @@ it("slad reki uzytkownika: nowa fiszka go ma, zmiana samego typu go nie stawia",
 
   const zeZmiana = await updateNote(note.id, { fields: { Front: "kot", Back: "kot domowy" } }, later);
   expect(zeZmiana.editedAt).toBe(later.toISOString());
+});
+
+// --- zakopywanie rodzenstwa, odkladanie kart, cofanie oceny ----------------
+
+it("obie strony tej samej fiszki nie trafiaja do jednej sesji", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  await createNote(
+    { deckId: deck.id, noteType: "basic_reversed", fields: { Front: "kot", Back: "cat" } },
+    NOW,
+  );
+  await createNote(
+    { deckId: deck.id, noteType: "basic_reversed", fields: { Front: "pies", Back: "dog" } },
+    NOW,
+  );
+
+  const queue = await studyQueue(deck.id, { now: NOW });
+  expect(queue.cards).toHaveLength(2); // po jednej stronie z kazdej fiszki
+  expect(new Set(queue.cards.map((e) => e.note.id)).size).toBe(2);
+
+  // Bez zakopywania widac wszystkie cztery karty.
+  const pelna = await studyQueue(deck.id, { now: NOW, burySiblings: false });
+  expect(pelna.cards).toHaveLength(4);
+});
+
+it("ocena jednej strony zakopuje druga na dzis, ale sama karta wraca", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  await createNote(
+    { deckId: deck.id, noteType: "basic_reversed", fields: { Front: "kot", Back: "cat" } },
+    NOW,
+  );
+  const pierwsza = (await studyQueue(deck.id, { now: NOW })).cards[0].card;
+  // "Znowu" - karta ma wrocic za kilka minut.
+  await submitReview({ cardId: pierwsza.id, rating: 1, durationMs: 1000, now: NOW });
+
+  const pozniej = new Date(NOW.getTime() + 15 * 60_000);
+  const queue = await studyQueue(deck.id, { now: pozniej });
+  expect(queue.cards).toHaveLength(1);
+  expect(queue.cards[0].card.id).toBe(pierwsza.id); // ta sama, nie rodzenstwo
+});
+
+it("karta odlozona na bok nie wchodzi do kolejki, ale zachowuje stan", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  const { cards } = await createNote(
+    { deckId: deck.id, noteType: "basic", fields: { Front: "kot", Back: "cat" } },
+    NOW,
+  );
+  await submitReview({ cardId: cards[0].id, rating: 3, durationMs: 1000, now: NOW });
+
+  await setCardSuspended(cards[0].id, true, NOW);
+  const pozniej = new Date(NOW.getTime() + 10 * 24 * 3600_000);
+  expect((await studyQueue(deck.id, { now: pozniej })).cards).toHaveLength(0);
+
+  await setCardSuspended(cards[0].id, false, NOW);
+  const wrocila = (await studyQueue(deck.id, { now: pozniej })).cards;
+  expect(wrocila).toHaveLength(1);
+  expect(wrocila[0].card.fsrs.reps).toBe(1); // stan nauki nietkniety
+});
+
+it("cofniecie oceny przywraca stan karty i usuwa wpis z logu", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  const { cards } = await createNote(
+    { deckId: deck.id, noteType: "basic", fields: { Front: "kot", Back: "cat" } },
+    NOW,
+  );
+  const przed = cards[0];
+  const po = await submitReview({ cardId: przed.id, rating: 4, durationMs: 1000, now: NOW });
+  expect(po.card.due).not.toBe(przed.due);
+
+  const cofniete = await undoLastReview();
+  expect(cofniete?.card.id).toBe(przed.id);
+  expect(cofniete?.note.fields.Front).toBe("kot");
+
+  const database = await db();
+  const teraz = (await database.get("cards", przed.id))!;
+  expect(teraz.due).toBe(przed.due);
+  expect(teraz.fsrs.reps).toBe(0);
+  expect(await database.count("reviewLog")).toBe(0);
+
+  // Nie ma czego cofac - null, nie wyjatek.
+  expect(await undoLastReview()).toBeNull();
+});
+
+it("cofa ostatnia ocene, nie dowolna", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  const a = await createNote(
+    { deckId: deck.id, noteType: "basic", fields: { Front: "kot", Back: "cat" } },
+    NOW,
+  );
+  const b = await createNote(
+    { deckId: deck.id, noteType: "basic", fields: { Front: "pies", Back: "dog" } },
+    NOW,
+  );
+  await submitReview({ cardId: a.cards[0].id, rating: 3, durationMs: 1000, now: NOW });
+  const druga = new Date(NOW.getTime() + 60_000);
+  await submitReview({ cardId: b.cards[0].id, rating: 3, durationMs: 1000, now: druga });
+
+  const cofniete = await undoLastReview();
+  expect(cofniete?.note.fields.Front).toBe("pies");
+
+  const database = await db();
+  expect(await database.count("reviewLog")).toBe(1);
+  expect((await database.get("cards", a.cards[0].id))!.fsrs.reps).toBe(1); // pierwsza nietknieta
+});
+
+it("data egzaminu zapisuje sie w ustawieniach", async () => {
+  expect((await getSettings()).examDate).toBeNull();
+  const zapisane = await updateSettings({ examDate: "2026-12-05" });
+  expect(zapisane.examDate).toBe("2026-12-05");
+  expect((await getSettings()).examDate).toBe("2026-12-05");
+  // Pozostale ustawienia bez zmian.
+  expect((await getSettings()).desiredRetention).toBe(0.9);
 });

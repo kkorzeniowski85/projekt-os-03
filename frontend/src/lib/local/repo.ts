@@ -38,12 +38,24 @@ export async function getSettings(): Promise<SettingsRecord> {
   const created: SettingsRecord = {
     id: "app",
     desiredRetention: 0.9,
+    examDate: null,
     fsrsParameters: null,
     createdAt: iso,
     updatedAt: iso,
   };
   await database.put("settings", created);
   return created;
+}
+
+export async function updateSettings(
+  patch: Partial<Pick<SettingsRecord, "desiredRetention" | "examDate" | "fsrsParameters">>,
+  now: Date = new Date(),
+): Promise<SettingsRecord> {
+  const current = await getSettings();
+  const next: SettingsRecord = { ...current, ...patch, updatedAt: now.toISOString() };
+  const database = await db();
+  await database.put("settings", next);
+  return next;
 }
 
 // --- talie -----------------------------------------------------------------
@@ -390,6 +402,44 @@ export async function deleteNote(id: string): Promise<void> {
   await tx.done;
 }
 
+/**
+ * Odklada karte na bok albo przywraca ja do kolejki.
+ *
+ * Stan FSRS i historia zostaja nietkniete - to nie jest skasowanie, tylko
+ * wyciszenie. Karta odlozona wraca dokladnie tam, gdzie byla.
+ */
+export async function setCardSuspended(
+  cardId: string,
+  suspended: boolean,
+  now: Date = new Date(),
+): Promise<CardRecord> {
+  const database = await db();
+  const card = await database.get("cards", cardId);
+  if (!card) throw new Error("Nie znaleziono karty");
+  const updated: CardRecord = { ...card, suspended, updatedAt: now.toISOString() };
+  if (!suspended) delete updated.suspended;
+  await database.put("cards", updated);
+  return updated;
+}
+
+/** Odklada na bok wszystkie karty notatki - "tego juz nie chce widziec". */
+export async function setNoteSuspended(
+  noteId: string,
+  suspended: boolean,
+  now: Date = new Date(),
+): Promise<number> {
+  const database = await db();
+  const tx = database.transaction("cards", "readwrite");
+  const cards = await tx.store.index("by-note").getAll(noteId);
+  for (const card of cards) {
+    const updated: CardRecord = { ...card, suspended, updatedAt: now.toISOString() };
+    if (!suspended) delete updated.suspended;
+    await tx.store.put(updated);
+  }
+  await tx.done;
+  return cards.length;
+}
+
 // --- laczenie talii ---------------------------------------------------------
 
 export interface MergeResult {
@@ -533,9 +583,10 @@ export async function resolveDecks(selection: DeckSelection): Promise<DeckRecord
  */
 export async function studyQueue(
   selection: DeckSelection,
-  options?: { limit?: number; now?: Date },
+  options?: { limit?: number; now?: Date; burySiblings?: boolean },
 ): Promise<StudyQueueResult> {
   const limit = options?.limit ?? 20;
+  const bury = options?.burySiblings ?? true;
   const now = options?.now ?? new Date();
   const nowIso = now.toISOString();
   const since = dayStart(now).toISOString();
@@ -559,9 +610,27 @@ export async function studyQueue(
     const newToday = new Set(
       today.filter((entry) => entry.stateBefore.state === 0).map((entry) => entry.cardId),
     ).size;
+    const ocenioneDzis = new Set(today.map((entry) => entry.cardId));
 
     const newAllowance = Math.max(deck.newPerDay - newToday, 0);
     const reviewAllowance = Math.max(deck.maxReviewsPerDay - today.length, 0);
+
+    // Nowe czytamy z calej talii, nie z zakresu terminow: karta dodana
+    // "w przyszlosci" wzgledem zegara sesji (cofniety czas) nie moze zniknac
+    // z kolejki. Przy okazji mamy z czego zbudowac mape karta -> notatka.
+    const wszystkie = await database.getAllFromIndex("cards", "by-deck", deck.id);
+
+    // Zakopywanie rodzenstwa: obie strony tej samej fiszki w jednej sesji to
+    // nie dwie proby, tylko jedna - odpowiedz z pierwszej wciaz siedzi
+    // w pamieci roboczej, wiec druga zawyzalaby ocene i psula planowanie.
+    // Zakopujemy RODZENSTWO karty juz ocenionej, nie ja sama: karta z ocena
+    // "Znowu" ma wrocic za kilka minut zgodnie z algorytmem.
+    const notatkiDzis = new Set(
+      wszystkie.filter((card) => ocenioneDzis.has(card.id)).map((card) => card.noteId),
+    );
+    const czynna = (card: CardRecord) =>
+      card.suspended !== true &&
+      !(bury && notatkiDzis.has(card.noteId) && !ocenioneDzis.has(card.id));
 
     // Zalegle: widziane (state != New) z terminem, ktory minal.
     const dueAll = (
@@ -570,13 +639,10 @@ export async function studyQueue(
         "by-deck-due",
         IDBKeyRange.bound([deck.id, ""], [deck.id, nowIso]),
       )
-    ).filter((card) => !isNew(card.fsrs));
+    ).filter((card) => !isNew(card.fsrs) && czynna(card));
 
-    // Nowe czytamy osobno z calej talii, nie z zakresu terminow: karta
-    // dodana "w przyszlosci" wzgledem zegara sesji (cofniety czas) nie moze
-    // zniknac z kolejki.
-    const newAll = (await database.getAllFromIndex("cards", "by-deck", deck.id))
-      .filter((card) => isNew(card.fsrs))
+    const newAll = wszystkie
+      .filter((card) => isNew(card.fsrs) && czynna(card))
       .sort(
         (a, b) =>
           a.createdAt.localeCompare(b.createdAt) ||
@@ -587,10 +653,28 @@ export async function studyQueue(
           a.id.localeCompare(b.id),
       );
 
-    dueParts.push(...dueAll.slice(0, reviewAllowance));
-    newParts.push(...newAll.slice(0, newAllowance));
-    dueRemaining += Math.min(dueAll.length, reviewAllowance);
-    newRemaining += Math.min(newAll.length, newAllowance);
+    // Rodzenstwo odsiewamy PRZED limitem dziennym. Odwrotna kolejnosc
+    // zabralaby polowe przydzialu na karty, ktore i tak nie wejda do sesji:
+    // obie strony fiszki maja ten sam czas dodania, wiec stoja w kolejce
+    // parami. "20 nowych dziennie" ma znaczyc 20 fiszek, nie 10.
+    const jednaNaNotatke = (karty: CardRecord[], zajete: Set<string>) => {
+      if (!bury) return karty;
+      const wynik: CardRecord[] = [];
+      for (const card of karty) {
+        if (zajete.has(card.noteId)) continue;
+        zajete.add(card.noteId);
+        wynik.push(card);
+      }
+      return wynik;
+    };
+    const zajeteWTalii = new Set<string>();
+    const dueWybrane = jednaNaNotatke(dueAll, zajeteWTalii);
+    const newWybrane = jednaNaNotatke(newAll, zajeteWTalii);
+
+    dueParts.push(...dueWybrane.slice(0, reviewAllowance));
+    newParts.push(...newWybrane.slice(0, newAllowance));
+    dueRemaining += Math.min(dueWybrane.length, reviewAllowance);
+    newRemaining += Math.min(newWybrane.length, newAllowance);
   }
 
   // Zalegle: wg terminu - najstarszy dlug pierwszy, niezaleznie od talii.
@@ -647,6 +731,50 @@ export interface ReviewInput {
   /** Czas odpowiedzi. Wymagany (ADR 0005). */
   durationMs: number;
   now?: Date;
+}
+
+/**
+ * Cofa ostatnia ocene: karta wraca do stanu sprzed niej, wpis znika z logu.
+ *
+ * Potrzebne, bo na telefonie kciuk trafia w sasiedni przycisk, a bledna ocena
+ * przesuwa termin o tygodnie. Cofamy tylko OSTATNIA ocene i tylko wtedy, gdy
+ * karta nie byla pozniej oceniana ponownie - inaczej przywrocilibysmy stan
+ * sprzed cudzej, wazniejszej zmiany.
+ *
+ * Log jest append-only wszedzie indziej (ADR 0005); to jedyne odstepstwo,
+ * swiadome: wpis, ktory nie opisuje prawdziwej proby, zafalszowalby
+ * statystyki bardziej niz jego brak.
+ */
+export async function undoLastReview(): Promise<{ card: CardRecord; note: NoteRecord } | null> {
+  const database = await db();
+  const tx = database.transaction(["cards", "notes", "reviewLog"], "readwrite");
+  const log = tx.objectStore("reviewLog");
+
+  // Ostatni wpis wg czasu - kursor od konca indeksu.
+  const kursor = await log.index("by-time").openCursor(null, "prev");
+  if (!kursor) {
+    await tx.done;
+    return null;
+  }
+  const wpis = kursor.value;
+  const card = await tx.objectStore("cards").get(wpis.cardId);
+  if (!card) {
+    await tx.done;
+    return null;
+  }
+
+  const przywrocona: CardRecord = {
+    ...card,
+    fsrs: wpis.stateBefore,
+    due: wpis.stateBefore.due,
+    updatedAt: new Date().toISOString(),
+  };
+  await tx.objectStore("cards").put(przywrocona);
+  await log.delete(wpis.id);
+  const note = await tx.objectStore("notes").get(card.noteId);
+  await tx.done;
+
+  return note ? { card: przywrocona, note } : null;
 }
 
 export async function submitReview(

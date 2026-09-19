@@ -11,7 +11,9 @@ import {
   secondaryButtonClass,
 } from "@/components/AppShell";
 import { BUNDLED_EVENT } from "@/lib/local/bundled";
+import { examPace, type PaceInfo } from "@/lib/local/pace";
 import {
+  getSettings,
   DICTIONARY_DECK_ID,
   createDeck,
   ensureDictionary,
@@ -45,12 +47,14 @@ function DeckList() {
   const [mergeInto, setMergeInto] = useState("");
   const [merging, setMerging] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [pace, setPace] = useState<PaceInfo | null>(null);
 
   const load = useCallback(async () => {
     try {
       // Slownik ma istniec od pierwszego otwarcia - to baza glowna.
       await ensureDictionary();
       setDecks(await listDecks());
+      setPace(await examPace((await getSettings()).examDate));
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udało się wczytać talii");
     }
@@ -146,6 +150,9 @@ function DeckList() {
   const studyHref =
     selected.size === 0 ? "/nauka?talia=wszystko" : `/nauka?talia=${[...selected].join(",")}`;
   const hasSomething = totals.new + totals.due > 0;
+  //: Krotka sesja "w kolejce do gabinetu" - tyle, ile mieszczy sie miedzy
+  //: jednym a drugim zajeciem.
+  const szybkaHref = `${studyHref}&ile=10`;
 
   return (
     <div className="space-y-4">
@@ -170,6 +177,33 @@ function DeckList() {
           Dodaj fiszkę
         </Link>
       </div>
+
+      {pace && !pace.past && pace.newCards > 0 && (
+        <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1 rounded-lg border border-line bg-surface px-3.5 py-2.5 text-[13px]">
+          <span className="text-ink-2">
+            Do egzaminu {pace.daysLeft} {odmien(pace.daysLeft, "dzień", "dni", "dni")}
+          </span>
+          <span className="text-ink-4">·</span>
+          <span className={pace.onTrack ? "text-ink-2" : "font-medium text-hard"}>
+            {pace.needPerDay} nowych dziennie{pace.onTrack ? "" : ` (ustawione ${pace.currentPerDay})`}
+          </span>
+        </p>
+      )}
+
+      {hasSomething && (
+        <Link
+          href={szybkaHref}
+          className="flex items-center justify-between rounded-lg border border-line bg-surface px-3.5 py-3 text-sm"
+        >
+          <span>
+            <span className="font-medium">Szybka sesja</span>
+            <span className="text-ink-3"> — 10 kart</span>
+          </span>
+          <span aria-hidden="true" className="text-ink-3">
+            →
+          </span>
+        </Link>
+      )}
 
       {decks !== null && decks.length > 1 && (
         <section className="rounded-xl border border-line bg-surface p-4">

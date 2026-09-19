@@ -19,17 +19,32 @@ interface Draft {
   front: string;
   back: string;
   example: string;
+  pronunciation: string;
+  synonyms: string;
+  formal: string;
   tags: string;
   noteType: NoteType;
 }
 
-const EMPTY: Draft = { front: "", back: "", example: "", tags: "", noteType: "basic" };
+const EMPTY: Draft = {
+  front: "",
+  back: "",
+  example: "",
+  pronunciation: "",
+  synonyms: "",
+  formal: "",
+  tags: "",
+  noteType: "basic",
+};
 
 function toDraft(note: NoteRecord): Draft {
   return {
     front: note.fields.Front ?? "",
     back: note.fields.Back ?? "",
     example: note.fields.Example ?? "",
+    pronunciation: note.fields.Pronunciation ?? "",
+    synonyms: note.fields.Synonyms ?? "",
+    formal: note.fields.Formal ?? "",
     tags: note.tags.join(", "),
     noteType: note.noteType,
   };
@@ -64,6 +79,9 @@ function NotesManager() {
   const [error, setError] = useState<string | null>(null);
   //: Przy kilkuset fiszkach przewijanie listy przestaje byc wyszukiwaniem.
   const [szukaj, setSzukaj] = useState("");
+  //: Czy sekcja adnotacji jest rozwinieta. Stan, nie localStorage w renderze -
+  //: eksport statyczny renderuje strone bez okna.
+  const [szczegoly, setSzczegoly] = useState(false);
   const [busy, setBusy] = useState(false);
 
   const load = useCallback(async () => {
@@ -101,10 +119,15 @@ function NotesManager() {
     setBusy(true);
     setError(null);
     try {
+      // WSZYSTKIE pola, nie tylko te trzy: updateNote podmienia caly obiekt,
+      // wiec pominiecie ktoregokolwiek kasuje je po cichu przy zapisie.
       const fields = {
         Front: draft.front.trim(),
         Back: draft.back.trim(),
         Example: draft.example.trim(),
+        Pronunciation: draft.pronunciation.trim(),
+        Synonyms: draft.synonyms.trim(),
+        Formal: draft.formal.trim(),
       };
       const tags = parseTags(draft.tags);
       if (editingId) {
@@ -136,7 +159,15 @@ function NotesManager() {
   const widoczne = (notes ?? []).filter(({ note }) => {
     const fraza = szukaj.trim().toLowerCase();
     if (!fraza) return true;
-    return [note.fields.Front, note.fields.Back, note.fields.Example ?? "", ...note.tags]
+    return [
+      note.fields.Front,
+      note.fields.Back,
+      note.fields.Example ?? "",
+      note.fields.Pronunciation ?? "",
+      note.fields.Synonyms ?? "",
+      note.fields.Formal ?? "",
+      ...note.tags,
+    ]
       .join(" ")
       .toLowerCase()
       .includes(fraza);
@@ -211,13 +242,48 @@ function NotesManager() {
           placeholder="tył fiszki"
           className={`${inputClass} tresc text-[15px]`}
         />
-        <textarea
-          rows={2}
-          value={draft.example}
-          onChange={(e) => setDraft({ ...draft, example: e.target.value })}
-          placeholder="przykład (opcjonalnie)"
-          className={`${inputClass} text-[13px]`}
-        />
+        {/* Adnotacje zwiniete: przy dopisywaniu slowka w biegu formularz ma
+            byc krotki, ale przy edycji fiszki z pakietu trzeba widziec, co
+            sie zmienia - stad automatyczne rozwiniecie, gdy cokolwiek jest. */}
+        <details open={szczegoly} className="rounded-lg border border-line-soft">
+          <summary
+            onClick={(e) => {
+              e.preventDefault();
+              setSzczegoly((tak) => !tak);
+            }}
+            className="cursor-pointer px-3 py-2 text-[13px] text-ink-2 hover:text-ink"
+          >
+            Przykład, wymowa, synonimy, forma oficjalna
+          </summary>
+          <div className="space-y-2.5 p-3 pt-0">
+            <textarea
+              rows={2}
+              value={draft.example}
+              onChange={(e) => setDraft({ ...draft, example: e.target.value })}
+              placeholder="zdanie przykładowe — musi zawierać uczony zwrot"
+              className={`${inputClass} text-[13px]`}
+            />
+            <input
+              value={draft.pronunciation}
+              onChange={(e) => setDraft({ ...draft, pronunciation: e.target.value })}
+              placeholder="wymowa, np. /tə tʃeɪz ʌp/"
+              className={`${inputClass} text-[13px]`}
+            />
+            <textarea
+              rows={2}
+              value={draft.synonyms}
+              onChange={(e) => setDraft({ ...draft, synonyms: e.target.value })}
+              placeholder="synonimy — człony oddzielaj ukośnikiem ze spacjami: a / b"
+              className={`${inputClass} text-[13px]`}
+            />
+            <input
+              value={draft.formal}
+              onChange={(e) => setDraft({ ...draft, formal: e.target.value })}
+              placeholder="odpowiednik formalny (OET)"
+              className={`${inputClass} text-[13px]`}
+            />
+          </div>
+        </details>
 
         <div className="grid gap-2 sm:grid-cols-2">
           <input
@@ -308,8 +374,16 @@ function NotesManager() {
                       type="button"
                       aria-label="Edytuj"
                       onClick={() => {
-                        setDraft(toDraft(note));
+                        const szkic = toDraft(note);
+                        setDraft(szkic);
                         setEditingId(note.id);
+                        // Bez tego uzytkownik edytuje fiszke z pakietu nie
+                        // widzac tresci, ktora zmienia.
+                        setSzczegoly(
+                          Boolean(
+                            szkic.example || szkic.pronunciation || szkic.synonyms || szkic.formal,
+                          ),
+                        );
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
                       className="rounded-lg p-2 text-ink-3 hover:bg-chip hover:text-ink"

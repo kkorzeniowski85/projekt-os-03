@@ -20,9 +20,16 @@ import {
   type BackupFile,
 } from "@/lib/local/backup";
 import { BUNDLED_EVENT, applyBundled, bundledState } from "@/lib/local/bundled";
+import { BUNDLED_STATE_ID, asBundledState } from "@/lib/local/bundled-state";
+import { db } from "@/lib/local/db";
 import { storageEstimate } from "@/lib/local/db";
 import { BUFOR_DNI, examPace, type PaceInfo } from "@/lib/local/pace";
-import { getSettings, updateSettings } from "@/lib/local/repo";
+import {
+  countCueCandidates,
+  getSettings,
+  setAllCueCards,
+  updateSettings,
+} from "@/lib/local/repo";
 import type { BundledStateRecord } from "@/lib/local/types";
 import { DEFAULT_PREFS, loadPrefs, savePrefs, type StudyPrefs } from "@/lib/prefs";
 import { recognitionAvailable } from "@/lib/listen";
@@ -55,6 +62,7 @@ function Settings() {
   const [bundled, setBundled] = useState<BundledStateRecord | null>(null);
   const [examDate, setExamDate] = useState("");
   const [pace, setPace] = useState<PaceInfo | null>(null);
+  const [karty, setKarty] = useState<{ gotowe: number; wlaczone: number } | null>(null);
   const [prefs, setPrefs] = useState<StudyPrefs>(DEFAULT_PREFS);
   //: Sprawdzane w przegladarce, nie w renderze - patrz ekran nauki.
   const [mowa, setMowa] = useState<{ dostepna: boolean; angielski: boolean; mikrofon: boolean }>({
@@ -75,6 +83,7 @@ function Settings() {
       const settings = await getSettings();
       setExamDate(settings.examDate ?? "");
       setPace(await examPace(settings.examDate));
+      setKarty(await countCueCandidates());
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udało się odczytać danych");
     }
@@ -126,6 +135,50 @@ function Settings() {
       setPace(await examPace(value || null));
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udało się zapisać daty");
+    }
+  }
+
+  async function przelaczKartyOpisowe(on: boolean) {
+    setBusy(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const ile = await setAllCueCards(on);
+      const fiszek = (n: number) => `${n} ${odmien(n, "fiszce", "fiszkom", "fiszkom")}`;
+      setMessage(
+        on
+          ? `Dodano pytanie z opisu ${fiszek(ile)}. Pojawią się w kolejce razem z resztą materiału.`
+          : `Odłożono karty opisowe (${ile}). Stan ich powtórek został zachowany.`,
+      );
+      await refresh();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Nie udało się zmienić kart");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function wprowadzPakietPonownie() {
+    setBusy(true);
+    setError(null);
+    setMessage(null);
+    try {
+      // Czyscimy zapamietane odciski plikow - wtedy wchodza wszystkie od nowa.
+      // Scalanie uzupelnia i niczego nie dubluje, wiec to jest bezpieczne.
+      const database = await db();
+      const stan = asBundledState(await database.get("settings", BUNDLED_STATE_ID));
+      await database.put("settings", { ...stan, files: {} });
+      const wynik = await applyBundled();
+      setMessage(
+        wynik.status === "applied"
+          ? `Pakiet wprowadzony ponownie: dodano ${wynik.imported}, uzupełniono ${wynik.updated}.`
+          : (wynik.message ?? "Nie udało się wprowadzić pakietu."),
+      );
+      await refresh();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Nie udało się wprowadzić pakietu");
+    } finally {
+      setBusy(false);
     }
   }
 
@@ -251,6 +304,47 @@ function Settings() {
             Ta data już minęła. Wpisz nową albo wyczyść pole.
           </p>
         )}
+      </section>
+
+      <section className="rounded-xl border border-line bg-surface p-4">
+        <p className="text-xs tracking-[0.01em] text-ink-3">PYTANIE Z OPISU</p>
+        <p className="mt-1.5 text-[13px] leading-relaxed text-ink-2">
+          Dodatkowa karta do fiszek, które mają synonimy: pytanie brzmi „fever / high
+          temperature”, odpowiedzią jest termin. OET w częściach Listening i Reading
+          w dużej mierze sprawdza rozpoznawanie parafraz.
+        </p>
+        {karty && (
+          <p className="mt-2.5 border-t border-line-soft pt-3 text-[13px] text-ink-2">
+            {karty.wlaczone > 0
+              ? `Włączone dla ${karty.wlaczone} ${odmien(karty.wlaczone, "fiszki", "fiszek", "fiszek")} · gotowych ${karty.gotowe}`
+              : `Gotowych fiszek: ${karty.gotowe}`}
+          </p>
+        )}
+        <div className="mt-3 flex flex-wrap gap-2">
+          <button
+            type="button"
+            disabled={busy || !karty || karty.gotowe === 0}
+            onClick={() => void przelaczKartyOpisowe(true)}
+            className={`${secondaryButtonClass} flex-1 py-3`}
+          >
+            Włącz pytanie z opisu
+          </button>
+          {karty && karty.wlaczone > 0 && (
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => void przelaczKartyOpisowe(false)}
+              className={`${secondaryButtonClass} py-3`}
+            >
+              Odłóż
+            </button>
+          )}
+        </div>
+        <p className="mt-2.5 text-[12px] leading-relaxed text-ink-3">
+          Włączenie nie zmienia dziennego limitu — nadal widzisz tyle samo fiszek
+          dziennie, tylko każda rozkłada się na trzy dni zamiast dwóch. Odłożenie
+          zachowuje stan powtórek.
+        </p>
       </section>
 
       <section className="rounded-xl border border-line bg-surface p-4">
@@ -388,6 +482,14 @@ function Settings() {
           className={`${secondaryButtonClass} mt-3 w-full py-3`}
         >
           Aktualizuj słownik
+        </button>
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() => void wprowadzPakietPonownie()}
+          className="mt-2 w-full py-2 text-[12px] text-ink-3 hover:text-ink-2 disabled:opacity-40"
+        >
+          Wprowadź pakiet ponownie
         </button>
       </section>
 

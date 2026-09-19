@@ -6,13 +6,63 @@ import type { ItemKind } from "@/lib/types";
 export const FIELD_FRONT = "Front";
 export const FIELD_BACK = "Back";
 export const FIELD_EXAMPLE = "Example";
-export const KNOWN_FIELDS = [FIELD_FRONT, FIELD_BACK, FIELD_EXAMPLE] as const;
+export const FIELD_PRONUNCIATION = "Pronunciation";
+export const FIELD_SYNONYMS = "Synonyms";
+export const FIELD_FORMAL = "Formal";
+
+/**
+ * NOWE POLA DOPISUJEMY ZAWSZE NA KONCU.
+ *
+ * Ta tablica ustala kolejnosc kluczy w zapisanym rekordzie (uporzadkujPola),
+ * a ta kolejnosc wchodzi do JSON.stringify w differs() przy imporcie i w
+ * porownaniu tresci w updateNote. Wstawienie pola w srodku przetasowaloby
+ * klucze we wszystkich istniejacych notatkach: import zglosilby "zaktualizowano
+ * 229 fiszek", ktore niczego nie zmienily, a edycja postawilaby editedAt.
+ * editedAt jest furtka jednokierunkowa - taka fiszka przestaje dostawac
+ * poprawki z pakietu wbudowanego.
+ */
+export const KNOWN_FIELDS = [
+  FIELD_FRONT,
+  FIELD_BACK,
+  FIELD_EXAMPLE,
+  FIELD_PRONUNCIATION,
+  FIELD_SYNONYMS,
+  FIELD_FORMAL,
+] as const;
+
+/** Jedyne miejsce ustalajace kolejnosc i czystosc kluczy w rekordzie. */
+export function uporzadkujPola(raw: Record<string, string>): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const name of KNOWN_FIELDS) {
+    const value = (raw[name] ?? "").trim();
+    if (value) out[name] = value;
+  }
+  return out;
+}
+
+/**
+ * Rozbija liste na czlony. Ukosnik MUSI miec spacje wokol.
+ *
+ * W pakiecie sa czlony z ukosnikiem w srodku ("temporary/covering doctor",
+ * "to explain in simple/plain language") - naiwne split("/") rozbiloby je
+ * na polowy i zrobilo z jednego pojecia dwa bezsensowne.
+ */
+export function splitCzlony(value: string | undefined | null): string[] {
+  return (value ?? "")
+    .split(/\s+\/\s+/)
+    .map((czlon) => czlon.trim())
+    .filter(Boolean);
+}
 
 /**
  * Odcisk tresci odporny na roznice formatowania - port z backendu.
  *
- * Przyklad nie wchodzi do odcisku: dopisanie zdania przykladowego nie czyni
- * fiszki nowa. (JS toLowerCase() zamiast pythonowego casefold() - roznica
+ * Do odcisku wchodzi WYLACZNIE para znaczeniowa przod-tyl. Zasada: pole,
+ * ktorego zmiana nie moze utworzyc nowej fiszki, nie wchodzi do odcisku.
+ * Dopisanie przykladu, wymowy, synonimow czy odpowiednika formalnego nie
+ * czyni fiszki nowa - te same slowo opisane pelniej to nadal to samo slowo.
+ * Gdyby weszly, jedno uzupelnienie pakietu zamienilo by sie z 229 aktualizacji
+ * w 229 duplikatow. (JS toLowerCase() zamiast pythonowego casefold() - roznica
  * dotyczy egzotycznych liter i nie ma znaczenia, bo wszystkie odciski liczy
  * ta sama implementacja.)
  */

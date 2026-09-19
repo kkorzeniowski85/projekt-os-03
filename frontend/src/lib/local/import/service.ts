@@ -338,7 +338,7 @@ export async function commitImport(
         id: crypto.randomUUID(),
         noteId: note.id,
         deckId,
-        templateOrd: ord as 0 | 1,
+        templateOrd: ord as 0 | 1 | 2,
         fsrs: snapshot,
         due: snapshot.due,
         createdAt: stamp,

@@ -42,6 +42,9 @@ każde pominięte pole to informacja, którą aplikacja musi zgadnąć albo utra
 | `front` | Strona pytania — to, czego się uczysz |
 | `back` | Strona odpowiedzi — zwykle polski |
 | `example` | Zdanie przykładowe — **musi zawierać uczony zwrot** (patrz niżej). Widać je dopiero po odsłonięciu odpowiedzi, więc nie podpowiada. Może mieć wiele linii |
+| `pronunciation` | Zapis wymowy. Aplikacja pokazuje go przy odpowiedzi |
+| `synonyms` | Wyrażenia **wymienne w zdaniu** — patrz niżej, to z nich powstaje osobna karta |
+| `formal` | Odpowiednik formalny — rejestr, którego wymaga OET |
 | `tags` | Do filtrowania i statystyk po tagach |
 | `kind` | **Oś statystyk** — patrz niżej, to najważniejsze pole opcjonalne |
 | `note_type` | Ile kart powstanie: `basic` = 1, `basic_reversed` = 2 |
@@ -70,6 +73,28 @@ heads-up** about the ward closure."*
 
 Jeśli materiał źródłowy nie ma przykładu dla danej pozycji, zostaw pole puste.
 Lepszy brak niż zmyślony.
+
+## `synonyms` — wymienne wyrażenia, nie definicje
+
+Z tego pola aplikacja robi osobną kartę: pytaniem jest synonim, odpowiedzią
+uczony termin. Dla OET to ćwiczenie parafraz, na których w dużej mierze stoją
+części Listening i Reading.
+
+Stąd jedno twarde wymaganie: synonim musi dać się **wstawić w zdanie zamiast
+terminu**.
+
+```
+front: "pyrexia"
+✅ "fever / high temperature"        ← wymienne w zdaniu
+❌ "a pyrexia is a raised body temperature"   ← definicja, i zdradza termin
+```
+
+Definicja zawierająca sam termin jest odrzucana automatycznie (karta by się
+nie utworzyła), ale definicja bez terminu utworzy kartę o miernej wartości.
+
+**Nie wklejaj synonimów, wymowy ani odpowiednika formalnego do `example`.**
+Każde ma własne pole. Wklejone w przykład zaśmiecają zdanie i nie dają się
+użyć osobno — ten właśnie nawyk trzeba było potem rozplątywać.
 
 ## `kind` — cztery kategorie, jedna do oznaczenia ręcznie
 

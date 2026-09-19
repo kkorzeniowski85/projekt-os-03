@@ -21,7 +21,7 @@
  *   - fiszka skasowana recznie nie wraca
  */
 
-import { BUNDLED_STATE_ID, asBundledState } from "./bundled-state";
+import { BUNDLED_STATE_ID, DANE_WERSJA, asBundledState } from "./bundled-state";
 import { db } from "./db";
 import { parseSource } from "./import";
 import { commitImport, normalize } from "./import/service";
@@ -107,8 +107,16 @@ export async function bundledState(): Promise<BundledStateRecord> {
   return asBundledState(await database.get("settings", BUNDLED_STATE_ID));
 }
 
-/** Pliki, ktorych obecna wersja jeszcze nie weszla. */
+/**
+ * Pliki, ktorych obecna wersja jeszcze nie weszla.
+ *
+ * Niezgodna wersja danych oznacza WSZYSTKIE pliki: odciski sie zgadzaja,
+ * ale poprzedni kod nie potrafil wyciagnac z nich wszystkiego (np. nie znal
+ * pola synonimow). Ponowne wprowadzenie jest tanie - scalanie uzupelnia
+ * i niczego nie dubluje.
+ */
 export function pendingFiles(manifest: BundledManifest, state: BundledStateRecord): BundledFile[] {
+  if (state.dataVersion !== DANE_WERSJA) return manifest.files;
   return manifest.files.filter((file) => state.files[file.path] !== file.sha256);
 }
 
@@ -233,7 +241,12 @@ async function runBundled(
   }
 
   const database = await db();
-  await database.put("settings", { ...state, files, appliedAt: now.toISOString() });
+  await database.put("settings", {
+    ...state,
+    files,
+    appliedAt: now.toISOString(),
+    dataVersion: DANE_WERSJA,
+  });
 
   result.status = "applied";
   if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent(BUNDLED_EVENT));

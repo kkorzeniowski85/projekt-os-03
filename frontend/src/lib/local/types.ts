@@ -22,7 +22,10 @@ export interface NoteRecord {
   id: string;
   deckId: string;
   noteType: NoteType;
-  /** {"Front": "...", "Back": "...", "Example": "..."} - jak w formacie fiszki/v1. */
+  /**
+   * Pola wg KNOWN_FIELDS: Front, Back, Example oraz adnotacje - Pronunciation,
+   * Synonyms, Formal. Do odcisku tresci wchodza tylko Front i Back.
+   */
   fields: Record<string, string>;
   tags: string[];
   itemKind: ItemKind;
@@ -63,8 +66,8 @@ export interface CardRecord {
   id: string;
   noteId: string;
   deckId: string;
-  /** 0 = Front->Back, 1 = Back->Front */
-  templateOrd: 0 | 1;
+  /** 0 = Front->Back, 1 = Back->Front, 2 = opis (synonimy) -> Front */
+  templateOrd: 0 | 1 | 2;
   fsrs: FsrsSnapshot;
   /** Kopia fsrs.due - IndexedDB nie indeksuje pol zagniezdzonych. */
   due: string;
@@ -90,6 +93,12 @@ export interface ReviewLogRecord {
   cardId: string;
   deckId: string;
   itemKind: ItemKind;
+  /**
+   * Ktory kierunek karty (0/1/2). Zdenormalizowane jak deckId i itemKind:
+   * bez tego nie da sie pozniej sprawdzic, czy karty opisowe sa trudniejsze
+   * od zwyklych. Opcjonalne - wpisy sprzed tej zmiany go nie maja.
+   */
+  templateOrd?: number;
   rating: Rating;
   reviewDatetime: string;
   /** Wymagane (ADR 0005) - bez tego optymalizacja parametrow bylaby zamknieta. */
@@ -123,6 +132,12 @@ export interface BundledStateRecord {
   /** Sciezka pliku w pakiecie -> odcisk wersji, ktora juz weszla. */
   files: Record<string, string>;
   appliedAt: string | null;
+  /**
+   * Ktora wersja kodu wprowadzila pakiet. Gdy nie zgadza sie z DANE_WERSJA,
+   * pliki wchodza ponownie - nowy kod potrafi wyciagnac z nich wiecej niz
+   * stary, mimo ze same pliki sie nie zmienily. Brak = baza sprzed tego pola.
+   */
+  dataVersion?: number;
   /**
    * Odciski tresci i sourceRef fiszek skasowanych recznie. Pakiet ich nie
    * przywraca - skasowanie pojedynczej fiszki ma byc decyzja ostateczna.

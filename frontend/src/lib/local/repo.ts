@@ -5,7 +5,20 @@
 
 import type { ItemKind, NoteType, Rating } from "@/lib/types";
 
-import { contentHash, FIELD_BACK, FIELD_FRONT, guessItemKind, KNOWN_FIELDS } from "./content";
+import {
+  FIELD_BACK,
+  FIELD_EXAMPLE,
+  FIELD_FORMAL,
+  FIELD_FRONT,
+  FIELD_PRONUNCIATION,
+  FIELD_SYNONYMS,
+  contentHash,
+  guessItemKind,
+  uporzadkujPola,
+} from "./content";
+import { splitLegacyExample } from "./legacy-example";
+import { findPhrase } from "./phrase";
+import { cueOf } from "./render";
 import { db } from "./db";
 import {
   applyReview,
@@ -218,14 +231,8 @@ export interface NoteDraftInput {
   sourceRef?: string | null;
 }
 
-function cleanFields(raw: Record<string, string>): Record<string, string> {
-  const fields: Record<string, string> = {};
-  for (const name of KNOWN_FIELDS) {
-    const value = (raw[name] ?? "").trim();
-    if (value) fields[name] = value;
-  }
-  return fields;
-}
+//: Kolejnosc i czystosc kluczy ustala jedno miejsce - content.ts.
+const cleanFields = uporzadkujPola;
 
 function buildCards(note: NoteRecord, now: Date): CardRecord[] {
   const iso = now.toISOString();
@@ -235,7 +242,7 @@ function buildCards(note: NoteRecord, now: Date): CardRecord[] {
       id: uid(),
       noteId: note.id,
       deckId: note.deckId,
-      templateOrd: ord as 0 | 1,
+      templateOrd: ord as 0 | 1 | 2,
       fsrs: snapshot,
       due: snapshot.due,
       createdAt: iso,
@@ -352,10 +359,18 @@ export async function updateNote(
 
   // Dosztukowanie/usuniecie kart przy zmianie typu. Kasowana karta zabiera
   // swoj stan FSRS - historia zostaje w logu (denormalizacja, ADR 0006).
+  //
+  // Karta opisowa (ord 2) jest POZA zasiegiem tej petli. Petla uzgadnia
+  // liczbe kart po indeksie w posortowanej tablicy, wiec przy notatce
+  // dwustronnej z kartami [0,1,2] slice(2) wskazalby na karte opisowa
+  // i kasowal ja razem ze stanem FSRS przy KAZDEJ edycji fiszki.
+  // Po ograniczeniu do {0,1} zbior jest zawsze ciaglym prefiksem, czyli
+  // zalozenie petli staje sie prawdziwe z definicji. Karte opisowa
+  // wlacza i gasi wylacznie setCueCard.
   const target = CARDS_PER_NOTE_TYPE[note.noteType];
-  const existing = (await tx.objectStore("cards").index("by-note").getAll(id)).sort(
-    (a, b) => a.templateOrd - b.templateOrd,
-  );
+  const existing = (await tx.objectStore("cards").index("by-note").getAll(id))
+    .filter((card) => card.templateOrd < 2)
+    .sort((a, b) => a.templateOrd - b.templateOrd);
   for (const card of existing.slice(target)) {
     await tx.objectStore("cards").delete(card.id);
   }
@@ -365,7 +380,7 @@ export async function updateNote(
       id: uid(),
       noteId: note.id,
       deckId: note.deckId,
-      templateOrd: ord as 0 | 1,
+      templateOrd: ord as 0 | 1 | 2,
       fsrs: snapshot,
       due: snapshot.due,
       createdAt: now.toISOString(),
@@ -444,6 +459,148 @@ export async function setNoteSuspended(
   }
   await tx.done;
   return cards.length;
+}
+
+// --- karta opisowa (ord 2) --------------------------------------------------
+
+//: Kierunek karty opisowej: pytanie opisem/synonimem, odpowiedz terminem.
+export const CUE_TEMPLATE_ORD = 2;
+
+/**
+ * Wlacza albo gasi karte opisowa notatki. Zwraca true, gdy cos sie zmienilo.
+ *
+ * Gaszenie ODKLADA karte (suspended), nigdy jej nie kasuje. Skasowana karta
+ * zabiera stan FSRS bezpowrotnie, a tresc pola nie moze decydowac o istnieniu
+ * historii nauki: wyczyszczenie synonimow w formularzu nie jest powodem do
+ * utraty tygodni powtorek.
+ */
+export async function setCueCard(
+  noteId: string,
+  on: boolean,
+  now: Date = new Date(),
+): Promise<boolean> {
+  const database = await db();
+  const tx = database.transaction(["notes", "cards"], "readwrite");
+  const note = await tx.objectStore("notes").get(noteId);
+  if (!note) {
+    await tx.done;
+    throw new Error("Nie znaleziono notatki");
+  }
+  const karty = await tx.objectStore("cards").index("by-note").getAll(noteId);
+  const istniejaca = karty.find((card) => card.templateOrd === CUE_TEMPLATE_ORD);
+  const iso = now.toISOString();
+  let zmiana = false;
+
+  if (on && !istniejaca) {
+    const snapshot = newCardSnapshot(now);
+    await tx.objectStore("cards").put({
+      id: uid(),
+      noteId,
+      deckId: note.deckId,
+      templateOrd: CUE_TEMPLATE_ORD,
+      fsrs: snapshot,
+      due: snapshot.due,
+      createdAt: iso,
+      updatedAt: iso,
+    });
+    zmiana = true;
+  } else if (on && istniejaca?.suspended) {
+    const { suspended, ...bezOdlozenia } = istniejaca;
+    void suspended;
+    await tx.objectStore("cards").put({ ...bezOdlozenia, updatedAt: iso });
+    zmiana = true;
+  } else if (!on && istniejaca && !istniejaca.suspended) {
+    await tx.objectStore("cards").put({ ...istniejaca, suspended: true, updatedAt: iso });
+    zmiana = true;
+  }
+
+  await tx.done;
+  return zmiana;
+}
+
+/** Czy z tej notatki da sie zrobic sensowna karte opisowa. */
+export function cueUsable(note: NoteRecord): boolean {
+  const cue = cueOf(note);
+  if (!cue) return false;
+  // Wskazowka zawierajaca uczony termin zdradza odpowiedz ("follow-up" jako
+  // opis dla "follow-up"). Takich pozycji nie zasiewamy.
+  return findPhrase(cue, note.fields[FIELD_FRONT] ?? "") === null;
+}
+
+/**
+ * Wlacza karty opisowe wszedzie, gdzie sie da (albo gasi je wszystkie).
+ * Idempotentne - wolanie drugi raz nic nie zmienia. Zwraca liczbe fiszek,
+ * ktore zmienily stan.
+ */
+export async function setAllCueCards(on: boolean, now: Date = new Date()): Promise<number> {
+  const database = await db();
+  const notes = await database.getAll("notes");
+  let dotkniete = 0;
+  for (const note of notes) {
+    if (on && !cueUsable(note)) continue;
+    if (await setCueCard(note.id, on, now)) dotkniete += 1;
+  }
+  return dotkniete;
+}
+
+/** Ile fiszek czeka na wlaczenie karty opisowej (do etykiety przycisku). */
+export async function countCueCandidates(): Promise<{ gotowe: number; wlaczone: number }> {
+  const database = await db();
+  const notes = await database.getAll("notes");
+  const karty = await database.getAll("cards");
+  const zKarta = new Set(
+    karty.filter((c) => c.templateOrd === CUE_TEMPLATE_ORD && !c.suspended).map((c) => c.noteId),
+  );
+  let gotowe = 0;
+  for (const note of notes) if (cueUsable(note)) gotowe += 1;
+  return { gotowe, wlaczone: zKarta.size };
+}
+
+// --- porzadkowanie starych notatek -----------------------------------------
+
+/**
+ * Rozbija sklejone pole "przyklad" na osobne pola adnotacji.
+ *
+ * Material z trackerow OET wchodzil, gdy notatka miala trzy pola, wiec wymowa,
+ * synonimy i odpowiednik formalny zostaly wklejone w przyklad. Ta funkcja
+ * przenosi je tam, gdzie naleza.
+ *
+ * Czego NIE robi, i to jest istota jej bezpieczenstwa:
+ *  - nie dotyka przodu ani tylu, wiec odcisk tresci zostaje ten sam (dedup,
+ *    trafianie poprawek z pakietu i lista odrzuconych dzialaja dalej),
+ *  - nie ustawia editedAt - to nie jest reczna poprawka uzytkownika; jedna
+ *    taka linia odcielaby cala kolekcje od poprawek pakietu na zawsze,
+ *  - nie tworzy i nie kasuje zadnej karty,
+ *  - nie liczy odciskow, wiec nie ma tu zadnego await na crypto.subtle -
+ *    obietnica spoza IndexedDB zatwierdzilaby transakcje w polowie.
+ *
+ * Jedna transakcja z kursorem, nie dwie fazy: miedzy odczytem a zapisem
+ * dostawa pakietu zdazylaby zapisac te sama notatke.
+ */
+export async function naprawPrzyklady(): Promise<number> {
+  const database = await db();
+  const tx = database.transaction("notes", "readwrite");
+  let naprawione = 0;
+
+  for (let kursor = await tx.store.openCursor(); kursor; kursor = await kursor.continue()) {
+    const note = kursor.value;
+    const podzial = splitLegacyExample(note.fields[FIELD_EXAMPLE]);
+    if (!podzial.pronunciation && !podzial.synonyms && !podzial.formal) continue;
+
+    const fields = uporzadkujPola({
+      ...note.fields,
+      [FIELD_EXAMPLE]: podzial.example,
+      // Pole juz wypelnione wygrywa - rozbior uzupelnia, nigdy nie nadpisuje.
+      [FIELD_PRONUNCIATION]: note.fields[FIELD_PRONUNCIATION] || podzial.pronunciation,
+      [FIELD_SYNONYMS]: note.fields[FIELD_SYNONYMS] || podzial.synonyms,
+      [FIELD_FORMAL]: note.fields[FIELD_FORMAL] || podzial.formal,
+    });
+    await kursor.update({ ...note, fields });
+    naprawione += 1;
+  }
+
+  await tx.done;
+  return naprawione;
 }
 
 // --- laczenie talii ---------------------------------------------------------
@@ -816,6 +973,7 @@ export async function submitReview(
     cardId: card.id,
     deckId: card.deckId,
     itemKind: note?.itemKind ?? "other",
+    templateOrd: card.templateOrd,
     rating: input.rating,
     reviewDatetime: now.toISOString(),
     durationMs: Math.round(input.durationMs),

@@ -7,9 +7,17 @@ import type { FSRS } from "ts-fsrs";
 
 import { ErrorBanner, FocusShell, buttonClass, inputClass, secondaryButtonClass } from "@/components/AppShell";
 import { compareAnswer } from "@/lib/local/answer";
+import { splitCzlony } from "@/lib/local/content";
 import { firstClozeLine, splitOnPhrase } from "@/lib/local/phrase";
 import { makeScheduler, previewIntervals } from "@/lib/local/scheduler";
-import { exampleOf, renderCard, templateLabel } from "@/lib/local/render";
+import {
+  cueOf,
+  exampleOf,
+  formalOf,
+  pronunciationOf,
+  renderCard,
+  templateLabel,
+} from "@/lib/local/render";
 import {
   getSettings,
   setNoteSuspended,
@@ -152,16 +160,20 @@ function StudySession() {
   const englishText = entry?.note.fields.Front ?? "";
   //: Przy produkcji (polski -> angielski) zdanie z luka daje kontekst, ale nie
   //: zdradza odpowiedzi - sam zwrot jest z niego wyciety.
+  //: Karty, w ktorych odpowiedzia jest angielski termin: produkcja z polskiego
+  //: (ord 1) i rozpoznanie z opisu (ord 2). Luka i wpisywanie maja sens
+  //: w obu - przy karcie opisowej zdanie z wycietym terminem plus synonim to
+  //: dokladnie zadanie z czesci Reading.
+  const odpowiedzPoAngielsku = entry !== null && entry.card.templateOrd !== 0;
   const cloze = useMemo(() => {
-    if (!entry || entry.card.templateOrd !== 1 || !prefs.showCloze) return null;
+    if (!entry || entry.card.templateOrd === 0 || !prefs.showCloze) return null;
     const example = exampleOf(entry.note);
     return example ? firstClozeLine(example, englishText) : null;
   }, [entry, prefs.showCloze, englishText]);
 
   //: Wpisywanie odpowiedzi ma sens tylko tam, gdzie cwiczy sie produkcje -
   //: i tylko gdy odpowiedz jest jednym zwrotem, nie akapitem.
-  const wantsTyping =
-    prefs.typeAnswer && entry?.card.templateOrd === 1 && englishText.length <= 60;
+  const wantsTyping = prefs.typeAnswer && odpowiedzPoAngielsku && englishText.length <= 60;
 
   //: Uchwyt nasluchu - przerywamy go przy zmianie karty i wyjsciu z ekranu.
   const nasluch = useRef<ListenHandle | null>(null);
@@ -435,7 +447,15 @@ function StudySession() {
 
         {!revealed ? (
           <>
-            <p className="tresc whitespace-pre-wrap text-[34px] leading-[1.25] tracking-[-0.01em]">
+            {/* Wskazowka karty opisowej bywa dluga (do 86 znakow w pakiecie),
+                wiec mniejszy stopien i lamanie dlugich ciagow. */}
+            <p
+              className={`tresc whitespace-pre-wrap tracking-[-0.01em] ${
+                entry.card.templateOrd === 2
+                  ? "break-words text-[26px] leading-[1.32]"
+                  : "text-[34px] leading-[1.25]"
+              }`}
+            >
               {question}
             </p>
             {/* Kontekst bez podpowiedzi: sam zwrot jest ze zdania wyciety. */}
@@ -522,6 +542,8 @@ function StudySession() {
               <p className="tresc whitespace-pre-wrap text-[30px] leading-[1.28] tracking-[-0.01em]">
                 {answer}
               </p>
+              {/* Przy karcie opisowej glosnik czyta Front, czyli ODPOWIEDZ -
+                  dlatego pokazuje sie dopiero tutaj, po odslonieciu. */}
               {canSpeak && (
                 <button
                   type="button"
@@ -549,6 +571,13 @@ function StudySession() {
             {ocena && !ocena.exact && ocena.close && (
               <p className="mt-2 text-[13px] text-hard">Prawie — różnica w pisowni.</p>
             )}
+
+            <Adnotacje
+              wymowa={pronunciationOf(entry.note)}
+              synonimy={entry.card.templateOrd === 2 ? "" : cueOf(entry.note)}
+              formalnie={formalOf(entry.note)}
+              polski={entry.card.templateOrd === 2 ? entry.note.fields.Back : ""}
+            />
 
             {example && (
               <p className="tresc mt-5 whitespace-pre-wrap border-l-2 border-line pl-3.5 text-left text-[15px] italic leading-[1.55] text-ink-2">
@@ -649,6 +678,50 @@ function StudySession() {
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * Wymowa, synonimy i odpowiednik formalny pod odpowiedzia.
+ *
+ * Bez ramki i bez koloru: kolor w tej aplikacji niesie znaczenie wylacznie
+ * przy ocenach. Etykiety mikroskopijne, tresc czytelna - to material
+ * pomocniczy, nie druga fiszka.
+ */
+function Adnotacje({
+  wymowa,
+  synonimy,
+  formalnie,
+  polski,
+}: {
+  wymowa: string;
+  synonimy: string;
+  formalnie: string;
+  polski: string;
+}) {
+  if (!wymowa && !synonimy && !formalnie && !polski) return null;
+  const etykieta = "text-[11px] uppercase tracking-[0.08em] text-ink-4";
+
+  return (
+    <div className="mx-auto mt-5 w-full max-w-md space-y-2.5 text-left">
+      {polski && <p className="text-[15px] text-ink-2">{polski}</p>}
+      {wymowa && (
+        <p className="text-[14px] text-ink-2">
+          <span className={etykieta}>wymowa</span>{" "}
+          <span className="tabular-nums">{wymowa}</span>
+        </p>
+      )}
+      {synonimy && (
+        <p className="text-[14px] text-ink-2">
+          <span className={etykieta}>to samo co</span> {splitCzlony(synonimy).join(" · ")}
+        </p>
+      )}
+      {formalnie && (
+        <p className="text-[14px] text-ink-2">
+          <span className={etykieta}>formalnie</span> {splitCzlony(formalnie).join(" · ")}
+        </p>
+      )}
     </div>
   );
 }

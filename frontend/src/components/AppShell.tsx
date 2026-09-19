@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { applyBundled } from "@/lib/local/bundled";
+import { naprawPrzyklady } from "@/lib/local/repo";
 import { requestPersistentStorage } from "@/lib/local/db";
 import { odmien } from "@/lib/types";
 
@@ -27,11 +28,26 @@ export function AppShell({ children }: { children: ReactNode }) {
     // zainstalowanej PWA zwykle przyznawane automatycznie.
     void requestPersistentStorage();
 
+    // Porzadkowanie starych notatek: wymowa, synonimy i odpowiednik formalny
+    // wracaja z pola "przyklad" do swoich pol. PRZED bramka sieci - to praca
+    // na wlasnej bazie, bez zasiegu tez ma sie wykonac. Ekran nauki dziala
+    // poprawnie takze bez niej (rozbior w locie), wiec porazka jest cicha.
+    void naprawPrzyklady().catch((blad) => console.warn("naprawa przykladow:", blad));
+
     // Slownik wbudowany: cicha dostawa tresci z pakietu (ADR 0007). Bez sieci
     // konczy sie po cichu; glos zabiera tylko wtedy, gdy cos doszlo.
     if (bundledChecked || !navigator.onLine) return;
     bundledChecked = true;
-    void applyBundled().then((result) => {
+    void applyBundled()
+      .then(async (result) => {
+        // Pakiet to jedyne zrodlo nowej sklejonej tresci - po dostawie
+        // porzadkujemy jeszcze raz.
+        if (result.status === "applied") {
+          await naprawPrzyklady().catch(() => undefined);
+        }
+        return result;
+      })
+      .then((result) => {
       // navigator.onLine klamie przy braku zasiegu i portalach logowania -
       // dopiero fetch wie, ze sieci nie ma. Wtedy sprobujemy ponownie
       // przy nastepnym ekranie zamiast milczec do konca sesji.

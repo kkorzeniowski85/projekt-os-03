@@ -36,7 +36,7 @@ export interface FiszkiDB extends DBSchema {
 }
 
 export const DB_NAME = "fiszki";
-const DB_VERSION = 1;
+export const DB_VERSION = 1;
 
 let handle: Promise<IDBPDatabase<FiszkiDB>> | null = null;
 

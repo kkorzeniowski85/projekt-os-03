@@ -122,9 +122,14 @@ dopisujący przykłady, tagi i kategorię do istniejących fiszek — także po
 `source_ref`, gdy zmieniło się tłumaczenie — bez ruszania stanu powtórek;
 udostępnianie z innych aplikacji (Android).
 
+**Fiszka** — przód, tył, zdanie przykładowe oraz adnotacje: wymowa, synonimy
+i odpowiednik formalny (OET). Z synonimów powstaje opcjonalna karta
+**„opis → termin"**: pytaniem jest parafraza, odpowiedzią uczony termin —
+włączana przyciskiem w Ustawieniach, nie automatycznie.
+
 **Statystyki** — rzeczywista skuteczność z podziałem na materiał świeży
 i utrwalony, rozbicie na kategorie (słowo / fraza / wyrażenie / zdanie) i tagi,
-pijawki, prognoza obciążenia.
+pijawki, prognoza obciążenia, mapa dni nauki, tempo pod datę egzaminu.
 
 **Offline** — service worker trzyma całą aplikację, dane żyją w IndexedDB.
 Kopia zapasowa do pliku i przywracanie „wszystko albo nic".
@@ -150,3 +155,5 @@ aplikacji mobilnych.
   — **obowiązujący kierunek**
 - [0007 — Słownik wbudowany](docs/adr/0007-slownik-wbudowany.md) — treść jedzie
   z aplikacją, postęp zostaje w telefonie
+- [0008 — Pola adnotacji i karta opisowa](docs/adr/0008-pola-adnotacji-i-karta-opisowa.md)
+  — wymowa, synonimy i rejestr formalny osobno; pytanie z opisu

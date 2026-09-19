@@ -10,7 +10,7 @@
  * swiadome uproszczenie modelu bez synchronizacji.
  */
 
-import { db } from "./db";
+import { DB_VERSION, db } from "./db";
 import type {
   BundledStateRecord,
   CardRecord,
@@ -69,7 +69,7 @@ export async function exportBackup(now: Date = new Date()): Promise<BackupFile> 
   return {
     format: BACKUP_FORMAT,
     exportedAt: now.toISOString(),
-    schema: 1,
+    schema: DB_VERSION,
     data: {
       decks: await database.getAll("decks"),
       notes: await database.getAll("notes"),
@@ -105,6 +105,18 @@ export function parseBackup(text: string): BackupFile {
     throw new Error(
       `Plik nie jest kopia zapasowa tej aplikacji (format: ${String(candidate.format ?? "brak")}). ` +
         "Talie w formacie fiszki/v1 wczytuje sie przez ekran Import.",
+    );
+  }
+  // Wersja schematu: brak = kopia sprzed wprowadzenia pola, czyli 1.
+  // Kopia z NOWSZEJ wersji moze zawierac sklepy i pola, ktorych ta wersja
+  // nie zna - wczytanie jej po cichu zgubiloby dane.
+  const schema = candidate.schema === undefined ? 1 : candidate.schema;
+  if (typeof schema !== "number" || !Number.isFinite(schema)) {
+    throw new Error("Kopia ma uszkodzone oznaczenie wersji.");
+  }
+  if (schema > DB_VERSION) {
+    throw new Error(
+      "Ta kopia pochodzi z nowszej wersji aplikacji. Zaktualizuj aplikację i spróbuj ponownie.",
     );
   }
   const data = candidate.data as Record<string, unknown> | undefined;
@@ -148,5 +160,16 @@ export async function restoreBackup(payload: BackupFile): Promise<BackupCounts> 
         "Dotychczasowe dane pozostaly bez zmian.",
     );
   }
+  // Po zatwierdzeniu, w OSOBNEJ transakcji: kopia sprzed wprowadzenia pol
+  // adnotacji ma je sklejone w przykladzie. Blok wyzej ma catch, ktory
+  // przerywa transakcje i zglasza nieudane przywrocenie - wyjatek z naprawy
+  // zamienilby udane przywrocenie w nieudane, wiec porazka jest tu cicha.
+  try {
+    const { naprawPrzyklady } = await import("./repo");
+    await naprawPrzyklady();
+  } catch {
+    // Dane sa przywrocone; porzadek zrobi sie przy nastepnym otwarciu.
+  }
+
   return backupCounts(payload);
 }

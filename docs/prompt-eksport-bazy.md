@@ -37,6 +37,9 @@ W plikach tego projektu jest moja baza słówek. Przekształć ją na format JSO
       "front": "ubiquitous",
       "back": "wszechobecny",
       "example": "Smartphones are ubiquitous these days.",
+      "pronunciation": "/juːˈbɪkwɪtəs/",
+      "synonyms": "omnipresent / found everywhere",
+      "formal": "prevalent throughout",
       "tags": ["b2", "przymiotnik"],
       "kind": "word",
       "note_type": "basic_reversed",
@@ -79,6 +82,14 @@ wybrane przy imporcie, więc talia może być mieszana.
 
 - `example` — zdanie przykładowe, TYLKO jeśli jest w bazie. Nie wymyślaj.
   Nie wchodzi do wykrywania duplikatów, więc można je dopisać później.
+  **Samo zdanie** — wymowy, synonimów ani odpowiednika formalnego tu nie wklejaj,
+  mają własne pola niżej.
+- `pronunciation` — zapis wymowy, jeśli baza go ma (np. `/juːˈbɪkwɪtəs/`).
+- `synonyms` — wyrażenia **wymienne w zdaniu**, nie definicje: z tego pola
+  powstaje osobna karta, w której synonim jest pytaniem, a termin odpowiedzią.
+  Definicja zawierająca sam termin zdradziłaby odpowiedź. Człony rozdzielaj
+  ukośnikiem ze spacjami (`a / b`) albo podaj tablicę.
+- `formal` — odpowiednik formalny, jeśli baza rozróżnia rejestr.
 - `tags` — przenieś kategorie, poziomy i części mowy z bazy. Małe litery,
   bez znaków specjalnych. Nie wymyślaj tagów, których baza nie ma.
 - `source_ref` — stabilny identyfikator pozycji w bazie (np. `"baza/1042"` albo

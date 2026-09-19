@@ -17,6 +17,9 @@ mapowania.
       "front": "ubiquitous",
       "back": "wszechobecny",
       "example": "Smartphones are ubiquitous these days.",
+      "pronunciation": "/juːˈbɪkwɪtəs/",
+      "synonyms": "omnipresent / found everywhere",
+      "formal": "prevalent throughout",
       "tags": ["b2", "przymiotnik"],
       "kind": "word",
       "source_ref": "oxford-3000/ubiquitous"
@@ -32,6 +35,9 @@ mapowania.
 | `front` | **tak** | Strona pytania |
 | `back` | **tak** | Strona odpowiedzi |
 | `example` | nie | Zdanie przykładowe. Pokazywane razem z odpowiedzią, nie wchodzi do wykrywania duplikatów |
+| `pronunciation` | nie | Zapis wymowy, np. `/juːˈbɪkwɪtəs/` |
+| `synonyms` | nie | Wyrażenia **wymienne w zdaniu**. Z nich powstaje pytanie karty „opis → termin", więc definicja zawierająca sam termin zdradziłaby odpowiedź |
+| `formal` | nie | Odpowiednik formalny (rejestr, którego wymaga OET) |
 | `tags` | nie | Lista tagów |
 | `kind` | nie | `word` \| `phrase` \| `expression` \| `sentence` \| `other`. Bez tego kategoria jest zgadywana z treści `front` |
 | `note_type` | nie | `basic` (1 karta) albo `basic_reversed` (2 karty). **Wygrywa z typem wybranym na ekranie importu** — patrz niżej. Bez tego obowiązuje typ z importu |
@@ -85,6 +91,15 @@ z przykładami, typowymi błędami i tym, co robić przy kolejnych wersjach
 materiału. Ten dokument jest specyfikacją formatu, tamten — poradnikiem.
 
 ## Deduplikacja
+
+**Do odcisku wchodzą wyłącznie `front` i `back`.** Zasada: pole, którego
+zmiana nie może utworzyć nowej fiszki, nie wchodzi do odcisku — dopisanie
+wymowy nie czyni słowa innym słowem. Gdyby weszły, jedno uzupełnienie
+zamieniłoby się z aktualizacji w duplikaty.
+
+Listy (`synonyms`, `formal`) można podać jako tablicę albo jako napis
+z członami rozdzielonymi **ukośnikiem ze spacjami**: `a / b`. Ukośnik bez
+spacji zostaje częścią członu (`temporary/covering doctor`).
 
 Import porównuje odcisk treści (`front` + `back`, bez uwzględniania wielkości
 liter i białych znaków). Ta sama fiszka z dwóch różnych źródeł zostanie

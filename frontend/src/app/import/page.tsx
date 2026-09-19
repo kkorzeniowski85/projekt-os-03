@@ -27,6 +27,7 @@ import {
   ensureDictionary,
   isDictionary,
   listDecks,
+  naprawPrzyklady,
 } from "@/lib/local/repo";
 import type { DeckRecord } from "@/lib/local/types";
 import {
@@ -58,6 +59,9 @@ const CLAUDE_PROMPT = `Zrób z tego fiszki w formacie JSON "fiszki/v1". Zasady:
       "front": "strona pytania (obcy język)",
       "back": "strona odpowiedzi (polski)",
       "example": "zdanie przykładowe — opcjonalne",
+      "pronunciation": "/wymowa IPA/ — opcjonalne",
+      "synonyms": "synonim / inny synonim — opcjonalne",
+      "formal": "odpowiednik formalny — opcjonalne",
       "tags": ["tag1", "tag2"],
       "kind": "word | phrase | expression | sentence",
       "note_type": "basic | basic_reversed"
@@ -71,6 +75,12 @@ const CLAUDE_PROMPT = `Zrób z tego fiszki w formacie JSON "fiszki/v1". Zasady:
   someone off" → "The council keeps fobbing me off"), a placeholdery
   someone/something zastąp konkretem. Przepisz z materiału; gdy go tam nie
   ma, zostaw pole puste.
+- NIE wklejaj synonimów, wymowy ani odpowiednika formalnego do "example".
+  Każde z nich ma własne pole; wklejone w przykład zaśmiecają zdanie i nie
+  dają się użyć osobno. Człony list rozdzielaj ukośnikiem ZE SPACJAMI: "a / b".
+- "synonyms" to wyrażenia WYMIENNE w zdaniu, nie definicje — z tego pola
+  powstaje pytanie karty „opis → termin", więc definicja zawierająca sam
+  termin zdradza odpowiedź.
 - NIE dodawaj pola "deck" ani nie wymyślaj nazw talii — materiał trafia do
   jednej wspólnej bazy.
 - "kind": pojedyncze słowo → word; kilka słów dosłownie → phrase; idiom albo
@@ -264,6 +274,8 @@ function Importer() {
       if (!deckId) throw new Error("Wybierz talię");
 
       const stats = await commitImport(deckId, drafts, { noteType, onDuplicate });
+      // Stare pliki z czatu maja adnotacje sklejone w przykladzie.
+      await naprawPrzyklady().catch(() => undefined);
       setDone({ ...stats, deckId });
       // Nastepny import znow celuje w baze glowna - "+ osobna talia" nie ma
       // sie utrwalac jako nowy stan domyslny.

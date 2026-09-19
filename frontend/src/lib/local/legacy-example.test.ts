@@ -40,13 +40,20 @@ it("ukosnik w srodku zdania nie jest brany za wymowe", () => {
   expect(wynik.example).toBe("Check the and/or clause.\n/not pronunciation/");
 });
 
-it("nie gubi tresci, ktorej nie rozpoznaje", () => {
+it("naglowek PO zdaniach zostaje w przykladzie", () => {
+  // Skanujemy wylacznie poczatek pola. "Synonimy:" wpisane przez uzytkownika
+  // w srodku wlasnego tekstu nie moze zostac wyciete ze srodka tego tekstu.
   const raw = "Uwaga redaktora bez naglowka\nSynonimy: x\n\nZdanie.";
   const wynik = splitLegacyExample(raw);
-  expect(wynik.synonyms).toBe("x");
-  // Pusta linia stala w zrodle - rozbior jej nie zwija, bo nie rozroznia
-  // dziury po naglowku od celowego akapitu.
-  expect(wynik.example).toBe("Uwaga redaktora bez naglowka\n\nZdanie.");
+  expect(wynik.synonyms).toBe("");
+  expect(wynik.example).toBe(raw);
+});
+
+it("nie zjada zdania zaczynajacego sie od slowa 'Formally'", () => {
+  const raw = "Formally, the patient was discharged: no follow-up needed.";
+  const wynik = splitLegacyExample(raw);
+  expect(wynik.formal).toBe("");
+  expect(wynik.example).toBe(raw);
 });
 
 it("przyjmuje warianty zapisu naglowkow", () => {

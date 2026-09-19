@@ -7,7 +7,11 @@
 
 import type { NoteType } from "@/lib/types";
 
-import { FIELD_BACK, FIELD_EXAMPLE, FIELD_FRONT } from "../content";
+import { FIELD_BACK, FIELD_EXAMPLE, FIELD_FRONT,
+  FIELD_PRONUNCIATION,
+  FIELD_SYNONYMS,
+  FIELD_FORMAL,
+} from "../content";
 import {
   ImportParseError,
   TARGET_KIND,
@@ -24,13 +28,24 @@ const KEYS: Record<string, string> = {
   front: FIELD_FRONT,
   back: FIELD_BACK,
   example: FIELD_EXAMPLE,
+  pronunciation: FIELD_PRONUNCIATION,
+  synonyms: FIELD_SYNONYMS,
+  formal: FIELD_FORMAL,
   tags: TARGET_TAGS,
   kind: TARGET_KIND,
 };
 
-function asText(value: unknown): string {
+//: Czym skleic liste podana jako tablica. Synonimy i odpowiedniki formalne
+//: rozdziela ukosnik ZE SPACJAMI - tak, jak rozbija je splitCzlony. Tagi
+//: musza zostac przy przecinku, bo rozbiera je splitTags przy normalizacji.
+const SEPARATORY: Record<string, string> = {
+  [FIELD_SYNONYMS]: " / ",
+  [FIELD_FORMAL]: " / ",
+};
+
+function asText(value: unknown, separator = ", "): string {
   if (value == null) return "";
-  if (Array.isArray(value)) return value.map(String).join(", ");
+  if (Array.isArray(value)) return value.map(String).join(separator);
   return String(value);
 }
 
@@ -98,7 +113,10 @@ export function parse(data: Uint8Array): ParseResult {
     const item = note as Record<string, unknown>;
 
     const values = Object.fromEntries(
-      Object.entries(KEYS).map(([key, column]) => [column, asText(item[key])]),
+      Object.entries(KEYS).map(([key, column]) => [
+        column,
+        asText(item[key], SEPARATORY[column]),
+      ]),
     );
     if (!values[FIELD_FRONT].trim() || !values[FIELD_BACK].trim()) {
       warnings.push(`Pozycja ${index}: pominieta (pusty przod albo tyl).`);

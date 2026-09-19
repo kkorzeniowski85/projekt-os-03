@@ -8,7 +8,11 @@
 
 import type { ItemKind, NoteType } from "@/lib/types";
 
-import { FIELD_BACK, FIELD_EXAMPLE, FIELD_FRONT } from "../content";
+import { FIELD_BACK, FIELD_EXAMPLE, FIELD_FRONT,
+  FIELD_PRONUNCIATION,
+  FIELD_SYNONYMS,
+  FIELD_FORMAL,
+} from "../content";
 
 //: Cele mapowania: pola aplikacji + role specjalne.
 export const TARGET_IGNORE = "ignore";
@@ -18,6 +22,9 @@ export const MAPPING_TARGETS = [
   FIELD_FRONT,
   FIELD_BACK,
   FIELD_EXAMPLE,
+  FIELD_PRONUNCIATION,
+  FIELD_SYNONYMS,
+  FIELD_FORMAL,
   TARGET_TAGS,
   TARGET_KIND,
   TARGET_IGNORE,
@@ -138,6 +145,11 @@ const HINTS: Record<string, readonly string[]> = {
     "example", "przyklad", "przykład", "sentence", "zdanie", "usage",
     "uzycie", "użycie", "context", "kontekst",
   ],
+  [FIELD_PRONUNCIATION]: ["pronunciation", "wymowa", "ipa", "transkrypcja"],
+  [FIELD_SYNONYMS]: ["synonyms", "synonimy", "synonim", "parafraza", "opis"],
+  // Bez "register"/"rejestr": w trackerze OET to os aktywny/pasywny, ktora
+  // idzie w tagi, nie odpowiednik formalny.
+  [FIELD_FORMAL]: ["formal", "formalnie", "formalny", "oficjalnie"],
   [TARGET_TAGS]: ["tags", "tagi", "tag", "kategoria", "category", "labels", "etykiety"],
   [TARGET_KIND]: ["kind", "rodzaj", "typ", "type", "item_kind"],
 };

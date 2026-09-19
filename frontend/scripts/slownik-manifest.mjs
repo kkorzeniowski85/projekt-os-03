@@ -73,6 +73,23 @@ export function buildManifest(dir) {
         );
       }
       seenRefs.set(note.source_ref, name);
+
+      // Literowka w kluczu ("synonims") przechodzilaby bez slowa, a importer
+      // po cichu wyrzucilby wartosc - dokladnie ten rodzaj cichej porazki,
+      // przed ktorym ten skrypt istnieje.
+      for (const klucz of ["pronunciation", "synonyms", "formal"]) {
+        const wartosc = note[klucz];
+        if (wartosc === undefined || wartosc === null) continue;
+        const dobre =
+          typeof wartosc === "string" ||
+          (Array.isArray(wartosc) && wartosc.every((x) => typeof x === "string"));
+        if (!dobre) {
+          throw new Error(
+            `${name}: fiszka "${note.front}" ma pole ${klucz} ktore nie jest ` +
+              "napisem ani lista napisow",
+          );
+        }
+      }
       const key = [normalize(note.front), normalize(note.back)].join("\x1f");
       const other = seen.get(key);
       if (other && other !== name) {

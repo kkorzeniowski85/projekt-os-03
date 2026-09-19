@@ -40,7 +40,7 @@ const PUSTY: SplitExample = { pronunciation: "", synonyms: "", formal: "", examp
 //: Naglowki dopuszczaja polska i angielska pisownie oraz brak dwukropka po
 //: nawiasie - zrodla bywaly redagowane recznie.
 const SYNONIMY = /^(synonimy|synonyms)\s*:\s*/i;
-const FORMALNIE = /^(formalnie|formally)\b[^:]*:\s*/i;
+const FORMALNIE = /^(formalnie\s*\(oet\)|formalnie|formally)\s*:\s*/i;
 
 /** Linia wygladajaca na zapis wymowy: w slashach albo w nawiasach kwadratowych. */
 function czyWymowa(linia: string): boolean {
@@ -61,16 +61,22 @@ export function splitLegacyExample(raw: string | undefined | null): SplitExample
   const formalne: string[] = [];
   const reszta: string[] = [];
 
+  // Naglowki czytamy WYLACZNIE z poczatku pola. Pierwsza nierozpoznana
+  // niepusta linia konczy naglowek i cala dalsza tresc leci do przykladu
+  // doslownie. Bez tego "Synonimy:" napisane przez uzytkownika w trzecim
+  // zdaniu jego wlasnej notatki zostaloby wyciete ze srodka tekstu.
+  let wNaglowku = true;
   for (const linia of raw.split("\n")) {
     const czysta = linia.trim();
-    if (SYNONIMY.test(czysta)) {
+    if (wNaglowku && !czysta) continue; // puste linie naglowka pomijamy
+    if (wNaglowku && SYNONIMY.test(czysta)) {
       synonimy.push(czysta.replace(SYNONIMY, "").trim());
-    } else if (FORMALNIE.test(czysta)) {
+    } else if (wNaglowku && FORMALNIE.test(czysta)) {
       formalne.push(czysta.replace(FORMALNIE, "").trim());
-    } else if (czyWymowa(czysta) && reszta.length === 0) {
-      // Tylko zanim zaczna sie zdania - slash w srodku zdania to nie wymowa.
+    } else if (wNaglowku && czyWymowa(czysta)) {
       wymowa.push(czysta);
     } else {
+      wNaglowku = false;
       reszta.push(linia);
     }
   }

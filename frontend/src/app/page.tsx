@@ -48,13 +48,21 @@ function DeckList() {
   const [merging, setMerging] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [pace, setPace] = useState<PaceInfo | null>(null);
+  //: Ile dni temu zrobiono kopie. null = nigdy, a to jest najgorszy przypadek.
+  const [odKopii, setOdKopii] = useState<number | null | undefined>(undefined);
 
   const load = useCallback(async () => {
     try {
       // Slownik ma istniec od pierwszego otwarcia - to baza glowna.
       await ensureDictionary();
       setDecks(await listDecks());
-      setPace(await examPace((await getSettings()).examDate));
+      const settings = await getSettings();
+      setPace(await examPace(settings.examDate));
+      setOdKopii(
+        settings.lastBackupAt
+          ? Math.floor((Date.now() - new Date(settings.lastBackupAt).getTime()) / 86_400_000)
+          : null,
+      );
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udało się wczytać talii");
     }
@@ -181,6 +189,27 @@ function DeckList() {
         </Link>
       </div>
 
+      {/* Nie ma synchronizacji ani kont: kopia to jedyne, co dzieli tę
+          kolekcję od zera. Pasek pokazuje się dopiero, gdy jest o czym
+          przypominać - codzienne straszenie przestaje działać po tygodniu. */}
+      {odKopii !== undefined && (odKopii === null || odKopii >= 7) && (
+        <Link
+          href="/ustawienia"
+          className={`flex items-center justify-between gap-3 rounded-lg border px-3.5 py-2.5 text-[13px] ${
+            odKopii === null || odKopii >= 14
+              ? "border-again-line bg-again-bg text-again"
+              : "border-hard-line bg-hard-bg text-hard"
+          }`}
+        >
+          <span>
+            {odKopii === null
+              ? "Nie masz kopii zapasowej — historia nauki żyje tylko w tym telefonie"
+              : `Ostatnia kopia: ${odKopii} ${odmien(odKopii, "dzień", "dni", "dni")} temu`}
+          </span>
+          <span className="shrink-0 font-medium">Zrób kopię →</span>
+        </Link>
+      )}
+
       {pace && !pace.past && pace.newCards > 0 && (
         <p className="flex flex-wrap items-baseline gap-x-2 gap-y-1 rounded-lg border border-line bg-surface px-3.5 py-2.5 text-[13px]">
           <span className="text-ink-2">
@@ -188,7 +217,13 @@ function DeckList() {
           </span>
           <span className="text-ink-4">·</span>
           <span className={pace.onTrack ? "text-ink-2" : "font-medium text-hard"}>
-            {pace.needPerDay} nowych dziennie{pace.onTrack ? "" : ` (ustawione ${pace.currentPerDay})`}
+            {pace.needPerDay} {odmien(pace.needPerDay, "nowa karta", "nowe karty", "nowych kart")}{" "}
+            dziennie
+            {pace.onTrack
+              ? ""
+              : pace.actualPerDay !== null
+                ? ` (bierzesz ${String(pace.actualPerDay).replace(".", ",")})`
+                : ` (limit ${pace.limitPerDay})`}
           </span>
         </p>
       )}
@@ -218,7 +253,7 @@ function DeckList() {
               <p className="mt-1.5 flex items-center gap-2.5 text-[13px] text-ink-2">
                 <span className="flex items-center gap-1.5">
                   <span className="inline-block h-[7px] w-[7px] rounded-full bg-accent" />
-                  {totals.new} nowych
+                  {totals.new} {odmien(totals.new, "nowa", "nowe", "nowych")}
                 </span>
                 <span className="flex items-center gap-1.5">
                   <span className="inline-block h-[7px] w-[7px] rounded-full bg-good" />
@@ -365,7 +400,8 @@ function DeckList() {
                         )}
                       </p>
                       <p className="mt-1.5 text-[13px] text-ink-2">
-                        {deck.counts.new} nowych · {deck.counts.due} do powtórki ·{" "}
+                        {deck.counts.new} {odmien(deck.counts.new, "nowa", "nowe", "nowych")} ·{" "}
+                        {deck.counts.due} do powtórki ·{" "}
                         {deck.counts.total} kart
                       </p>
                     </div>

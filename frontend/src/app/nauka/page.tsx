@@ -9,7 +9,7 @@ import { ErrorBanner, FocusShell, buttonClass, inputClass, secondaryButtonClass 
 import { compareAnswer } from "@/lib/local/answer";
 import { splitCzlony } from "@/lib/local/content";
 import { firstClozeLine, splitOnPhrase } from "@/lib/local/phrase";
-import { makeScheduler, previewIntervals } from "@/lib/local/scheduler";
+import { makeScheduler, maxIntervalForExam, previewIntervals } from "@/lib/local/scheduler";
 import {
   cueOf,
   exampleOf,
@@ -127,7 +127,14 @@ function StudySession() {
         getSettings(),
         studyQueue(selection, { limit }),
       ]);
-      setScheduler(makeScheduler(settings));
+      // Planista dostaje termin egzaminu: bez tego "Latwe" na swiezej karcie
+      // potrafi wyznaczyc powtorke PO egzaminie, czyli wyjac material
+      // z kolejki dokladnie wtedy, gdy trzeba go utrwalac.
+      setScheduler(
+        makeScheduler(settings, {
+          maxIntervalDays: maxIntervalForExam(settings.examDate, new Date()),
+        }),
+      );
       setQueue(data);
       setSessionSize((size) => (size === 0 ? data.cards.length : size));
       setIndex(0);
@@ -296,11 +303,22 @@ function StudySession() {
 
     void (async () => {
       setRevealed(false);
-      speak(englishText);
+      // Czytamy to, co JEST teraz na ekranie - i tylko gdy jest po angielsku.
+      // Wczesniejsza wersja czytala zawsze Front, wiec przy karcie tyl->przod
+      // (a takich jest wiekszosc) telefon wypowiadal odpowiedz, zanim padlo
+      // pytanie. Polskiej strony nie czytamy: glos jest angielski, a tlumaczenie
+      // i tak znamy.
+      const { question: pytanie, answer: odpowiedz } = renderCard(
+        entry.note,
+        entry.card.templateOrd,
+      );
+      const pytaniePoAngielsku = entry.card.templateOrd !== 1;
+      if (pytaniePoAngielsku) speak(pytanie);
       // Tyle, ile trwa przypomnienie sobie odpowiedzi - dluzej niz odczyt.
-      await czekaj(3200);
+      await czekaj(pytaniePoAngielsku ? 3200 : 2400);
       if (porzucone) return;
       setRevealed(true);
+      if (entry.card.templateOrd !== 0) speak(odpowiedz);
       await czekaj(2600);
       if (porzucone) return;
       // Kolejna karta albo koniec: kolejki nie dociagamy, bo nic nie ocenilismy
@@ -314,6 +332,9 @@ function StudySession() {
       for (const id of zegary.current) clearTimeout(id);
       zegary.current = [];
       stopSpeaking();
+      // Bez tego pierwsza ocena po wyjsciu z trybu sluchania zapisalaby
+      // do logu czas liczony od wejscia w tryb - wartosc fikcyjna.
+      shownAt.current = Date.now();
     };
   }, [trybSluchania, entry, englishText, index, queue]);
 
@@ -330,7 +351,15 @@ function StudySession() {
       const target = event.target;
       if (target instanceof HTMLElement) {
         const control = target.closest("button, a, select, textarea, input");
-        if (control && control.getAttribute("data-odpowiedz") === null) return;
+        if (control) {
+          // Pole odpowiedzi to jedyny wyjatek, i tylko dla Entera: spacja
+          // ma w nim wpisywac spacje. Wczesniejsza wersja sprawdzala
+          // getAttribute(...) === null, a atrybut bez wartosci zwraca pusty
+          // napis - warunek nigdy nie chronil pola i "shortness of breath"
+          // bylo niewpisywalne.
+          const poleOdpowiedzi = control.hasAttribute("data-odpowiedz");
+          if (!poleOdpowiedzi || event.code !== "Enter") return;
+        }
       }
       if (event.code === "Space" || event.code === "Enter") {
         event.preventDefault();

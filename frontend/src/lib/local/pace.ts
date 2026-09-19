@@ -24,13 +24,19 @@ export interface PaceInfo {
   daysLeft: number;
   /** Dni, ktore zostaja na branie nowego materialu. */
   learningDays: number;
-  /** Ile nowych fiszek czeka w calej kolekcji. */
+  /** Ile nowych KART czeka (nie fiszek - fiszka ma ich dwie albo trzy). */
   newCards: number;
-  /** Ile nowych dziennie trzeba brac, zeby zdazyc. */
+  /** Ile nowych kart dziennie trzeba brac, zeby zdazyc. */
   needPerDay: number;
-  /** Ile nowych dziennie jest teraz ustawione (suma po taliach). */
-  currentPerDay: number;
-  /** Czy obecne tempo wystarcza. */
+  /** Sufit ustawiony w taliach - ile wolno wziac. */
+  limitPerDay: number;
+  /**
+   * Ile nowych kart dziennie BIERZESZ naprawde - srednia z ostatniego
+   * tygodnia, z logu powtorek. null, gdy nie ma jeszcze historii.
+   * Sufit nie jest miara pracy: po tygodniu przerwy nadal wynosi 20.
+   */
+  actualPerDay: number | null;
+  /** Czy tempo wystarcza - mierzone praca, a gdy jej brak, sufitem. */
   onTrack: boolean;
   /** Egzamin juz byl albo jest dzis. */
   past: boolean;
@@ -62,8 +68,32 @@ export async function examPace(
   for (const card of await database.getAll("cards")) {
     if (isNew(card.fsrs) && card.suspended !== true) newCards += 1;
   }
-  let currentPerDay = 0;
-  for (const deck of await database.getAll("decks")) currentPerDay += deck.newPerDay;
+  let limitPerDay = 0;
+  for (const deck of await database.getAll("decks")) limitPerDay += deck.newPerDay;
+
+  // Realne tempo: ile RÓŻNYCH kart zobaczylo sie po raz pierwszy w ciagu
+  // ostatnich siedmiu dni nauki. Liczone z logu, bo tylko on wie, co sie
+  // naprawde wydarzylo.
+  const tydzienTemu = new Date(now.getTime() - 7 * 24 * 3600_000).toISOString();
+  const swieze = new Set<string>();
+  let najstarszaPowtorka: string | null = null;
+  for (const wpis of await database.getAllFromIndex(
+    "reviewLog",
+    "by-time",
+    IDBKeyRange.lowerBound(tydzienTemu),
+  )) {
+    if (najstarszaPowtorka === null) najstarszaPowtorka = wpis.reviewDatetime;
+    if (wpis.stateBefore.state === 0) swieze.add(wpis.cardId);
+  }
+  // Dzielimy przez liczbe dni, ktore naprawde uplynely od pierwszej powtorki
+  // w oknie - inaczej pierwszy dzien nauki pokazywalby jedna siodma tempa.
+  const dniNauki = najstarszaPowtorka
+    ? Math.max(
+        1,
+        Math.round((now.getTime() - new Date(najstarszaPowtorka).getTime()) / (24 * 3600_000)),
+      )
+    : 0;
+  const actualPerDay = dniNauki > 0 ? Math.round((swieze.size / dniNauki) * 10) / 10 : null;
 
   if (daysLeft <= 0) {
     return {
@@ -71,7 +101,8 @@ export async function examPace(
       learningDays: 0,
       newCards,
       needPerDay: 0,
-      currentPerDay,
+      limitPerDay,
+      actualPerDay,
       onTrack: true,
       past: true,
     };
@@ -85,8 +116,11 @@ export async function examPace(
     learningDays,
     newCards,
     needPerDay,
-    currentPerDay,
-    onTrack: currentPerDay >= needPerDay,
+    limitPerDay,
+    actualPerDay,
+    // Praca jest miara, gdy jest co mierzyc. Bez historii zostaje sufit -
+    // ale wtedy mowimy o mozliwosci, nie o fakcie.
+    onTrack: actualPerDay !== null ? actualPerDay >= needPerDay : limitPerDay >= needPerDay,
     past: false,
   };
 }

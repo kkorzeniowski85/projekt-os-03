@@ -117,6 +117,12 @@ export interface SettingsRecord {
    * utrwalenie. null = brak terminu, tempo nie jest liczone.
    */
   examDate?: string | null;
+  /**
+   * Kiedy ostatnio pobrano kopie zapasowa. Aplikacja nie wie, czy plik
+   * naprawde powstal i gdzie wylądowal - wie tylko, kiedy uzytkownik o to
+   * poprosil. To wystarczy, zeby przypomniec.
+   */
+  lastBackupAt?: string | null;
   /** null = wagi domyslne; wlasne pojawia sie po optymalizacji na historii. */
   fsrsParameters: number[] | null;
   createdAt: string;

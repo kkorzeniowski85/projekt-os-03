@@ -24,6 +24,7 @@ import {
   applyReview,
   isNew,
   makeScheduler,
+  maxIntervalForExam,
   newCardSnapshot,
   schedulerVersion,
 } from "./scheduler";
@@ -41,6 +42,10 @@ const CARDS_PER_NOTE_TYPE: Record<NoteType, number> = { basic: 1, basic_reversed
 
 const uid = () => crypto.randomUUID();
 
+//: Dluzej nad jedna karta nikt swiadomie nie siedzi - to znak, ze telefon
+//: trafil do kieszeni. Prog z Anki.
+const MAX_DURATION_MS = 60_000;
+
 // --- ustawienia ------------------------------------------------------------
 
 export async function getSettings(): Promise<SettingsRecord> {
@@ -52,6 +57,7 @@ export async function getSettings(): Promise<SettingsRecord> {
     id: "app",
     desiredRetention: 0.9,
     examDate: null,
+    lastBackupAt: null,
     fsrsParameters: null,
     createdAt: iso,
     updatedAt: iso,
@@ -61,7 +67,9 @@ export async function getSettings(): Promise<SettingsRecord> {
 }
 
 export async function updateSettings(
-  patch: Partial<Pick<SettingsRecord, "desiredRetention" | "examDate" | "fsrsParameters">>,
+  patch: Partial<
+    Pick<SettingsRecord, "desiredRetention" | "examDate" | "fsrsParameters" | "lastBackupAt">
+  >,
   now: Date = new Date(),
 ): Promise<SettingsRecord> {
   const current = await getSettings();
@@ -191,8 +199,12 @@ export async function listDecks(
   );
   for (const deck of sorted) {
     const cards = await database.getAllFromIndex("cards", "by-deck", deck.id);
-    const counts: DeckCounts = { new: 0, due: 0, total: cards.length };
-    for (const card of cards) {
+    // Karty odlozone na bok nie licza sie nigdzie: ani w sumie, ani
+    // w zaleglosciach. Kolejka i tak ich nie poda, wiec licznik obiecujacy
+    // prace, ktorej nie bedzie, jest gorszy niz brak licznika.
+    const czynne = cards.filter((card) => card.suspended !== true);
+    const counts: DeckCounts = { new: 0, due: 0, total: czynne.length };
+    for (const card of czynne) {
       if (isNew(card.fsrs)) counts.new += 1;
       else if (card.due <= nowIso) counts.due += 1;
     }
@@ -443,7 +455,14 @@ export async function setCardSuspended(
   return updated;
 }
 
-/** Odklada na bok wszystkie karty notatki - "tego juz nie chce widziec". */
+/**
+ * Odklada na bok karty notatki - "tego juz nie chce widziec".
+ *
+ * Przywracanie NIE budzi karty opisowej. To samo pole `suspended` sluzy tu
+ * dwom roznym decyzjom: "odlozylem te fiszke" i "nie chce pytania z opisu".
+ * Bez tego wyjatku przywrocenie odlozonej fiszki wlaczaloby karte, ktorej
+ * uzytkownik nigdy nie zamawial. Karte opisowa budzi wylacznie setCueCard.
+ */
 export async function setNoteSuspended(
   noteId: string,
   suspended: boolean,
@@ -452,13 +471,16 @@ export async function setNoteSuspended(
   const database = await db();
   const tx = database.transaction("cards", "readwrite");
   const cards = await tx.store.index("by-note").getAll(noteId);
+  let dotkniete = 0;
   for (const card of cards) {
+    if (!suspended && card.templateOrd === CUE_TEMPLATE_ORD) continue;
     const updated: CardRecord = { ...card, suspended, updatedAt: now.toISOString() };
     if (!suspended) delete updated.suspended;
     await tx.store.put(updated);
+    dotkniete += 1;
   }
   await tx.done;
-  return cards.length;
+  return dotkniete;
 }
 
 // --- karta opisowa (ord 2) --------------------------------------------------
@@ -948,7 +970,11 @@ export async function submitReview(
   }
   const now = input.now ?? new Date();
   const settings = await getSettings();
-  const scheduler = makeScheduler(settings);
+  // Ten sam limit co przy podgladzie interwalow na przyciskach - inaczej
+  // podglad klamalby wobec faktycznej oceny.
+  const scheduler = makeScheduler(settings, {
+    maxIntervalDays: maxIntervalForExam(settings.examDate, now),
+  });
 
   const database = await db();
   const tx = database.transaction(["cards", "notes", "reviewLog"], "readwrite");
@@ -976,7 +1002,10 @@ export async function submitReview(
     templateOrd: card.templateOrd,
     rating: input.rating,
     reviewDatetime: now.toISOString(),
-    durationMs: Math.round(input.durationMs),
+    // Sufit: karta porzucona na godzine (telefon w kieszeni, przerwanie
+    // w pracy) zawyzalaby srednia kilkudziesieciokrotnie. Log jest
+    // append-only, wiec takiej wartosci nie da sie pozniej poprawic.
+    durationMs: Math.min(Math.round(input.durationMs), MAX_DURATION_MS),
     stateBefore,
     stateAfter,
     scheduler: schedulerVersion(settings),

@@ -47,7 +47,7 @@ it("liczy, ile nowych dziennie trzeba brac, z zapasem na utrwalenie", async () =
 it("mowi wprost, gdy obecne tempo nie wystarcza", async () => {
   await fiszki(100, 2);
   const pace = (await examPace("2026-11-09", NOW))!;
-  expect(pace.currentPerDay).toBe(2);
+  expect(pace.limitPerDay).toBe(2);
   expect(pace.onTrack).toBe(false);
 });
 
@@ -75,4 +75,44 @@ it("egzamin dzis albo po egzaminie nie straszy liczbami", async () => {
   expect(dzis.past).toBe(true);
   expect(dzis.needPerDay).toBe(0);
   expect((await examPace("2026-09-01", NOW))!.past).toBe(true);
+});
+
+it("tempo mierzy prace, nie ustawiony sufit", async () => {
+  // Sufit 20 wystarczylby na papierze, ale przez tydzien nie wzieto nic.
+  const { karty } = await fiszki(100, 20);
+  const dawno = new Date(NOW.getTime() - 10 * 24 * 3600_000);
+  await submitReview({ cardId: karty[0].id, rating: 3, durationMs: 1000, now: dawno });
+
+  const pace = (await examPace("2026-11-09", NOW))!;
+  expect(pace.limitPerDay).toBe(20);
+  // Powtorka sprzed 10 dni jest poza oknem tygodnia - tempo nieznane.
+  expect(pace.actualPerDay).toBeNull();
+});
+
+it("liczy realne tempo z logu ostatniego tygodnia", async () => {
+  const { karty } = await fiszki(100, 20);
+  // Trzy nowe karty wziete trzy dni temu.
+  const trzyDniTemu = new Date(NOW.getTime() - 3 * 24 * 3600_000);
+  for (let i = 0; i < 3; i += 1) {
+    await submitReview({
+      cardId: karty[i].id,
+      rating: 3,
+      durationMs: 1000,
+      now: new Date(trzyDniTemu.getTime() + i * 1000),
+    });
+  }
+  const pace = (await examPace("2026-11-09", NOW))!;
+  expect(pace.actualPerDay).toBe(1); // 3 karty / 3 dni
+  expect(pace.onTrack).toBe(false); // potrzeba ~4 dziennie
+});
+
+it("powtorka karty juz znanej nie liczy sie jako nowy material", async () => {
+  const { karty } = await fiszki(10, 20);
+  const wczoraj = new Date(NOW.getTime() - 24 * 3600_000);
+  await submitReview({ cardId: karty[0].id, rating: 3, durationMs: 1000, now: wczoraj });
+  // Ta sama karta drugi raz - to powtorka, nie nowa.
+  await submitReview({ cardId: karty[0].id, rating: 3, durationMs: 1000, now: NOW });
+
+  const pace = (await examPace("2026-11-09", NOW))!;
+  expect(pace.actualPerDay).toBe(1);
 });

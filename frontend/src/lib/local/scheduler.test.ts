@@ -180,12 +180,12 @@ describe("etykiety interwalow", () => {
     [59 * MIN, "59 min"],
     [60 * MIN, "1 godz."],
     [23 * 60 * MIN + 59 * MIN, "23 godz."],
-    [24 * 60 * MIN, "1 dzien"],
+    [24 * 60 * MIN, "1 dzień"],
     [2 * 24 * 60 * MIN, "2 dni"],
     [29 * 24 * 60 * MIN, "29 dni"],
     [30 * 24 * 60 * MIN, "1 mies."],
     [330 * 24 * 60 * MIN, "11 mies."],
-    [730 * 24 * 60 * MIN, "2.0 lat"],
+    [730 * 24 * 60 * MIN, "2,0 lat"],
   ];
   for (const [ms, expected] of cases) {
     it(`${ms} ms -> ${expected}`, () => {

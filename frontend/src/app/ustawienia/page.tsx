@@ -226,7 +226,14 @@ function Settings() {
       link.click();
       link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 60_000);
-      setMessage(`Zapisano kopię: ${describe(backupCounts(payload))}.`);
+      await updateSettings({ lastBackupAt: now.toISOString() });
+      // "Pobrano", nie "zapisano": klikniecie linku nie mowi nam, czy plik
+      // doszedl na dysk. Obietnica, ktorej nie da sie sprawdzic, jest gorsza
+      // niz jej brak - zwlaszcza ta.
+      setMessage(
+        `Pobrano kopię: ${describe(backupCounts(payload))}. Przenieś plik poza telefon.`,
+      );
+      await refresh();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udało się zapisać kopii");
     } finally {
@@ -283,18 +290,22 @@ function Settings() {
           <div className="mt-3 border-t border-line-soft pt-3 text-[13px] leading-relaxed">
             <p className="text-ink-2">
               Zostało {pace.daysLeft} {odmien(pace.daysLeft, "dzień", "dni", "dni")} ·{" "}
-              {pace.newCards} {odmien(pace.newCards, "nowa fiszka", "nowe fiszki", "nowych fiszek")}{" "}
-              do wzięcia
+              {pace.newCards} {odmien(pace.newCards, "nowa karta", "nowe karty", "nowych kart")} do
+              wzięcia
             </p>
             <p className={`mt-1 font-medium ${pace.onTrack ? "text-good" : "text-hard"}`}>
               {pace.newCards === 0
                 ? "Cały materiał jest już w nauce."
-                : `Potrzeba ${pace.needPerDay} nowych dziennie · ustawione ${pace.currentPerDay}`}
+                : pace.actualPerDay !== null
+                  ? `Potrzeba ${pace.needPerDay} nowych kart dziennie · bierzesz ${String(pace.actualPerDay).replace(".", ",")}`
+                  : `Potrzeba ${pace.needPerDay} nowych kart dziennie · limit ${pace.limitPerDay}`}
             </p>
             {!pace.onTrack && pace.newCards > 0 && (
               <p className="mt-1 text-ink-3">
-                Przy obecnym tempie materiał się nie skończy przed egzaminem. Zwiększ dzienny
-                limit nowych kart w talii albo licz się z tym, że części nie zobaczysz.
+                Przy obecnym tempie materiał się nie skończy przed egzaminem —
+                {pace.actualPerDay !== null && pace.actualPerDay < pace.limitPerDay
+                  ? " limit na to pozwala, więc chodzi o częstsze sesje."
+                  : " trzeba podnieść dzienny limit w talii albo pogodzić się z tym, że części nie zobaczysz."}
               </p>
             )}
           </div>

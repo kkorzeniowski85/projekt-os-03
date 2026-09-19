@@ -21,8 +21,11 @@ export function humanizeInterval(ms: number): string {
   const hours = Math.floor(minutes / 60);
   if (hours < 24) return `${hours} godz.`;
   const days = Math.floor(hours / 24);
-  if (days < 30) return days === 1 ? "1 dzien" : `${days} dni`;
+  if (days < 30) return days === 1 ? "1 dzień" : `${days} dni`;
   const months = Math.floor(days / 30);
   if (months < 12) return `${months} mies.`;
-  return `${(days / 365).toFixed(1)} lat`;
+  const lata = days / 365;
+  // "1.5 lat" to nie po polsku: przecinek dziesietny i odmiana po liczbie.
+  const zapis = lata.toFixed(1).replace(".", ",");
+  return lata < 2 ? `${zapis} roku` : `${zapis} lat`;
 }

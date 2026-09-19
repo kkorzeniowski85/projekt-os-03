@@ -39,17 +39,42 @@ export const ENABLE_FUZZING = true;
 
 type SchedulerSettings = Pick<SettingsRecord, "desiredRetention" | "fsrsParameters">;
 
+/**
+ * Buduje planiste.
+ *
+ * `maxIntervalDays` przycina najdluzszy mozliwy odstep. Ma znaczenie przy
+ * terminie egzaminu: bez niego dwa razy "Latwe" na swiezej karcie daje
+ * termin za ponad dwa miesiace, czyli PO egzaminie - material zniknalby
+ * z kolejki dokladnie wtedy, gdy trzeba go utrwalac. Z przycieciem karta
+ * wraca najpozniej kilka dni przed terminem.
+ */
 export function makeScheduler(
   settings: SchedulerSettings,
-  options?: { enableFuzz?: boolean },
+  options?: { enableFuzz?: boolean; maxIntervalDays?: number },
 ): FSRS {
+  const maks = options?.maxIntervalDays;
   return fsrs(
     generatorParameters({
       request_retention: settings.desiredRetention,
       enable_fuzz: options?.enableFuzz ?? ENABLE_FUZZING,
+      ...(maks && maks > 0 ? { maximum_interval: Math.max(1, Math.floor(maks)) } : {}),
       ...(settings.fsrsParameters ? { w: settings.fsrsParameters } : {}),
     }),
   );
+}
+
+/**
+ * Ile dni przed egzaminem karta musi wrocic. Trzy dni zapasu: powtorka
+ * w przeddzien jest juz tylko uspokajaniem sumienia.
+ */
+export function maxIntervalForExam(
+  examDate: string | null | undefined,
+  now: Date,
+): number | undefined {
+  if (!examDate) return undefined;
+  const cel = new Date(`${examDate}T12:00:00`).getTime();
+  const dni = Math.floor((cel - now.getTime()) / (24 * 3600_000)) - 3;
+  return dni > 0 ? dni : undefined;
 }
 
 export function schedulerVersion(settings: SchedulerSettings): string {

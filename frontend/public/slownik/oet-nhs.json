@@ -1,0 +1,397 @@
+{
+  "format": "fiszki/v1",
+  "deck": "OET — NHS i oddział",
+  "default_note_type": "basic_reversed",
+  "notes": [
+    {
+      "front": "without any hiccups",
+      "back": "bez komplikacji",
+      "example": "/wɪˈðaʊt ˈeni ˈhɪkʌps/\nFormalnie (OET): without any complications / without any difficulties\n\nWe managed to stent the IVC without any hiccups.\nThe handover went without any hiccups — very smooth.\nThe transfer was completed without any hiccups, thankfully.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n1/without-any-hiccups"
+    },
+    {
+      "front": "to hand someone over",
+      "back": "przekazać pacjenta (np. innemu zespołowi)",
+      "example": "/tə hænd ˈsʌmwʌn ˈəʊvə/\nFormalnie (OET): to transfer care of / to formally transfer to the care of\n\nI'll hand him over to the ward team now.\nShe was handed over to the night team at ten o'clock.\nMake sure you hand the patient over properly before you leave.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n2/to-hand-someone-over"
+    },
+    {
+      "front": "obs",
+      "back": "parametry życiowe (obserwacje pielęgniarskie)",
+      "example": "/ɒbz/\nFormalnie (OET): vital signs / physiological observations / clinical observations\n\nKeep an eye on his obs — NEWS2 is creeping up.\nHer obs have been stable all morning.\nCan you do his obs again? I'm not happy with that blood pressure.",
+      "tags": [
+        "oet",
+        "med-slang",
+        "nhs"
+      ],
+      "kind": "word",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/n3/obs"
+    },
+    {
+      "front": "to fast-track",
+      "back": "przyspieszyć / skierować trybem pilnym",
+      "example": "/tə fɑːst træk/\nFormalnie (OET): to expedite / to prioritise urgently\n\nWe need to fast-track a CT scan right away.\nShe was fast-tracked to the cardiac unit given her presentation.\nCan we fast-track this referral? I'm worried about the timeline.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n4/to-fast-track"
+    },
+    {
+      "front": "to rule out",
+      "back": "wykluczyć (rozpoznanie)",
+      "example": "/tə ruːl aʊt/\nFormalnie (OET): to exclude\n\nWe need to rule out a bleed before giving pain relief.\nThe CT was requested to rule out pulmonary embolism.\nI'd like to rule out infection before we proceed.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n5/to-rule-out"
+    },
+    {
+      "front": "to consent a patient",
+      "back": "zebrać świadomą zgodę pacjenta",
+      "example": "/tə kənˈsent ə ˈpeɪʃənt/\nFormalnie (OET): to obtain the patient's informed consent\n\nI just need to consent the patient in bay three.\nHas she been consented for the procedure?\nCould you consent Mr Johnson while I scrub in?",
+      "tags": [
+        "oet",
+        "med-slang",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/n6/to-consent-a-patient"
+    },
+    {
+      "front": "clotting profile",
+      "back": "koagulogram",
+      "example": "/ˈklɒtɪŋ ˈprəʊfaɪl/\nFormalnie (OET): coagulation screen / coagulation profile\n\nWe need to check his clotting profile before booking.\nHer clotting profile came back deranged — hold the procedure.\nSend a clotting profile along with the routine bloods.",
+      "tags": [
+        "oet",
+        "medyczny",
+        "nhs"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n7/clotting-profile"
+    },
+    {
+      "front": "to bleep someone",
+      "back": "wywołać kogoś przez pager",
+      "example": "/tə bliːp ˈsʌmwʌn/\nFormalnie (OET): to contact / to page\n\nCan you bleep the on-call reg, please?\nI've been bleeped three times in the last hour.\nBleep the anaesthetist — we may need their input.",
+      "tags": [
+        "oet",
+        "med-slang",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/n8/to-bleep-someone"
+    },
+    {
+      "front": "to take bloods",
+      "back": "pobrać krew (do badań)",
+      "example": "/tə teɪk blʌdz/\nFormalnie (OET): to obtain blood samples / to collect blood specimens\n\nThe nurse will take bloods first thing in the morning.\nI've asked the FY1 to take bloods before the ward round.\nWe'll take bloods on admission and repeat at six hours.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n9/to-take-bloods"
+    },
+    {
+      "front": "to escalate (to someone)",
+      "back": "zgłosić wyżej / eskalować sprawę",
+      "example": "/tə ˈeskəleɪt/\nFormalnie (OET): to escalate to a senior clinician / to seek senior review\n\nIf his obs deteriorate, escalate to the registrar.\nI escalated to the consultant when I wasn't happy with the progress.\nDon't hesitate to escalate if you're concerned — that's what we're here for.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n10/to-escalate-to-someone"
+    },
+    {
+      "front": "nil by mouth (NBM)",
+      "back": "nic doustnie / na czczo",
+      "example": "/nɪl baɪ maʊθ/\nFormalnie (OET): fasting / no oral intake / restricted to nil orally\n\nKeep him nil by mouth from midnight.\nShe's been nil by mouth since eight this morning.\nMake sure the NBM sign is clearly visible above the bed.",
+      "tags": [
+        "oet",
+        "medyczny",
+        "nhs"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n11/nil-by-mouth-nbm"
+    },
+    {
+      "front": "to write someone up (for a drug)",
+      "back": "zaordynować lek / wpisać do karty zleceń",
+      "example": "/tə raɪt ˈsʌmwʌn ʌp/\nFormalnie (OET): to prescribe / to chart a medication\n\nI'll write him up for some analgesia.\nCan you write her up for antiemetics? She's quite nauseated.\nHe's already been written up for heparin — check the drug chart.",
+      "tags": [
+        "oet",
+        "med-slang",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/n12/to-write-someone-up-for-a-drug"
+    },
+    {
+      "front": "to flag something up",
+      "back": "zwrócić uwagę / zgłosić coś",
+      "example": "/tə flæɡ ˈsʌmθɪŋ ʌp/\nFormalnie (OET): to highlight / to draw attention to / to raise\n\nThe nurse flagged up that his urine output had dropped significantly.\nI wanted to flag up a safeguarding concern before discharge.\nCan you flag this up at the MDT? I think it needs discussing.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n13/to-flag-something-up"
+    },
+    {
+      "front": "to be fit for discharge",
+      "back": "kwalifikować się do wypisu / być gotowym do domu",
+      "example": "/tə biː fɪt fə dɪsˈtʃɑːdʒ/\nFormalnie (OET): medically optimised for discharge / suitable for discharge\n\nShe's medically fit for discharge, but we're waiting on social care.\nHe's been fit for discharge since yesterday — it's a bed management issue.\nWe'll review her this afternoon and decide if she's fit for discharge.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n14/to-be-fit-for-discharge"
+    },
+    {
+      "front": "to put something on hold",
+      "back": "wstrzymać / zawiesić (procedurę, decyzję)",
+      "example": "/tə pʊt ˈsʌmθɪŋ ɒn həʊld/\nFormalnie (OET): to defer / to postpone / to suspend\n\nWe've put the procedure on hold until his INR comes down.\nThe discharge has been put on hold pending the social work assessment.\nLet's put that on hold and revisit it after the weekend.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n15/to-put-something-on-hold"
+    },
+    {
+      "front": "to put in a referral",
+      "back": "wystawić skierowanie",
+      "example": "/tə pʊt ɪn ə rɪˈfɜːrəl/\nFormalnie (OET): to submit a referral / to make a referral\n\nI'll put in a referral to vascular surgery today.\nThe GP has already put in a referral — we're waiting for the appointment.\nCould you put in an urgent referral to oncology?",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n16/to-put-in-a-referral"
+    },
+    {
+      "front": "to be on call",
+      "back": "być na dyżurze",
+      "example": "/tə biː ɒn kɔːl/\nFormalnie (OET): to be the on-call clinician / to be covering out-of-hours\n\nWho's on call tonight — do you know?\nI was on call all weekend and barely slept.\nThe on-call registrar dealt with it overnight.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n17/to-be-on-call"
+    },
+    {
+      "front": "to chase a result",
+      "back": "sprawdzać / ponaglać wynik badania",
+      "example": "/tə tʃeɪs ə rɪˈzʌlt/\nFormalnie (OET): to follow up on / to request an update on\n\nCan you chase that CT result? It was requested three hours ago.\nI've been chasing the biopsy result all week.\nChase the microbiology result — we need it before we can discharge.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n18/to-chase-a-result"
+    },
+    {
+      "front": "to come off (a medication)",
+      "back": "odstawić lek",
+      "example": "/tə kʌm ɒf/\nFormalnie (OET): to discontinue / to withdraw\n\nHe came off warfarin two weeks before the procedure.\nShe's been trying to come off the antidepressants gradually.\nWe'll come off the IV antibiotics once he can tolerate oral.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n19/to-come-off-a-medication"
+    },
+    {
+      "front": "to be on the mend",
+      "back": "wracać do zdrowia / być na dobrej drodze",
+      "example": "/tə biː ɒn ðə mend/\nFormalnie (OET): to be recovering / to be improving / to be making good progress\n\nGood news — he's on the mend and should be home by Friday.\nShe's definitely on the mend; her obs have been stable all day.\nIt's early days, but he's on the mend.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n20/to-be-on-the-mend"
+    },
+    {
+      "front": "to take a history",
+      "back": "zebrać wywiad lekarski",
+      "example": "/tə teɪk ə ˈhɪstri/\nFormalnie (OET): to obtain a clinical history / to conduct a clinical assessment\n\nHas anyone taken a full history from her yet?\nI'll take a history while you set up the trolley.\nThe student took a thorough history — very impressive.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n21/to-take-a-history"
+    },
+    {
+      "front": "on the ward round",
+      "back": "podczas obchodu",
+      "example": "/ɒn ðə wɔːd raʊnd/\nFormalnie (OET): during the daily clinical review / at the morning review\n\nWe'll discuss his management on the ward round tomorrow morning.\nThe consultant reviewed all twelve patients on the ward round.\nI'll present the new admission on the ward round.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n22/on-the-ward-round"
+    },
+    {
+      "front": "to be in theatre",
+      "back": "być na sali operacyjnej / w trakcie zabiegu",
+      "example": "/tə biː ɪn ˈθɪətə/\nFormalnie (OET): to be performing a procedure / to be in the operating theatre\n\nThe consultant is in theatre until three — bleep the registrar instead.\nI'll be in theatre all morning; can someone cover my bleep?\nShe's been in theatre since seven — it's a long case.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n23/to-be-in-theatre"
+    },
+    {
+      "front": "to liaise (with someone)",
+      "back": "współpracować / koordynować / skontaktować się",
+      "example": "/tə liˈeɪz/\nFormalnie (OET): to coordinate with / to collaborate with / to work in conjunction with\n\nPlease liaise with the community nurse before we discharge her.\nI've been liaising with the social work team about his housing situation.\nCould you liaise with pharmacy regarding the new prescription?",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n24/to-liaise-with-someone"
+    },
+    {
+      "front": "to step down (to a lower level of care)",
+      "back": "przenieść na oddział o niższym stopniu opieki",
+      "example": "/tə step daʊn/\nFormalnie (OET): to de-escalate care / to transfer to a lower level of care\n\nHe's stable enough to step down from HDU to the general ward.\nWe'll step down the oxygen support gradually over the next 24 hours.\nOnce she's stepped down, we can start planning discharge.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n25/to-step-down-to-a-lower-level-of-care"
+    },
+    {
+      "front": "to keep someone in the loop",
+      "back": "informować kogoś na bieżąco",
+      "example": "/tə kiːp ˈsʌmwʌn ɪn ðə luːp/\nFormalnie (OET): to keep someone informed / to update someone regularly\n\nKeep the family in the loop — they're very anxious.\nPlease keep me in the loop if anything changes overnight.\nThe GP should be kept in the loop throughout the admission.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n26/to-keep-someone-in-the-loop"
+    },
+    {
+      "front": "to go over the notes",
+      "back": "przejrzeć dokumentację",
+      "example": "/tə ɡəʊ ˈəʊvə ðə nəʊts/\nFormalnie (OET): to review the documentation / to go through the clinical records\n\nI'll go over the notes before the ward round tomorrow.\nHave you had a chance to go over her notes from the last admission?\nLet me go over the notes — I wasn't here when she came in.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n27/to-go-over-the-notes"
+    },
+    {
+      "front": "to be under the care of",
+      "back": "być pod opieką (lekarza / oddziału)",
+      "example": "/tə biː ˈʌndə ðə keər ɒv/\nFormalnie (OET): to be managed by / to be under the supervision of\n\nShe is currently under the care of the hepatology team.\nHe was under the care of cardiology during his last admission.\nThe patient will remain under the care of the surgical team until discharge.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n28/to-be-under-the-care-of"
+    },
+    {
+      "front": "to review a patient",
+      "back": "ocenić / zbadać pacjenta ponownie",
+      "example": "/tə rɪˈvjuː ə ˈpeɪʃənt/\nFormalnie (OET): to assess / to re-evaluate / to conduct a clinical review of\n\nCan you review the patient in bay two? I'm not happy with her progress.\nI've asked the registrar to review him before we make a decision.\nShe was reviewed by the medical team and found to be improving.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n29/to-review-a-patient"
+    },
+    {
+      "front": "to take over (from someone)",
+      "back": "przejąć opiekę / zmianę od kogoś",
+      "example": "/tə teɪk ˈəʊvə/\nFormalnie (OET): to assume responsibility for / to take charge of\n\nI'll take over from you at eight — go home and get some rest.\nThe night team will take over from us at ten.\nShe took over the case when the consultant was called away.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/n30/to-take-over-from-someone"
+    }
+  ]
+}

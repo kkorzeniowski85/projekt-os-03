@@ -1,0 +1,1830 @@
+{
+  "format": "fiszki/v1",
+  "notes": [
+    {
+      "front": "I am writing to refer...",
+      "back": "Piszę, aby skierować...",
+      "example": "Synonimy: I am writing to request a referral for / I would like to refer\n\nI am writing to refer Mr Kowalski, a 54-year-old man with a two-week history of exertional dyspnoea.\nI am writing to refer this patient for further specialist assessment of her chronic abdominal pain.\nI am writing to refer Mrs Smith to your outpatient clinic for urgent review.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m101"
+    },
+    {
+      "front": "I am writing to request...",
+      "back": "Piszę, aby poprosić o...",
+      "example": "Synonimy: I would be grateful if you could arrange / I am writing to ask for\n\nI am writing to request an urgent outpatient appointment for this patient.\nI am writing to request further investigation of his persistent haematuria.\nI am writing to request your assessment regarding suitability for surgery.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m102"
+    },
+    {
+      "front": "in light of",
+      "back": "w świetle (czegoś)",
+      "example": "Synonimy: given / considering / in view of\n\nIn light of these findings, I would recommend urgent referral to gastroenterology.\nIn light of her deteriorating renal function, the medication dose was reduced.\nIn light of the imaging results, surgery was deemed necessary.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m104"
+    },
+    {
+      "front": "consequently",
+      "back": "w konsekwencji",
+      "example": "Synonimy: as a result / therefore / accordingly\n\nConsequently, his medication was changed to a lower-dose alternative.\nThe patient missed several follow-up appointments; consequently, her condition worsened.\nConsequently, we would appreciate your prompt assessment.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m105"
+    },
+    {
+      "front": "should you have any questions, please do not hesitate to contact me",
+      "back": "w razie pytań proszę o kontakt",
+      "example": "Synonimy: please feel free to contact me / do get in touch if you require further information\n\nShould you have any questions, please do not hesitate to contact me on the number above.\nShould you have any questions regarding this referral, please do not hesitate to contact me.\nShould you have any questions about her medication history, please do not hesitate to contact me.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "sentence",
+      "note_type": "basic",
+      "source_ref": "oet-core/m106"
+    },
+    {
+      "front": "I would be grateful if you could...",
+      "back": "Byłbym wdzięczny, gdyby...",
+      "example": "Synonimy: I would appreciate it if you could / I kindly request that you\n\nI would be grateful if you could see this patient at your earliest convenience.\nI would be grateful if you could review his medication regime.\nI would be grateful if you could arrange further imaging.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m107"
+    },
+    {
+      "front": "please find enclosed",
+      "back": "w załączeniu przesyłam",
+      "example": "Synonimy: attached is / I have enclosed\n\nPlease find enclosed a copy of her recent blood results.\nPlease find enclosed the discharge summary from her recent admission.\nPlease find enclosed his most recent imaging report.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m108"
+    },
+    {
+      "front": "to that end",
+      "back": "w tym celu",
+      "example": "Synonimy: with this in mind / for this purpose\n\nTo that end, I have arranged for a follow-up ultrasound in four weeks.\nTo that end, we would ask that his blood pressure be monitored weekly.\nTo that end, physiotherapy input has already been arranged.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m109"
+    },
+    {
+      "front": "with regard to",
+      "back": "odnośnie do",
+      "example": "Synonimy: regarding / concerning / in relation to\n\nWith regard to her ongoing pain management, please continue the current regime.\nWith regard to his surgical history, he underwent an appendicectomy in 2019.\nWith regard to the imaging findings, further correlation with symptoms is advised.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m110"
+    },
+    {
+      "front": "it is worth noting that",
+      "back": "warto zauważyć, że",
+      "example": "Synonimy: it should be noted that / notably\n\nIt is worth noting that she has a family history of colorectal cancer.\nIt is worth noting that his symptoms improved significantly with the new medication.\nIt is worth noting that no previous imaging is available for comparison.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m111"
+    },
+    {
+      "front": "upon discharge",
+      "back": "przy wypisie",
+      "example": "Synonimy: at the time of discharge / on discharge\n\nUpon discharge, she was prescribed a five-day course of antibiotics.\nUpon discharge, the patient was advised to avoid heavy lifting for six weeks.\nUpon discharge, follow-up was arranged with his GP in two weeks.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m112"
+    },
+    {
+      "front": "for your information",
+      "back": "do wiadomości",
+      "example": "Synonimy: for reference / to keep you informed\n\nFor your information, a copy of this letter has been sent to the patient.\nFor your information, his previous scan was performed in March 2025.\nFor your information, the patient's next of kin has been informed.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m113"
+    },
+    {
+      "front": "kindly advise",
+      "back": "proszę o poinformowanie",
+      "example": "Synonimy: please advise / please let me know\n\nKindly advise if any further tests are required prior to his appointment.\nKindly advise on the most appropriate management plan going forward.\nKindly advise if you require any additional clinical information.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m114"
+    },
+    {
+      "front": "as previously mentioned",
+      "back": "jak wspomniano wcześniej",
+      "example": "Synonimy: as noted above / as stated earlier\n\nAs previously mentioned, she has a documented allergy to penicillin.\nAs previously mentioned, his symptoms began approximately three weeks ago.\nAs previously mentioned, conservative management was trialled without success.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m115"
+    },
+    {
+      "front": "in view of the above",
+      "back": "biorąc powyższe pod uwagę",
+      "example": "Synonimy: given the above / taking the above into account\n\nIn view of the above, I would recommend an urgent surgical opinion.\nIn view of the above, her medication has been adjusted accordingly.\nIn view of the above, further outpatient follow-up is advised.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m116"
+    },
+    {
+      "front": "I am pleased to report that",
+      "back": "z przyjemnością informuję, że",
+      "example": "Synonimy: I am glad to inform you that / it is encouraging to note that\n\nI am pleased to report that his symptoms have resolved completely.\nI am pleased to report that she responded well to the treatment.\nI am pleased to report that his recovery has been uneventful.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m117"
+    },
+    {
+      "front": "given the above findings",
+      "back": "biorąc pod uwagę powyższe wyniki",
+      "example": "Synonimy: on the basis of these findings / in light of these results\n\nGiven the above findings, I would suggest a change in her antihypertensive regime.\nGiven the above findings, further investigation is warranted.\nGiven the above findings, I recommend a multidisciplinary team discussion.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m118"
+    },
+    {
+      "front": "at your earliest convenience",
+      "back": "najszybciej jak to możliwe (formalnie)",
+      "example": "Synonimy: as soon as possible / promptly\n\nI would be grateful if you could see this patient at your earliest convenience.\nPlease could you arrange the appointment at your earliest convenience.\nWe would appreciate a review at your earliest convenience given the urgency.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m119"
+    },
+    {
+      "front": "thank you for taking the time to review this referral",
+      "back": "dziękuję za poświęcenie czasu na rozpatrzenie skierowania",
+      "example": "Synonimy: thank you for your attention to this matter / I appreciate your consideration\n\nThank you for taking the time to review this referral.\nThank you for taking the time to review this referral; I look forward to your response.\nThank you for taking the time to review this referral and for your continued care of this patient.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list-oet",
+        "list"
+      ],
+      "kind": "sentence",
+      "note_type": "basic",
+      "source_ref": "oet-core/m120"
+    },
+    {
+      "front": "malaise",
+      "back": "złe samopoczucie",
+      "example": "Synonimy: feeling generally unwell / lack of wellbeing\n\nHe presented with a two-day history of malaise and low-grade fever.\nShe reported general malaise alongside joint pain.\nThe malaise gradually resolved following a course of antibiotics.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m122"
+    },
+    {
+      "front": "lethargy",
+      "back": "ospałość, letarg",
+      "example": "Synonimy: fatigue / tiredness / low energy\n\nThe mother reported increasing lethargy in her child over the past 24 hours.\nHe described several weeks of lethargy and reduced appetite.\nLethargy is a common but non-specific presenting symptom.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m123"
+    },
+    {
+      "front": "dyspnoea (on exertion)",
+      "back": "duszność (wysiłkowa)",
+      "example": "Synonimy: shortness of breath / breathlessness\n\nHe reports worsening dyspnoea on exertion over the past month.\nShe was admitted with acute dyspnoea and chest tightness.\nHis dyspnoea limits him to walking short distances on the flat.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m124"
+    },
+    {
+      "front": "palpitations",
+      "back": "kołatanie serca",
+      "example": "Synonimy: irregular heartbeat / racing heart\n\nShe describes intermittent palpitations lasting several minutes at a time.\nThe palpitations are associated with light-headedness.\nHe denies any chest pain but reports occasional palpitations.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m125"
+    },
+    {
+      "front": "tenderness",
+      "back": "tkliwość, bolesność uciskowa",
+      "example": "Synonimy: pain on palpation / sensitivity to touch\n\nThere was marked tenderness in the right upper quadrant.\nMild tenderness was noted over the lumbar spine.\nNo tenderness was elicited on abdominal palpation.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m126"
+    },
+    {
+      "front": "distension",
+      "back": "wzdęcie, rozdęcie",
+      "example": "Synonimy: swelling / bloating / enlargement\n\nThe abdomen was noted to be distended, with generalised tenderness.\nAbdominal distension had progressively worsened over three days.\nThere was no evidence of bowel distension on the scan.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m127"
+    },
+    {
+      "front": "erythema",
+      "back": "rumień",
+      "example": "Synonimy: redness / skin reddening\n\nThere was erythema surrounding the surgical wound.\nThe affected area showed erythema and mild swelling.\nNo erythema or discharge was noted at the injection site.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m128"
+    },
+    {
+      "front": "pallor",
+      "back": "bladość",
+      "example": "Synonimy: paleness / pale complexion\n\nThe patient appeared pale, with noticeable pallor of the conjunctivae.\nPallor and tachycardia raised concern for significant blood loss.\nThere was no pallor or cyanosis on general inspection.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m129"
+    },
+    {
+      "front": "syncope",
+      "back": "omdlenie",
+      "example": "Synonimy: fainting / loss of consciousness (transient)\n\nHe experienced a syncopal episode while standing at the bus stop.\nShe was referred following a single episode of syncope.\nThe syncope was preceded by light-headedness and blurred vision.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m130"
+    },
+    {
+      "front": "insidious onset",
+      "back": "podstępny/skryty początek",
+      "example": "Synonimy: gradual onset / slow-developing\n\nThe pain had an insidious onset over several weeks.\nSymptoms of insidious onset are typical of this condition.\nUnlike acute presentations, this was of insidious onset.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m131"
+    },
+    {
+      "front": "intermittent",
+      "back": "przerywany, okresowy",
+      "example": "Synonimy: episodic / on-and-off / recurrent\n\nHe describes intermittent abdominal pain over the past month.\nThe symptoms are intermittent rather than constant.\nIntermittent claudication was reported on walking uphill.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m132"
+    },
+    {
+      "front": "radiating pain",
+      "back": "ból promieniujący",
+      "example": "Synonimy: referred pain / pain spreading to\n\nThe chest pain was radiating to his left arm and jaw.\nShe reported lower back pain radiating down her right leg.\nThe pain radiates from the epigastrium through to the back.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m133"
+    },
+    {
+      "front": "pyrexia",
+      "back": "gorączka (termin formalny)",
+      "example": "Synonimy: fever / elevated temperature\n\nThe patient was pyrexial on admission, with a temperature of 38.6°C.\nPyrexia resolved following the administration of antipyretics.\nHe remained pyrexial despite broad-spectrum antibiotics.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "raport"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m136"
+    },
+    {
+      "front": "nausea and vomiting",
+      "back": "nudności i wymioty",
+      "example": "Synonimy: feeling sick and being sick / N&V\n\nShe presented with a two-day history of nausea and vomiting.\nThe nausea and vomiting settled with antiemetic treatment.\nHe reports nausea but denies any episodes of vomiting.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m137"
+    },
+    {
+      "front": "malodorous",
+      "back": "o nieprzyjemnym zapachu",
+      "example": "Synonimy: foul-smelling / offensive-smelling\n\nThe wound discharge was noted to be malodorous.\nShe reported malodorous vaginal discharge for one week.\nThere was malodorous drainage from the surgical site.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "raport"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m138"
+    },
+    {
+      "front": "oedema",
+      "back": "obrzęk",
+      "example": "Synonimy: swelling / fluid retention\n\nThere was bilateral pitting oedema of the lower limbs.\nPeriorbital oedema was noted on examination.\nThe oedema improved following diuretic treatment.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m139"
+    },
+    {
+      "front": "anorexia (loss of appetite)",
+      "back": "brak łaknienia",
+      "example": "Synonimy: poor appetite / reduced oral intake\n\nHe describes a three-week history of anorexia and weight loss.\nAnorexia was accompanied by early satiety.\nHer appetite has improved, with resolution of the earlier anorexia.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m140"
+    },
+    {
+      "front": "pruritus",
+      "back": "świąd",
+      "example": "Synonimy: itching / itchiness\n\nShe complains of generalised pruritus, worse at night.\nThe pruritus was associated with a widespread rash.\nPruritus can be a symptom of underlying liver disease.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "raport"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m141"
+    },
+    {
+      "front": "rigors",
+      "back": "dreszcze (silne, z drżeniem)",
+      "example": "Synonimy: shivering episodes / shaking chills\n\nHe experienced rigors associated with a spiking temperature.\nThe patient reported rigors the night prior to admission.\nRigors and pyrexia raised suspicion of sepsis.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m142"
+    },
+    {
+      "front": "diaphoresis",
+      "back": "nadmierne pocenie się",
+      "example": "Synonimy: excessive sweating / profuse sweating\n\nThe patient was noted to be cool and clammy, with marked diaphoresis.\nDiaphoresis accompanied the episode of chest pain.\nShe reported night-time diaphoresis over the past month.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "raport"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m143"
+    },
+    {
+      "front": "photophobia",
+      "back": "światłowstręt",
+      "example": "Synonimy: light sensitivity\n\nHe reports headache associated with photophobia and neck stiffness.\nPhotophobia was a prominent feature of her migraine.\nThere was no photophobia or neck stiffness on examination.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m144"
+    },
+    {
+      "front": "tachycardia",
+      "back": "tachykardia, przyspieszona akcja serca",
+      "example": "Synonimy: rapid heart rate / elevated pulse\n\nHe was tachycardic on arrival, with a heart rate of 128 beats per minute.\nThe tachycardia settled following adequate fluid resuscitation.\nSinus tachycardia was noted on the ECG.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m145"
+    },
+    {
+      "front": "bradycardia",
+      "back": "bradykardia, zwolniona akcja serca",
+      "example": "Synonimy: slow heart rate / low pulse\n\nThe patient developed bradycardia following the procedure.\nBradycardia was attributed to beta-blocker therapy.\nHe remained asymptomatic despite mild bradycardia.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m146"
+    },
+    {
+      "front": "hypotension",
+      "back": "niedociśnienie",
+      "example": "Synonimy: low blood pressure\n\nHe became hypotensive shortly after induction of anaesthesia.\nThe hypotension responded well to intravenous fluids.\nPostural hypotension was confirmed on lying and standing measurements.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m147"
+    },
+    {
+      "front": "pyrexia of unknown origin (PUO)",
+      "back": "gorączka o nieznanej etiologii",
+      "example": "Synonimy: fever of unknown origin (FUO)\n\nShe was referred for further investigation of pyrexia of unknown origin.\nExtensive work-up failed to identify a cause for his PUO.\nPUO was eventually attributed to an occult abscess.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "list",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m148"
+    },
+    {
+      "front": "abdominal guarding",
+      "back": "obrona mięśniowa powłok brzusznych",
+      "example": "Synonimy: muscle guarding / involuntary abdominal rigidity\n\nThere was marked abdominal guarding in the right iliac fossa.\nGuarding and rebound tenderness raised concern for peritonitis.\nNo guarding was elicited on gentle palpation.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m149"
+    },
+    {
+      "front": "rebound tenderness",
+      "back": "bolesność uciskowa z objawem Blumberga",
+      "example": "Synonimy: Blumberg's sign / peritonism\n\nRebound tenderness was positive over McBurney's point.\nThe presence of rebound tenderness prompted an urgent surgical review.\nThere was no rebound tenderness on examination.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m150"
+    },
+    {
+      "front": "jaundice",
+      "back": "żółtaczka",
+      "example": "Synonimy: icterus / yellowing of the skin and eyes\n\nHe presented with painless jaundice and dark urine.\nJaundice was noted on examination of the sclerae.\nThe jaundice gradually improved following biliary drainage.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m151"
+    },
+    {
+      "front": "cyanosis",
+      "back": "sinica",
+      "example": "Synonimy: bluish discolouration / hypoxic discolouration\n\nCentral cyanosis was noted around the lips.\nPeripheral cyanosis of the fingertips was observed in the cold.\nThere was no cyanosis, and oxygen saturations were normal.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m152"
+    },
+    {
+      "front": "clubbing (finger clubbing)",
+      "back": "palce pałeczkowate",
+      "example": "Synonimy: digital clubbing\n\nMild finger clubbing was noted, raising suspicion of chronic lung disease.\nThere was no evidence of clubbing on examination of the hands.\nClubbing can be associated with a variety of cardiopulmonary conditions.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m153"
+    },
+    {
+      "front": "haemoptysis",
+      "back": "krwioplucie",
+      "example": "Synonimy: coughing up blood\n\nHe was referred urgently following an episode of haemoptysis.\nShe reported small volumes of haemoptysis over several days.\nMassive haemoptysis required urgent bronchoscopy.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m154"
+    },
+    {
+      "front": "haematemesis",
+      "back": "krwawe wymioty",
+      "example": "Synonimy: vomiting blood\n\nHe was admitted following an episode of haematemesis.\nThe haematemesis prompted urgent endoscopic assessment.\nShe denied haematemesis but reported dark stools.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m155"
+    },
+    {
+      "front": "melaena",
+      "back": "smoliste stolce",
+      "example": "Synonimy: black, tarry stools\n\nHe described a two-day history of melaena.\nMelaena is suggestive of an upper gastrointestinal bleed.\nThere was no melaena or fresh rectal bleeding reported.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m156"
+    },
+    {
+      "front": "dysuria",
+      "back": "bolesne oddawanie moczu",
+      "example": "Synonimy: painful urination\n\nShe reported dysuria and increased urinary frequency.\nDysuria and fever raised suspicion of a urinary tract infection.\nThere was no dysuria or haematuria reported.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m157"
+    },
+    {
+      "front": "polyuria",
+      "back": "wielomocz",
+      "example": "Synonimy: excessive urination\n\nHe presented with polyuria and polydipsia over several weeks.\nPolyuria was one of the initial presenting features of his diabetes.\nThe polyuria resolved with improved glycaemic control.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m158"
+    },
+    {
+      "front": "urinary frequency",
+      "back": "częstomocz",
+      "example": "Synonimy: increased frequency of micturition\n\nShe complains of urinary frequency, particularly at night.\nUrinary frequency was associated with mild suprapubic discomfort.\nThere was no urinary frequency or urgency reported.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m159"
+    },
+    {
+      "front": "constipation",
+      "back": "zaparcie",
+      "example": "Synonimy: infrequent bowel movements\n\nHe reports a two-week history of constipation.\nThe constipation improved following dietary modification.\nShe denies any recent constipation or change in bowel habit.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m160"
+    },
+    {
+      "front": "diarrhoea",
+      "back": "biegunka",
+      "example": "Synonimy: loose stools / frequent bowel movements\n\nShe presented with a five-day history of diarrhoea.\nThe diarrhoea was associated with abdominal cramping.\nHis diarrhoea settled following cessation of the antibiotic.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m161"
+    },
+    {
+      "front": "weight loss (unintentional)",
+      "back": "niezamierzona utrata masy ciała",
+      "example": "Synonimy: unexplained weight loss\n\nHe reports unintentional weight loss of approximately 6kg over three months.\nUnintentional weight loss is a recognised red-flag symptom.\nShe denies any deliberate dieting to account for the weight loss.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "list",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m162"
+    },
+    {
+      "front": "malaise and fatigue",
+      "back": "ogólne złe samopoczucie i zmęczenie",
+      "example": "Synonimy: generalised tiredness and unwellness\n\nShe presented with several weeks of malaise and fatigue.\nMalaise and fatigue were the predominant presenting symptoms.\nHis malaise and fatigue improved following correction of his anaemia.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m163"
+    },
+    {
+      "front": "dizziness / light-headedness",
+      "back": "zawroty głowy / uczucie oszołomienia",
+      "example": "Synonimy: vertigo (if rotational) / feeling faint\n\nHe describes episodes of light-headedness on standing.\nThe dizziness was associated with mild nausea.\nShe denies true vertigo but reports intermittent light-headedness.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m164"
+    },
+    {
+      "front": "confusion",
+      "back": "splątanie",
+      "example": "Synonimy: disorientation / altered mental state\n\nThe family reported acute confusion over the preceding 24 hours.\nHis confusion resolved following treatment of the underlying infection.\nShe was noted to be intermittently confused, particularly at night.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m165"
+    },
+    {
+      "front": "reduced level of consciousness",
+      "back": "obniżony poziom świadomości",
+      "example": "Synonimy: decreased consciousness / drowsiness\n\nHe was brought in with a reduced level of consciousness following a fall.\nA reduced level of consciousness prompted urgent airway assessment.\nHer level of consciousness improved following correction of hypoglycaemia.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "raport"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m166"
+    },
+    {
+      "front": "localised / generalised (pain)",
+      "back": "zlokalizowany / uogólniony (ból)",
+      "example": "Synonimy: focal / diffuse (pain)\n\nThe pain was localised to the right upper quadrant.\nHe described generalised abdominal pain rather than a specific focus.\nThe tenderness was localised, without generalised peritonism.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m167"
+    },
+    {
+      "front": "sharp / dull (pain)",
+      "back": "ostry / tępy (ból)",
+      "example": "Synonimy: stabbing (sharp) / aching (dull)\n\nShe described the pain as sharp and stabbing in nature.\nHe reported a dull, constant ache in the lower back.\nThe pain changed from a dull ache to a sharp, severe pain.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m168"
+    },
+    {
+      "front": "colicky pain",
+      "back": "ból kolkowy",
+      "example": "Synonimy: cramping pain / spasmodic pain\n\nHe described colicky abdominal pain occurring in waves.\nThe colicky pain was associated with vomiting.\nColicky pain radiating to the groin is typical of renal colic.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "notatki",
+        "raport"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m169"
+    },
+    {
+      "front": "on palpation",
+      "back": "podczas palpacji",
+      "example": "Synonimy: on palpating the area / to palpation\n\nOn palpation, a firm mass was noted in the left flank.\nThe abdomen was soft on palpation, with no organomegaly.\nTenderness was elicited on palpation of the epigastrium.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "objawy",
+        "raport",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m170"
+    },
+    {
+      "front": "to be commenced on (medication)",
+      "back": "zostać włączonym na (lek)",
+      "example": "Synonimy: to be started on / to be initiated on\n\nHe was commenced on a five-day course of amoxicillin.\nShe was commenced on low-dose aspirin for secondary prevention.\nThe patient was commenced on insulin during the admission.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "notatki",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m171"
+    },
+    {
+      "front": "to be weaned off",
+      "back": "być stopniowo odstawianym",
+      "example": "Synonimy: to be gradually discontinued / to be tapered off\n\nHe was gradually weaned off the oxygen supplementation.\nSteroids were weaned off over a period of six weeks.\nShe was successfully weaned off ventilatory support.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "notatki",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m172"
+    },
+    {
+      "front": "conservative management",
+      "back": "leczenie zachowawcze",
+      "example": "Synonimy: non-surgical management / watchful waiting\n\nA trial of conservative management was opted for in the first instance.\nGiven the mild symptoms, conservative management was appropriate.\nConservative management failed, and surgical intervention was required.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "list",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m173"
+    },
+    {
+      "front": "to be reviewed",
+      "back": "zostać skonsultowanym/ocenionym",
+      "example": "Synonimy: to be assessed / to be seen (by a specialist)\n\nThe patient will need to be reviewed in the outpatient clinic in six weeks.\nHe should be reviewed by cardiology prior to discharge.\nShe was reviewed by the on-call registrar overnight.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "list",
+        "notatki"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m174"
+    },
+    {
+      "front": "to deteriorate",
+      "back": "pogarszać się",
+      "example": "Synonimy: to worsen / to decline\n\nHis condition began to deteriorate rapidly overnight.\nDespite treatment, her renal function continued to deteriorate.\nThe wound showed no signs of deterioration on review.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "notatki",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m175"
+    },
+    {
+      "front": "to stabilise",
+      "back": "ustabilizować się",
+      "example": "Synonimy: to settle / to become stable\n\nHis observations stabilised following fluid resuscitation.\nHer condition has now stabilised and she is fit for discharge.\nBlood pressure stabilised within normal range after treatment.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "notatki",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m176"
+    },
+    {
+      "front": "prophylaxis",
+      "back": "profilaktyka",
+      "example": "Synonimy: preventive treatment / prevention\n\nHe was commenced on prophylaxis against deep vein thrombosis.\nAntibiotic prophylaxis was given prior to the procedure.\nProphylaxis is recommended in patients with recurrent infections.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "list",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m177"
+    },
+    {
+      "front": "contraindicated",
+      "back": "przeciwwskazany",
+      "example": "Synonimy: not recommended / unsuitable (for a treatment)\n\nThis medication is contraindicated in patients with renal impairment.\nGiven her allergy, penicillin-based antibiotics are contraindicated.\nThe procedure was contraindicated due to his bleeding disorder.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "list",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m178"
+    },
+    {
+      "front": "compliance / adherence (to treatment)",
+      "back": "przestrzeganie zaleceń",
+      "example": "Synonimy: concordance with treatment\n\nPoor adherence to treatment may explain the recurrence of symptoms.\nHe reports good compliance with his current medication regime.\nWe discussed the importance of adherence to reduce future complications.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "list",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m179"
+    },
+    {
+      "front": "to titrate (a dose)",
+      "back": "miareczkować, dostosowywać dawkę",
+      "example": "Synonimy: to gradually adjust the dose\n\nThe insulin dose was titrated according to daily blood glucose readings.\nAnalgesia was titrated to achieve adequate pain control.\nThe medication was titrated up slowly to minimise side effects.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m180"
+    },
+    {
+      "front": "follow-up",
+      "back": "kontrola, wizyta kontrolna",
+      "example": "Synonimy: review appointment / follow-up visit\n\nFollow-up has been arranged in the outpatient clinic in four weeks.\nShe will require regular follow-up to monitor disease progression.\nNo further follow-up is required at this stage.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m181"
+    },
+    {
+      "front": "referral",
+      "back": "skierowanie",
+      "example": "Synonimy: referral letter / request for specialist opinion\n\nI am making this referral for further specialist assessment.\nA referral to the pain clinic has been arranged.\nThe referral was accepted, and an appointment has been scheduled.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m182"
+    },
+    {
+      "front": "co-morbidities",
+      "back": "choroby współistniejące",
+      "example": "Synonimy: coexisting conditions / associated medical conditions\n\nHis significant co-morbidities include type 2 diabetes and hypertension.\nGiven her multiple co-morbidities, a cautious approach is advised.\nThere were no significant co-morbidities of note.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "list",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m183"
+    },
+    {
+      "front": "baseline",
+      "back": "wartość wyjściowa/wyjściowy stan",
+      "example": "Synonimy: starting point / pre-existing level\n\nRenal function has returned to baseline following treatment.\nHis baseline mobility is with the aid of a walking stick.\nRepeat imaging showed no change compared with the baseline scan.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "notatki",
+        "raport"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m184"
+    },
+    {
+      "front": "to be discharged with...",
+      "back": "zostać wypisanym z...",
+      "example": "Synonimy: to be sent home with\n\nHe was discharged with a course of oral antibiotics.\nShe was discharged with outpatient follow-up arranged.\nThe patient was discharged with clear safety-netting advice.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m185"
+    },
+    {
+      "front": "to be admitted under (specialty/team)",
+      "back": "zostać przyjętym pod opiekę (oddziału)",
+      "example": "Synonimy: to be admitted to the care of\n\nHe was admitted under the general surgical team for observation.\nShe was admitted under cardiology for further investigation.\nThe patient was admitted under the medical team overnight.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "notatki",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m186"
+    },
+    {
+      "front": "to optimise (treatment/condition)",
+      "back": "optymalizować (leczenie/stan)",
+      "example": "Synonimy: to improve / to fine-tune management\n\nHis diabetic control was optimised prior to surgery.\nWe aim to optimise her pain management before discharge.\nMedication was adjusted to optimise blood pressure control.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "list",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m187"
+    },
+    {
+      "front": "to resolve (symptoms resolved)",
+      "back": "ustąpić (o objawach)",
+      "example": "Synonimy: to settle / to clear up\n\nHis symptoms fully resolved within 48 hours of treatment.\nThe swelling had largely resolved by the follow-up appointment.\nHer fever resolved following the course of antibiotics.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "notatki",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m188"
+    },
+    {
+      "front": "to be commenced empirically",
+      "back": "włączyć empirycznie",
+      "example": "Synonimy: to start treatment based on clinical judgement (pending results)\n\nAntibiotics were commenced empirically pending culture results.\nTreatment was commenced empirically given the clinical suspicion of infection.\nHe was started empirically on broad-spectrum cover.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m189"
+    },
+    {
+      "front": "uneventful (recovery/stay)",
+      "back": "bez powikłań, niepowikłany (przebieg)",
+      "example": "Synonimy: without complications / straightforward\n\nHis postoperative recovery was uneventful.\nThe remainder of her hospital stay was uneventful.\nShe had an uneventful recovery and was discharged on day three.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "leczenie",
+        "list",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m190"
+    },
+    {
+      "front": "GP (General Practitioner)",
+      "back": "lekarz rodzinny/POZ",
+      "example": "Synonimy: family doctor / primary care physician\n\nPlease could you arrange follow-up with his GP in two weeks.\nThe patient was referred by her GP for further assessment.\nA copy of this letter will be sent to the patient's GP.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m191"
+    },
+    {
+      "front": "consultant",
+      "back": "lekarz specjalista (starszy, kierujący)",
+      "example": "Synonimy: senior specialist / attending physician\n\nThe consultant reviewed the patient on the ward round.\nThis decision was made in discussion with the consultant in charge.\nShe will be seen by the consultant at her next outpatient appointment.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "list",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m192"
+    },
+    {
+      "front": "registrar",
+      "back": "lekarz rezydent (starszy stażem)",
+      "example": "Synonimy: senior trainee doctor\n\nThe on-call registrar was asked to review the patient overnight.\nHe was initially assessed by the surgical registrar in A&E.\nThe registrar discussed the case with the consultant before proceeding.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m193"
+    },
+    {
+      "front": "A&E (Accident & Emergency)",
+      "back": "SOR",
+      "example": "Synonimy: emergency department / ED\n\nHe presented to A&E with acute chest pain.\nShe was brought to A&E by ambulance following a fall.\nThe patient was discharged from A&E with safety-netting advice.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "list",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m194"
+    },
+    {
+      "front": "MDT (multidisciplinary team)",
+      "back": "zespół wielodyscyplinarny",
+      "example": "Synonimy: multidisciplinary meeting\n\nThis case was discussed at the weekly MDT meeting.\nThe MDT recommended proceeding with surgical resection.\nHer case will be presented at the next oncology MDT.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "list",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m195"
+    },
+    {
+      "front": "discharge summary",
+      "back": "karta wypisowa",
+      "example": "Synonimy: discharge letter\n\nPlease find enclosed a copy of his discharge summary.\nThe discharge summary outlines his medications and follow-up plan.\nA discharge summary was sent to the GP on the day of discharge.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m196"
+    },
+    {
+      "front": "safeguarding",
+      "back": "ochrona osób wrażliwych (dzieci/dorosłych)",
+      "example": "Synonimy: protection of vulnerable individuals\n\nA safeguarding referral was made in light of the concerns raised.\nThe safeguarding team was informed of the family circumstances.\nSafeguarding concerns should always be documented clearly.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m197"
+    },
+    {
+      "front": "ward round",
+      "back": "obchód lekarski",
+      "example": "Synonimy: daily patient review by the team\n\nThe patient was reviewed on the morning ward round.\nHis plan was updated following discussion on the ward round.\nShe was noted to be clinically improving on the ward round.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m198"
+    },
+    {
+      "front": "next of kin",
+      "back": "najbliższa rodzina/osoba kontaktowa",
+      "example": "Synonimy: closest relative / primary contact\n\nThe next of kin was informed of the change in his condition.\nContact details for her next of kin are recorded in the notes.\nWe discussed the treatment plan with the patient's next of kin.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "notatki",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m199"
+    },
+    {
+      "front": "care plan",
+      "back": "plan opieki",
+      "example": "Synonimy: management plan\n\nA comprehensive care plan was agreed with the patient and family.\nThe care plan includes regular community nurse visits.\nHis care plan was reviewed and updated following the recent admission.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "list",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m200"
+    },
+    {
+      "front": "locum",
+      "back": "lekarz zastępczy (na zastępstwie)",
+      "example": "Synonimy: temporary/covering doctor\n\nThe locum consultant reviewed the case overnight.\nA locum GP was covering the practice that week.\nHe worked as a locum registrar during his first year in the UK.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m201"
+    },
+    {
+      "front": "out-patient clinic",
+      "back": "poradnia przyszpitalna",
+      "example": "Synonimy: outpatient appointment / OPD\n\nShe was seen in the out-patient clinic six weeks after surgery.\nAn appointment has been arranged in the respiratory out-patient clinic.\nHe was discharged from the out-patient clinic following full recovery.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m202"
+    },
+    {
+      "front": "in-patient",
+      "back": "pacjent hospitalizowany",
+      "example": "Synonimy: hospitalised patient\n\nHe remained an in-patient for a total of five days.\nAs an in-patient, she received daily physiotherapy input.\nIn-patient management was preferred given the severity of symptoms.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "list",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m203"
+    },
+    {
+      "front": "triage",
+      "back": "segregacja medyczna, triaż",
+      "example": "Synonimy: initial assessment and prioritisation\n\nHe was triaged as a priority case on arrival.\nThe triage nurse assessed his observations on arrival.\nTriage helps prioritise patients according to clinical urgency.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m204"
+    },
+    {
+      "front": "community nurse",
+      "back": "pielęgniarka środowiskowa",
+      "example": "Synonimy: district nurse\n\nThe community nurse will visit twice weekly to change the dressing.\nA referral was made to the community nursing team for wound care.\nCommunity nurse input has been arranged to support her at home.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "nhs",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m205"
+    },
+    {
+      "front": "to reassure",
+      "back": "uspokajać, zapewniać",
+      "example": "Synonimy: to put someone's mind at rest / to comfort\n\nI reassured her that the findings were benign.\nHe was reassured that this is a common and treatable condition.\nWe aimed to reassure the family throughout the procedure.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m206"
+    },
+    {
+      "front": "to explain in layman's terms",
+      "back": "wyjaśnić prostym językiem",
+      "example": "Synonimy: to explain in simple/plain language\n\nI explained the diagnosis in layman's terms to ensure understanding.\nIt is important to explain procedures in layman's terms before consent.\nHe appreciated having the results explained in layman's terms.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m207"
+    },
+    {
+      "front": "informed consent",
+      "back": "świadoma zgoda",
+      "example": "Synonimy: consent following full explanation\n\nInformed consent was obtained prior to the procedure.\nWe discussed the risks and benefits to ensure informed consent.\nThe patient gave informed consent after all questions were answered.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m208"
+    },
+    {
+      "front": "to break bad news",
+      "back": "przekazać złe wieści",
+      "example": "Synonimy: to deliver difficult news\n\nBreaking bad news requires sensitivity and clear communication.\nI broke the news to the family in a private, quiet room.\nHe was supported by a nurse while receiving the bad news.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m209"
+    },
+    {
+      "front": "risks and benefits",
+      "back": "ryzyka i korzyści",
+      "example": "Synonimy: pros and cons / advantages and disadvantages\n\nWe discussed the risks and benefits of the proposed treatment.\nThe risks and benefits of surgery versus conservative management were outlined.\nShe was given time to consider the risks and benefits before deciding.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m210"
+    },
+    {
+      "front": "to check understanding",
+      "back": "sprawdzić zrozumienie",
+      "example": "Synonimy: to confirm comprehension\n\nI checked her understanding by asking her to summarise the plan.\nIt is good practice to check understanding before ending the consultation.\nHe checked the patient's understanding of the medication instructions.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m211"
+    },
+    {
+      "front": "lifestyle advice",
+      "back": "zalecenia dotyczące stylu życia",
+      "example": "Synonimy: lifestyle modification advice\n\nLifestyle advice was given regarding diet and physical activity.\nWe provided lifestyle advice to help reduce his cardiovascular risk.\nShe was receptive to the lifestyle advice offered during the consultation.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m212"
+    },
+    {
+      "front": "side effects",
+      "back": "skutki uboczne",
+      "example": "Synonimy: adverse effects\n\nI explained the common side effects of the new medication.\nHe was advised to report any side effects promptly.\nNo significant side effects were reported during treatment.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m213"
+    },
+    {
+      "front": "to have any concerns",
+      "back": "mieć jakiekolwiek obawy",
+      "example": "Synonimy: to have worries or questions\n\nPlease let us know if you have any concerns before the procedure.\nShe had several concerns, which we addressed in detail.\nHe was encouraged to raise any concerns at follow-up.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m214"
+    },
+    {
+      "front": "to book a follow-up appointment",
+      "back": "umówić wizytę kontrolną",
+      "example": "Synonimy: to arrange a review appointment\n\nPlease book a follow-up appointment for four weeks' time.\nThe receptionist will help you book a follow-up appointment on your way out.\nHe was asked to book a follow-up appointment if symptoms persisted.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m215"
+    },
+    {
+      "front": "to put your mind at ease",
+      "back": "uspokoić, rozwiać obawy",
+      "example": "Synonimy: to reassure / to alleviate worry\n\nI hope this explanation has put your mind at ease.\nThe consultant's clear explanation put her mind at ease.\nWe wanted to put his mind at ease before the operation.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m216"
+    },
+    {
+      "front": "to go through (results/options) with someone",
+      "back": "omówić (wyniki/opcje) z kimś",
+      "example": "Synonimy: to discuss in detail with\n\nLet's go through the results together and answer any questions.\nI went through the treatment options with the patient and her husband.\nWe went through the discharge instructions before she left the ward.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m217"
+    },
+    {
+      "front": "to weigh up the pros and cons",
+      "back": "rozważyć za i przeciw",
+      "example": "Synonimy: to consider the advantages and disadvantages\n\nTake some time to weigh up the pros and cons before deciding.\nWe helped him weigh up the pros and cons of each treatment option.\nShe weighed up the pros and cons before consenting to surgery.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m218"
+    },
+    {
+      "front": "at your own pace",
+      "back": "we własnym tempie",
+      "example": "Synonimy: in your own time\n\nPlease read through the information at your own pace.\nRecovery will happen at your own pace, so there's no need to rush.\nYou can ask questions at your own pace throughout the consultation.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m219"
+    },
+    {
+      "front": "is there anything you'd like to ask?",
+      "back": "czy jest coś, o co chciał(a)by Pan/Pani zapytać?",
+      "example": "Synonimy: do you have any questions?\n\nBefore we finish, is there anything you'd like to ask?\nIs there anything you'd like to ask about the procedure itself?\nI paused regularly to check: is there anything you'd like to ask?",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "sentence",
+      "note_type": "basic",
+      "source_ref": "oet-core/m220"
+    },
+    {
+      "front": "presenting complaint",
+      "back": "dolegliwość zgłaszana (przyczyna wizyty)",
+      "example": "Synonimy: chief complaint / reason for presentation\n\nHis presenting complaint was a two-week history of cough and fever.\nThe presenting complaint was acute right-sided abdominal pain.\nHer presenting complaint had gradually worsened over several days.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "struktura-listu",
+        "list",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m221"
+    },
+    {
+      "front": "past medical history (PMH)",
+      "back": "wywiad chorobowy przebyty",
+      "example": "Synonimy: medical background / prior health conditions\n\nHis past medical history includes hypertension and type 2 diabetes.\nThere is no significant past medical history of note.\nHer PMH is notable for a previous myocardial infarction.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "struktura-listu",
+        "list",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m222"
+    },
+    {
+      "front": "social history",
+      "back": "wywiad społeczny",
+      "example": "Synonimy: social background\n\nSocial history reveals that he lives alone and is independent with daily activities.\nHer social history includes a 20 pack-year smoking history.\nSocial history was unremarkable, with no relevant occupational exposures.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "struktura-listu",
+        "list",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m223"
+    },
+    {
+      "front": "drug history (DHx)",
+      "back": "wywiad lekowy",
+      "example": "Synonimy: medication history\n\nHis drug history includes amlodipine and atorvastatin.\nThere were no known drug allergies documented in her drug history.\nDrug history was reviewed prior to prescribing the new medication.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "struktura-listu",
+        "list",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m224"
+    },
+    {
+      "front": "on admission",
+      "back": "przy przyjęciu",
+      "example": "Synonimy: at the time of admission\n\nOn admission, his observations were within normal limits.\nBlood tests taken on admission showed a raised white cell count.\nShe was afebrile on admission but became pyrexial overnight.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "struktura-listu",
+        "list",
+        "notatki"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m225"
+    },
+    {
+      "front": "impression / working diagnosis",
+      "back": "rozpoznanie robocze",
+      "example": "Synonimy: provisional diagnosis / clinical impression\n\nThe working diagnosis was community-acquired pneumonia.\nMy impression is that these findings represent a benign lesion.\nThe initial impression was later confirmed by biopsy.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "struktura-listu",
+        "list",
+        "raport"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m226"
+    },
+    {
+      "front": "differential diagnosis",
+      "back": "diagnostyka różnicowa",
+      "example": "Synonimy: differentials / possible diagnoses\n\nThe differential diagnosis includes cholecystitis and peptic ulcer disease.\nFurther investigation was needed to narrow the differential diagnosis.\nAppendicitis remained high on the differential diagnosis list.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "struktura-listu",
+        "list",
+        "raport"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m227"
+    },
+    {
+      "front": "plan going forward",
+      "back": "dalszy plan postępowania",
+      "example": "Synonimy: management plan / next steps\n\nThe plan going forward includes outpatient follow-up in six weeks.\nWe discussed the plan going forward with the patient and her family.\nThe plan going forward is to continue conservative management.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "struktura-listu",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m228"
+    },
+    {
+      "front": "as an outpatient",
+      "back": "w trybie ambulatoryjnym",
+      "example": "Synonimy: on an outpatient basis\n\nFurther investigations can be arranged as an outpatient.\nHe will continue physiotherapy as an outpatient.\nThis can be safely managed as an outpatient rather than requiring admission.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "struktura-listu",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m229"
+    },
+    {
+      "front": "to liaise with",
+      "back": "współpracować/kontaktować się z",
+      "example": "Synonimy: to coordinate with / to communicate with\n\nI will liaise with the community team regarding ongoing care.\nPlease liaise with the patient's GP prior to any medication changes.\nThe ward team liaised closely with physiotherapy throughout her stay.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "struktura-listu",
+        "list",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-core/m230"
+    }
+  ]
+}

@@ -1,4 +1,25 @@
 {
   "format": "slownik-manifest/v1",
-  "files": []
+  "files": [
+    {
+      "path": "oet-codziennosc.json",
+      "sha256": "e9ff26f069eb885c994c2cf1bc6874bca5cd9b977373e1c03962c9d9ff43f0df",
+      "notes": 56
+    },
+    {
+      "path": "oet-core.json",
+      "sha256": "b33bf229996b5acca782e24d0296393d43fbb3f76aa405f9bf7bb77aa1b659ed",
+      "notes": 126
+    },
+    {
+      "path": "oet-nhs.json",
+      "sha256": "131c2e409ccd73c2490a2959b57ce399dbeccd6d8aa1f70172ade00445adacd7",
+      "notes": 30
+    },
+    {
+      "path": "oet-terminologia.json",
+      "sha256": "edb746f6ff3b306d03150d44a7818a8368d00267a72a8d6d99b16e397fa09f04",
+      "notes": 17
+    }
+  ]
 }

@@ -1,0 +1,240 @@
+{
+  "format": "fiszki/v1",
+  "deck": "OET — terminologia i zwroty formalne",
+  "default_note_type": "basic_reversed",
+  "notes": [
+    {
+      "front": "exacerbation",
+      "back": "zaostrzenie (choroby)",
+      "example": "Synonimy: acute deterioration / worsening / decompensation\n\nThe patient was admitted with an acute exacerbation of COPD.\nThere has been an exacerbation of her symptoms over the past week.\nWe managed to prevent further exacerbation with early intervention.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m1/exacerbation"
+    },
+    {
+      "front": "contraindication",
+      "back": "przeciwwskazanie",
+      "example": "Synonimy: reason to avoid / precaution / absolute bar to\n\nRenal impairment is a contraindication to this contrast agent.\nThere are no absolute contraindications to this procedure.\nPregnancy is an important contraindication for this medication.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m2/contraindication"
+    },
+    {
+      "front": "prognosis",
+      "back": "rokowanie",
+      "example": "Synonimy: outlook / expected course / likely outcome / clinical trajectory\n\nThe prognosis for stage III disease is guarded.\nWe discussed a more favourable prognosis if he loses weight.\nThe overall prognosis remains uncertain at this stage.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m3/prognosis"
+    },
+    {
+      "front": "palliative",
+      "back": "paliatywny / objawowy",
+      "example": "Synonimy: symptomatic / supportive / comfort-focused / non-curative\n\nThe patient has been referred for palliative care input.\nWe're taking a palliative approach given his advanced disease.\nPalliative treatment focuses on symptom control rather than cure.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m4/palliative"
+    },
+    {
+      "front": "comorbidity",
+      "back": "choroba współistniejąca / choroby towarzyszące",
+      "example": "Synonimy: coexisting condition / concurrent illness / associated condition\n\nHe has multiple comorbidities including diabetes and hypertension.\nSignificant comorbidity was noted on examination.\nHer comorbidities will impact the choice of treatment.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m5/comorbidity"
+    },
+    {
+      "front": "Test indicates that…",
+      "back": "Badanie wskazuje, że… / Wynik pokazuje, że…",
+      "example": "Synonimy: findings suggest / imaging demonstrates / results reveal / the investigation confirms\n\nThe CT scan indicates that there is a small effusion.\nBlood tests indicate that his clotting is significantly prolonged.\nRecent imaging indicates a degree of stenosis in the left artery.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m6/test-indicates-that"
+    },
+    {
+      "front": "Benefits and harms",
+      "back": "Korzyści i ryzyko / Zalety i wady zabiegu",
+      "example": "Synonimy: risks and benefits / potential advantages and disadvantages / the risk-benefit profile\n\nI explained the benefits and harms of the proposed treatment.\nWe discussed the benefits and harms of continuing versus stopping the medication.\nThe benefits clearly outweigh the potential harms in this case.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m7/benefits-and-harms"
+    },
+    {
+      "front": "No evidence of…",
+      "back": "Brak dowodów na… / Nie stwierdzono…",
+      "example": "Synonimy: no features of / no signs of / there is an absence of / we found no indication of\n\nThere is no evidence of acute pathology on imaging.\nNo evidence of infection was found on the blood cultures.\nNo evidence of metastatic disease is present.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m8/no-evidence-of"
+    },
+    {
+      "front": "In keeping with",
+      "back": "Zgodnie z… / Sugerujący / Przy założeniu…",
+      "example": "Synonimy: consistent with / suggestive of / compatible with / in line with\n\nThe findings are in keeping with viral hepatitis.\nThese results are in keeping with our clinical suspicion.\nThe presentation is in keeping with acute pancreatitis.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m9/in-keeping-with"
+    },
+    {
+      "front": "Consistent with",
+      "back": "Zgodnie z… / Wskazujący na…",
+      "example": "Synonimy: in keeping with / suggestive of / compatible with / supportive of\n\nThe clinical picture is consistent with sepsis.\nThe radiological features are consistent with cirrhosis.\nHis symptoms are consistent with a viral prodrome.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m10/consistent-with"
+    },
+    {
+      "front": "On examination",
+      "back": "Podczas badania / Przy badaniu fizykalnym",
+      "example": "Synonimy: upon assessment / at clinical review / on clinical assessment\n\nOn examination, the patient was pyrexial and tachycardic.\nOn examination, there was marked abdominal distension.\nOn examination, we found a palpable mass in the right upper quadrant.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list",
+        "notatki"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m11/on-examination"
+    },
+    {
+      "front": "It is recommended that…",
+      "back": "Rekomenduje się… / Zaleca się…",
+      "example": "Synonimy: we advise / we suggest / the recommendation is / our guidance is that\n\nIt is recommended that he continues on current antibiotic therapy.\nIt is recommended that she undergoes further imaging.\nIt is recommended that a follow-up appointment is arranged within two weeks.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m12/it-is-recommended-that"
+    },
+    {
+      "front": "We propose to…",
+      "back": "Proponujemy… / Zamierzamy…",
+      "example": "Synonimy: we plan to / we intend to / our management plan is to / we would suggest\n\nWe propose to start him on a trial of beta-blockers.\nWe propose to review the imaging with radiology before proceeding.\nWe propose to monitor him closely over the next 48 hours.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m13/we-propose-to"
+    },
+    {
+      "front": "Unremarkable",
+      "back": "Bez widocznych zmian / Prawidłowy / Bez cech patologicznych",
+      "example": "Synonimy: normal / within normal limits / without abnormality / showing no significant findings\n\nThe abdominal examination was unremarkable.\nCardiovascular examination was unremarkable.\nBaseline imaging was unremarkable apart from mild degenerative changes.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m14/unremarkable"
+    },
+    {
+      "front": "Deranged (results)",
+      "back": "Zaburzony / Nie w normie (np. wyniki)",
+      "example": "Synonimy: abnormal / out of range / elevated / impaired / significantly altered\n\nHis liver function tests were significantly deranged.\nWe found deranged coagulation and thrombocytopenia.\nBiochemistry showed deranged renal function.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m15/deranged-results"
+    },
+    {
+      "front": "Surrogate outcome",
+      "back": "Punkt końcowy zastępczy / Miernik zastępczy",
+      "example": "Synonimy: indirect endpoint / proxy measure / intermediate outcome / surrogate marker\n\nWe need to be careful — improving the surrogate outcome doesn't guarantee better patient outcomes.\nThe trial used blood pressure as a surrogate outcome for cardiovascular events.\nSurrogate outcomes can be misleading if they don't correlate with true clinical benefit.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m16/surrogate-outcome"
+    },
+    {
+      "front": "Steeped in complexity",
+      "back": "Pełne złożoności / Wysoce złożone",
+      "example": "Synonimy: highly complex / multifaceted / nuanced / fraught with complexity\n\nThe ethical considerations surrounding this case are steeped in complexity.\nDecision-making in palliative care is often steeped in complexity.\nThe management of this condition is steeped in complexity and requires an MDT approach.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m17/steeped-in-complexity"
+    }
+  ]
+}

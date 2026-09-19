@@ -1,0 +1,735 @@
+{
+  "format": "fiszki/v1",
+  "deck": "OET — codzienność (Londyn)",
+  "default_note_type": "basic_reversed",
+  "notes": [
+    {
+      "front": "to chase up",
+      "back": "ponaglić / sprawdzić status",
+      "example": "/tə tʃeɪz ʌp/\nFormalnie (OET): to follow up on / to enquire about the status of\n\nI'll chase up the estate agent about the contract tomorrow.\nCan you chase up that MRI referral? It's been two weeks.\nShe chased up the lab results and they finally came back.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l1/to-chase-up"
+    },
+    {
+      "front": "to crack on (with)",
+      "back": "brać się do roboty",
+      "example": "/tə kræk ɒn/\nFormalnie (OET): to proceed with / to continue with / to get on with\n\nRight, I'll crack on — lots to get through today.\nWe cracked on with the list despite being short-staffed.\nI can't stop long — I need to crack on with these reports.",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l2/to-crack-on-with"
+    },
+    {
+      "front": "to fob someone off",
+      "back": "zbyć kogoś",
+      "example": "/tə fɒb ˈsʌmwʌn ɒf/\nFormalnie (OET): to dismiss / to deflect / to give an evasive response\n\nThe council keeps fobbing me off with excuses.\nDon't let them fob you off — ask to speak to the manager.\nI felt like I was being fobbed off without a proper explanation.",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l3/to-fob-someone-off"
+    },
+    {
+      "front": "to pop to the shops",
+      "back": "wyskoczyć do sklepu",
+      "example": "/tə pɒp tə ðə ʃɒps/\nFormalnie (OET): to go to the shops / to visit the pharmacy\n\nI'm just popping to the shops — need anything?\nShe popped to the pharmacy on her lunch break.\nI'll pop out and grab some coffee before the meeting starts.",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l4/to-pop-to-the-shops"
+    },
+    {
+      "front": "it's tipping it down",
+      "back": "leje jak z cebra",
+      "example": "/ɪts ˈtɪpɪŋ ɪt daʊn/\nFormalnie (OET): it's raining heavily / there's heavy rainfall\n\nDon't go out yet — it's tipping it down.\nIt was tipping it down all morning, so the car park was chaos.\nI got soaked — it just started tipping it down out of nowhere.",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l5/it-s-tipping-it-down"
+    },
+    {
+      "front": "to be gutted",
+      "back": "być załamanym / nieziemsko rozczarowanym",
+      "example": "/tə biː ˈɡʌtɪd/\nFormalnie (OET): to be very disappointed / to be devastated\n\nI was absolutely gutted when I heard the news.\nHe was gutted to miss the procedure after preparing all week.\nYou must be gutted — that's such a disappointing result.",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l6/to-be-gutted"
+    },
+    {
+      "front": "to sort something out",
+      "back": "załatwić / ogarnąć coś",
+      "example": "/tə sɔːt ˈsʌmθɪŋ aʊt/\nFormalnie (OET): to resolve / to arrange / to deal with\n\nI'll sort out the paperwork before the end of the day.\nCan you sort out a bed for the new admission?\nWe sorted it out between us — no need to escalate.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l7/to-sort-something-out"
+    },
+    {
+      "front": "fair enough",
+      "back": "no dobra / rozumiem / przyjmuję",
+      "example": "/feər ɪˈnʌf/\nFormalnie (OET): I understand / that's reasonable / I can see the reasoning\n\nFair enough — I can see why you'd want a second opinion.\nFair enough, let's give it another 24 hours.\nFair enough — I'll rebook for next week then.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l8/fair-enough"
+    },
+    {
+      "front": "to be up for something",
+      "back": "mieć ochotę na coś",
+      "example": "/tə biː ʌp fə ˈsʌmθɪŋ/\nFormalnie (OET): to be willing to / to be happy to / to be available for\n\nAre you up for a coffee after the ward round?\nIs anyone up for covering Saturday morning?\nI'm up for it if the rest of the team agrees.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l9/to-be-up-for-something"
+    },
+    {
+      "front": "to be chuffed (with something)",
+      "back": "być zadowolonym / uradowanym",
+      "example": "/tə biː tʃʌft/\nFormalnie (OET): to be very pleased / to be delighted / to be thrilled\n\nShe was absolutely chuffed with her exam results.\nThe patient was chuffed to hear he could go home.\nI'm really chuffed we managed to finish on time.",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l10/to-be-chuffed-with-something"
+    },
+    {
+      "front": "to be knackered",
+      "back": "być wykończonym / padniętym",
+      "example": "/tə biː ˈnækəd/\nFormalnie (OET): to be exhausted / to be very tired\n\nI'm absolutely knackered — that was a brutal shift.\nHe looked knackered; I don't think he'd slept at all.\nDon't ask me to stay late tonight — I'm completely knackered.",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l11/to-be-knackered"
+    },
+    {
+      "front": "to be run off one's feet",
+      "back": "nie móc złapać oddechu / być zawalonym",
+      "example": "/tə biː rʌn ɒf wʌnz fiːt/\nFormalnie (OET): to be extremely busy / to have an exceptionally heavy workload\n\nSorry I didn't call back — I've been run off my feet all day.\nThe A&E team was completely run off their feet last night.\nWe've been run off our feet since the new admissions policy changed.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l12/to-be-run-off-one-s-feet"
+    },
+    {
+      "front": "a bit of a nightmare",
+      "back": "koszmar / draka / nie lada problem",
+      "example": "/ə bɪt əv ə ˈnaɪtmeə/\nFormalnie (OET): rather challenging / quite problematic / far from straightforward\n\nParking near the hospital is a bit of a nightmare.\nThe handover was a bit of a nightmare — three unexpected admissions.\nGetting the IT system to work has been a bit of a nightmare, honestly.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l13/a-bit-of-a-nightmare"
+    },
+    {
+      "front": "to get the hang of something",
+      "back": "łapać rytm / ogarniać jak coś działa",
+      "example": "/tə ɡet ðə hæŋ əv ˈsʌmθɪŋ/\nFormalnie (OET): to become familiar with / to master / to grow accustomed to\n\nIt took me a while, but I'm finally getting the hang of the EPR system.\nOnce you get the hang of it, the commute isn't bad at all.\nDon't worry — you'll get the hang of the ward routine within a week.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l14/to-get-the-hang-of-something"
+    },
+    {
+      "front": "to touch base (with someone)",
+      "back": "skontaktować się / odezwać się",
+      "example": "/tə tʌtʃ beɪs/\nFormalnie (OET): to contact / to follow up with / to liaise with\n\nI'll touch base with the ward sister before I leave.\nCan we touch base tomorrow morning before the MDT?\nI just wanted to touch base and see how you're settling in.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l15/to-touch-base-with-someone"
+    },
+    {
+      "front": "bear with me",
+      "back": "chwileczkę / proszę o cierpliwość",
+      "example": "/beə wɪð miː/\nFormalnie (OET): one moment please / please allow me a moment\n\nBear with me — I just need to pull up your notes.\nBear with me for a moment while I check the scan results.\nBear with me — the system is running slowly this morning.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l16/bear-with-me"
+    },
+    {
+      "front": "to give someone a heads-up",
+      "back": "uprzedzić kogoś z wyprzedzeniem",
+      "example": "/tə ɡɪv ˈsʌmwʌn ə ˈhedz ʌp/\nFormalnie (OET): to notify in advance / to inform beforehand / to alert\n\nJust wanted to give you a heads-up — the patient in bay four is quite anxious.\nThanks for the heads-up about the ward closure.\nCan you give me a heads-up before you send the referral?",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l17/to-give-someone-a-heads-up"
+    },
+    {
+      "front": "to be in the same boat",
+      "back": "być w tej samej sytuacji / mieć ten sam problem",
+      "example": "/tə biː ɪn ðə seɪm bəʊt/\nFormalnie (OET): to be in a similar situation / to face the same challenges\n\nWe're all in the same boat with the parking situation.\nEveryone here is in the same boat — new city, new system.\nI know it's tough, but we're all in the same boat right now.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l18/to-be-in-the-same-boat"
+    },
+    {
+      "front": "to fancy (something / doing something)",
+      "back": "mieć ochotę na coś",
+      "example": "/tə ˈfænsi/\nFormalnie (OET): would you like / would you be interested in\n\nDo you fancy a coffee before the ward round?\nI don't fancy another night on call so soon.\nDo you fancy trying that new Italian place near the station?",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l19/to-fancy-something-doing-something"
+    },
+    {
+      "front": "to nip (out / to somewhere)",
+      "back": "wyskoczyć na chwilę",
+      "example": "/tə nɪp aʊt/\nFormalnie (OET): to step out briefly / to go out for a moment\n\nI'm just nipping out to grab a sandwich — back in ten minutes.\nShe nipped to the pharmacy on her lunch break.\nCan I nip out for five minutes? I need to make a call.",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "word",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l20/to-nip-out-to-somewhere"
+    },
+    {
+      "front": "to come across (as)",
+      "back": "sprawiać wrażenie / wydawać się",
+      "example": "/tə kʌm əˈkrɒs æz/\nFormalnie (OET): to appear / to seem / to present as\n\nHe came across as quite anxious during the consultation.\nShe comes across as very capable — I think she'll fit in well.\nI hope I didn't come across as dismissive — that wasn't my intention.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l21/to-come-across-as"
+    },
+    {
+      "front": "to go pear-shaped",
+      "back": "nie wyjść po bożemu / wziąć w łeb",
+      "example": "/tə ɡəʊ ˈpeəʃeɪpt/\nFormalnie (OET): to go wrong / to deteriorate unexpectedly / to fail\n\nThe plan was fine, but things went pear-shaped in theatre.\nIt all went pear-shaped when the second cannula failed.\nThe day started well, then went completely pear-shaped after lunch.",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l22/to-go-pear-shaped"
+    },
+    {
+      "front": "to catch up (with someone)",
+      "back": "nadrobić zaległości / spotkać się po czasie",
+      "example": "/tə kætʃ ʌp/\nFormalnie (OET): to meet / to reconnect / to review progress with\n\nLet's catch up properly after the MDT meeting.\nI need to catch up on my paperwork before Friday.\nIt was great to catch up with the cardiology team at the conference.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l23/to-catch-up-with-someone"
+    },
+    {
+      "front": "to reckon",
+      "back": "uważać / myśleć / sądzić",
+      "example": "/tə ˈrekən/\nFormalnie (OET): to think / to believe / in my view / in my opinion\n\nI reckon we should keep him in overnight just to be safe.\nWhat do you reckon — is she ready for discharge?\nI reckon the scan will come back clear, but let's wait and see.",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "word",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l24/to-reckon"
+    },
+    {
+      "front": "to ring someone",
+      "back": "zadzwonić do kogoś",
+      "example": "/tə rɪŋ ˈsʌmwʌn/\nFormalnie (OET): to telephone / to contact / to call\n\nI'll ring the registrar and let them know.\nRing me if anything changes overnight.\nShe rang ahead to warn us the patient was on his way in.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l25/to-ring-someone"
+    },
+    {
+      "front": "does that suit you?",
+      "back": "Czy to Panu/Pani odpowiada?",
+      "example": "/dʌz ðæt sjuːt juː/\nFormalnie (OET): would that be convenient / would that work for you\n\nI've booked the scan for Thursday — does that suit you?\nWe could meet at two o'clock — does that suit you?\nI'll schedule the follow-up for next Tuesday — does that suit?",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l26/does-that-suit-you"
+    },
+    {
+      "front": "to get on (with someone / with something)",
+      "back": "radzić sobie / dogadywać się",
+      "example": "/tə ɡet ɒn wɪð/\nFormalnie (OET): to manage / to cope with / to progress with\n\nHow are you getting on with the new medication?\nHow are you getting on with the EPR system?\nHe gets on well with everyone on the team.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l27/to-get-on-with-someone-with-something"
+    },
+    {
+      "front": "cheers",
+      "back": "dzięki (nieformalne)",
+      "example": "/tʃɪəz/\nFormalnie (OET): thank you / many thanks / I'm very grateful\n\nCheers for covering my bleep.\nCheers — I'll see you at handover.\nCheers for that, really helpful.",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "word",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l28/cheers"
+    },
+    {
+      "front": "to have a go (at something)",
+      "back": "spróbować / dać próbę",
+      "example": "/tə hæv ə ɡəʊ/\nFormalnie (OET): to attempt / to try\n\nDo you want to have a go at cannulating first?\nHave a go at writing up the discharge summary — I'll review it.\nI had a go at fixing the printer but gave up in the end.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l29/to-have-a-go-at-something"
+    },
+    {
+      "front": "I'm not bothered",
+      "back": "wszystko mi jedno / nie mam zdania",
+      "example": "/aɪm nɒt ˈbɒðəd/\nFormalnie (OET): I have no preference / either would be fine / I'm happy with either\n\nTea or coffee? — I'm not bothered, either is fine.\nWindow seat or aisle? — I'm not bothered.\nWhich consultant covers it? — Honestly, I'm not bothered either way.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l30/i-m-not-bothered"
+    },
+    {
+      "front": "do you mind if…?",
+      "back": "Czy mogę…? / Czy ma Pan/Pani coś przeciwko?",
+      "example": "/duː juː maɪnd ɪf/\nFormalnie (OET): may I / would it be alright if / would you be comfortable if\n\nDo you mind if I examine your abdomen?\nDo you mind if I ask a colleague to join us?\nDo you mind if I open the window? It's quite warm in here.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l31/do-you-mind-if"
+    },
+    {
+      "front": "carry on",
+      "back": "proszę kontynuować / dalej",
+      "example": "/ˈkæri ɒn/\nFormalnie (OET): please continue / do continue / please proceed\n\nCarry on — I didn't mean to interrupt.\nCarry on with the examination; I'll just observe.\nSorry to keep you waiting — please carry on.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l32/carry-on"
+    },
+    {
+      "front": "as it happens",
+      "back": "akurat / jak się składa",
+      "example": "/æz ɪt ˈhæpənz/\nFormalnie (OET): as it turns out / coincidentally / it so happens that\n\nAs it happens, I know that area quite well.\nAs it happens, we had a very similar case last week.\nAs it happens, the consultant is available this afternoon.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l33/as-it-happens"
+    },
+    {
+      "front": "I must say",
+      "back": "muszę przyznać / przyznam",
+      "example": "/aɪ mʌst seɪ/\nFormalnie (OET): I should note / I have to say / I find it noteworthy that\n\nI must say, the flat is much bigger than I expected.\nI must say, the team have handled this very well.\nI must say, I wasn't expecting such a quick recovery.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l34/i-must-say"
+    },
+    {
+      "front": "if you don't mind me asking",
+      "back": "jeśli mogę zapytać / nie chcąc być wścibskim",
+      "example": "/ɪf juː dəʊnt maɪnd miː ˈɑːskɪŋ/\nFormalnie (OET): if I may ask / may I enquire / if I may\n\nIf you don't mind me asking, how long have you been in the UK?\nIf you don't mind me asking, what brought you to see us today?\nIf you don't mind me asking, is there anything worrying you about the procedure?",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l35/if-you-don-t-mind-me-asking"
+    },
+    {
+      "front": "that said",
+      "back": "niemniej jednak / to powiedziawszy",
+      "example": "/ðæt sed/\nFormalnie (OET): however / nevertheless / nonetheless\n\nIt's a long commute. That said, the pay is very good.\nThe results aren't ideal. That said, we have good treatment options.\nIt's a complex case. That said, I'm cautiously optimistic.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l36/that-said"
+    },
+    {
+      "front": "all being well",
+      "back": "jeśli wszystko pójdzie dobrze",
+      "example": "/ɔːl ˈbiːɪŋ wel/\nFormalnie (OET): subject to no complications / provided all proceeds as planned\n\nAll being well, you should be home by the weekend.\nAll being well, the results will be back by Thursday.\nWe'll discharge her tomorrow, all being well.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l37/all-being-well"
+    },
+    {
+      "front": "to be honest (with you)",
+      "back": "szczerze mówiąc / żeby być szczerym",
+      "example": "/tə biː ˈɒnɪst/\nFormalnie (OET): frankly / to be candid / I should be transparent\n\nTo be honest, I found the commute more manageable than I thought.\nTo be honest, I'm not entirely sure — I'd want a second opinion.\nTo be honest with you, the prognosis is quite uncertain at this stage.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l38/to-be-honest-with-you"
+    },
+    {
+      "front": "I don't suppose you could…",
+      "back": "Nie mógłby Pan/Pani przypadkiem… (uprzejma prośba)",
+      "example": "/aɪ dəʊnt səˈpəʊz juː kʊd/\nFormalnie (OET): would you be able to / I wonder whether you could / could I ask you to\n\nI don't suppose you could recommend a good GP in this area?\nI don't suppose you could cover the ward for an hour?\nI don't suppose you could take a look at this before the meeting?",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l39/i-don-t-suppose-you-could"
+    },
+    {
+      "front": "mind you",
+      "back": "co prawda / ale z drugiej strony / swoją drogą",
+      "example": "/maɪnd juː/\nFormalnie (OET): however / I should note / that said\n\nIt's quite expensive to rent here. Mind you, the transport links are excellent.\nIt was a difficult case. Mind you, the outcome was better than expected.\nThe ward is busy. Mind you, it's always like this on a Monday.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l40/mind-you"
+    },
+    {
+      "front": "to take something in one's stride",
+      "back": "radzić sobie z czymś spokojnie / bez paniki",
+      "example": "/tə teɪk ˈsʌmθɪŋ ɪn wʌnz straɪd/\nFormalnie (OET): to manage / to cope with composure / to handle without difficulty\n\nThe paperwork was overwhelming at first, but she took it all in her stride.\nHe took the bad news remarkably well — completely in his stride.\nMoving to a new country is hard, but you seem to be taking it in your stride.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l41/to-take-something-in-one-s-stride"
+    },
+    {
+      "front": "quality assured",
+      "back": "zatwierdzony / zweryfikowany / spełnia standardy",
+      "example": "/ˈkwɒlɪti əˈʃɔːd/\nFormalnie (OET): verified / validated / meets the required standard\n\nThe equipment has been quality assured before theatre use.\nAll discharge summaries are quality assured by the consultant.\nYour blood results are quality assured — you can trust them.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l42/quality-assured"
+    },
+    {
+      "front": "it boils down to",
+      "back": "sprowadza się to do… / w gruncie rzeczy chodzi o…",
+      "example": "/ɪt bɔɪlz daʊn tə/\nFormalnie (OET): ultimately / the fundamental issue is / in essence / the key consideration is\n\nIt boils down to whether the patient is willing to try the treatment.\nIn the end, it boils down to shared decision-making with the patient.\nIt boils down to resource constraints and prioritising urgent cases.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l43/it-boils-down-to"
+    },
+    {
+      "front": "to pivot (to something)",
+      "back": "zmienić kierunek / przestawić się na coś",
+      "example": "/tə ˈpɪvət/\nFormalnie (OET): to shift to / to transition to / to redirect our approach towards\n\nWe need to pivot our approach — the current plan isn't working.\nThe team pivoted to a palliative strategy after the latest scan results.\nDuring the pandemic, many services pivoted to remote consultations.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l44/to-pivot-to-something"
+    },
+    {
+      "front": "disingenuous",
+      "back": "nieszczery / nieuczciwy w argumentacji / udający niewiedzę",
+      "example": "/ˌdɪsɪnˈdʒenjuəs/\nFormalnie (OET): insincere / misleading / lacking candour / not entirely candid\n\nIt would be disingenuous to claim that the evidence is conclusive — we need more data.\nI think it's a little disingenuous to suggest that funding wasn't a factor in this decision.\nTo be disingenuous here would undermine the patient's trust entirely.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l45/disingenuous"
+    },
+    {
+      "front": "to put someone in the picture",
+      "back": "wprowadzić kogoś w temat / poinformować",
+      "example": "/tə pʊt ˈsʌmwʌn ɪn ðə ˈpɪktʃə/\nFormalnie (OET): to brief / to inform / to update someone on the situation\n\nLet me put you in the picture — there have been some changes to the rota.\nI'll put the family in the picture once we have the results.\nCan someone put the on-call team in the picture before handover?",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l46/to-put-someone-in-the-picture"
+    },
+    {
+      "front": "to be on the same page",
+      "back": "mieć wspólne rozumienie / być po tej samej stronie",
+      "example": "/tə biː ɒn ðə seɪm peɪdʒ/\nFormalnie (OET): to be in agreement / to share the same understanding\n\nBefore we proceed, I want to make sure we're all on the same page.\nLet's just clarify the plan — I want to be on the same page as the family.\nThe MDT wasn't quite on the same page, so we deferred the decision.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l47/to-be-on-the-same-page"
+    },
+    {
+      "front": "to take something on board",
+      "back": "wziąć pod uwagę / przyjąć do wiadomości",
+      "example": "/tə teɪk ˈsʌmθɪŋ ɒn bɔːd/\nFormalnie (OET): to consider / to take into account / to acknowledge\n\nThank you for the feedback — I'll take that on board.\nI've taken your concerns on board and we're reviewing the protocol.\nShe took the advice on board and made the changes straightaway.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l48/to-take-something-on-board"
+    },
+    {
+      "front": "as far as I'm aware",
+      "back": "o ile mi wiadomo / według mojej wiedzy",
+      "example": "/æz fɑː æz aɪm əˈweə/\nFormalnie (OET): to my knowledge / based on the information available to me\n\nAs far as I'm aware, the scan results haven't come back yet.\nAs far as I'm aware, no one has spoken to the family today.\nThere are no contraindications, as far as I'm aware.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l49/as-far-as-i-m-aware"
+    },
+    {
+      "front": "to be tied up",
+      "back": "być zajętym / niedostępnym",
+      "example": "/tə biː taɪd ʌp/\nFormalnie (OET): to be unavailable / to be occupied / to be otherwise engaged\n\nThe consultant is tied up in theatre — can I take a message?\nI'm tied up until three, but I can call you back after that.\nShe was tied up with a complex case and couldn't attend the MDT.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l50/to-be-tied-up"
+    },
+    {
+      "front": "to pull something off",
+      "back": "udać się / wypalić / dokonać czegoś trudnego",
+      "example": "/tə pʊl ˈsʌmθɪŋ ɒf/\nFormalnie (OET): to achieve / to accomplish / to succeed in / to carry out successfully\n\nThe procedure was technically demanding, but the team pulled it off.\nI wasn't sure we'd manage the discharge by Friday, but we pulled it off.\nHe pulled off a very difficult conversation with the family — handled it beautifully.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l51/to-pull-something-off"
+    },
+    {
+      "front": "to pull through",
+      "back": "przeżyć / wyjść z tego / dać radę",
+      "example": "/tə pʊl θruː/\nFormalnie (OET): to survive / to recover / to make it through\n\nAgainst all odds, he pulled through after the surgery.\nShe's pulled through some very dark times — she's remarkably strong.\nWe weren't sure he'd pull through, but he's stabilising well.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l52/to-pull-through"
+    },
+    {
+      "front": "to come through (something)",
+      "back": "przejść przez coś trudnego / wyjść z opałów",
+      "example": "/tə kʌm θruː/\nFormalnie (OET): to overcome / to get through / to emerge from\n\nShe's come through a very difficult year — she's incredibly resilient.\nHe came through the operation better than we expected.\nIt won't be easy, but I'm confident you'll come through this.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l53/to-come-through-something"
+    },
+    {
+      "front": "to see something through",
+      "back": "doprowadzić do końca / wytrwać do końca",
+      "example": "/tə siː ˈsʌmθɪŋ θruː/\nFormalnie (OET): to complete / to follow through with / to persist with\n\nIt's a long treatment course, but I'd encourage you to see it through.\nWe started this together and we'll see it through.\nHe was determined to see the rehabilitation programme through despite the setbacks.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l54/to-see-something-through"
+    },
+    {
+      "front": "to get away with something",
+      "back": "ujść na sucho / przepchnąć coś bez konsekwencji",
+      "example": "/tə ɡet əˈweɪ wɪð ˈsʌmθɪŋ/\nFormalnie (OET): to succeed despite the risks / to avoid negative consequences\n\nWe got away with a conservative approach, which I wasn't expecting.\nYou can't always get away with delaying the decision — at some point you have to act.\nWe got away with it this time, but the protocol needs updating.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l55/to-get-away-with-something"
+    },
+    {
+      "front": "to bring something off",
+      "back": "przeprowadzić coś z sukcesem / dokonać czegoś trudnego",
+      "example": "/tə brɪŋ ˈsʌmθɪŋ ɒf/\nFormalnie (OET): to accomplish / to carry out successfully / to achieve\n\nIt was a complicated case — I wasn't sure we'd bring it off.\nThe team brought off a really difficult intervention under pressure.\nShe brought it off brilliantly — the family were very reassured.",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l56/to-bring-something-off"
+    }
+  ]
+}

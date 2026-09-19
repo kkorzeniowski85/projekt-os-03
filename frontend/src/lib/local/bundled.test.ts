@@ -160,9 +160,9 @@ it("skasowana recznie fiszka nie wraca z pakietem", async () => {
   await applyBundled({ now: NOW, fetchFn: fetchFrom(await site({ "a.json": [KOT, PIES] })) });
   const kot = (await slownik()).find((n) => n.note.fields.Front === "kot")!;
   await deleteNote(kot.note.id);
-  expect((await bundledState()).removed).toEqual(
-    expect.arrayContaining([kot.note.contentHash, "demo/kot"]),
-  );
+  // Slad tylko pod identyfikatorem z pakietu - odcisk tresci blokowalby takze
+  // przyszle, nigdy nie widziane pozycje o tym samym przodzie i tyle.
+  expect((await bundledState()).removed).toEqual(["demo/kot"]);
 
   // Plik sie zmienil (doszla ryba), wiec wchodzi ponownie - z kotem w srodku.
   const v2 = await site({ "a.json": [KOT, PIES, RYBA] });

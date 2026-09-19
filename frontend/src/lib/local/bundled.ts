@@ -196,6 +196,9 @@ async function runBundled(
         throw new Error("odcisk pliku nie zgadza się z manifestem");
       }
       const parsed = parseSource(file.path, new TextEncoder().encode(text));
+      // Odrzucone czytamy po obu kluczach: nowe zapisy trzymaja sam
+      // sourceRef, ale bazy sprzed tej zmiany maja tam takze odciski tresci
+      // i te wpisy nadal musza dzialac.
       const drafts = (await normalize(parsed, parsed.suggestedMapping)).filter(
         (draft) =>
           !removed.has(draft.contentHash) &&

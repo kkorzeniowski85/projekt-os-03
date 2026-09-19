@@ -19,6 +19,12 @@ import {
   type DeckSelection,
   type StudyQueueResult,
 } from "@/lib/local/repo";
+import {
+  RECOGNITION_ERROR_LABELS,
+  listenOnce,
+  recognitionAvailable,
+  type ListenHandle,
+} from "@/lib/listen";
 import { DEFAULT_PREFS, loadPrefs, type StudyPrefs } from "@/lib/prefs";
 import { speak, speechAvailable, stopSpeaking } from "@/lib/speech";
 import { RATING_LABELS, type Rating } from "@/lib/types";
@@ -72,16 +78,35 @@ function StudySession() {
   //: Dostepnosc mowy sprawdzamy po stronie przegladarki - w renderze na
   //: serwerze nie ma window, a rozbiezny wynik rozjechalby hydracje.
   const [canSpeak, setCanSpeak] = useState(false);
+  const [canListen, setCanListen] = useState(false);
+  //: Ten sam uchwyt co `nasluch`, widoczny w efekcie sprzatajacym, ktory
+  //: stoi wyzej w pliku niz deklaracja tamtego.
+  const nasluchNaWyjsciu = useRef<ListenHandle | null>(null);
+  const [sluchanie, setSluchanie] = useState(false);
+  //: Tryb sluchania: karty ida same, czytane na glos, BEZ oceniania.
+  //: To przeglad w drodze, nie sesja - stan powtorek zostaje nietkniety.
+  const [trybSluchania, setTrybSluchania] = useState(false);
 
   //  Czas odpowiedzi - wymagany w logu (ADR 0005), mierzony od pokazania karty.
   // Ustawiane przy pokazaniu karty (loadQueue/rate), nie w renderze.
   const shownAt = useRef<number>(0);
+  //: Zegary trybu sluchania - do posprzatania przy wyjsciu.
+  const zegary = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
+    // Obie wartosci istnieja wylacznie w przegladarce (localStorage, window).
+    // W renderze nie wolno ich czytac, bo eksport statyczny renderuje strone
+    // takze bez okna - stad zapis w efekcie.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrefs(loadPrefs());
     setCanSpeak(speechAvailable());
-    // Wyjscie z ekranu ucina wypowiedz - inaczej telefon mowi do pustego pokoju.
-    return () => stopSpeaking();
+    setCanListen(recognitionAvailable());
+    // Wyjscie z ekranu ucina wypowiedz i nasluch - inaczej telefon mowi do
+    // pustego pokoju albo trzyma wlaczony mikrofon.
+    return () => {
+      stopSpeaking();
+      nasluchNaWyjsciu.current?.stop();
+    };
   }, []);
 
   const loadQueue = useCallback(async () => {
@@ -109,6 +134,9 @@ function StudySession() {
   }, [param, limit]);
 
   useEffect(() => {
+    // Stan pochodzi z IndexedDB, wiec zapis nastepuje po await, nie w ciele
+    // efektu; regula tego nie rozroznia.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void loadQueue();
   }, [loadQueue]);
 
@@ -134,6 +162,38 @@ function StudySession() {
   //: i tylko gdy odpowiedz jest jednym zwrotem, nie akapitem.
   const wantsTyping =
     prefs.typeAnswer && entry?.card.templateOrd === 1 && englishText.length <= 60;
+
+  //: Uchwyt nasluchu - przerywamy go przy zmianie karty i wyjsciu z ekranu.
+  const nasluch = useRef<ListenHandle | null>(null);
+  const przerwijNasluch = useCallback(() => {
+    nasluch.current?.stop();
+    nasluch.current = null;
+    nasluchNaWyjsciu.current = null;
+    setSluchanie(false);
+  }, []);
+
+  function powiedz() {
+    if (sluchanie) {
+      przerwijNasluch();
+      return;
+    }
+    setError(null);
+    const uchwyt = listenOnce({
+      onResult: (transcript) => setTyped(transcript),
+      onError: (kod) => setError(RECOGNITION_ERROR_LABELS[kod]),
+      onEnd: () => {
+        nasluch.current = null;
+        setSluchanie(false);
+      },
+    });
+    if (!uchwyt) {
+      setError("Ta przeglądarka nie rozpoznaje mowy.");
+      return;
+    }
+    nasluch.current = uchwyt;
+    nasluchNaWyjsciu.current = uchwyt;
+    setSluchanie(true);
+  }
 
   const reveal = useCallback(() => {
     setRevealed(true);
@@ -210,6 +270,40 @@ function StudySession() {
       setBusy(false);
     }
   }
+
+  // Tryb sluchania: przod -> pauza -> tyl -> pauza -> nastepna karta.
+  // Nie zapisuje ocen i nie rusza FSRS; wychodzi sie jednym dotknieciem.
+  useEffect(() => {
+    if (!trybSluchania || !entry) return;
+    let porzucone = false;
+    const czekaj = (ms: number) =>
+      new Promise((res) => {
+        const id = setTimeout(res, ms);
+        zegary.current.push(id);
+      });
+
+    void (async () => {
+      setRevealed(false);
+      speak(englishText);
+      // Tyle, ile trwa przypomnienie sobie odpowiedzi - dluzej niz odczyt.
+      await czekaj(3200);
+      if (porzucone) return;
+      setRevealed(true);
+      await czekaj(2600);
+      if (porzucone) return;
+      // Kolejna karta albo koniec: kolejki nie dociagamy, bo nic nie ocenilismy
+      // i dostalibysmy w kolko te sama.
+      if (queue && index + 1 < queue.cards.length) setIndex(index + 1);
+      else setTrybSluchania(false);
+    })();
+
+    return () => {
+      porzucone = true;
+      for (const id of zegary.current) clearTimeout(id);
+      zegary.current = [];
+      stopSpeaking();
+    };
+  }, [trybSluchania, entry, englishText, index, queue]);
 
   // Skroty klawiszowe: spacja odslania, 1-4 ocenia.
   useEffect(() => {
@@ -325,6 +419,12 @@ function StudySession() {
         </span>
       </div>
 
+      {trybSluchania && (
+        <p className="mx-5 mt-3 rounded-lg border border-line bg-surface px-3 py-2 text-center text-[12px] text-ink-2">
+          Tryb słuchania — karty idą same i nie są oceniane. Stan powtórek bez zmian.
+        </p>
+      )}
+
       {/* Srodek ekranu nalezy do fiszki. */}
       <div className="flex flex-1 flex-col justify-center px-7 py-6 text-center">
         <p className="mb-5 text-[11px] uppercase tracking-[0.08em] text-ink-4">
@@ -345,23 +445,52 @@ function StudySession() {
               </p>
             )}
             {wantsTyping && (
-              <input
-                data-odpowiedz=""
-                autoFocus
-                value={typed}
-                onChange={(e) => setTyped(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    reveal();
-                  }
-                }}
-                placeholder="Wpisz po angielsku…"
-                autoCapitalize="off"
-                autoCorrect="off"
-                spellCheck={false}
-                className={`${inputClass} mx-auto mt-6 max-w-md text-center text-lg`}
-              />
+              <div className="mx-auto mt-6 flex w-full max-w-md items-center gap-2">
+                <input
+                  data-odpowiedz=""
+                  autoFocus
+                  value={typed}
+                  onChange={(e) => setTyped(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      reveal();
+                    }
+                  }}
+                  placeholder="Wpisz po angielsku…"
+                  autoCapitalize="off"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  className={`${inputClass} flex-1 text-center text-lg`}
+                />
+                {canListen && (
+                  <button
+                    type="button"
+                    onClick={powiedz}
+                    aria-label={sluchanie ? "Przerwij nagrywanie" : "Powiedz odpowiedź"}
+                    aria-pressed={sluchanie}
+                    className={`shrink-0 rounded-lg border p-2.5 ${
+                      sluchanie
+                        ? "animate-pulse border-again-line bg-again-bg text-again"
+                        : "border-line text-ink-3 hover:border-field hover:text-ink"
+                    }`}
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect x="9" y="2" width="6" height="12" rx="3" />
+                      <path d="M5 10a7 7 0 0 0 14 0M12 17v5" />
+                    </svg>
+                  </button>
+                )}
+              </div>
             )}
           </>
         ) : (
@@ -455,7 +584,15 @@ function StudySession() {
 
       <div className="px-5 pb-8">
         <ErrorBanner message={error} />
-        {!revealed ? (
+        {trybSluchania ? (
+          <button
+            type="button"
+            onClick={() => setTrybSluchania(false)}
+            className="mt-2 w-full rounded-[10px] border border-line px-3 py-4 text-base font-medium hover:border-field"
+          >
+            Zatrzymaj i wróć do oceniania
+          </button>
+        ) : !revealed ? (
           <button
             type="button"
             onClick={reveal}
@@ -500,6 +637,16 @@ function StudySession() {
           >
             Odłóż na bok
           </button>
+          {canSpeak && (
+            <button
+              type="button"
+              onClick={() => setTrybSluchania((tak) => !tak)}
+              aria-pressed={trybSluchania}
+              className={trybSluchania ? "font-medium text-accent" : "hover:text-ink-2"}
+            >
+              {trybSluchania ? "■ Zatrzymaj słuchanie" : "▸ Słuchaj"}
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -25,6 +25,7 @@ import { BUFOR_DNI, examPace, type PaceInfo } from "@/lib/local/pace";
 import { getSettings, updateSettings } from "@/lib/local/repo";
 import type { BundledStateRecord } from "@/lib/local/types";
 import { DEFAULT_PREFS, loadPrefs, savePrefs, type StudyPrefs } from "@/lib/prefs";
+import { recognitionAvailable } from "@/lib/listen";
 import { englishVoiceReady, speak, speechAvailable } from "@/lib/speech";
 import { odmien } from "@/lib/types";
 
@@ -56,9 +57,10 @@ function Settings() {
   const [pace, setPace] = useState<PaceInfo | null>(null);
   const [prefs, setPrefs] = useState<StudyPrefs>(DEFAULT_PREFS);
   //: Sprawdzane w przegladarce, nie w renderze - patrz ekran nauki.
-  const [mowa, setMowa] = useState<{ dostepna: boolean; angielski: boolean }>({
+  const [mowa, setMowa] = useState<{ dostepna: boolean; angielski: boolean; mikrofon: boolean }>({
     dostepna: false,
     angielski: false,
+    mikrofon: false,
   });
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -81,9 +83,17 @@ function Settings() {
   // Preferencje i dostepnosc mowy - osobno od danych, bo lista glosow bywa
   // doczytywana asynchronicznie i trzeba jej sluchac.
   useEffect(() => {
+    // Preferencje i glosy istnieja wylacznie w przegladarce (localStorage,
+    // speechSynthesis) - w renderze ich nie ma, bo eksport statyczny buduje
+    // strone bez okna.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrefs(loadPrefs());
     const sprawdz = () =>
-      setMowa({ dostepna: speechAvailable(), angielski: englishVoiceReady() });
+      setMowa({
+        dostepna: speechAvailable(),
+        angielski: englishVoiceReady(),
+        mikrofon: recognitionAvailable(),
+      });
     sprawdz();
     if (!speechAvailable()) return;
     window.speechSynthesis.addEventListener("voiceschanged", sprawdz);
@@ -91,6 +101,9 @@ function Settings() {
   }, []);
 
   useEffect(() => {
+    // Stan pochodzi z IndexedDB, wiec zapis nastepuje po await, nie w ciele
+    // efektu; regula tego nie rozroznia.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void refresh();
     // Cicha aktualizacja Slownika konczy sie zwykle juz po wczytaniu tego
     // ekranu - liczniki i data maja to pokazac bez przeladowania.
@@ -260,6 +273,8 @@ function Settings() {
                     ? "Głos brytyjski, jeśli jest w systemie. Przycisk 🔊 działa zawsze."
                     : "Ta przeglądarka nie ma głosu angielskiego — sprawdź ustawienia systemu."
                   : "Ta przeglądarka nie obsługuje syntezy mowy."}
+                {mowa.dostepna &&
+                  " Na ekranie nauki jest też tryb słuchania: karty idą same, bez oceniania."}
               </span>
             </span>
           </label>
@@ -286,6 +301,7 @@ function Settings() {
               <span className="text-ink-3">
                 Przy kierunku polski → angielski. Ćwiczy brytyjską pisownię, której samo
                 rozpoznanie nie utrwala. Ocenę nadal wybierasz sam.
+                {mowa.mikrofon && " Obok pola jest mikrofon — możesz powiedzieć zamiast pisać (wymaga sieci)."}
               </span>
             </span>
           </label>

@@ -377,12 +377,19 @@ export async function updateNote(
 }
 
 /**
- * Kasuje notatke z kartami i zapamietuje, ze zostala skasowana RECZNIE.
+ * Kasuje notatke z kartami i - gdy to material z pakietu - zapamietuje,
+ * ze zostala odrzucona RECZNIE.
  *
  * Bez tego sladu Slownik wbudowany przywrocilby ja przy nastepnej
- * aktualizacji pakietu - skasowanie ma byc decyzja ostateczna. Slad to
- * odcisk tresci i sourceRef (gdy jest); kasowanie calej talii sladu nie
- * zostawia, bo to porzadkowanie, nie sad o pojedynczej fiszce.
+ * aktualizacji - skasowanie ma byc decyzja ostateczna.
+ *
+ * Slad zostawiamy waziutko: tylko dla fiszek ze Slownika, ktore maja
+ * sourceRef, i tylko pod tym identyfikatorem. Szerszy zapis szkodzil:
+ * odcisk tresci blokowal przyszla pozycje pakietu o tym samym przodzie
+ * i tyle, ktorej uzytkownik nigdy nie widzial, a kasowanie w dowolnej
+ * talii (choćby roboczej) liczylo sie jak odrzucenie materialu.
+ * Kasowanie calej talii sladu nie zostawia - to porzadkowanie, nie sad
+ * o pojedynczej fiszce.
  */
 export async function deleteNote(id: string): Promise<void> {
   const database = await db();
@@ -391,12 +398,11 @@ export async function deleteNote(id: string): Promise<void> {
   const cards = await tx.objectStore("cards").index("by-note").getAllKeys(id);
   for (const key of cards) await tx.objectStore("cards").delete(key);
   await tx.objectStore("notes").delete(id);
-  if (note) {
+  if (note?.sourceRef && isDictionary(note.deckId)) {
     const settings = tx.objectStore("settings");
     const state = asBundledState(await settings.get(BUNDLED_STATE_ID));
     const removed = new Set(state.removed);
-    removed.add(note.contentHash);
-    if (note.sourceRef) removed.add(note.sourceRef);
+    removed.add(note.sourceRef);
     await settings.put({ ...state, removed: [...removed] });
   }
   await tx.done;

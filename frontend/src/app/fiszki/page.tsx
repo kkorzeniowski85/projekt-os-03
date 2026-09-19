@@ -81,6 +81,9 @@ function NotesManager() {
   }, [deckId]);
 
   useEffect(() => {
+    // Stan pochodzi z IndexedDB, wiec zapis nastepuje po await, nie w ciele
+    // efektu; regula tego nie rozroznia.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void load();
   }, [load]);
 

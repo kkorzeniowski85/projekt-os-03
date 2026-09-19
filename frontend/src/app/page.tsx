@@ -61,6 +61,9 @@ function DeckList() {
   }, []);
 
   useEffect(() => {
+    // Stan pochodzi z IndexedDB, wiec zapis nastepuje po await, nie w ciele
+    // efektu; regula tego nie rozroznia.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void load();
     // Cicha aktualizacja Slownika moze skonczyc sie juz po wczytaniu listy -
     // liczniki maja to pokazac bez przeladowania.

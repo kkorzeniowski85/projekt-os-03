@@ -7,14 +7,16 @@
  * pliku celowo tego nie robila, bo wtedy fiszki mieszkaly na serwerze.
  *
  * Strategie:
- *   - nawigacje  -> najpierw siec, przy braku zasiegu wersja z pamieci
- *                   (swieza wersja po wdrozeniu, ale offline zawsze dziala)
+ *   - nawigacje  -> siec scigana z zegarem: kto pierwszy, ten lepszy.
+ *                   Swieza wersja wchodzi sama, ale telefon "online bez
+ *                   transmisji" (slaby zasieg, winda, metro) nie zawiesza
+ *                   startu - po chwili dostaje wersje z pamieci
  *   - /_next/static -> najpierw pamiec; te pliki maja hash w nazwie, wiec
  *                   ich tresc nigdy sie nie zmienia
  *   - reszta     -> najpierw pamiec, w tle odswiezenie
  */
 
-const VERSION = "v4";
+const VERSION = "v5";
 const SHELL = `fiszki-shell-${VERSION}`;
 const ASSETS = `fiszki-assets-${VERSION}`;
 
@@ -22,6 +24,12 @@ const ASSETS = `fiszki-assets-${VERSION}`;
 //: stoi w podkatalogu, lokalnie w korzeniu. Dzieki temu nazwa repozytorium
 //: nie jest zaszyta w tym pliku.
 const BASE = new URL(self.registration.scope).pathname.replace(/\/$/, "");
+
+//: Ile czekamy na siec przy otwieraniu aplikacji, zanim pokazemy wersje
+//: z pamieci. navigator.onLine bywa prawdziwe przy zerowej transmisji,
+//: a wtedy fetch potrafi wisiec kilkadziesiat sekund. Aplikacja jest
+//: lokalna - nie ma na co czekac tak dlugo.
+const CZEKAJ_NA_SIEC_MS = 2500;
 
 //: Strony aplikacji - wszystkie musza byc dostepne offline.
 const ROUTES = ["/", "/nauka/", "/fiszki/", "/import/", "/stats/", "/ustawienia/"].map(
@@ -73,22 +81,35 @@ self.addEventListener("fetch", (event) => {
   // Nawigacje: siec ma pierwszenstwo, zeby nowa wersja wchodzila sama.
   // Bez zasiegu - wersja z pamieci; gdy i tej nie ma, strona glowna.
   if (request.mode === "navigate") {
+    // Parametry zapytania nie zmieniaja pliku strony (/nauka?talia=x to ten
+    // sam dokument co /nauka/), wiec szukamy po samej sciezce.
+    const zPamieci = async () =>
+      (await caches.match(url.pathname)) ??
+      (await caches.match(request, { ignoreSearch: true })) ??
+      (await caches.match(`${BASE}/`));
+
+    const zSieci = fetch(request).then((response) => {
+      // Odpowiedz z sieci trafia do pamieci takze wtedy, gdy przyszla po
+      // zegarze i uzytkownik oglada juz wersje zapamietana - nastepne
+      // otwarcie bedzie mialo swiezsza.
+      const copy = response.clone();
+      caches.open(SHELL).then((cache) => cache.put(request, copy));
+      return response;
+    });
+
     event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(SHELL).then((cache) => cache.put(request, copy));
-          return response;
-        })
-        .catch(async () => {
-          // Parametry zapytania nie zmieniaja pliku strony (/nauka?talia=x
-          // to ten sam dokument co /nauka/), wiec szukamy po samej sciezce.
-          const cached =
-            (await caches.match(url.pathname)) ??
-            (await caches.match(request, { ignoreSearch: true })) ??
-            (await caches.match(`${BASE}/`));
-          return cached ?? Response.error();
+      Promise.race([
+        zSieci.catch(() => zPamieci().then((c) => c ?? Response.error())),
+        new Promise((resolve) => {
+          setTimeout(() => {
+            // Zegar wygrywa tylko wtedy, gdy JEST co pokazac. Bez kopii
+            // w pamieci czekamy na siec do skutku - pusty ekran bylby gorszy.
+            zPamieci().then((c) => {
+              if (c) resolve(c);
+            });
+          }, CZEKAJ_NA_SIEC_MS);
         }),
+      ]),
     );
     return;
   }

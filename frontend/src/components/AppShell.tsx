@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
+import { applyBundled } from "@/lib/local/bundled";
 import { requestPersistentStorage } from "@/lib/local/db";
+import { odmien } from "@/lib/types";
 
 /**
  * Wspolna ramka ekranow. Wersja local-first - bez logowania (ADR 0006).
@@ -12,12 +14,38 @@ import { requestPersistentStorage } from "@/lib/local/db";
  * Nawigacja jest na DOLE: cztery linki tekstowe w rogu naglowka byly na
  * telefonie za ciasne, a gora ekranu jest cenniejsza niz dol.
  */
+//: Raz na zaladowanie strony, nie na kazda nawigacje. Nowa wersja aplikacji
+//: przychodzi przez service worker i przeladowanie - wtedy sprawdzamy znowu.
+let bundledChecked = false;
+
 export function AppShell({ children }: { children: ReactNode }) {
+  const [notice, setNotice] = useState<string | null>(null);
+
   useEffect(() => {
     // Prosba o trwala pamiec - bez niej przegladarka moglaby w potrzebie
     // wyczyscic dane. Odmowa nie jest bledem; na Androidzie dla
     // zainstalowanej PWA zwykle przyznawane automatycznie.
     void requestPersistentStorage();
+
+    // Slownik wbudowany: cicha dostawa tresci z pakietu (ADR 0007). Bez sieci
+    // konczy sie po cichu; glos zabiera tylko wtedy, gdy cos doszlo.
+    if (bundledChecked || !navigator.onLine) return;
+    bundledChecked = true;
+    void applyBundled().then((result) => {
+      if (result.status !== "applied" || result.imported + result.updated === 0) return;
+      const parts: string[] = [];
+      if (result.imported > 0) {
+        parts.push(
+          `${result.imported} ${odmien(result.imported, "nowa fiszka", "nowe fiszki", "nowych fiszek")}`,
+        );
+      }
+      if (result.updated > 0) {
+        parts.push(
+          `${result.updated} ${odmien(result.updated, "uzupełniona", "uzupełnione", "uzupełnionych")}`,
+        );
+      }
+      setNotice(`Słownik zaktualizowany: ${parts.join(" · ")}.`);
+    });
   }, []);
 
   return (
@@ -25,9 +53,32 @@ export function AppShell({ children }: { children: ReactNode }) {
     // body ma tylko min-height. Bez tego dolna nawigacja wisi tuz pod trescia
     // zamiast przy krawedzi ekranu.
     <div className="flex flex-1 flex-col">
-      <main className="mx-auto w-full max-w-2xl flex-1 px-5 pb-4 pt-5">{children}</main>
+      <main className="mx-auto w-full max-w-2xl flex-1 px-5 pb-4 pt-5">
+        {notice && <Notice text={notice} onClose={() => setNotice(null)} />}
+        {children}
+      </main>
       <BottomNav />
     </div>
+  );
+}
+
+/** Jedna linia nad trescia - do zamkniecia, nie do klikania. */
+function Notice({ text, onClose }: { text: string; onClose: () => void }) {
+  return (
+    <p
+      role="status"
+      className="mb-4 flex items-start justify-between gap-3 rounded-lg border border-good-line bg-good-bg px-3 py-2.5 text-sm text-good"
+    >
+      <span>{text}</span>
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Zamknij"
+        className="-mr-1 px-1 leading-none opacity-70 hover:opacity-100"
+      >
+        ×
+      </button>
+    </p>
   );
 }
 

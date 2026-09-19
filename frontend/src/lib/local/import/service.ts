@@ -169,15 +169,26 @@ function resolveNoteType(fromSource: NoteType | null, fallback: NoteType): NoteT
  * Zasada: UZUPELNIA, nie kasuje. Brak wartosci w pliku nigdy nie usuwa tego,
  * co juz jest - ponowny import ubozszej wersji nie moze zubozyc kolekcji.
  *
+ * `protectContent` - dla fiszki poprawionej recznie, gdy zrodlem jest
+ * Slownik wbudowany: przod, tyl, przyklad i kategoria zostaja jej, dochodzi
+ * tylko to, czego nie miala. Reka uzytkownika wygrywa z repozytorium.
+ *
  * Czego NIE rusza: typu notatki. Zmiana typu zmienia liczbe kart, a to
  * znaczy skasowanie karty razem z jej stanem FSRS. Aktualizacja dotyczy
  * tresci, nigdy stanu nauki. Zmiane typu robi sie swiadomie przez "Edytuj".
  */
-function mergeNote(existing: NoteRecord, draft: NoteDraft, iso: string): NoteRecord {
+function mergeNote(
+  existing: NoteRecord,
+  draft: NoteDraft,
+  iso: string,
+  protectContent = false,
+): NoteRecord {
   const fields = { ...existing.fields };
   for (const name of KNOWN_FIELDS) {
     const incoming = draft.fields[name]?.trim();
-    if (incoming) fields[name] = incoming;
+    if (!incoming) continue;
+    if (protectContent && fields[name]) continue;
+    fields[name] = incoming;
   }
 
   return {
@@ -186,8 +197,11 @@ function mergeNote(existing: NoteRecord, draft: NoteDraft, iso: string): NoteRec
     // Tagi sie sumuja - zadna etykieta nie ginie przy ponownym imporcie.
     tags: [...new Set([...existing.tags, ...draft.tags])].sort(),
     // Zgadnieta kategoria nie moze nadpisac recznie ustawionej.
-    itemKind: draft.kindExplicit ? draft.itemKind : existing.itemKind,
+    itemKind: draft.kindExplicit && !protectContent ? draft.itemKind : existing.itemKind,
     sourceRef: draft.sourceRef ?? existing.sourceRef,
+    // Odcisk ma opisywac to, co faktycznie stoi w polach: po poprawce
+    // tlumaczenia z pakietu jest nowy, przy chronionej tresci - bez zmian.
+    contentHash: protectContent ? existing.contentHash : draft.contentHash,
     updatedAt: iso,
   };
 }
@@ -198,7 +212,8 @@ function differs(before: NoteRecord, after: NoteRecord): boolean {
     JSON.stringify(before.fields) !== JSON.stringify(after.fields) ||
     before.tags.join("") !== after.tags.join("") ||
     before.itemKind !== after.itemKind ||
-    before.sourceRef !== after.sourceRef
+    before.sourceRef !== after.sourceRef ||
+    before.contentHash !== after.contentHash
   );
 }
 
@@ -214,11 +229,19 @@ export async function commitImport(
     onDuplicate?: DuplicateMode;
     skipDuplicates?: boolean;
     now?: Date;
+    /**
+     * Zrodlem jest Slownik wbudowany: fiszke odnajdujemy takze po sourceRef
+     * i - jesli uzytkownik jej nie poprawial - wersja z pakietu wygrywa.
+     * Wymusza tryb "update".
+     */
+    authoritative?: boolean;
   },
 ): Promise<CommitStats> {
   const now = options.now ?? new Date();
-  const mode: DuplicateMode =
-    options.onDuplicate ?? (options.skipDuplicates === false ? "add" : "skip");
+  const authoritative = options.authoritative === true;
+  const mode: DuplicateMode = authoritative
+    ? "update"
+    : (options.onDuplicate ?? (options.skipDuplicates === false ? "add" : "skip"));
   const iso = now.toISOString();
 
   const database = await db();
@@ -227,8 +250,14 @@ export async function commitImport(
 
   // Przy aktualizacji potrzebujemy calych rekordow, nie samych odciskow.
   const byHash = new Map<string, NoteRecord>();
+  // Pakiet odnajduje fiszke takze po sourceRef: poprawka tlumaczenia zmienia
+  // odcisk, a ma trafic w te sama fiszke, nie utworzyc drugiej obok.
+  const bySourceRef = new Map<string, NoteRecord>();
   for (const note of await database.getAll("notes")) {
     if (!byHash.has(note.contentHash)) byHash.set(note.contentHash, note);
+    if (authoritative && note.sourceRef && !bySourceRef.has(note.sourceRef)) {
+      bySourceRef.set(note.sourceRef, note);
+    }
   }
   const seenInBatch = new Set<string>();
 
@@ -250,17 +279,24 @@ export async function commitImport(
       skippedInvalid += 1;
       continue;
     }
-    const known = byHash.get(draft.contentHash);
+    const known =
+      byHash.get(draft.contentHash) ??
+      (authoritative && draft.sourceRef ? bySourceRef.get(draft.sourceRef) : undefined);
     const duplicate = known !== undefined || seenInBatch.has(draft.contentHash);
 
     if (duplicate && mode !== "add") {
       // Powtorzenie w samym pliku zawsze pomijamy - nie ma czego aktualizowac
       // rekordem, ktory dopiero powstaje w tej samej transakcji.
       if (mode === "update" && known) {
-        const merged = mergeNote(known, draft, iso);
+        // Reka uzytkownika wygrywa z pakietem; plik z importu uzupelnia jak dotad.
+        const merged = mergeNote(known, draft, iso, authoritative && Boolean(known.editedAt));
         if (differs(known, merged)) {
           updates.push(merged);
-          byHash.set(draft.contentHash, merged); // kolejne powtorzenia widza nowy stan
+          // Kolejne powtorzenia maja widziec nowy stan - takze pod nowym
+          // odciskiem, gdy tresc sie zmienila.
+          byHash.delete(known.contentHash);
+          byHash.set(merged.contentHash, merged);
+          if (merged.sourceRef) bySourceRef.set(merged.sourceRef, merged);
         } else {
           skippedDuplicates += 1;
         }

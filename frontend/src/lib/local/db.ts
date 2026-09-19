@@ -3,6 +3,7 @@
 import { deleteDB, openDB, type DBSchema, type IDBPDatabase } from "idb";
 
 import type {
+  BundledStateRecord,
   CardRecord,
   DeckRecord,
   NoteRecord,
@@ -29,7 +30,9 @@ export interface FiszkiDB extends DBSchema {
     // by-deck-time: dzisiejsze liczniki (limit nowych i powtorek na dzien).
     indexes: { "by-card": string; "by-time": string; "by-deck-time": [string, string] };
   };
-  settings: { key: string; value: SettingsRecord };
+  // Obok ustawien lezy stan Slownika wbudowanego - jeden maly rekord,
+  // ktory nie zasluzyl na wlasny sklep i migracje schematu.
+  settings: { key: string; value: SettingsRecord | BundledStateRecord };
 }
 
 export const DB_NAME = "fiszki";

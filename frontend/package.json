@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "npm run slownik",
     "dev": "next dev",
+    "prebuild": "npm run slownik",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "gen:api": "npx --yes openapi-typescript http://localhost:8000/openapi.json -o src/lib/api-types.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "slownik": "node scripts/slownik-manifest.mjs"
   },
   "dependencies": {
     "idb": "^8.0.3",

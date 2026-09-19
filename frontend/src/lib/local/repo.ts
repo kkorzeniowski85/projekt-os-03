@@ -22,6 +22,7 @@ import type {
   ReviewLogRecord,
   SettingsRecord,
 } from "./types";
+import { BUNDLED_STATE_ID, asBundledState } from "./bundled-state";
 
 const CARDS_PER_NOTE_TYPE: Record<NoteType, number> = { basic: 1, basic_reversed: 2 };
 
@@ -32,7 +33,7 @@ const uid = () => crypto.randomUUID();
 export async function getSettings(): Promise<SettingsRecord> {
   const database = await db();
   const existing = await database.get("settings", "app");
-  if (existing) return existing;
+  if (existing && existing.id === "app") return existing;
   const iso = new Date().toISOString();
   const created: SettingsRecord = {
     id: "app",
@@ -314,6 +315,9 @@ export async function updateNote(
   if (patch.itemKind !== undefined) note.itemKind = patch.itemKind;
   if (patch.noteType !== undefined) note.noteType = patch.noteType;
   note.updatedAt = now.toISOString();
+  // Slad reki uzytkownika: od tej pory Slownik wbudowany tej fiszki nie
+  // nadpisuje, tylko dopisuje braki.
+  note.editedAt = now.toISOString();
 
   const tx = database.transaction(["notes", "cards"], "readwrite");
   await tx.objectStore("notes").put(note);
@@ -344,12 +348,29 @@ export async function updateNote(
   return note;
 }
 
+/**
+ * Kasuje notatke z kartami i zapamietuje, ze zostala skasowana RECZNIE.
+ *
+ * Bez tego sladu Slownik wbudowany przywrocilby ja przy nastepnej
+ * aktualizacji pakietu - skasowanie ma byc decyzja ostateczna. Slad to
+ * odcisk tresci i sourceRef (gdy jest); kasowanie calej talii sladu nie
+ * zostawia, bo to porzadkowanie, nie sad o pojedynczej fiszce.
+ */
 export async function deleteNote(id: string): Promise<void> {
   const database = await db();
-  const tx = database.transaction(["notes", "cards"], "readwrite");
+  const tx = database.transaction(["notes", "cards", "settings"], "readwrite");
+  const note = await tx.objectStore("notes").get(id);
   const cards = await tx.objectStore("cards").index("by-note").getAllKeys(id);
   for (const key of cards) await tx.objectStore("cards").delete(key);
   await tx.objectStore("notes").delete(id);
+  if (note) {
+    const settings = tx.objectStore("settings");
+    const state = asBundledState(await settings.get(BUNDLED_STATE_ID));
+    const removed = new Set(state.removed);
+    removed.add(note.contentHash);
+    if (note.sourceRef) removed.add(note.sourceRef);
+    await settings.put({ ...state, removed: [...removed] });
+  }
   await tx.done;
 }
 

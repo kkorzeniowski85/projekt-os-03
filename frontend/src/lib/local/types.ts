@@ -32,6 +32,12 @@ export interface NoteRecord {
   contentHash: string;
   createdAt: string;
   updatedAt: string;
+  /**
+   * Kiedy uzytkownik ostatnio poprawil fiszke recznie ("Edytuj").
+   * Slownik wbudowany nie nadpisuje tresci ani kategorii takiej fiszki -
+   * tylko dopisuje to, czego brakuje. Brak pola = nigdy nie poprawiana.
+   */
+  editedAt?: string;
 }
 
 /**
@@ -94,4 +100,20 @@ export interface SettingsRecord {
   fsrsParameters: number[] | null;
   createdAt: string;
   updatedAt: string;
+}
+
+/**
+ * Stan Slownika wbudowanego - pakietu dostarczanego razem z aplikacja
+ * (ADR 0007). Rekord w sklepie `settings` pod id "slownik-wbudowany".
+ */
+export interface BundledStateRecord {
+  id: "slownik-wbudowany";
+  /** Sciezka pliku w pakiecie -> odcisk wersji, ktora juz weszla. */
+  files: Record<string, string>;
+  appliedAt: string | null;
+  /**
+   * Odciski tresci i sourceRef fiszek skasowanych recznie. Pakiet ich nie
+   * przywraca - skasowanie pojedynczej fiszki ma byc decyzja ostateczna.
+   */
+  removed: string[];
 }

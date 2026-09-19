@@ -13,7 +13,9 @@ import {
   type BackupCounts,
   type BackupFile,
 } from "@/lib/local/backup";
+import { BUNDLED_EVENT, applyBundled, bundledState } from "@/lib/local/bundled";
 import { storageEstimate } from "@/lib/local/db";
+import type { BundledStateRecord } from "@/lib/local/types";
 import { odmien } from "@/lib/types";
 
 function describe(counts: BackupCounts): string {
@@ -39,6 +41,7 @@ function Settings() {
     null,
   );
   const [pending, setPending] = useState<{ file: BackupFile; name: string } | null>(null);
+  const [bundled, setBundled] = useState<BundledStateRecord | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -47,11 +50,41 @@ function Settings() {
   const refresh = useCallback(async () => {
     setCounts(await currentCounts());
     setStorage(await storageEstimate());
+    setBundled(await bundledState());
   }, []);
 
   useEffect(() => {
     void refresh();
+    // Cicha aktualizacja Slownika konczy sie zwykle juz po wczytaniu tego
+    // ekranu - liczniki i data maja to pokazac bez przeladowania.
+    const onBundled = () => void refresh();
+    window.addEventListener(BUNDLED_EVENT, onBundled);
+    return () => window.removeEventListener(BUNDLED_EVENT, onBundled);
   }, [refresh]);
+
+  async function updateDictionary() {
+    setBusy(true);
+    setError(null);
+    setMessage(null);
+    try {
+      const result = await applyBundled();
+      if (result.status === "applied") {
+        const fiszek = (n: number) => `${n} ${odmien(n, "fiszkę", "fiszki", "fiszek")}`;
+        const pominieto = result.failed.length ? ` Pominięto: ${result.failed.join("; ")}.` : "";
+        setMessage(
+          `Słownik zaktualizowany: dodano ${fiszek(result.imported)}, ` +
+            `uzupełniono ${fiszek(result.updated)}.${pominieto}`,
+        );
+      } else if (result.status === "up-to-date") {
+        setMessage("Słownik jest aktualny.");
+      } else {
+        setError(result.message ?? "Nie udało się sprawdzić pakietu.");
+      }
+      await refresh();
+    } finally {
+      setBusy(false);
+    }
+  }
 
   async function download() {
     setBusy(true);
@@ -148,6 +181,29 @@ function Settings() {
             {storage.usageMb !== null && ` · ${String(storage.usageMb).replace(".", ",")} MB`}
           </p>
         )}
+      </section>
+
+      <section className="rounded-xl border border-line bg-surface p-4">
+        <p className="text-xs tracking-[0.01em] text-ink-3">SŁOWNIK WBUDOWANY</p>
+        <p className="mt-1.5 text-[13px] leading-relaxed text-ink-2">
+          Aplikacja niesie Słownik w sobie. Przy każdym otwarciu z dostępem do sieci
+          sprawdza, czy pakiet się zmienił, i dopisuje różnicę. Stan powtórek zostaje
+          nietknięty, fiszki poprawione ręcznie nie są nadpisywane, a skasowane nie
+          wracają.
+        </p>
+        <p className="mt-2.5 border-t border-line-soft pt-3 text-[13px] text-ink-2">
+          {bundled?.appliedAt
+            ? `Ostatnia aktualizacja: ${new Date(bundled.appliedAt).toLocaleString("pl-PL")}`
+            : "Pakiet nie został jeszcze wprowadzony."}
+        </p>
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() => void updateDictionary()}
+          className={`${secondaryButtonClass} mt-3 w-full py-3`}
+        >
+          Aktualizuj słownik
+        </button>
       </section>
 
       {/* Jedyne miejsce, gdzie aplikacja podnosi glos. */}

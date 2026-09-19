@@ -10,6 +10,7 @@ import {
   inputClass,
   secondaryButtonClass,
 } from "@/components/AppShell";
+import { BUNDLED_EVENT } from "@/lib/local/bundled";
 import {
   DICTIONARY_DECK_ID,
   createDeck,
@@ -57,6 +58,11 @@ function DeckList() {
 
   useEffect(() => {
     void load();
+    // Cicha aktualizacja Slownika moze skonczyc sie juz po wczytaniu listy -
+    // liczniki maja to pokazac bez przeladowania.
+    const onBundled = () => void load();
+    window.addEventListener(BUNDLED_EVENT, onBundled);
+    return () => window.removeEventListener(BUNDLED_EVENT, onBundled);
   }, [load]);
 
   async function addDeck(event: FormEvent) {

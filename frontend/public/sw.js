@@ -14,7 +14,7 @@
  *   - reszta     -> najpierw pamiec, w tle odswiezenie
  */
 
-const VERSION = "v3";
+const VERSION = "v4";
 const SHELL = `fiszki-shell-${VERSION}`;
 const ASSETS = `fiszki-assets-${VERSION}`;
 
@@ -64,6 +64,11 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+
+  // Slownik wbudowany (slownik/): zawsze z sieci, nigdy z pamieci. Aplikacja
+  // sama porownuje odciski i trzyma tresc w IndexedDB, wiec stara kopia
+  // w cache tylko opoznialaby aktualizacje o jedno otwarcie.
+  if (url.pathname.startsWith(`${BASE}/slownik/`)) return;
 
   // Nawigacje: siec ma pierwszenstwo, zeby nowa wersja wchodzila sama.
   // Bez zasiegu - wersja z pamieci; gdy i tej nie ma, strona glowna.

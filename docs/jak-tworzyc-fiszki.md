@@ -135,6 +135,23 @@ Czego aktualizacja **nie** robi: nie zmienia `note_type`. Zmiana typu oznacza
 skasowanie karty razem z jej stanem nauki, więc robi się to świadomie przez
 „Edytuj" przy konkretnej fiszce.
 
+## Plik do pakietu wbudowanego
+
+Gdy plik ma dotrzeć na telefon przez repozytorium, a nie przez ekran Import,
+ląduje w `frontend/public/slownik/`. Manifest z odciskami generuje się sam
+przy budowaniu, a każde urządzenie dowozi sobie różnicę przy następnym
+otwarciu (ADR 0007). Skrypt pilnuje dwóch dodatkowych wymagań:
+
+- **każda pozycja ma `source_ref`** — stały, unikalny identyfikator, np.
+  `oet-core/m103`. Po nim aplikacja odnajduje fiszkę, gdy poprawka tłumaczenia
+  zmieni odcisk treści. Bez niego poprawka utworzyłaby drugą fiszkę obok starej
+- **jedna treść, jedno źródło** — ta sama para przód/tył nie może być w dwóch
+  plikach pakietu
+
+`source_ref` raz nadany **nie zmienia się nigdy** — to on jest tożsamością
+fiszki między wersjami pakietu. Poprawiasz tłumaczenie, przykład, tagi,
+kategorię; identyfikator zostaje.
+
 ## Czego nie robić
 
 **Nie wymyślaj materiału.** Jeśli tworzysz plik ze zdjęcia, listy albo notatek —

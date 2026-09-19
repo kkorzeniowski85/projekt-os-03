@@ -108,6 +108,14 @@ istnieje zawsze i której nie można usunąć w całości. Wgrany materiał rozp
 się w niej zamiast tworzyć osobną grupę. Generując plik, **nie wymyślaj nazw
 talii** — pole `deck` zostaw puste albo czysto informacyjne.
 
+## Pakiet wbudowany
+
+Plik w tym formacie może też jechać **razem z aplikacją**: w katalogu
+`frontend/public/slownik/` (ADR 0007). Wtedy każde urządzenie dowozi sobie
+różnicę po otwarciu, bez ekranu Import. Dwa dodatkowe wymagania: każda pozycja
+ma stały `source_ref` (po nim trafiają poprawki), a ta sama treść nie może być
+w dwóch plikach. Szczegóły w [jak-tworzyc-fiszki.md](jak-tworzyc-fiszki.md).
+
 ## Jak zamówić talię w tym formacie
 
 Wystarczy poprosić wprost, np.:

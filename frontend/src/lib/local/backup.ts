@@ -12,6 +12,7 @@
 
 import { db } from "./db";
 import type {
+  BundledStateRecord,
   CardRecord,
   DeckRecord,
   NoteRecord,
@@ -31,7 +32,7 @@ export interface BackupFile {
     notes: NoteRecord[];
     cards: CardRecord[];
     reviewLog: ReviewLogRecord[];
-    settings: SettingsRecord[];
+    settings: Array<SettingsRecord | BundledStateRecord>;
   };
 }
 

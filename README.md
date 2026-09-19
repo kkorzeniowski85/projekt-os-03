@@ -30,6 +30,29 @@ w bazie** zamiast tworzyć osobną grupę (nazwa talii z pliku jest tylko
 podpowiedzią przy świadomym wyborze „+ osobna talia"). Istniejące talie można
 wchłonąć do Słownika przez łączenie — z pełną historią nauki.
 
+### Słownik wbudowany — słówka przychodzą razem z aplikacją
+
+Treść Słownika jedzie z aplikacją jak każdy inny plik: katalog
+`frontend/public/slownik/` zawiera pliki `fiszki/v1`, a `manifest.json`
+(generowany automatycznie przed `build` i `dev`) — ich odciski. Po otwarciu
+aplikacji z dostępem do sieci telefon pobiera manifest, porównuje odciski z tym,
+co już ma, i **dowozi różnicę** trybem „Uzupełnij". Ten sam przebieg uruchamia
+przycisk **Aktualizuj słownik** w Ustawieniach.
+
+Zasady, których pilnuje kod (i testy):
+
+- **stan powtórek nietknięty** — to dostawa treści, nie synchronizacja; postęp
+  nauki nadal zostaje na urządzeniu (ADR 0006)
+- poprawka tłumaczenia w repozytorium trafia w **tę samą** fiszkę (po
+  `source_ref`), nie tworzy drugiej obok
+- fiszki poprawionej ręcznie („Edytuj") pakiet **nie nadpisuje** — dopisuje
+  tylko to, czego jej brakuje
+- fiszka skasowana ręcznie **nie wraca**
+
+Nowe słówka dodaje się więc jednym ruchem: plik do `frontend/public/slownik/`,
+commit, push — każde urządzenie dostanie je przy następnym otwarciu.
+Szczegóły: [ADR 0007](docs/adr/0007-slownik-wbudowany.md).
+
 ### Dodawanie z telefonu
 
 > **Czat Claude nie zna formatu tej aplikacji** — to osobne środowisko,

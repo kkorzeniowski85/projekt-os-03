@@ -165,13 +165,10 @@ function StudySession() {
 
   //: Angielska strona fiszki - niezaleznie od kierunku karty czytamy to samo.
   const englishText = entry?.note.fields.Front ?? "";
-  //: Przy produkcji (polski -> angielski) zdanie z luka daje kontekst, ale nie
-  //: zdradza odpowiedzi - sam zwrot jest z niego wyciety.
-  //: Karty, w ktorych odpowiedzia jest angielski termin: produkcja z polskiego
-  //: (ord 1) i rozpoznanie z opisu (ord 2). Luka i wpisywanie maja sens
-  //: w obu - przy karcie opisowej zdanie z wycietym terminem plus synonim to
-  //: dokladnie zadanie z czesci Reading.
-  const odpowiedzPoAngielsku = entry !== null && entry.card.templateOrd !== 0;
+  //: Luka pokazuje sie tam, gdzie odpowiedzia jest angielski termin: przy
+  //: produkcji z polskiego (ord 1) i przy karcie opisowej (ord 2). W obu
+  //: przypadkach zdanie z wycietym zwrotem daje kontekst, nie zdradzajac
+  //: odpowiedzi - przy karcie opisowej to dokladnie zadanie z czesci Reading.
   const cloze = useMemo(() => {
     if (!entry || entry.card.templateOrd === 0 || !prefs.showCloze) return null;
     const example = exampleOf(entry.note);
@@ -180,7 +177,14 @@ function StudySession() {
 
   //: Wpisywanie odpowiedzi ma sens tylko tam, gdzie cwiczy sie produkcje -
   //: i tylko gdy odpowiedz jest jednym zwrotem, nie akapitem.
-  const wantsTyping = prefs.typeAnswer && odpowiedzPoAngielsku && englishText.length <= 60;
+  //: Wpisywanie TYLKO przy produkcji z polskiego (ord 1), gdzie oczekiwana
+  //: odpowiedz jest jedna. Przy karcie opisowej wskazowka bywa lista
+  //: rownorzednych wyrazen ("given / considering / in view of" -> "in light
+  //: of") i wtedy semantycznie poprawnych odpowiedzi jest kilka, a porownanie
+  //: zna jedna - uzytkownik dostawalby przekreslony czerwony tekst za dobra
+  //: odpowiedz. Luka w zdaniu zostaje, bo ona niczego nie ocenia.
+  const wantsTyping =
+    prefs.typeAnswer && entry?.card.templateOrd === 1 && englishText.length <= 60;
 
   //: Uchwyt nasluchu - przerywamy go przy zmianie karty i wyjsciu z ekranu.
   const nasluch = useRef<ListenHandle | null>(null);

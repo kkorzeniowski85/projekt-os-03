@@ -258,6 +258,9 @@ export async function createNote(
     contentHash: hash,
     createdAt: iso,
     updatedAt: iso,
+    // Fiszka dopisana recznie jest tak samo "autorska" jak poprawiona
+    // recznie - Slownik wbudowany nie moze jej nadpisac.
+    editedAt: iso,
   };
   const cards = buildCards(note, now);
 
@@ -279,12 +282,20 @@ export async function listNotes(
 ): Promise<Array<{ note: NoteRecord; cards: CardRecord[] }>> {
   const database = await db();
   const notes = await database.getAllFromIndex("notes", "by-deck", deckId);
-  const out = [];
-  for (const note of notes.sort((a, b) => b.createdAt.localeCompare(a.createdAt))) {
-    const cards = await database.getAllFromIndex("cards", "by-note", note.id);
-    out.push({ note, cards: cards.sort((a, b) => a.templateOrd - b.templateOrd) });
+  // Jeden odczyt kart calej talii zamiast jednego na notatke - lista
+  // Slownika to setki notatek, a kazdy odczyt to osobna transakcja.
+  const cardsByNote = new Map<string, CardRecord[]>();
+  for (const card of await database.getAllFromIndex("cards", "by-deck", deckId)) {
+    const list = cardsByNote.get(card.noteId);
+    if (list) list.push(card);
+    else cardsByNote.set(card.noteId, [card]);
   }
-  return out;
+  return notes
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+    .map((note) => ({
+      note,
+      cards: (cardsByNote.get(note.id) ?? []).sort((a, b) => a.templateOrd - b.templateOrd),
+    }));
 }
 
 export async function updateNote(
@@ -300,6 +311,7 @@ export async function updateNote(
   const database = await db();
   const note = await database.get("notes", id);
   if (!note) throw new Error("Nie znaleziono notatki");
+  const contentBefore = JSON.stringify([note.fields, note.tags, note.itemKind]);
 
   if (patch.fields !== undefined) {
     const fields = cleanFields(patch.fields);
@@ -316,8 +328,12 @@ export async function updateNote(
   if (patch.noteType !== undefined) note.noteType = patch.noteType;
   note.updatedAt = now.toISOString();
   // Slad reki uzytkownika: od tej pory Slownik wbudowany tej fiszki nie
-  // nadpisuje, tylko dopisuje braki.
-  note.editedAt = now.toISOString();
+  // nadpisuje, tylko dopisuje braki. Tylko gdy tresc naprawde sie zmienila -
+  // samo przelaczenie typu (formularz odsyla pola bez zmian) nie moze
+  // na zawsze odciac fiszki od poprawek z pakietu.
+  if (JSON.stringify([note.fields, note.tags, note.itemKind]) !== contentBefore) {
+    note.editedAt = now.toISOString();
+  }
 
   const tx = database.transaction(["notes", "cards"], "readwrite");
   await tx.objectStore("notes").put(note);
@@ -556,6 +572,9 @@ export async function studyQueue(
       )
     ).filter((card) => !isNew(card.fsrs));
 
+    // Nowe czytamy osobno z calej talii, nie z zakresu terminow: karta
+    // dodana "w przyszlosci" wzgledem zegara sesji (cofniety czas) nie moze
+    // zniknac z kolejki.
     const newAll = (await database.getAllFromIndex("cards", "by-deck", deck.id))
       .filter((card) => isNew(card.fsrs))
       .sort(

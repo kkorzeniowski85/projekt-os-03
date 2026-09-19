@@ -16,11 +16,11 @@
  * obejmuja takze material, ktory zostal juz skasowany.
  */
 
-import type { ItemKind, Rating } from "@/lib/types";
+import type { ItemKind } from "@/lib/types";
 
 import { db } from "./db";
 import { isNew } from "./scheduler";
-import { DAY_ROLLOVER_HOUR } from "./time";
+import { dayStart } from "./time";
 import type { CardRecord, NoteRecord, ReviewLogRecord } from "./types";
 
 //: Prog dojrzalosci karty w dniach. Karta o mniejszej stabilnosci jest
@@ -46,9 +46,12 @@ export interface StatsScope {
 
 /** Data "dnia nauki" (lokalna, z przelomem doby o 4:00) jako YYYY-MM-DD. */
 export function studyDay(at: Date): string {
-  const shifted = new Date(at.getTime() - DAY_ROLLOVER_HOUR * 3600_000);
+  // Ta sama granica co w kolejce nauki (dayStart), nie "minus 4 godziny":
+  // w noc zmiany czasu te dwie miary sie rozjezdzaly i statystyki liczyly
+  // nauke do innego dnia niz kolejka.
+  const start = dayStart(at);
   const pad = (n: number) => String(n).padStart(2, "0");
-  return `${shifted.getFullYear()}-${pad(shifted.getMonth() + 1)}-${pad(shifted.getDate())}`;
+  return `${start.getFullYear()}-${pad(start.getMonth() + 1)}-${pad(start.getDate())}`;
 }
 
 function previousDay(day: string): string {

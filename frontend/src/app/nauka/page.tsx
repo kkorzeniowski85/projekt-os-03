@@ -53,11 +53,13 @@ function StudySession() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [reviewedCount, setReviewedCount] = useState(0);
-  // Ile kart mialo byc na starcie sesji - do paska postepu.
-  const sessionSize = useRef(0);
+  // Ile kart mialo byc na starcie sesji - do paska postepu. Stan, nie ref:
+  // wartosc jest czytana w renderze.
+  const [sessionSize, setSessionSize] = useState(0);
 
   //  Czas odpowiedzi - wymagany w logu (ADR 0005), mierzony od pokazania karty.
-  const shownAt = useRef<number>(Date.now());
+  // Ustawiane przy pokazaniu karty (loadQueue/rate), nie w renderze.
+  const shownAt = useRef<number>(0);
 
   const loadQueue = useCallback(async () => {
     if (!param) {
@@ -71,7 +73,7 @@ function StudySession() {
       ]);
       setScheduler(makeScheduler(settings));
       setQueue(data);
-      if (sessionSize.current === 0) sessionSize.current = data.cards.length;
+      setSessionSize((size) => (size === 0 ? data.cards.length : size));
       setIndex(0);
       setRevealed(false);
       shownAt.current = Date.now();
@@ -130,6 +132,17 @@ function StudySession() {
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
       if (!entry) return;
+      // Przytrzymany klawisz to jeden zamiar, nie seria ocen.
+      if (event.repeat) return;
+      // Spacja i Enter na przycisku albo linku maja robic to, co przycisk -
+      // inaczej Enter na "Znowu" zapisywalby "Dobre", a strzalka wstecz
+      // odslanialaby odpowiedz zamiast wracac.
+      if (
+        event.target instanceof HTMLElement &&
+        event.target.closest("button, a, input, textarea, select")
+      ) {
+        return;
+      }
       if (event.code === "Space" || event.code === "Enter") {
         event.preventDefault();
         if (!revealed) setRevealed(true);
@@ -168,7 +181,9 @@ function StudySession() {
           <p className="mt-2 text-sm text-ink-2">
             {reviewedCount > 0
               ? `Powtórzono kart: ${reviewedCount}. Kolejne pojawią się zgodnie z harmonogramem.`
-              : "W tej talii nie ma teraz nic do powtórzenia."}
+              : singleDeckId
+                ? "W tej talii nie ma teraz nic do powtórzenia."
+                : "W wybranych taliach nie ma teraz nic do powtórzenia."}
           </p>
         </div>
         <ErrorBanner message={error} />
@@ -189,7 +204,7 @@ function StudySession() {
   const { question, answer } = renderCard(entry.note, entry.card.templateOrd);
   const example = exampleOf(entry.note);
   const isNewCard = entry.card.fsrs.state === 0;
-  const total = Math.max(sessionSize.current, reviewedCount + queue.cards.length - index);
+  const total = Math.max(sessionSize, reviewedCount + queue.cards.length - index);
   const done = Math.min(reviewedCount, total);
 
   return (

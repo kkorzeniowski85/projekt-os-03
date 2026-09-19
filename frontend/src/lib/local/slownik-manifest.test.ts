@@ -84,3 +84,14 @@ it("odmawia plikowi, ktory nie jest fiszki/v1", () => {
   expect(wynik.ok).toBe(false);
   expect(wynik.out).toContain("fiszki/v1");
 });
+
+it("odmawia, gdy ten sam source_ref jest w dwoch plikach", () => {
+  const wynik = uruchom(
+    katalog({
+      "a.json": talia([KOT]),
+      "b.json": talia([{ ...PIES, source_ref: "demo/kot" }]),
+    }),
+  );
+  expect(wynik.ok).toBe(false);
+  expect(wynik.out).toContain("unikalny");
+});

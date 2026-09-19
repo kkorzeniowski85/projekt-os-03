@@ -323,3 +323,48 @@ it("tryb add nadal tworzy osobna fiszke", async () => {
   await commitImport(deck.id, drafts, { noteType: "basic", onDuplicate: "add", now: NOW });
   expect(await listNotes(deck.id)).toHaveLength(2);
 });
+
+it("reczne uzupelnianie odnajduje fiszke po source_ref, gdy zmienilo sie tlumaczenie", async () => {
+  // Instrukcja w aplikacji kaze wygenerowac caly plik od nowa i wgrac trybem
+  // "Uzupelnij" - poprawka tlumaczenia ma trafic w te sama fiszke.
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  await commitImport(deck.id, await draftsFrom("a.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "to rule out", back: "wykluczyć", source_ref: "oet/1" }],
+  })), { noteType: "basic", now: NOW });
+  const przed = (await listNotes(deck.id))[0];
+
+  const stat = await commitImport(deck.id, await draftsFrom("b.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "to rule out", back: "wykluczyć (rozpoznanie)", source_ref: "oet/1" }],
+  })), { noteType: "basic", onDuplicate: "update", now: NOW });
+  expect(stat).toMatchObject({ imported: 0, updated: 1 });
+
+  const notes = await listNotes(deck.id);
+  expect(notes).toHaveLength(1);
+  expect(notes[0].note.id).toBe(przed.note.id);
+  expect(notes[0].note.fields.Back).toBe("wykluczyć (rozpoznanie)");
+  expect(notes[0].note.contentHash).not.toBe(przed.note.contentHash);
+});
+
+it("dwa wpisy z tym samym source_ref w jednym pliku to jedna fiszka", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  const stat = await commitImport(deck.id, await draftsFrom("a.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [
+      { front: "kot", back: "cat", source_ref: "x/1" },
+      { front: "kot", back: "cat (zwierzę)", source_ref: "x/1" },
+    ],
+  })), { noteType: "basic", onDuplicate: "update", now: NOW });
+  expect(stat).toMatchObject({ imported: 1, updated: 1 });
+  expect(await listNotes(deck.id)).toHaveLength(1);
+});
+
+it("tagi z pliku sa przycinane tak samo jak z formularza", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  await commitImport(deck.id, await draftsFrom("a.json", JSON.stringify({
+    format: "fiszki/v1",
+    notes: [{ front: "kot", back: "cat", tags: [" oet", "oet ", "nhs"] }],
+  })), { noteType: "basic", now: NOW });
+  expect((await listNotes(deck.id))[0].note.tags).toEqual(["nhs", "oet"]);
+});

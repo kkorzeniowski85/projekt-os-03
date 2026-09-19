@@ -135,8 +135,25 @@ function isNetworkError(error: unknown): boolean {
  * Plik z odciskiem niezgodnym z manifestem (urwane pobranie, stara kopia
  * na CDN) jest pomijany i zostaje "do wprowadzenia" na nastepny raz.
  */
-export async function applyBundled(
+export function applyBundled(
   options: { now?: Date; fetchFn?: FetchFn } = {},
+): Promise<BundledResult> {
+  // Jeden przebieg naraz. Cicha aktualizacja po starcie i przycisk
+  // w ustawieniach potrafia sie nalozyc, a commitImport czyta stan bazy
+  // przed zapisem - dwa rownolegle przebiegi wprowadzilyby pakiet dwa razy.
+  // Drugi wolajacy dostaje wynik pierwszego.
+  if (!inFlight) {
+    inFlight = runBundled(options).finally(() => {
+      inFlight = null;
+    });
+  }
+  return inFlight;
+}
+
+let inFlight: Promise<BundledResult> | null = null;
+
+async function runBundled(
+  options: { now?: Date; fetchFn?: FetchFn },
 ): Promise<BundledResult> {
   const now = options.now ?? new Date();
   const fetchFn = options.fetchFn ?? fetch;

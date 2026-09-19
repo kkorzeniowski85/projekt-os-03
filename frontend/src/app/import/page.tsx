@@ -4,16 +4,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 
-import {
-  AppShell,
-  ErrorBanner,
-  buttonClass,
-  inputClass,
-  secondaryButtonClass,
-} from "@/components/AppShell";
+import { AppShell, ErrorBanner, inputClass } from "@/components/AppShell";
 import {
   FORMATS,
-  ImportParseError,
   MAPPING_TARGETS,
   type ParseResult,
   parseSource,
@@ -215,14 +208,22 @@ function Importer() {
         setDrafts([]);
         setSummary(null);
         setError(
-          caught instanceof ImportParseError || caught instanceof Error
-            ? caught.message
-            : "Nie udało się odczytać źródła",
+          caught instanceof Error ? caught.message : "Nie udało się odczytać źródła",
         );
       }
     },
-    [pasted, fileName, formatKey, hasHeader, decks],
+    [pasted, fileName, formatKey, hasHeader],
   );
+
+  // Bez wyzerowania pole pamieta ostatni plik i ponowny wybor tego samego
+  // pliku nie wywoluje zdarzenia - import "raz Pomin, raz Uzupelnij" bylby
+  // niemozliwy bez przeladowania strony.
+  const fileInput = useRef<HTMLInputElement>(null);
+  function clearFile() {
+    fileData.current = null;
+    setFileName(null);
+    if (fileInput.current) fileInput.current.value = "";
+  }
 
   async function pickFile(file: File | null) {
     if (!file) return;
@@ -271,8 +272,7 @@ function Importer() {
       setDrafts([]);
       setSummary(null);
       setPasted("");
-      setFileName(null);
-      fileData.current = null;
+      clearFile();
       setHasHeader(null);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Import się nie powiódł");
@@ -357,6 +357,7 @@ function Importer() {
         <label className="block space-y-1">
           <span className="text-sm">Plik (fiszki/v1, CSV/TSV, tekst)</span>
           <input
+            ref={fileInput}
             type="file"
             accept=".json,.csv,.tsv,.txt,.md"
             onChange={(e) => void pickFile(e.target.files?.[0] ?? null)}
@@ -372,8 +373,7 @@ function Importer() {
             value={pasted}
             onChange={(e) => {
               setPasted(e.target.value);
-              fileData.current = null;
-              setFileName(null);
+              clearFile();
             }}
             placeholder={'kot - cat\npies - dog\n\nalbo CSV, albo JSON w formacie fiszki/v1'}
             className={`${inputClass} font-mono`}
@@ -479,8 +479,8 @@ function Importer() {
               <table className="w-full text-left text-sm">
                 <thead className="text-ink-3">
                   <tr>
-                    <th className="py-1.5 pr-3 font-normal">Przod</th>
-                    <th className="py-1.5 pr-3 font-normal">Tyl</th>
+                    <th className="py-1.5 pr-3 font-normal">Przód</th>
+                    <th className="py-1.5 pr-3 font-normal">Tył</th>
                     <th className="py-1.5 pr-3 font-normal">Kategoria</th>
                     <th className="py-1.5 pr-3 font-normal">Karty</th>
                     <th className="py-1.5 font-normal">Tagi</th>

@@ -192,7 +192,7 @@ function DeckList() {
             <Link
               href={studyHref}
               aria-disabled={!hasSomething}
-              className={`rounded-lg px-[18px] py-2.5 text-sm font-medium text-white ${
+              className={`rounded-lg px-[18px] py-2.5 text-sm font-medium text-on-accent ${
                 hasSomething
                   ? "bg-accent hover:bg-accent-hover"
                   : "pointer-events-none bg-accent/40"
@@ -232,7 +232,7 @@ function DeckList() {
                   type="button"
                   disabled={!mergeInto || merging}
                   onClick={() => void merge()}
-                  className="rounded-lg bg-again px-3 py-2 text-sm font-medium text-white hover:opacity-90 disabled:opacity-40"
+                  className="rounded-lg bg-again px-3 py-2 text-sm font-medium text-on-accent hover:opacity-90 disabled:opacity-40"
                 >
                   Połącz {selected.size} {odmien(selected.size, "talię", "talie", "talii")}
                 </button>

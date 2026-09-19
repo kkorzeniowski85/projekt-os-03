@@ -92,7 +92,9 @@ export async function normalize(
 
     drafts.push({
       fields: clean,
-      tags: [...new Set(tags.filter(Boolean))].sort(),
+      // Ta sama normalizacja co w formularzu (createNote): tag " oet" z pliku
+      // i "oet" wpisany recznie to jedna etykieta, nie dwie.
+      tags: [...new Set(tags.map((tag) => tag.trim()).filter(Boolean))].sort(),
       itemKind: kind ?? defaultKind ?? guessItemKind(clean[FIELD_FRONT]),
       // Kolumna zrodla albo jawny wybor przy imporcie to decyzja czlowieka;
       // heurystyka nie.
@@ -250,12 +252,15 @@ export async function commitImport(
 
   // Przy aktualizacji potrzebujemy calych rekordow, nie samych odciskow.
   const byHash = new Map<string, NoteRecord>();
-  // Pakiet odnajduje fiszke takze po sourceRef: poprawka tlumaczenia zmienia
-  // odcisk, a ma trafic w te sama fiszke, nie utworzyc drugiej obok.
+  // Tryb "uzupelnij" odnajduje fiszke takze po sourceRef: poprawka
+  // tlumaczenia zmienia odcisk, a ma trafic w te sama fiszke, nie utworzyc
+  // drugiej obok. Dotyczy tak samo pakietu, jak pliku wgranego recznie -
+  // instrukcja w aplikacji kaze wygenerowac caly plik od nowa i wgrac go
+  // trybem "Uzupelnij", wiec ta droga musi dzialac.
   const bySourceRef = new Map<string, NoteRecord>();
   for (const note of await database.getAll("notes")) {
     if (!byHash.has(note.contentHash)) byHash.set(note.contentHash, note);
-    if (authoritative && note.sourceRef && !bySourceRef.has(note.sourceRef)) {
+    if (mode === "update" && note.sourceRef && !bySourceRef.has(note.sourceRef)) {
       bySourceRef.set(note.sourceRef, note);
     }
   }
@@ -281,7 +286,7 @@ export async function commitImport(
     }
     const known =
       byHash.get(draft.contentHash) ??
-      (authoritative && draft.sourceRef ? bySourceRef.get(draft.sourceRef) : undefined);
+      (mode === "update" && draft.sourceRef ? bySourceRef.get(draft.sourceRef) : undefined);
     const duplicate = known !== undefined || seenInBatch.has(draft.contentHash);
 
     if (duplicate && mode !== "add") {
@@ -324,6 +329,9 @@ export async function commitImport(
       updatedAt: stamp,
     };
     notes.push(note);
+    // Drugi wpis z tym samym sourceRef w jednym pliku ma trafic w te notatke,
+    // nie powolac kolejnej.
+    if (note.sourceRef) bySourceRef.set(note.sourceRef, note);
     for (let ord = 0; ord < CARDS_PER_NOTE_TYPE[noteType]; ord += 1) {
       const snapshot = newCardSnapshot(now);
       cards.push({

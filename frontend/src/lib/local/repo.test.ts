@@ -518,3 +518,28 @@ it("slownik stoi na poczatku listy talii", async () => {
   const decks = await listDecks(NOW);
   expect(decks[0].id).toBe(DICTIONARY_DECK_ID);
 });
+
+it("slad reki uzytkownika: nowa fiszka go ma, zmiana samego typu go nie stawia", async () => {
+  const deck = await createDeck({ name: "Talia" }, NOW);
+  const { note } = await createNote(
+    { deckId: deck.id, noteType: "basic", fields: { Front: "kot", Back: "cat" } },
+    NOW,
+  );
+  expect(note.editedAt).toBe(NOW.toISOString());
+
+  // Pakiet potem oznacza fiszke jako swoja - zdejmujemy slad, zeby sprawdzic
+  // sama regule updateNote.
+  const database = await db();
+  await database.put("notes", { ...note, editedAt: undefined });
+
+  const later = new Date("2026-08-04T12:00:00");
+  const bezZmianTresci = await updateNote(
+    note.id,
+    { fields: note.fields, tags: note.tags, noteType: "basic_reversed" },
+    later,
+  );
+  expect(bezZmianTresci.editedAt).toBeUndefined();
+
+  const zeZmiana = await updateNote(note.id, { fields: { Front: "kot", Back: "kot domowy" } }, later);
+  expect(zeZmiana.editedAt).toBe(later.toISOString());
+});

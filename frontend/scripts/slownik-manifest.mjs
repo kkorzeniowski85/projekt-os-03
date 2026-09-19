@@ -42,6 +42,7 @@ export function buildManifest(dir) {
   mkdirSync(dir, { recursive: true });
   const files = [];
   const seen = new Map();
+  const seenRefs = new Map();
 
   for (const name of readdirSync(dir).sort()) {
     if (!name.endsWith(".json") || name === "manifest.json") continue;
@@ -64,6 +65,14 @@ export function buildManifest(dir) {
             "identyfikatora, po nim trafiaja poprawki",
         );
       }
+      const refOwner = seenRefs.get(note.source_ref);
+      if (refOwner) {
+        throw new Error(
+          `${name}: source_ref "${note.source_ref}" jest juz uzyty w ${refOwner} - ` +
+            "identyfikator musi byc unikalny w calym pakiecie",
+        );
+      }
+      seenRefs.set(note.source_ref, name);
       const key = [normalize(note.front), normalize(note.back)].join("\x1f");
       const other = seen.get(key);
       if (other && other !== name) {

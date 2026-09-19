@@ -32,6 +32,10 @@ export function AppShell({ children }: { children: ReactNode }) {
     if (bundledChecked || !navigator.onLine) return;
     bundledChecked = true;
     void applyBundled().then((result) => {
+      // navigator.onLine klamie przy braku zasiegu i portalach logowania -
+      // dopiero fetch wie, ze sieci nie ma. Wtedy sprobujemy ponownie
+      // przy nastepnym ekranie zamiast milczec do konca sesji.
+      if (result.status === "offline") bundledChecked = false;
       if (result.status !== "applied" || result.imported + result.updated === 0) return;
       const parts: string[] = [];
       if (result.imported > 0) {

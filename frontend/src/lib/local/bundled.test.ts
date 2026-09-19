@@ -23,6 +23,7 @@ import { parseSource } from "./import";
 import { commitImport, normalize } from "./import/service";
 import {
   DICTIONARY_DECK_ID,
+  createNote,
   deleteNote,
   ensureDictionary,
   listNotes,
@@ -237,4 +238,34 @@ it("plik usuniety z pakietu przestaje byc sledzony, jego fiszki zostaja", async 
   expect(result).toMatchObject({ status: "applied", imported: 1 });
   expect(Object.keys((await bundledState()).files)).toEqual(["a.json"]);
   expect(await fronty()).toEqual(["kot", "pies", "ryba"]);
+});
+
+it("dwa rownolegle wywolania to jeden przebieg - pakiet nie wchodzi dwa razy", async () => {
+  // Cicha aktualizacja po starcie i przycisk w ustawieniach potrafia sie
+  // nalozyc; commitImport czyta stan przed zapisem, wiec bez zapory kazda
+  // fiszka powstalaby dwa razy.
+  const pages = await site({ "a.json": [KOT, PIES] });
+  const fetchFn = fetchFrom(pages);
+  const [first, second] = await Promise.all([
+    applyBundled({ now: NOW, fetchFn }),
+    applyBundled({ now: NOW, fetchFn }),
+  ]);
+  expect(first).toBe(second);
+  expect(first.imported).toBe(2);
+  expect(await fronty()).toEqual(["kot", "pies"]);
+});
+
+it("fiszka dopisana recznie jest chroniona jak poprawiona recznie", async () => {
+  const deck = await ensureDictionary(NOW);
+  await createNote(
+    { deckId: deck.id, noteType: "basic", fields: { Front: "kot", Back: "cat", Example: "Mój kot śpi." } },
+    NOW,
+  );
+  await applyBundled({
+    now: LATER,
+    fetchFn: fetchFrom(await site({ "a.json": [{ ...KOT, example: "The cat sleeps." }] })),
+  });
+  const note = (await slownik())[0].note;
+  expect(note.fields.Example).toBe("Mój kot śpi."); // przyklad uzytkownika zostal
+  expect(note.sourceRef).toBe("demo/kot"); // ale tozsamosc z pakietu doszla
 });

@@ -48,9 +48,13 @@ function Settings() {
   const fileInput = useRef<HTMLInputElement>(null);
 
   const refresh = useCallback(async () => {
-    setCounts(await currentCounts());
-    setStorage(await storageEstimate());
-    setBundled(await bundledState());
+    try {
+      setCounts(await currentCounts());
+      setStorage(await storageEstimate());
+      setBundled(await bundledState());
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Nie udało się odczytać danych");
+    }
   }, []);
 
   useEffect(() => {
@@ -81,6 +85,8 @@ function Settings() {
         setError(result.message ?? "Nie udało się sprawdzić pakietu.");
       }
       await refresh();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Nie udało się zaktualizować słownika");
     } finally {
       setBusy(false);
     }
@@ -97,8 +103,13 @@ function Settings() {
       const link = document.createElement("a");
       link.href = url;
       link.download = backupFilename(now);
+      // Link w dokumencie i adres zwalniany z opoznieniem: czesc przegladarek
+      // rozwiazuje blob: asynchronicznie i natychmiastowe zwolnienie urywa
+      // pobieranie, mimo ze komunikat mowilby o zapisanej kopii.
+      document.body.appendChild(link);
       link.click();
-      URL.revokeObjectURL(url);
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 60_000);
       setMessage(`Zapisano kopię: ${describe(backupCounts(payload))}.`);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udało się zapisać kopii");
@@ -280,7 +291,7 @@ function Settings() {
                 type="button"
                 disabled={busy}
                 onClick={() => void confirmRestore()}
-                className="rounded-lg bg-again px-3 py-2 text-sm font-medium text-white hover:opacity-90 disabled:opacity-40"
+                className="rounded-lg bg-again px-3 py-2 text-sm font-medium text-on-accent hover:opacity-90 disabled:opacity-40"
               >
                 Zastąp moje dane
               </button>

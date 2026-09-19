@@ -96,7 +96,6 @@ function Dashboard() {
 
   const { overview: ov } = data;
   const today = studyDay(new Date());
-  const maxKind = Math.max(...data.kinds.map((k) => k.cards), 1);
 
   return (
     <div className="space-y-5">
@@ -208,7 +207,7 @@ function Dashboard() {
               day: d.day,
               count: d.reviews,
               highlight: d.day === today,
-              title: `${shortDay(d.day)}: ${d.reviews} powtórek, ${duration(d.seconds)}`,
+              title: `${shortDay(d.day)}: ${d.reviews} ${odmien(d.reviews, "powtórka", "powtórki", "powtórek")}, ${duration(d.seconds)}`,
             }))}
           />
         )}
@@ -227,7 +226,7 @@ function Dashboard() {
                 day: p.day,
                 count: p.count,
                 highlight: p.day < today,
-                title: `${shortDay(p.day)}: ${p.count} kart${p.day < today ? " (zaległe)" : ""}`,
+                title: `${shortDay(p.day)}: ${p.count} ${odmien(p.count, "karta", "karty", "kart")}${p.day < today ? " (zaległe)" : ""}`,
               }))}
             />
             {data.load.some((p) => p.day < today) && (

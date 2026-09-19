@@ -73,6 +73,11 @@ const CLAUDE_PROMPT = `Zrób z tego fiszki w formacie JSON "fiszki/v1". Zasady:
 }
 
 - Wymagane są tylko "front" i "back". Nigdy puste.
+- "example" MUSI zawierać uczony zwrot — zdanie na temat, ale bez samego
+  zwrotu, jest do nauki bezużyteczne. Zwrot może być odmieniony ("to fob
+  someone off" → "The council keeps fobbing me off"), a placeholdery
+  someone/something zastąp konkretem. Przepisz z materiału; gdy go tam nie
+  ma, zostaw pole puste.
 - NIE dodawaj pola "deck" ani nie wymyślaj nazw talii — materiał trafia do
   jednej wspólnej bazy.
 - "kind": pojedyncze słowo → word; kilka słów dosłownie → phrase; idiom albo

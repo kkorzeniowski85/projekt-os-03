@@ -41,7 +41,7 @@ każde pominięte pole to informacja, którą aplikacja musi zgadnąć albo utra
 |---|---|
 | `front` | Strona pytania — to, czego się uczysz |
 | `back` | Strona odpowiedzi — zwykle polski |
-| `example` | Zdanie przykładowe. Widać je **dopiero po odsłonięciu odpowiedzi**, więc nie podpowiada. Może mieć wiele linii |
+| `example` | Zdanie przykładowe — **musi zawierać uczony zwrot** (patrz niżej). Widać je dopiero po odsłonięciu odpowiedzi, więc nie podpowiada. Może mieć wiele linii |
 | `tags` | Do filtrowania i statystyk po tagach |
 | `kind` | **Oś statystyk** — patrz niżej, to najważniejsze pole opcjonalne |
 | `note_type` | Ile kart powstanie: `basic` = 1, `basic_reversed` = 2 |
@@ -49,6 +49,27 @@ każde pominięte pole to informacja, którą aplikacja musi zgadnąć albo utra
 
 **Nie dodawaj pola `deck`.** Materiał trafia do Słownika — jednej wspólnej bazy.
 Nazwy talii nie są aplikacji potrzebne i tylko mnożą grupy.
+
+## `example` — zdanie musi zawierać uczony zwrot
+
+To jedyny warunek, ale twardy. Zdanie „na temat", w którym samego zwrotu nie ma,
+jest do nauki bezużyteczne — pokazuje kontekst, a nie użycie.
+
+```
+front: "to rule out"
+✅ "We need to rule out a bleed before giving pain relief."
+❌ "The diagnosis was uncertain at that point."   ← na temat, ale bez zwrotu
+```
+
+Zwrot może być **odmieniony** — tak nawet lepiej, bo pokazuje żywe użycie:
+`to fob someone off` → *„The council keeps **fobbing me off** with excuses."*
+
+Gdy w `front` stoi placeholder (`someone`, `something`, `one's`), w zdaniu
+podstaw konkret — `to give someone a heads-up` → *„Just wanted to **give you a
+heads-up** about the ward closure."*
+
+Jeśli materiał źródłowy nie ma przykładu dla danej pozycji, zostaw pole puste.
+Lepszy brak niż zmyślony.
 
 ## `kind` — cztery kategorie, jedna do oznaczenia ręcznie
 

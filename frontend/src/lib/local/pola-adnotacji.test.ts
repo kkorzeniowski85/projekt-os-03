@@ -2,7 +2,7 @@
  * Pola adnotacji (wymowa, synonimy, odpowiednik formalny) i karta opisowa.
  *
  * Najwazniejszy test tego pliku to ten na calym pakiecie: rozbior dziala na
- * PRAWDZIWYCH 229 fiszkach, nie na wymyslonych probkach.
+ * PRAWDZIWYM materiale uzytkownika, nie na wymyslonych probkach.
  */
 
 import "fake-indexeddb/auto";
@@ -259,11 +259,14 @@ describe.skipIf(!pakietJest)("caly pakiet wbudowany", () => {
       }
     }
 
-    expect(razem).toBe(229);
-    expect(bezZdan).toEqual([]); // nic nie ginie
+    // Niezmienniki, nie konkretne liczby: pakiet ma rosnac bez lamania testu.
+    // Pierwsza wersja asertowala 229 i padla przy dolozeniu pliku ze skrotami -
+    // test pilnowal wtedy rozmiaru pakietu zamiast poprawnosci rozbioru.
+    expect(bezZdan).toEqual([]); // zadne zdanie nie ginie
     expect(zostalNaglowek).toEqual([]); // nic nie zostaje sklejone
-    expect(zSynonimami).toBe(143);
-    expect(zFormalnym).toBe(86);
-    expect(zWymowa).toBe(86);
+    expect(razem).toBeGreaterThanOrEqual(229);
+    expect(zSynonimami).toBeGreaterThanOrEqual(143);
+    expect(zFormalnym).toBeGreaterThanOrEqual(86);
+    expect(zWymowa).toBeGreaterThanOrEqual(86);
   });
 });

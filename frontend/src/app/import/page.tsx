@@ -98,6 +98,43 @@ nowa (nie tylko zmiany). Przy imporcie wybiorę „Uzupełnij o to, co jest
 w pliku" — istniejące fiszki dostaną nowe przykłady i tagi, a ich stan
 powtórek zostanie nietknięty.`;
 
+/**
+ * Instrukcja oceny listu OET - druga rzecz do wklejenia w rozmowie.
+ *
+ * Fiszki nie ruszaja Writing wcale, a to cwiartka egzaminu. Napisany list bez
+ * informacji zwrotnej jest cwiczeniem wlasnych nawykow - takze tych zlych.
+ * Kryteria sa dokladnie te, ktorymi ocenia OET od 2019 roku.
+ */
+const CLAUDE_LIST_PROMPT = `Oceń mój list OET (Writing sub-test). Jestem lekarzem, przygotowuję się do egzaminu.
+
+Poniżej wklejam: (1) zadanie z notatkami o pacjencie, (2) mój list.
+
+Oceń go WEDŁUG SZEŚCIU KRYTERIÓW OET, każde osobno, w skali 0-7 razem z krótkim uzasadnieniem:
+
+1. PURPOSE — czy cel listu jest jasny od pierwszego zdania? Czy adresat od razu wie, czego od niego oczekuję?
+2. CONTENT — czy są wszystkie informacje istotne DLA TEGO adresata i czy nie ma tych nieistotnych? Wypisz, co pominąłem i co dodałem niepotrzebnie.
+3. CONCISENESS & CLARITY — czy da się to powiedzieć krócej bez straty treści? Wskaż konkretne zdania do skrócenia.
+4. GENRE & STYLE — rejestr formalny, ton wobec kolegi po fachu, brak skrótów klinicznych (BD, O/E, SOB nie należą do listu), brak zwrotów potocznych. Wypisz każde potknięcie.
+5. ORGANISATION & LAYOUT — akapity w logicznym porządku, jedno zagadnienie na akapit, poprawne otwarcie i zamknięcie.
+6. LANGUAGE — gramatyka, słownictwo, interpunkcja, kolokacje. Wypisz WSZYSTKIE błędy z poprawkami; przy każdym napisz, czy to błąd, który egzaminator uzna za zaburzający komunikację, czy drobiazg.
+
+Potem podaj:
+- DWIE najważniejsze rzeczy do poprawy w następnym liście (nie więcej — mam się na czymś skupić).
+- Poprawioną wersję CAŁEGO listu, z zaznaczeniem zmian.
+- Liczbę słów mojego listu (limit to 180-200).
+
+Bądź surowy. Łagodna ocena nie pomoże mi na egzaminie. Jeśli list nie zdałby na B, napisz to wprost.
+
+---
+
+ZADANIE:
+[wklej tutaj notatki z zadania]
+
+---
+
+MÓJ LIST:
+[wklej tutaj swój list]`;
+
 export default function ImportPage() {
   return (
     <AppShell>
@@ -143,7 +180,18 @@ function Importer() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [promptCopied, setPromptCopied] = useState(false);
+  const [listCopied, setListCopied] = useState(false);
   const [promptVisible, setPromptVisible] = useState(false);
+
+  async function copyListPrompt() {
+    try {
+      await navigator.clipboard.writeText(CLAUDE_LIST_PROMPT);
+      setListCopied(true);
+      setTimeout(() => setListCopied(false), 3000);
+    } catch {
+      setPromptVisible(true);
+    }
+  }
 
   async function copyPrompt() {
     try {
@@ -361,6 +409,24 @@ function Importer() {
             className={`${inputClass} font-mono text-xs`}
           />
         )}
+      </section>
+
+      {/* Writing to ćwiartka egzaminu, której fiszki nie ruszają wcale.
+          Napisany list bez informacji zwrotnej utrwala też złe nawyki. */}
+      <section className="space-y-3 rounded-xl border border-line bg-surface p-4">
+        <h2 className="font-medium">Ocena napisanego listu (Writing)</h2>
+        <p className="text-sm text-ink-2">
+          Napisz list pod stoper (45 minut, 180–200 słów), potem skopiuj tę instrukcję,
+          wklej ją w rozmowie razem z zadaniem i swoim listem. Claude oceni go według
+          sześciu kryteriów, którymi ocenia OET.
+        </p>
+        <button
+          type="button"
+          onClick={() => void copyListPrompt()}
+          className="rounded-lg border border-line bg-canvas px-3 py-2 text-sm font-medium hover:border-field"
+        >
+          {listCopied ? "Skopiowano ✓" : "Skopiuj instrukcję oceny listu"}
+        </button>
       </section>
 
       <section className="space-y-3 rounded-xl border border-line bg-surface p-4">

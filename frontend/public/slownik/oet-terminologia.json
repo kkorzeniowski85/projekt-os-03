@@ -235,6 +235,51 @@
       "kind": "expression",
       "note_type": "basic_reversed",
       "source_ref": "oet-terminy/m17/steeped-in-complexity"
+    },
+    {
+      "front": "decompensation",
+      "back": "dekompensacja (niewydolność wcześniej wyrównanego narządu)",
+      "example": "She was admitted with acute cardiac decompensation following a chest infection.\nSigns of hepatic decompensation included ascites and new-onset confusion.\nClose monitoring is needed to detect early decompensation in patients with cirrhosis.",
+      "synonyms": "acute deterioration / failure of a previously stable condition",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "notatki"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m18/decompensation"
+    },
+    {
+      "front": "sequela (pl. sequelae)",
+      "back": "następstwo choroby, odległe powikłanie",
+      "example": "Chronic pain is a recognised sequela of shingles.\nThe long-term sequelae of meningitis can include hearing loss.\nShe has been left with neurological sequelae following the stroke.",
+      "synonyms": "long-term consequence / after-effect / late complication",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m19/sequela"
+    },
+    {
+      "front": "iatrogenic",
+      "back": "jatrogenny (spowodowany leczeniem)",
+      "example": "The bleed was considered iatrogenic, secondary to anticoagulation.\nIatrogenic infection is a recognised risk of central line insertion.\nWe reviewed her medication to rule out an iatrogenic cause of the confusion.",
+      "synonyms": "treatment-induced / caused by medical intervention",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m20/iatrogenic"
     }
   ]
 }

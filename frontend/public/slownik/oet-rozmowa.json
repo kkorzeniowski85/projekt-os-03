@@ -1,0 +1,122 @@
+{
+  "format": "fiszki/v1",
+  "deck": "OET — rozmowa z pacjentem (Speaking)",
+  "default_note_type": "basic_reversed",
+  "notes": [
+    {
+      "front": "It's completely understandable that you're afraid of this procedure.",
+      "back": "To zupełnie zrozumiałe, że boi się Pan/Pani tego zabiegu.",
+      "example": "I know the thought of the biopsy is worrying. It's completely understandable that you're afraid of this procedure, so let's take it step by step.\nIt's completely understandable that you're afraid of this procedure — a lot of my patients tell me the same before a colonoscopy.\nBefore we go any further: it's completely understandable that you're afraid of this procedure. What worries you most about it?",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "empatia"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-rozmowa/r1/afraid-of-this-procedure"
+    },
+    {
+      "front": "It's totally normal to feel confused about this.",
+      "back": "To zupełnie normalne, że czuje się Pan/Pani tym zagubiony/a.",
+      "example": "There's a lot of information to take in today. It's totally normal to feel confused about this, so please stop me whenever you need to.\nIt's totally normal to feel confused about this — the medication schedule changed twice this week.\nDon't worry, it's totally normal to feel confused about this. Shall I write the main points down for you?",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "empatia"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-rozmowa/r2/normal-to-feel-confused"
+    },
+    {
+      "front": "This can feel overwhelming sometimes.",
+      "back": "To czasem może przytłaczać.",
+      "example": "A new diagnosis brings a lot of changes at once. This can feel overwhelming sometimes, and that's okay.\nManaging insulin, diet and appointments all together — this can feel overwhelming sometimes. Let's focus on one thing at a time.\nI hear what you're saying. Caring for your mother while working full-time — this can feel overwhelming sometimes.",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "empatia"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-rozmowa/r3/can-feel-overwhelming"
+    },
+    {
+      "front": "The procedure will be performed under local anaesthetic.",
+      "back": "Zabieg zostanie wykonany w znieczuleniu miejscowym.",
+      "example": "The procedure will be performed under local anaesthetic, so we'll only numb the area we're working on.\nYou'll be able to go home the same day — the procedure will be performed under local anaesthetic.\nThe procedure will be performed under local anaesthetic, which means a small injection first, then you shouldn't feel anything sharp.",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "procedura"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-rozmowa/r4/under-local-anaesthetic"
+    },
+    {
+      "front": "There's no need for general anaesthesia.",
+      "back": "Nie ma potrzeby znieczulenia ogólnego.",
+      "example": "It's a short procedure, so there's no need for general anaesthesia.\nThere's no need for general anaesthesia — you'll be able to eat and drink normally beforehand.\nI understand you're worried about being put to sleep, but there's no need for general anaesthesia for this.",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "procedura"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "formal": "General anaesthesia is not required.",
+      "source_ref": "oet-rozmowa/r5/no-need-for-general-anaesthesia"
+    },
+    {
+      "front": "You'll be awake but comfortable during the procedure.",
+      "back": "Będzie Pan/Pani przytomny/a, ale nie będzie Pan/Pani odczuwać dyskomfortu podczas zabiegu.",
+      "example": "You'll be awake but comfortable during the procedure, and you can talk to me the whole time.\nYou'll be awake but comfortable during the procedure — if anything feels wrong, just tell me and I'll stop.\nSome patients prefer to watch on the screen. You'll be awake but comfortable during the procedure, so it's entirely up to you.",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "procedura"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-rozmowa/r6/awake-but-comfortable"
+    },
+    {
+      "front": "You may feel mild discomfort, but it won't be painful.",
+      "back": "Może Pan/Pani odczuć lekki dyskomfort, ale nie będzie bolało.",
+      "example": "When the needle goes in, you may feel mild discomfort, but it won't be painful.\nYou may feel mild discomfort, but it won't be painful — most people describe it as a bit of pressure.\nAs we insert the catheter, you may feel mild discomfort, but it won't be painful. Just let me know if it is.",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "procedura"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "formal": "Minimal discomfort is anticipated.",
+      "source_ref": "oet-rozmowa/r7/mild-discomfort-not-painful"
+    },
+    {
+      "front": "We do these scans because we want to make sure everything is going well.",
+      "back": "Robimy te badania, bo chcemy się upewnić, że wszystko przebiega dobrze.",
+      "example": "I know coming in every month is a nuisance. We do these scans because we want to make sure everything is going well with the baby.\nWe do these scans because we want to make sure everything is going well after your surgery.\nWe do these blood tests because we want to make sure everything is going well with your new medication.",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "uzasadnienie"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "formal": "to ensure satisfactory progress",
+      "source_ref": "oet-rozmowa/r8/make-sure-everything-is-going-well"
+    },
+    {
+      "front": "This doesn't mean anything is wrong now, but we need to check regularly.",
+      "back": "To nie znaczy, że teraz dzieje się coś złego, ale musimy regularnie sprawdzać.",
+      "example": "Your result was borderline. This doesn't mean anything is wrong now, but we need to check regularly.\nThis doesn't mean anything is wrong now, but we need to check regularly because of your family history.\nI don't want to worry you. This doesn't mean anything is wrong now, but we need to check regularly for the next year.",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "uzasadnienie"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "formal": "This does not indicate any current abnormality; however, regular surveillance is required.",
+      "source_ref": "oet-rozmowa/r9/doesnt-mean-anything-is-wrong"
+    },
+    {
+      "front": "That's why we schedule regular check-ups and scans.",
+      "back": "Dlatego umawiamy regularne wizyty kontrolne i badania.",
+      "example": "Polyps can come back over time. That's why we schedule regular check-ups and scans.\nThe condition can change without any symptoms. That's why we schedule regular check-ups and scans.\nWe want to stay one step ahead — that's why we schedule regular check-ups and scans every six months.",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "uzasadnienie"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "formal": "regular surveillance and follow-up imaging",
+      "source_ref": "oet-rozmowa/r10/regular-check-ups-and-scans"
+    },
+    {
+      "front": "We want to catch any problems early, so we can treat them straight away.",
+      "back": "Chcemy wychwycić ewentualne problemy wcześnie, żeby móc je od razu leczyć.",
+      "example": "That's the point of the screening. We want to catch any problems early, so we can treat them straight away.\nWe want to catch any problems early, so we can treat them straight away — that's much easier than dealing with them later.\nThe follow-up isn't because we expect trouble. We want to catch any problems early, so we can treat them straight away.",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "wczesne-wykrycie"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "formal": "to facilitate early detection and prompt treatment",
+      "source_ref": "oet-rozmowa/r11/catch-any-problems-early"
+    },
+    {
+      "front": "We're monitoring you closely to prevent any complications.",
+      "back": "Uważnie Pana/Panią obserwujemy, żeby zapobiec powikłaniom.",
+      "example": "That's why the nurses check on you every hour. We're monitoring you closely to prevent any complications.\nAfter the operation, we're monitoring you closely to prevent any complications, especially bleeding.\nYour sugars have been a bit unsettled, so we're monitoring you closely to prevent any complications.",
+      "tags": ["oet", "aktywny", "nhs", "rozmowa-z-pacjentem", "wczesne-wykrycie"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "formal": "close monitoring to minimise the risk of complications",
+      "source_ref": "oet-rozmowa/r12/monitoring-you-closely"
+    }
+  ]
+}

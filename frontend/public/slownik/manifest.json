@@ -17,14 +17,19 @@
       "notes": 30
     },
     {
+      "path": "oet-rozmowa.json",
+      "sha256": "d56fdc1b0fd40b17b1bb3bb62bc95f823d00e747a7cbd5152cf0e05aa86d9b7c",
+      "notes": 12
+    },
+    {
       "path": "oet-skroty.json",
       "sha256": "37cd94527b95919ecb08a74ffcf54196d6a19b0f5626e8b40ed64b8c5d86edf9",
       "notes": 76
     },
     {
       "path": "oet-terminologia.json",
-      "sha256": "edb746f6ff3b306d03150d44a7818a8368d00267a72a8d6d99b16e397fa09f04",
-      "notes": 17
+      "sha256": "73808fd3a67ea5ea2f48dab14b19a95f98dae62d4dd3fc6c783e2f072ab10c17",
+      "notes": 20
     }
   ]
 }

@@ -280,6 +280,66 @@
       "kind": "word",
       "note_type": "basic_reversed",
       "source_ref": "oet-terminy/m20/iatrogenic"
+    },
+    {
+      "front": "to strive for",
+      "back": "dążyć do czegoś",
+      "example": "We should strive for an HbA1c of 53 mmol/mol or less, provided this can be achieved without hypoglycaemia.\nThe unit strives for the shortest possible door-to-needle time in acute stroke.\nIn rehabilitation, Mrs Evans is striving for independence in washing and dressing.",
+      "synonyms": "to aim for / to work towards / to seek to achieve",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m21/to-strive-for"
+    },
+    {
+      "front": "in the meantime",
+      "back": "tymczasem, w międzyczasie",
+      "example": "The MRI of your knee is booked for next week. In the meantime, please continue taking ibuprofen as before.\nI would be grateful for your assessment of Mr Hall's palpitations. In the meantime, I have advised him to limit caffeine.\nShe is on the waiting list for cataract surgery; in the meantime, her vision is checked every three months.",
+      "synonyms": "meanwhile / for the time being / until then",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list",
+        "rozmowa-z-pacjentem"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m22/in-the-meantime"
+    },
+    {
+      "front": "to highlight problems",
+      "back": "zwracać uwagę na problemy, zgłaszać je",
+      "example": "Nurses are often the first to highlight problems with a patient's fluid balance.\nIt is important to highlight problems with medication adherence early, before the patient is discharged.\nThe audit helped us to highlight problems in the referral process.",
+      "synonyms": "to flag up problems / to raise concerns / to draw attention to problems",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "notatki"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m23/to-highlight-problems"
+    },
+    {
+      "front": "care pathway",
+      "back": "ścieżka opieki (ustalona sekwencja postępowania z pacjentem)",
+      "example": "Mr Singh has been placed on the stroke care pathway and will be reviewed daily by the physiotherapist.\nThe hip fracture care pathway aims for surgery on the day of admission or the day after.\nIf a patient deteriorates, staff should follow the agreed care pathway for suspected sepsis.",
+      "synonyms": "clinical pathway / treatment pathway / agreed plan of care",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m24/care-pathway"
     }
   ]
 }

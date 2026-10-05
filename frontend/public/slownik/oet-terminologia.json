@@ -340,6 +340,496 @@
       "kind": "phrase",
       "note_type": "basic_reversed",
       "source_ref": "oet-terminy/m24/care-pathway"
+    },
+    {
+      "front": "to sustain (an injury)",
+      "back": "doznać, odnieść (uraz)",
+      "example": "He sustained a fracture of the left wrist in a fall from his bicycle.\nThe patient sustained a head injury during a road traffic accident.\nWhich injuries did you sustain in the accident?",
+      "synonyms": "to suffer / to incur",
+      "tags": [
+        "oet",
+        "terminologia",
+        "notatki",
+        "objawy"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m25/to-sustain"
+    },
+    {
+      "front": "loss of mobility",
+      "back": "utrata mobilności",
+      "example": "The stroke resulted in a significant loss of mobility on the right side.\nLoss of mobility in the elderly increases the risk of pressure ulcers.\nShe complained of pain and a gradual loss of mobility in her left hip.",
+      "synonyms": "unable to move freely / restricted movement / reduced mobility",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "notatki",
+        "objawy"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m26/loss-of-mobility"
+    },
+    {
+      "front": "numbness in the affected area",
+      "back": "drętwienie w obszarze dotkniętym chorobą",
+      "example": "The patient reports numbness in the affected area, which has persisted for two weeks.\nNumbness in the affected area may indicate nerve damage.\nOn examination there was numbness in the affected area, with no motor weakness.",
+      "synonyms": "loss of sensation / reduced feeling",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "notatki",
+        "objawy"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m27/numbness-in-the-affected-area"
+    },
+    {
+      "front": "pre-diabetic state",
+      "back": "stan przedcukrzycowy (w brytyjskim systemie: non-diabetic hyperglycaemia)",
+      "example": "Her HbA1c of 46 mmol/mol is consistent with a pre-diabetic state.\nPatients in a pre-diabetic state should be offered advice on diet and exercise.\nA pre-diabetic state does not always progress to type 2 diabetes.",
+      "synonyms": "pre-diabetes / non-diabetic hyperglycaemia",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list",
+        "objawy"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m28/pre-diabetic-state"
+    },
+    {
+      "front": "insulin resistance",
+      "back": "insulinooporność",
+      "example": "Obesity is a major risk factor for insulin resistance.\nInsulin resistance often precedes the development of type 2 diabetes.\nWeight loss and regular exercise can improve insulin resistance.",
+      "synonyms": "reduced response to insulin / impaired insulin sensitivity",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "objawy"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m29/insulin-resistance"
+    },
+    {
+      "front": "catabolic state",
+      "back": "stan kataboliczny (przewaga rozpadu tkanek nad syntezą)",
+      "example": "Severe burns put the body in a catabolic state, so nutritional support is essential.\nProlonged fasting leads to a catabolic state, with breakdown of muscle protein.\nCritically ill patients are often in a catabolic state and lose muscle mass quickly.",
+      "synonyms": "state of tissue breakdown",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "objawy"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m30/catabolic-state"
+    },
+    {
+      "front": "mitochondrial activation",
+      "back": "aktywacja mitochondrialna",
+      "example": "Regular exercise promotes mitochondrial activation in skeletal muscle.\nThe study measured mitochondrial activation in muscle biopsies taken before and after training.\nMitochondrial activation increases the cell's capacity to produce energy.",
+      "synonyms": "stimulation of the cell's energy producers",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "objawy"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m31/mitochondrial-activation"
+    },
+    {
+      "front": "paradigm shift",
+      "back": "zmiana paradygmatu (zmiana modelu myślenia lub podejścia)",
+      "example": "The move from hospital-based to community care represents a paradigm shift.\nEarly rehabilitation after surgery marked a paradigm shift in postoperative care.\nThe introduction of antibiotics caused a paradigm shift in the treatment of infection.",
+      "synonyms": "fundamental change in approach",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "objawy"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m32/paradigm-shift"
+    },
+    {
+      "front": "neurotransmitters",
+      "back": "neuroprzekaźniki",
+      "example": "Serotonin and dopamine are neurotransmitters involved in the regulation of mood.\nAntidepressants work by altering the levels of neurotransmitters in the brain.\nAn imbalance of neurotransmitters has been linked to anxiety and low mood.",
+      "synonyms": "chemical messengers in the nervous system",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "objawy"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m33/neurotransmitters"
+    },
+    {
+      "front": "initial insertion",
+      "back": "początkowe wprowadzenie (np. sondy nosowo-żołądkowej)",
+      "example": "Initial insertion of the NG tube must be confirmed by a pH test or an X-ray.\nPain and gagging are common during initial insertion.\nAfter initial insertion, the cannula should be secured with a transparent dressing.",
+      "synonyms": "first placement",
+      "tags": [
+        "oet",
+        "terminologia",
+        "notatki",
+        "procedury"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m34/initial-insertion"
+    },
+    {
+      "front": "clinical assessment",
+      "back": "ocena kliniczna",
+      "example": "A full clinical assessment is needed before any treatment is started.\nThe clinical assessment revealed tenderness over the right iliac fossa.\nFollowing clinical assessment, the patient was referred for an urgent CT scan.",
+      "synonyms": "doctor's evaluation of the patient",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list",
+        "procedury"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m35/clinical-assessment"
+    },
+    {
+      "front": "anticoagulant use",
+      "back": "stosowanie leków przeciwkrzepliwych",
+      "example": "Anticoagulant use increases the risk of bleeding after minor trauma.\nLong-term anticoagulant use requires regular monitoring of the INR.\nPlease record any recent anticoagulant use before the procedure.",
+      "synonyms": "taking blood thinners",
+      "tags": [
+        "oet",
+        "terminologia",
+        "notatki",
+        "list",
+        "procedury"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m36/anticoagulant-use"
+    },
+    {
+      "front": "range of movement",
+      "back": "zakres ruchów (w stawie)",
+      "example": "Range of movement at the left shoulder was limited by pain.\nPhysiotherapy aims to restore the full range of movement after surgery.\nShe has a full range of movement in both knees.",
+      "synonyms": "how far a joint can move",
+      "tags": [
+        "oet",
+        "terminologia",
+        "notatki",
+        "procedury"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m37/range-of-movement"
+    },
+    {
+      "front": "to splint (a fracture)",
+      "back": "unieruchomić szyną, usztywnić (np. miejsce złamania)",
+      "example": "Splint the site of the fracture before moving the patient.\nThe paramedic splinted the injured leg with a rigid board.\nThe finger was splinted to the neighbouring finger for support.",
+      "synonyms": "to support with a rigid brace / to hold still",
+      "tags": [
+        "oet",
+        "terminologia",
+        "notatki",
+        "procedury"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m38/to-splint"
+    },
+    {
+      "front": "to administer analgesia",
+      "back": "podać leki przeciwbólowe",
+      "example": "Administer analgesia before moving the patient.\nThe nurse administered analgesia as prescribed.\nStaff must administer analgesia promptly to patients in severe pain.",
+      "synonyms": "to give pain relief / to give painkillers",
+      "tags": [
+        "oet",
+        "terminologia",
+        "notatki",
+        "procedury"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m39/to-administer-analgesia"
+    },
+    {
+      "front": "respiratory depression",
+      "back": "depresja oddechowa",
+      "example": "Opioids can cause respiratory depression, especially in older patients.\nMonitor the respiratory rate closely for signs of respiratory depression.\nNaloxone is used to reverse respiratory depression caused by an opioid overdose.",
+      "synonyms": "dangerously slow, shallow breathing",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "procedury"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m40/respiratory-depression"
+    },
+    {
+      "front": "continuous monitoring",
+      "back": "ciągłe monitorowanie",
+      "example": "The patient was transferred to the high dependency unit for continuous monitoring.\nContinuous monitoring of oxygen saturation is advised after the procedure.\nContinuous monitoring of the heart rhythm showed episodes of atrial fibrillation.",
+      "synonyms": "constant observation",
+      "tags": [
+        "oet",
+        "terminologia",
+        "notatki",
+        "procedury"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m41/continuous-monitoring"
+    },
+    {
+      "front": "referral for further investigation",
+      "back": "skierowanie na dalsze badania",
+      "example": "Referral for further investigation is recommended because of the persistent weight loss.\nThe GP arranged referral for further investigation of the abnormal blood results.\nI am writing to request referral for further investigation of his dysphagia.",
+      "synonyms": "being sent for more tests",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list",
+        "procedury"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m42/referral-for-further-investigation"
+    },
+    {
+      "front": "to disclose or use (confidential information)",
+      "back": "ujawniać lub wykorzystywać (np. informacje poufne)",
+      "example": "Staff must not disclose or use confidential information about patients for personal gain.\nIt is a breach of policy to disclose or use patient records without consent.\nYou may not disclose or use any information obtained in the course of your work.",
+      "synonyms": "to reveal or exploit",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "etyka"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m43/to-disclose-or-use"
+    },
+    {
+      "front": "at the discretion of",
+      "back": "według uznania, zależnie od decyzji (kogoś)",
+      "example": "Additional sick leave may be granted at the discretion of the manager.\nRelease of the records is at the discretion of the consultant.\nThe dose may be adjusted at the discretion of the prescribing doctor.",
+      "synonyms": "as decided by / according to the choice of",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list",
+        "etyka"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m44/at-the-discretion-of"
+    },
+    {
+      "front": "disciplinary action",
+      "back": "działania dyscyplinarne, postępowanie dyscyplinarne",
+      "example": "A breach of patient confidentiality may lead to disciplinary action.\nThe nurse faced disciplinary action after the medication error.\nNo disciplinary action was taken against the junior doctor.",
+      "synonyms": "formal punishment by an employer",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "etyka"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m45/disciplinary-action"
+    },
+    {
+      "front": "malpractice",
+      "back": "błąd w sztuce lekarskiej, nieprawidłowe postępowanie zawodowe",
+      "example": "The surgeon was accused of malpractice after the wrong limb was operated on.\nMedical malpractice claims can follow a missed diagnosis.\nThe hospital was investigated for alleged malpractice.",
+      "synonyms": "professional negligence / improper treatment",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "etyka"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m46/malpractice"
+    },
+    {
+      "front": "to brief a colleague",
+      "back": "wprowadzić kolegę w sytuację, zreferować mu stan pacjenta",
+      "example": "Before going off duty, she briefed her colleague on the patient's overnight observations.\nIt is important to brief a colleague thoroughly at handover.\nThe registrar briefed his colleague about the change in the patient's condition.",
+      "synonyms": "to update a colleague / to fill someone in",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "etyka"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m47/to-brief-a-colleague"
+    },
+    {
+      "front": "professional judgement",
+      "back": "osąd zawodowy, ocena specjalisty",
+      "example": "Nurses are expected to use professional judgement when prioritising care.\nThe final decision rests on the doctor's professional judgement.\nGuidelines support, but do not replace, professional judgement.",
+      "synonyms": "informed decision based on expertise",
+      "tags": [
+        "oet",
+        "terminologia",
+        "raport",
+        "list",
+        "etyka"
+      ],
+      "kind": "phrase",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m48/professional-judgement"
+    },
+    {
+      "front": "clearly documented",
+      "back": "wyraźnie udokumentowany",
+      "example": "The patient's refusal of treatment must be clearly documented in the notes.\nAllergies should be clearly documented on the drug chart.\nThe reason for the delay was clearly documented.",
+      "synonyms": "recorded in detail",
+      "tags": [
+        "oet",
+        "terminologia",
+        "notatki",
+        "list",
+        "etyka"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m49/clearly-documented"
+    },
+    {
+      "front": "to provide recommendations",
+      "back": "udzielić zaleceń",
+      "example": "The dietitian will provide recommendations on how to increase your protein intake.\nIn this letter I provide recommendations for ongoing management.\nThe committee was asked to provide recommendations on staffing levels.",
+      "synonyms": "to give advice / to make suggestions",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list",
+        "rozmowa-z-pacjentem",
+        "etyka"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m50/to-provide-recommendations"
+    },
+    {
+      "front": "in order to",
+      "back": "aby, w celu (+ bezokolicznik)",
+      "example": "I would be grateful if you could see him in order to rule out a malignancy.\nThe dose was reduced in order to minimise the side effects.\nPlease arrange a CT scan in order to clarify the diagnosis.",
+      "synonyms": "so as to / with the aim of",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list",
+        "frazy"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m51/in-order-to"
+    },
+    {
+      "front": "It is crucial to differentiate between…",
+      "back": "Kluczowe jest odróżnienie… od…",
+      "example": "It is crucial to differentiate between a viral and a bacterial infection before prescribing antibiotics.\nIt is crucial to differentiate between angina and a heart attack, as the management differs.\nIt is crucial to differentiate between the two types of diabetes when advising the patient.",
+      "synonyms": "It is vital to tell apart",
+      "tags": [
+        "oet",
+        "terminologia",
+        "list",
+        "raport",
+        "frazy"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m52/it-is-crucial-to-differentiate-between"
+    },
+    {
+      "front": "The patient is unsure how much…",
+      "back": "Pacjent nie jest pewien, ile…",
+      "example": "The patient is unsure how much paracetamol she has taken.\nThe patient is unsure how much weight he has lost over the past year.\nThe patient is unsure how much alcohol she drinks in a typical week.",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem",
+        "notatki",
+        "frazy"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m53/the-patient-is-unsure-how-much"
+    },
+    {
+      "front": "gradually do more exercise",
+      "back": "stopniowo zwiększać aktywność fizyczną (ćwiczyć coraz więcej)",
+      "example": "Start with a ten-minute walk and gradually do more exercise each week.\nAfter your operation, you should gradually do more exercise as you feel able.\nI would like you to gradually do more exercise, rather than trying to do too much at once.",
+      "synonyms": "to build up activity slowly",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem",
+        "frazy"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m54/gradually-do-more-exercise"
+    },
+    {
+      "front": "be physically and emotionally ready",
+      "back": "być gotowym fizycznie i emocjonalnie",
+      "example": "You should only return to work when you feel physically and emotionally ready.\nIt is important to be physically and emotionally ready before starting a cardiac rehabilitation programme.\nTake your time; there is no need to rush until you are physically and emotionally ready.",
+      "synonyms": "fit and mentally prepared",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem",
+        "frazy"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m55/be-physically-and-emotionally-ready"
+    },
+    {
+      "front": "seek to improve focus",
+      "back": "dążyć do poprawy koncentracji",
+      "example": "Mindfulness exercises seek to improve focus and reduce anxiety.\nMany patients seek to improve focus by cutting down on caffeine.\nThe programme will seek to improve focus and attention in children with ADHD.",
+      "synonyms": "to try to sharpen concentration",
+      "tags": [
+        "oet",
+        "terminologia",
+        "rozmowa-z-pacjentem",
+        "frazy"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-terminy/m56/seek-to-improve-focus"
     }
   ]
 }

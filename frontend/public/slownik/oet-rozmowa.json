@@ -117,6 +117,24 @@
       "note_type": "basic_reversed",
       "formal": "close monitoring to minimise the risk of complications",
       "source_ref": "oet-rozmowa/r12/monitoring-you-closely"
+    },
+    {
+      "front": "Have you tried anything to help with this?",
+      "back": "Czy próbował Pan/Pani czegoś, żeby sobie z tym pomóc?",
+      "example": "I can see this headache has been troubling you for weeks. Have you tried anything to help with this?\nYou mention the cough keeps you awake at night. Have you tried anything to help with this?\nBefore we talk about treatment: have you tried anything to help with this, such as painkillers or rest?",
+      "tags": ["oet", "aktywny", "speaking", "rozmowa-z-pacjentem", "wywiad"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-rozmowa/r13/tried-anything-to-help"
+    },
+    {
+      "front": "How have you been coping with it?",
+      "back": "Jak sobie Pan/Pani z tym radzi?",
+      "example": "That sounds like a difficult few weeks. How have you been coping with it?\nYou've been looking after your husband as well as working. How have you been coping with it?\nHow have you been coping with it day to day, both physically and emotionally?",
+      "tags": ["oet", "aktywny", "speaking", "rozmowa-z-pacjentem", "wywiad"],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-rozmowa/r14/coping-with-it"
     }
   ]
 }

@@ -12,14 +12,24 @@
       "notes": 126
     },
     {
+      "path": "oet-cwiczenia.json",
+      "sha256": "b36346a904c88e96daa1b623ea8aac15db9091cbb16d1650baddf7b9d3a416be",
+      "notes": 84
+    },
+    {
       "path": "oet-nhs.json",
       "sha256": "131c2e409ccd73c2490a2959b57ce399dbeccd6d8aa1f70172ade00445adacd7",
       "notes": 30
     },
     {
+      "path": "oet-pisownia-uk.json",
+      "sha256": "974314d50b4e7eef7fe3a03cda5c021c5292ee298e3573d6e96a68f89bc1c2d5",
+      "notes": 9
+    },
+    {
       "path": "oet-rozmowa.json",
-      "sha256": "d56fdc1b0fd40b17b1bb3bb62bc95f823d00e747a7cbd5152cf0e05aa86d9b7c",
-      "notes": 12
+      "sha256": "c5e3b2eade7dd3af43ec8c6d83e300778e940640c4316da69bce21d55b1599d3",
+      "notes": 14
     },
     {
       "path": "oet-skroty.json",

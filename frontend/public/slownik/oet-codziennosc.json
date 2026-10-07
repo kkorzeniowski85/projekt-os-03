@@ -786,6 +786,141 @@
       "kind": "expression",
       "note_type": "basic_reversed",
       "source_ref": "oet-frazy/l56/to-bring-something-off"
+    },
+    {
+      "front": "apprehensive",
+      "back": "pełen obaw, niespokojny (przed czymś)",
+      "example": "I'm a bit apprehensive about the biopsy results.\nShe felt apprehensive before her first day on the ward.\nHe was apprehensive about telling his consultant the news.",
+      "pronunciation": "/ˌæprɪˈhensɪv/",
+      "synonyms": "to have reservations about / to feel some anxiety about",
+      "register": "codzienne · częste — pasuje wszędzie",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc",
+        "emocje"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l57/apprehensive"
+    },
+    {
+      "front": "uneasy",
+      "back": "niespokojny, mający złe przeczucie",
+      "example": "I felt uneasy about the patient's reluctance to answer.\nThere was an uneasy silence in the meeting.\nShe grew uneasy as the symptoms worsened overnight.",
+      "pronunciation": "/ʌnˈiːzi/",
+      "synonyms": "to feel a sense of disquiet / to be ill at ease",
+      "register": "codzienne · częste — pasuje wszędzie",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc",
+        "emocje"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l58/uneasy"
+    },
+    {
+      "front": "anxious",
+      "back": "zaniepokojony, lękliwy (często uporczywie)",
+      "example": "The patient is anxious about the upcoming surgery.\nI'm anxious that we might miss the deadline.\nHe became increasingly anxious while waiting for the scan.",
+      "pronunciation": "/ˈæŋkʃəs/",
+      "synonyms": "to be deeply concerned / to be worried sick",
+      "register": "codzienne · bardzo częste — pasuje wszędzie",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc",
+        "emocje"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l59/anxious"
+    },
+    {
+      "front": "frightened",
+      "back": "przestraszony",
+      "example": "The child was frightened by the loud machine.\nShe was frightened of needles as a young patient.\nHe looked frightened when the alarm went off.",
+      "pronunciation": "/ˈfraɪtənd/",
+      "synonyms": "to be alarmed / to be fearful",
+      "register": "codzienne · bardzo częste — pasuje wszędzie",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc",
+        "emocje"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l60/frightened"
+    },
+    {
+      "front": "terrified",
+      "back": "przerażony",
+      "example": "I was terrified when the car skidded on the ice.\nShe was terrified of the diagnosis being confirmed.\nHe stood terrified as the storm closed in.",
+      "pronunciation": "/ˈterɪfaɪd/",
+      "synonyms": "to be extremely alarmed / to be gripped by terror",
+      "register": "codzienne · bardzo częste — pasuje wszędzie",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc",
+        "emocje"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l61/terrified"
+    },
+    {
+      "front": "petrified",
+      "back": "sparaliżowany strachem",
+      "example": "She was petrified of flying and avoided it for years.\nI was absolutely petrified during the interview.\nHe stood petrified, unable to move a muscle.",
+      "pronunciation": "/ˈpetrɪfaɪd/",
+      "synonyms": "to be paralysed with fear / to be utterly terrified",
+      "register": "potoczne · częste — swobodna rozmowa; nie w liście",
+      "tags": [
+        "oet",
+        "codziennosc",
+        "emocje"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l62/petrified"
+    },
+    {
+      "front": "to panic",
+      "back": "panikować, wpadać w panikę",
+      "example": "Try not to panic if the pain returns suddenly.\nShe panicked when she couldn't find the referral letter.\nThe crowd began to panic as the exits filled up.",
+      "pronunciation": "/tə ˈpænɪk/",
+      "synonyms": "to be overcome by fear / to lose composure",
+      "register": "codzienne · bardzo częste — pasuje wszędzie",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc",
+        "emocje"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l63/to-panic"
+    },
+    {
+      "front": "wary",
+      "back": "czujny, ostrożny (wobec czegoś)",
+      "example": "Be wary of strangers offering unsolicited advice.\nI'm wary of prescribing it without the full history.\nShe remained wary of his overly confident claims.",
+      "pronunciation": "/ˈweəri/",
+      "synonyms": "to be cautious of / to exercise caution regarding",
+      "register": "codzienne · częste — pasuje wszędzie",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc",
+        "emocje"
+      ],
+      "kind": "word",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l64/wary"
     }
   ]
 }

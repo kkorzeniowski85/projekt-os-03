@@ -7,6 +7,7 @@
       "front": "compound fracture",
       "back": "złamanie otwarte",
       "example": "A compound fracture of the tibia was confirmed on X-ray, and the patient was taken to theatre for washout.\nWith a compound fracture the bone breaks through the skin, so infection is a major risk.\nHe sustained a compound fracture of the forearm when he fell from the ladder.",
+      "pronunciation": "/ˈkɒmpaʊnd ˈfræktʃə/",
       "synonyms": "open fracture",
       "tags": [
         "oet",
@@ -20,6 +21,7 @@
       "front": "buckle fracture",
       "back": "złamanie typu buckle (torus) — wgniecenie warstwy korowej kości",
       "example": "A buckle fracture of the distal radius is common in children who fall onto an outstretched hand.\nThe X-ray showed a buckle fracture, so a removable splint was applied rather than a full cast.\nBuckle fractures are usually stable and tend to heal well with simple immobilisation.",
+      "pronunciation": "/ˈbʌkəl ˈfræktʃə/",
       "synonyms": "torus fracture",
       "tags": [
         "oet",
@@ -33,6 +35,7 @@
       "front": "sprain",
       "back": "skręcenie (częściowe uszkodzenie więzadła)",
       "example": "She sustained an ankle sprain while playing netball.\nA grade two sprain involves a partial tear of the ligament.\nMost mild sprains settle within two weeks with rest, ice and elevation.",
+      "pronunciation": "/spreɪn/",
       "synonyms": "ligament injury",
       "tags": [
         "oet",
@@ -46,6 +49,7 @@
       "front": "to halt haemorrhage",
       "back": "zatamować krwawienie",
       "example": "Direct pressure is the first step to halt haemorrhage from a wound.\nThe surgeon placed a suture to halt haemorrhage from the vessel.\nA tourniquet may be needed to halt haemorrhage when pressure alone fails.",
+      "pronunciation": "/tə hɔːlt ˈhemərɪdʒ/",
       "synonyms": "to stop bleeding / to control bleeding / to staunch bleeding",
       "tags": [
         "oet",
@@ -59,6 +63,7 @@
       "front": "pressure bandage",
       "back": "opatrunek uciskowy",
       "example": "A pressure bandage was applied over the wound to control the bleeding.\nApply a pressure bandage firmly, but check that the toes remain warm and pink.\nThe pressure bandage should be left in place until the patient is reviewed by a doctor.",
+      "pronunciation": "/ˈpreʃə ˈbændɪdʒ/",
       "synonyms": "compression dressing / firm wrap",
       "tags": [
         "oet",
@@ -72,6 +77,7 @@
       "front": "to immobilise",
       "back": "unieruchomić",
       "example": "The paramedics immobilised the cervical spine before moving the patient.\nIt is important to immobilise the limb to prevent further damage.\nWe need to immobilise the wrist in a splint for several weeks.",
+      "pronunciation": "/tə ɪˈməʊbəlaɪz/",
       "synonyms": "to keep still / to splint / to secure in place",
       "tags": [
         "oet",
@@ -85,6 +91,7 @@
       "front": "plaster backslab",
       "back": "longeta gipsowa",
       "example": "A plaster backslab was applied to the leg to allow for swelling.\nHe went home in a plaster backslab and was asked to return to the fracture clinic in a week.\nThe plaster backslab should be kept dry and must not be removed.",
+      "pronunciation": "/ˈplɑːstə ˈbækslæb/",
       "synonyms": "posterior plaster splint / half cast",
       "tags": [
         "oet",
@@ -98,6 +105,7 @@
       "front": "sling",
       "back": "temblak",
       "example": "Her arm was placed in a sling for comfort.\nHe should wear the sling for two weeks and then start gentle movement.\nThe nurse showed the patient how to adjust the sling so that the wrist is supported.",
+      "pronunciation": "/slɪŋ/",
       "synonyms": "arm support / shoulder support",
       "tags": [
         "oet",
@@ -111,6 +119,7 @@
       "front": "to elevate (a limb)",
       "back": "unieść, ułożyć wysoko",
       "example": "Elevate the limb above the level of the heart to reduce swelling.\nPatients are advised to elevate the leg whenever they are sitting.\nThe nurse helped him to elevate the injured arm on two pillows.",
+      "pronunciation": "/tə ˈelɪveɪt (ə lɪm)/",
       "synonyms": "to raise / to lift / to prop up",
       "tags": [
         "oet",
@@ -124,6 +133,7 @@
       "front": "throbbing",
       "back": "pulsujący",
       "example": "He described a throbbing pain in the left thigh that was worse at night.\nThe throbbing headache was accompanied by nausea and sensitivity to light.\nIs the pain throbbing, stabbing or aching?",
+      "pronunciation": "/ˈθrɒbɪŋ/",
       "synonyms": "pulsating / pounding",
       "tags": [
         "oet",
@@ -137,6 +147,7 @@
       "front": "peripheral pulses palpable",
       "back": "tętno obwodowe wyczuwalne",
       "example": "Capillary refill was under two seconds and peripheral pulses palpable distal to the injury.\nOn examination: warm, well perfused, peripheral pulses palpable.\nPeripheral pulses palpable bilaterally; no sensory deficit.",
+      "pronunciation": "/pəˈrɪfərəl ˈpʌlsɪz ˈpælpəbəl/",
       "tags": [
         "oet",
         "reading-a"
@@ -149,6 +160,7 @@
       "front": "compartment syndrome",
       "back": "zespół ciasnoty przedziałów powięziowych",
       "example": "Severe pain out of proportion to the injury should raise suspicion of compartment syndrome.\nCompartment syndrome is a surgical emergency that may require fasciotomy.\nAfter the tibial fracture he developed compartment syndrome and was taken to theatre urgently.",
+      "pronunciation": "/kəmˈpɑːtmənt ˈsɪndrəʊm/",
       "synonyms": "raised pressure within a muscle compartment",
       "tags": [
         "oet",
@@ -162,6 +174,7 @@
       "front": "increments",
       "back": "stopniowe zwiększanie dawki",
       "example": "The dose was increased in increments of 2.5 mg every three days.\nMorphine can be titrated in small increments until the pain is controlled.\nPlease increase the infusion rate in increments of 10 mL per hour.",
+      "pronunciation": "/ˈɪŋkrəmənts/",
       "synonyms": "small stepwise additions",
       "tags": [
         "oet",
@@ -175,6 +188,7 @@
       "front": "bony prominences",
       "back": "wyniosłości kostne",
       "example": "Pad the bony prominences, such as the heel and the elbow, before applying the plaster.\nPressure ulcers tend to develop over bony prominences like the sacrum.\nCheck the bony prominences daily for redness or breakdown of the skin.",
+      "pronunciation": "/ˈbəʊni ˈprɒmɪnənsɪz/",
       "synonyms": "areas where bone lies close to the skin",
       "tags": [
         "oet",
@@ -188,6 +202,7 @@
       "front": "crepe bandage",
       "back": "bandaż elastyczny",
       "example": "A crepe bandage was wrapped firmly around the ankle to support the sprain.\nApply the crepe bandage from the toes upwards, overlapping each turn by half.\nRemove the crepe bandage at night and reapply it in the morning.",
+      "pronunciation": "/kreɪp ˈbændɪdʒ/",
       "synonyms": "elastic bandage / stretch bandage",
       "tags": [
         "oet",
@@ -201,6 +216,7 @@
       "front": "stockinette",
       "back": "pończocha trykotowa (podkład pod gips)",
       "example": "A layer of stockinette is placed on the skin before the padding and plaster.\nThe stockinette is rolled back over the edges of the cast to give a smooth finish.\nShe was fitted with a stockinette liner before the cast was applied.",
+      "pronunciation": "/ˌstɒkɪˈnet/",
       "synonyms": "tubular cotton liner worn under a cast",
       "tags": [
         "oet",
@@ -214,6 +230,7 @@
       "front": "Consumer Medicine Information",
       "back": "ulotka informacyjna dla pacjenta",
       "example": "Please read the Consumer Medicine Information that comes with your tablets.\nThe pharmacist gave her the Consumer Medicine Information and went through the main side effects.\nIf you are unsure how to take the medicine, check the Consumer Medicine Information first.",
+      "pronunciation": "/kənˈsjuːmə ˈmedsən ˌɪnfəˈmeɪʃən/",
       "synonyms": "patient information leaflet / PIL",
       "tags": [
         "oet",
@@ -227,6 +244,7 @@
       "front": "susceptible to interference",
       "back": "podatny na zakłócenia",
       "example": "Some pacemakers are susceptible to interference from strong magnetic fields.\nWireless monitors may be susceptible to interference from other electronic devices.\nOlder hearing aids can be susceptible to interference from mobile phones.",
+      "pronunciation": "/səˈseptəbəl tə ˌɪntəˈfɪərəns/",
       "synonyms": "easily disrupted / prone to disturbance",
       "tags": [
         "oet",
@@ -240,6 +258,7 @@
       "front": "in close proximity to",
       "back": "w bezpośrednim sąsiedztwie",
       "example": "The tumour lies in close proximity to the spinal cord, which makes surgery difficult.\nPatients with infectious diarrhoea should not be nursed in close proximity to other patients.\nThe clinic is located in close proximity to the main hospital.",
+      "pronunciation": "/ɪn kləʊs prɒkˈsɪməti tə/",
       "synonyms": "very close to / right next to / adjacent to",
       "tags": [
         "oet",
@@ -253,6 +272,7 @@
       "front": "displacement (of a tube)",
       "back": "przemieszczenie (sondy)",
       "example": "Displacement of the feeding tube was suspected when the patient coughed after the feed.\nTube displacement is a common complication in confused patients.\nCheck for displacement of the tube before each feed by confirming the marked length.",
+      "pronunciation": "/dɪsˈpleɪsmənt/",
       "synonyms": "dislodgement / moving out of place",
       "tags": [
         "oet",
@@ -266,6 +286,7 @@
       "front": "regurgitation",
       "back": "zarzucanie treści",
       "example": "Regurgitation of food after meals can lead to aspiration in patients with a feeding tube.\nThe baby had frequent regurgitation after feeds but was gaining weight well.\nRaising the head of the bed can reduce regurgitation during enteral feeding.",
+      "pronunciation": "/rɪˌɡɜːdʒɪˈteɪʃən/",
       "synonyms": "backflow of stomach contents",
       "tags": [
         "oet",
@@ -279,6 +300,7 @@
       "front": "aspiration",
       "back": "aspiracja",
       "example": "Aspiration of stomach contents is a serious risk in patients with a reduced level of consciousness.\nThe speech therapist assessed her swallow because of the risk of aspiration.\nSit the patient upright during feeding to reduce the risk of aspiration.",
+      "pronunciation": "/ˌæspəˈreɪʃən/",
       "synonyms": "inhaling food or fluid into the lungs",
       "tags": [
         "oet",
@@ -292,6 +314,7 @@
       "front": "competency assessed",
       "back": "oceniony pod kątem kompetencji",
       "example": "Staff must have their competency assessed before they are allowed to change the dressings alone.\nAll nurses who insert the tubes must have their competency assessed before working unsupervised.\nCompetency assessed and signed off by the ward manager on 3 March.",
+      "pronunciation": "/ˈkɒmpɪtənsi əˈsest/",
       "synonyms": "formally checked as able to do the task",
       "tags": [
         "oet",
@@ -305,6 +328,7 @@
       "front": "mandatory training",
       "back": "szkolenie obowiązkowe",
       "example": "All new staff must complete mandatory training in infection control within their first week.\nFire safety is part of the annual mandatory training.\nShe was unable to work on the ward until her mandatory training was up to date.",
+      "pronunciation": "/ˈmændətəri ˈtreɪnɪŋ/",
       "synonyms": "compulsory courses / required training",
       "tags": [
         "oet",
@@ -318,6 +342,7 @@
       "front": "chaperone",
       "back": "osoba towarzysząca przy badaniu intymnym",
       "example": "The doctor offered the patient a chaperone before the examination.\nA chaperone should be present during any intimate examination.\nShe declined a chaperone, and this was recorded in the notes.",
+      "pronunciation": "/ˈʃæpərəʊn/",
       "synonyms": "a person present during an intimate examination",
       "tags": [
         "oet",
@@ -331,6 +356,7 @@
       "front": "formal chaperone",
       "back": "formalny chaperon (przeszkolony pracownik placówki)",
       "example": "A nurse acted as a formal chaperone during the breast examination.\nThe practice policy is to provide a formal chaperone for every intimate examination.\nA formal chaperone has been trained for the role and records their presence in the notes.",
+      "pronunciation": "/ˈfɔːməl ˈʃæpərəʊn/",
       "synonyms": "trained member of staff",
       "tags": [
         "oet",
@@ -344,6 +370,7 @@
       "front": "informal chaperone",
       "back": "nieformalny chaperon (rodzina, przyjaciel, opiekun)",
       "example": "The patient chose her sister as an informal chaperone.\nAn informal chaperone, such as a friend or relative, can provide comfort but is not trained for the role.\nHe asked his wife to stay as an informal chaperone during the examination.",
+      "pronunciation": "/ɪnˈfɔːməl ˈʃæpərəʊn/",
       "synonyms": "relative or friend who stays in the room",
       "tags": [
         "oet",
@@ -357,6 +384,7 @@
       "front": "to decline an offer",
       "back": "odrzucić propozycję",
       "example": "The patient decided to decline an offer of a chaperone.\nShe chose to decline an offer of further tests until she had spoken to her family.\nIt is her right to decline an offer of treatment, provided she understands the risks.",
+      "pronunciation": "/tə dɪˈklaɪn ən ˈɒfə/",
       "synonyms": "to turn down an offer / to refuse politely",
       "tags": [
         "oet",
@@ -370,6 +398,7 @@
       "front": "spot checks",
       "back": "kontrole okresowe, wyrywkowe",
       "example": "The pharmacist carries out spot checks on the controlled drugs cupboard every month.\nSpot checks of hand hygiene are carried out on all wards.\nManagers use spot checks to confirm that staff follow the protocol.",
+      "pronunciation": "/ˈspɒt tʃeks/",
       "synonyms": "random inspections / unannounced audits",
       "tags": [
         "oet",
@@ -383,6 +412,7 @@
       "front": "incidence",
       "back": "zapadalność, częstość występowania",
       "example": "The incidence of type 2 diabetes has risen sharply over the past thirty years.\nThe incidence of wound infection was 4% in the treatment group.\nIncidence refers to new cases arising in a given period, whereas prevalence refers to all existing cases.",
+      "pronunciation": "/ˈɪnsɪdəns/",
       "synonyms": "rate of new cases",
       "tags": [
         "oet",
@@ -396,6 +426,7 @@
       "front": "retrospective multi-centre study",
       "back": "retrospektywne badanie wieloośrodkowe",
       "example": "This retrospective multi-centre study reviewed the records of 2,400 patients treated between 2015 and 2020.\nA retrospective multi-centre study cannot prove causation, because the data were not collected for the research.\nThe authors carried out a retrospective multi-centre study across eight UK hospitals.",
+      "pronunciation": "/ˌretrəˈspektɪv ˌmʌltiˈsentə ˈstʌdi/",
       "tags": [
         "oet",
         "reading-b"
@@ -408,6 +439,7 @@
       "front": "myriad",
       "back": "niezliczone, mnóstwo",
       "example": "Myriad factors influence whether a patient takes their medication as prescribed.\nThere are myriad reasons why people delay seeking help for low mood.\nThe patient presented with a myriad of vague symptoms that were difficult to link.",
+      "pronunciation": "/ˈmɪriəd/",
       "synonyms": "countless / a great many / numerous",
       "tags": [
         "oet",
@@ -421,6 +453,7 @@
       "front": "impairment",
       "back": "upośledzenie",
       "example": "Cognitive impairment can make it difficult for patients to follow medication instructions.\nHearing impairment is common in older adults and often goes unrecognised.\nThe stroke left her with a mild visual impairment.",
+      "pronunciation": "/ɪmˈpeəmənt/",
       "synonyms": "reduced function / deficit / loss of ability",
       "tags": [
         "oet",
@@ -434,6 +467,7 @@
       "front": "a common refrain",
       "back": "powtarzany pogląd",
       "example": "A common refrain among shift workers is that they never feel fully rested.\n\"I don't have time to exercise\" is a common refrain in clinic.\nA common refrain from patients is that nobody explained the diagnosis to them.",
+      "pronunciation": "/ə ˈkɒmən rɪˈfreɪn/",
       "synonyms": "something people say again and again",
       "tags": [
         "oet",
@@ -447,6 +481,7 @@
       "front": "the be-all and end-all",
       "back": "najważniejsza, jedyna rzecz",
       "example": "Blood pressure is not the be-all and end-all when assessing cardiovascular risk.\nFor some patients, weight loss becomes the be-all and end-all of the consultation.\nA single test result should not be the be-all and end-all of the diagnosis.",
+      "pronunciation": "/ðə ˈbiː ɔːl ənd ˈend ɔːl/",
       "synonyms": "the only thing that matters / the most important factor",
       "tags": [
         "oet",
@@ -460,6 +495,7 @@
       "front": "sleep debt",
       "back": "zaległości snu, dług snu",
       "example": "Shift workers can build up a sleep debt over a run of night shifts.\nA weekend of lie-ins does not fully repay a sleep debt.\nChronic sleep debt is associated with poor concentration and low mood.",
+      "pronunciation": "/ˈsliːp det/",
       "synonyms": "accumulated lack of sleep",
       "tags": [
         "oet",
@@ -473,6 +509,7 @@
       "front": "onset",
       "back": "początek (choroby)",
       "example": "The onset of symptoms was sudden, with severe chest pain at rest.\nEarly onset of the disease is associated with a poorer prognosis.\nCan you tell me about the onset of the pain? Was it sudden or gradual?",
+      "pronunciation": "/ˈɒnset/",
       "synonyms": "start / beginning / first appearance",
       "tags": [
         "oet",
@@ -486,6 +523,7 @@
       "front": "trajectory",
       "back": "przebieg, trajektoria",
       "example": "The disease trajectory varies considerably between patients.\nHer recovery trajectory has been steady, with weekly improvements in mobility.\nFrailty can alter the trajectory of recovery after surgery.",
+      "pronunciation": "/trəˈdʒektəri/",
       "synonyms": "course / path / progression",
       "tags": [
         "oet",
@@ -499,6 +537,7 @@
       "front": "prevalence",
       "back": "rozpowszechnienie, chorobowość",
       "example": "The prevalence of obesity among children has doubled in twenty years.\nPrevalence is higher in women than in men.\nThe study estimated the prevalence of depression at 12% in the over-seventies.",
+      "pronunciation": "/ˈprevələns/",
       "synonyms": "proportion of people affected at one time",
       "tags": [
         "oet",
@@ -512,6 +551,7 @@
       "front": "plausible",
       "back": "wiarygodny, prawdopodobny",
       "example": "A viral trigger is a plausible explanation for her symptoms.\nThe mechanism seems biologically plausible, but it has not been proven.\nHis account of the fall was plausible, but the injuries suggested otherwise.",
+      "pronunciation": "/ˈplɔːzəbəl/",
       "synonyms": "credible / believable / reasonable",
       "tags": [
         "oet",
@@ -525,6 +565,7 @@
       "front": "stringent",
       "back": "rygorystyczny",
       "example": "Stringent infection control measures were introduced on the ward.\nThe trial applied stringent inclusion criteria, so the results may not apply to all patients.\nDrug storage is subject to stringent rules.",
+      "pronunciation": "/ˈstrɪndʒənt/",
       "synonyms": "strict / rigorous / tightly enforced",
       "tags": [
         "oet",
@@ -538,6 +579,7 @@
       "front": "sub-threshold",
       "back": "poniżej progu (diagnostycznego)",
       "example": "Many patients have sub-threshold symptoms that still cause distress.\nA sub-threshold dose had no measurable effect on blood pressure.\nShe had sub-threshold anxiety, which did not meet the criteria for a disorder.",
+      "pronunciation": "/ˌsʌbˈθreʃhəʊld/",
       "synonyms": "not meeting the full criteria",
       "tags": [
         "oet",
@@ -551,6 +593,7 @@
       "front": "scaffolding (figurative)",
       "back": "wsparcie, rusztowanie (w znaczeniu przenośnym)",
       "example": "The programme provides scaffolding for patients who are learning to manage their condition.\nRegular appointments offered the scaffolding she needed to stay in treatment.\nFamily support can act as scaffolding during the first months of recovery.",
+      "pronunciation": "/ˈskæfəldɪŋ/",
       "synonyms": "structure of support / framework",
       "tags": [
         "oet",
@@ -564,6 +607,7 @@
       "front": "proffered",
       "back": "przedstawiony, zaoferowany",
       "example": "The explanation proffered by the patient did not match the pattern of her injuries.\nHe declined the advice proffered by the nurse.\nSeveral theories have been proffered to account for the rise in cases.",
+      "pronunciation": "/ˈprɒfəd/",
       "synonyms": "offered / put forward / presented",
       "tags": [
         "oet",
@@ -577,6 +621,7 @@
       "front": "to fuel questions",
       "back": "podsycać pytania",
       "example": "The conflicting results have fuelled questions about the safety of the drug.\nDelays in diagnosis continue to fuel questions about the quality of care.\nThe report is likely to fuel questions about staffing levels.",
+      "pronunciation": "/tə ˈfjuːəl ˈkwestʃənz/",
       "synonyms": "to raise doubts / to prompt further debate",
       "tags": [
         "oet",
@@ -590,6 +635,7 @@
       "front": "to afflict",
       "back": "dotykać, nękać",
       "example": "Rheumatoid arthritis afflicts around one per cent of the population.\nA range of health problems afflict people who live in poor housing.\nHe was afflicted by chronic back pain for most of his working life.",
+      "pronunciation": "/tə əˈflɪkt/",
       "synonyms": "to affect / to trouble / to plague",
       "tags": [
         "oet",
@@ -603,6 +649,7 @@
       "front": "sciatica",
       "back": "rwa kulszowa",
       "example": "She has had sciatica for three weeks, with pain shooting down the left leg.\nSciatica is often caused by a prolapsed disc pressing on a nerve root.\nMost cases of sciatica improve within six to twelve weeks without surgery.",
+      "pronunciation": "/saɪˈætɪkə/",
       "synonyms": "pain running down the leg from the lower back",
       "tags": [
         "oet",
@@ -616,6 +663,7 @@
       "front": "recurrence",
       "back": "nawrót",
       "example": "The aim of treatment is to prevent recurrence of the ulcer.\nRecurrence is common in the first year after stopping the medication.\nIs there a risk of recurrence after the operation?",
+      "pronunciation": "/rɪˈkʌrəns/",
       "synonyms": "return of the condition / relapse",
       "tags": [
         "oet",
@@ -629,6 +677,7 @@
       "front": "manipulation",
       "back": "manipulacja (terapia manualna)",
       "example": "Spinal manipulation may give short-term relief for lower back pain.\nThe physiotherapist performed manipulation of the lower back, and the stiffness improved.\nManipulation is not appropriate when there are red flag symptoms such as numbness around the groin.",
+      "pronunciation": "/məˌnɪpjəˈleɪʃən/",
       "synonyms": "hands-on treatment of the spine or joints",
       "tags": [
         "oet",
@@ -642,6 +691,7 @@
       "front": "lesion",
       "back": "zmiana skórna, zmiana chorobowa",
       "example": "A pigmented lesion on her back had changed in size and colour.\nThe CT scan showed a solitary lesion in the right lobe of the liver.\nLesions on the legs were weeping and crusted.",
+      "pronunciation": "/ˈliːʒən/",
       "synonyms": "abnormal area of tissue / patch / growth",
       "tags": [
         "oet",
@@ -655,6 +705,7 @@
       "front": "neglected disease",
       "back": "zaniedbana choroba tropikalna",
       "example": "Neglected diseases mainly affect people in the poorest regions of the world.\nSchistosomiasis is classed as a neglected disease because it attracts little investment.\nControl programmes for neglected diseases rely heavily on donated medicines.",
+      "pronunciation": "/nɪˈɡlektɪd dɪˈziːz/",
       "synonyms": "illness that receives little research funding",
       "tags": [
         "oet",
@@ -668,6 +719,7 @@
       "front": "ante-natal",
       "back": "prenatalny, ciążowy",
       "example": "She attended her first ante-natal appointment at ten weeks.\nAnte-natal classes cover labour, breastfeeding and caring for a newborn.\nAll pregnant women are offered ante-natal screening for anaemia.",
+      "pronunciation": "/ˌæntiˈneɪtəl/",
       "synonyms": "before birth / during pregnancy",
       "tags": [
         "oet",
@@ -681,6 +733,7 @@
       "front": "post-natal",
       "back": "poporodowy",
       "example": "Post-natal depression can develop within the first year after delivery.\nShe was invited for a post-natal check six weeks after the birth.\nThe midwife visits the mother at home during the post-natal period.",
+      "pronunciation": "/ˌpəʊstˈneɪtəl/",
       "synonyms": "after birth / after delivery",
       "tags": [
         "oet",
@@ -694,6 +747,7 @@
       "front": "labour",
       "back": "poród",
       "example": "She went into labour at 38 weeks and was admitted to the delivery suite.\nThe first stage of labour can last many hours in a first pregnancy.\nLabour was induced because the pregnancy had continued beyond 41 weeks.",
+      "pronunciation": "/ˈleɪbə/",
       "synonyms": "childbirth / delivery",
       "tags": [
         "oet",
@@ -707,6 +761,7 @@
       "front": "dispensing medication",
       "back": "wydawanie, przygotowywanie leków",
       "example": "Dispensing medication is carried out by the pharmacist in line with the prescription.\nThe pharmacy technician is responsible for dispensing medication in the outpatient department.\nErrors in dispensing medication can cause serious harm.",
+      "pronunciation": "/dɪˈspensɪŋ ˌmedɪˈkeɪʃən/",
       "synonyms": "preparing and handing out drugs",
       "tags": [
         "oet",
@@ -720,6 +775,7 @@
       "front": "misaligned",
       "back": "przemieszczony, źle ustawiony",
       "example": "The fracture healed in a misaligned position and needed surgical correction.\nA misaligned tooth was causing ulceration on her cheek.\nThe X-ray showed that the bones were slightly misaligned.",
+      "pronunciation": "/ˌmɪsəˈlaɪnd/",
       "synonyms": "out of position / not properly lined up",
       "tags": [
         "oet",
@@ -733,6 +789,7 @@
       "front": "setbacks",
       "back": "niepowodzenia, nawroty trudności",
       "example": "Setbacks are common in rehabilitation, so it is important to stay positive.\nHe suffered a few setbacks during recovery, including a chest infection.\nPlease don't be discouraged by minor setbacks; progress is rarely a straight line.",
+      "pronunciation": "/ˈsetbæks/",
       "synonyms": "difficulties / temporary reversals / obstacles",
       "tags": [
         "oet",
@@ -746,6 +803,7 @@
       "front": "to come to terms with",
       "back": "pogodzić się z",
       "example": "It can take time to come to terms with a diagnosis of diabetes.\nShe is trying to come to terms with the loss of her independence.\nCounselling can help families come to terms with the news.",
+      "pronunciation": "/tə kʌm tə tɜːmz wɪð/",
       "synonyms": "to accept / to adjust to / to learn to live with",
       "tags": [
         "oet",
@@ -759,6 +817,7 @@
       "front": "dysphagia (solids)",
       "back": "dysfagia (pokarmów stałych)",
       "example": "He reports a two-month history of dysphagia, worse with solids than with liquids.\nProgressive dysphagia to solids should prompt urgent investigation for oesophageal cancer.\nThe patient complained of dysphagia when eating bread and meat.",
+      "pronunciation": "/dɪsˈfeɪdʒiə (ˈsɒlɪdz)/",
       "synonyms": "difficulty swallowing",
       "tags": [
         "oet",
@@ -772,6 +831,7 @@
       "front": "post-viral",
       "back": "po infekcji wirusowej",
       "example": "She has had a post-viral cough for six weeks.\nPost-viral fatigue usually improves gradually over weeks to months.\nThe patient developed a post-viral arthritis that resolved without treatment.",
+      "pronunciation": "/ˌpəʊstˈvaɪrəl/",
       "synonyms": "following a viral illness",
       "tags": [
         "oet",
@@ -785,6 +845,7 @@
       "front": "over-the-counter (OTC)",
       "back": "bez recepty",
       "example": "He has been taking over-the-counter ibuprofen for the pain.\nOver-the-counter painkillers did not relieve her symptoms.\nShe occasionally uses an over-the-counter antihistamine for hay fever.",
+      "pronunciation": "/ˌəʊvə ðə ˈkaʊntə (ˌəʊ tiː ˈsiː)/",
       "synonyms": "available without a prescription",
       "tags": [
         "oet",
@@ -798,6 +859,7 @@
       "front": "concomitant",
       "back": "współistniejący",
       "example": "Concomitant use of aspirin and warfarin increases the risk of bleeding.\nHe had concomitant hypertension and hyperlipidaemia.\nPlease list any concomitant medication in the referral letter.",
+      "pronunciation": "/kənˈkɒmɪtənt/",
       "synonyms": "coexisting / accompanying / occurring together",
       "tags": [
         "oet",
@@ -811,6 +873,7 @@
       "front": "radiating to the back",
       "back": "promieniujący do pleców",
       "example": "She presented with central abdominal pain radiating to the back.\nHe described a sudden tearing chest pain radiating to the back.\nEpigastric pain radiating to the back raised the possibility of pancreatitis.",
+      "pronunciation": "/ˈreɪdieɪtɪŋ tə ðə bæk/",
       "synonyms": "spreading through to the back",
       "tags": [
         "oet",
@@ -824,6 +887,7 @@
       "front": "stricture",
       "back": "zwężenie",
       "example": "Endoscopy revealed a benign oesophageal stricture.\nA urethral stricture can cause a weak urinary stream.\nThe stricture was dilated during the procedure, and her swallowing improved.",
+      "pronunciation": "/ˈstrɪktʃə/",
       "synonyms": "abnormal narrowing of a tube or passage",
       "tags": [
         "oet",
@@ -837,6 +901,7 @@
       "front": "provisional diagnosis",
       "back": "rozpoznanie wstępne",
       "example": "My provisional diagnosis is a migraine, but I would like to exclude other causes.\nThe provisional diagnosis was pneumonia, pending the chest X-ray.\nA provisional diagnosis of gout was made on the basis of the history and examination.",
+      "pronunciation": "/prəˈvɪʒənəl ˌdaɪəɡˈnəʊsɪs/",
       "synonyms": "working diagnosis / initial diagnosis / tentative diagnosis",
       "tags": [
         "oet",
@@ -850,6 +915,7 @@
       "front": "definitive diagnosis",
       "back": "rozpoznanie ostateczne",
       "example": "A biopsy is needed to establish a definitive diagnosis.\nUntil a definitive diagnosis is made, we will treat the symptoms.\nThe condition cannot be given a definitive diagnosis on symptoms alone.",
+      "pronunciation": "/dɪˈfɪnətɪv ˌdaɪəɡˈnəʊsɪs/",
       "synonyms": "final diagnosis / confirmed diagnosis",
       "tags": [
         "oet",
@@ -863,6 +929,7 @@
       "front": "to cease",
       "back": "zaprzestać",
       "example": "The patient was advised to cease smoking immediately.\nPlease cease taking the tablets if you develop a rash.\nSymptoms ceased within an hour of starting treatment.",
+      "pronunciation": "/tə siːs/",
       "synonyms": "to stop / to discontinue / to halt",
       "tags": [
         "oet",
@@ -876,6 +943,7 @@
       "front": "social drinker",
       "back": "osoba pijąca okazjonalnie",
       "example": "He is a social drinker and does not smoke.\nShe describes herself as a social drinker, with about six units a week.\nThe patient is a social drinker; there is no history of alcohol dependence.",
+      "pronunciation": "/ˈsəʊʃəl ˈdrɪŋkə/",
       "synonyms": "someone who drinks alcohol only occasionally",
       "tags": [
         "oet",
@@ -889,6 +957,7 @@
       "front": "tonsillectomy",
       "back": "tonsillektomia, usunięcie migdałków",
       "example": "She had a tonsillectomy at the age of seven after recurrent tonsillitis.\nBleeding is the main risk in the first fortnight after tonsillectomy.\nHe was referred for tonsillectomy because of recurrent throat infections.",
+      "pronunciation": "/ˌtɒnsəˈlektəmi/",
       "synonyms": "surgical removal of the tonsils",
       "tags": [
         "oet",
@@ -902,6 +971,7 @@
       "front": "sebaceous cyst",
       "back": "torbiel łojowa",
       "example": "A small sebaceous cyst was noted on the back of the neck.\nThe sebaceous cyst became inflamed and was incised and drained.\nA sebaceous cyst is usually painless unless it becomes infected.",
+      "pronunciation": "/sɪˈbeɪʃəs sɪst/",
       "synonyms": "lump under the skin filled with oily material",
       "tags": [
         "oet",
@@ -915,6 +985,7 @@
       "front": "whiplash injury",
       "back": "uraz typu smagnięcie biczem",
       "example": "He developed a whiplash injury after a rear-end collision.\nA whiplash injury usually causes neck pain and stiffness that develop within a day or two.\nShe was advised to keep her neck mobile after the whiplash injury.",
+      "pronunciation": "/ˈwɪplæʃ ˈɪndʒəri/",
       "synonyms": "neck sprain after a sudden jolt",
       "tags": [
         "oet",
@@ -928,6 +999,7 @@
       "front": "fatigue",
       "back": "zmęczenie",
       "example": "Fatigue is one of the most common reasons patients visit their GP.\nSince the infection she has been struggling with extreme fatigue.\nDoes the fatigue get worse as the day goes on?",
+      "pronunciation": "/fəˈtiːɡ/",
       "synonyms": "tiredness / exhaustion / lack of energy",
       "tags": [
         "oet",
@@ -941,6 +1013,7 @@
       "front": "discharged (from hospital)",
       "back": "wypisany (ze szpitala)",
       "example": "You will probably be discharged from hospital on Friday.\nBefore you are discharged, the pharmacist will go through your medicines.\nShe was discharged from hospital two days after the operation.",
+      "pronunciation": "/dɪsˈtʃɑːdʒd (frəm ˈhɒspɪtəl)/",
       "synonyms": "allowed to go home",
       "tags": [
         "oet",
@@ -954,6 +1027,7 @@
       "front": "exercise tolerance",
       "back": "tolerancja wysiłku",
       "example": "Her exercise tolerance has improved since the operation.\nReduced exercise tolerance is a common early sign of heart failure.\nHow is your exercise tolerance? Can you still climb the stairs without stopping?",
+      "pronunciation": "/ˈeksəsaɪz ˈtɒlərəns/",
       "synonyms": "how much activity someone can manage",
       "tags": [
         "oet",
@@ -967,6 +1041,7 @@
       "front": "cardiac rehabilitation programme",
       "back": "program rehabilitacji kardiologicznej",
       "example": "I would like to refer you to a cardiac rehabilitation programme.\nA cardiac rehabilitation programme usually includes exercise, education and emotional support.\nPatients who complete a cardiac rehabilitation programme have a lower risk of readmission.",
+      "pronunciation": "/ˈkɑːdiæk ˌriːəˌbɪlɪˈteɪʃən ˈprəʊɡræm/",
       "tags": [
         "oet",
         "speaking"
@@ -979,6 +1054,7 @@
       "front": "return to work",
       "back": "powrót do pracy",
       "example": "Most people can return to work after a few weeks, depending on their job and recovery.\nA gradual return to work is recommended after major surgery.\nWe can discuss a phased return to work with your employer.",
+      "pronunciation": "/rɪˈtɜːn tə wɜːk/",
       "synonyms": "going back to your job",
       "tags": [
         "oet",
@@ -992,6 +1068,7 @@
       "front": "whole grains",
       "back": "produkty pełnoziarniste",
       "example": "Try to eat more whole grains, such as oats, brown rice and wholemeal bread.\nWhole grains are a good source of fibre and can help to lower cholesterol.\nI suggest swapping white bread for whole grains.",
+      "pronunciation": "/ˈhəʊl ɡreɪnz/",
       "synonyms": "wholemeal cereals and bread",
       "tags": [
         "oet",
@@ -1005,6 +1082,7 @@
       "front": "uncomplicated recovery",
       "back": "niepowikłany przebieg zdrowienia",
       "example": "We expect an uncomplicated recovery, and you should be home within a few days.\nShe made an uncomplicated recovery and returned to work after six weeks.\nAn uncomplicated recovery is likely if you follow the exercise plan.",
+      "pronunciation": "/ʌnˈkɒmplɪkeɪtɪd rɪˈkʌvəri/",
       "synonyms": "smooth healing with no problems",
       "tags": [
         "oet",
@@ -1018,6 +1096,7 @@
       "front": "measures (action)",
       "back": "środki, działania",
       "example": "The hospital has introduced new measures to reduce falls on the ward.\nUrgent measures were taken to stabilise the patient.\nWhat measures can be taken to prevent pressure ulcers?",
+      "pronunciation": "/ˈmeʒəz/",
       "synonyms": "steps / precautions / moves to deal with a situation",
       "tags": [
         "oet",
@@ -1031,6 +1110,7 @@
       "front": "preventive measures",
       "back": "środki zapobiegawcze",
       "example": "Handwashing is one of the most effective preventive measures against infection.\nPreventive measures include vaccination and regular screening.\nThe report recommends preventive measures to reduce the risk of falls in older patients.",
+      "pronunciation": "/prɪˈventɪv ˈmeʒəz/",
       "synonyms": "precautions / steps to stop it happening",
       "tags": [
         "oet",
@@ -1044,6 +1124,7 @@
       "front": "safety measures",
       "back": "środki bezpieczeństwa",
       "example": "Safety measures such as non-slip flooring and good lighting reduce the risk of falls.\nThe ward follows strict safety measures when handling cytotoxic drugs.\nStaff were reminded to follow safety measures at all times.",
+      "pronunciation": "/ˈseɪfti ˈmeʒəz/",
       "synonyms": "protective precautions",
       "tags": [
         "oet",
@@ -1057,6 +1138,7 @@
       "front": "outcome measures",
       "back": "miary wyników (punkty końcowe w badaniu)",
       "example": "The primary outcome measures were mortality and length of hospital stay.\nPain scores and mobility were used as outcome measures.\nPatient-reported outcome measures help clinicians understand how treatment affects daily life.",
+      "pronunciation": "/ˈaʊtkʌm ˈmeʒəz/",
       "synonyms": "ways of assessing the result of treatment",
       "tags": [
         "oet",
@@ -1070,6 +1152,7 @@
       "front": "to manage a problem",
       "back": "radzić sobie z problemem, zarządzać problemem (nie: „manage with”)",
       "example": "Patients are taught how to manage a problem such as breathlessness at home.\nThe nurse helped her to manage a problem with her insulin pump.\nIt is important to manage a problem early, before it becomes serious.",
+      "pronunciation": "/tə ˈmænɪdʒ ə ˈprɒbləm/",
       "synonyms": "to deal with a problem / to handle an issue",
       "tags": [
         "oet",
@@ -1083,6 +1166,7 @@
       "front": "to cope with",
       "back": "radzić sobie z (czymś trudnym)",
       "example": "Many patients find it hard to cope with chronic pain.\nHow does she cope with the new medication?\nThe family needed support to cope with the diagnosis.",
+      "pronunciation": "/tə kəʊp wɪð/",
       "synonyms": "to deal with / to handle / to manage",
       "tags": [
         "oet",

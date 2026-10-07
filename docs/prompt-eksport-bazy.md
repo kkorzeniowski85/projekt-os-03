@@ -40,6 +40,7 @@ W plikach tego projektu jest moja baza słówek. Przekształć ją na format JSO
       "pronunciation": "/juːˈbɪkwɪtəs/",
       "synonyms": "omnipresent / found everywhere",
       "formal": "prevalent throughout",
+      "register": "formalne · częste — listy i raporty",
       "tags": ["b2", "przymiotnik"],
       "kind": "word",
       "note_type": "basic_reversed",
@@ -90,6 +91,9 @@ wybrane przy imporcie, więc talia może być mieszana.
   Definicja zawierająca sam termin zdradziłaby odpowiedź. Człony rozdzielaj
   ukośnikiem ze spacjami (`a / b`) albo podaj tablicę.
 - `formal` — odpowiednik formalny, jeśli baza rozróżnia rejestr.
+- `register` — użycie: rejestr i częstość, np. `formalne · częste — listy
+  i raporty`. Rejestr z listy: potoczne / codzienne / formalne / fachowe /
+  żargon szpitalny / skrót; częstość: bardzo częste / częste / rzadkie.
 - `tags` — przenieś kategorie, poziomy i części mowy z bazy. Małe litery,
   bez znaków specjalnych. Nie wymyślaj tagów, których baza nie ma.
 - `source_ref` — stabilny identyfikator pozycji w bazie (np. `"baza/1042"` albo

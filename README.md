@@ -122,8 +122,9 @@ dopisujący przykłady, tagi i kategorię do istniejących fiszek — także po
 `source_ref`, gdy zmieniło się tłumaczenie — bez ruszania stanu powtórek;
 udostępnianie z innych aplikacji (Android).
 
-**Fiszka** — przód, tył, zdanie przykładowe oraz adnotacje: wymowa, synonimy
-i odpowiednik formalny (OET). Z synonimów powstaje opcjonalna karta
+**Fiszka** — przód, tył, zdanie przykładowe oraz adnotacje: wymowa, użycie
+(rejestr i częstość), synonimy i odpowiednik formalny (OET). Z synonimów
+powstaje opcjonalna karta
 **„opis → termin"**: pytaniem jest parafraza, odpowiedzią uczony termin —
 włączana przyciskiem w Ustawieniach, nie automatycznie.
 

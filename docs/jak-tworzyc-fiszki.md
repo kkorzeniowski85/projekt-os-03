@@ -45,6 +45,7 @@ każde pominięte pole to informacja, którą aplikacja musi zgadnąć albo utra
 | `pronunciation` | Zapis wymowy. Aplikacja pokazuje go przy odpowiedzi |
 | `synonyms` | Wyrażenia **wymienne w zdaniu** — patrz niżej, to z nich powstaje osobna karta |
 | `formal` | Odpowiednik formalny — rejestr, którego wymaga OET |
+| `register` | Użycie: rejestr (`potoczne` / `codzienne` / `formalne` / `fachowe` / `żargon szpitalny` / `skrót`) i częstość (`bardzo częste` / `częste` / `rzadkie`), oddzielone ` · `, po myślniku gdzie pasuje. Pokazywane przy odpowiedzi; w pakiecie wymagane |
 | `tags` | Do filtrowania i statystyk po tagach |
 | `kind` | **Oś statystyk** — patrz niżej, to najważniejsze pole opcjonalne |
 | `note_type` | Ile kart powstanie: `basic` = 1, `basic_reversed` = 2 |

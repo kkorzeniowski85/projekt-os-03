@@ -10,6 +10,7 @@ import {
   inputClass,
   secondaryButtonClass,
 } from "@/components/AppShell";
+import { opiszKopie, pobierzKopie } from "@/lib/backup-download";
 import { BUNDLED_EVENT } from "@/lib/local/bundled";
 import { examPace, type PaceInfo } from "@/lib/local/pace";
 import {
@@ -50,6 +51,8 @@ function DeckList() {
   const [pace, setPace] = useState<PaceInfo | null>(null);
   //: Ile dni temu zrobiono kopie. null = nigdy, a to jest najgorszy przypadek.
   const [odKopii, setOdKopii] = useState<number | null | undefined>(undefined);
+  //: Potwierdzenie w miejscu paska - tam, gdzie patrzy ktos, kto kliknal.
+  const [kopiaInfo, setKopiaInfo] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     try {
@@ -79,6 +82,23 @@ function DeckList() {
     window.addEventListener(BUNDLED_EVENT, onBundled);
     return () => window.removeEventListener(BUNDLED_EVENT, onBundled);
   }, [load]);
+
+  async function zrobKopie() {
+    setBusy(true);
+    setError(null);
+    try {
+      const { counts, filename } = await pobierzKopie();
+      setOdKopii(0);
+      setKopiaInfo(
+        `Pobrano kopię (${opiszKopie(counts)}). Plik ${filename} jest w folderze ` +
+          "Pobrane — przenieś go poza telefon, np. na Dysk Google.",
+      );
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Nie udało się pobrać kopii");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   async function addDeck(event: FormEvent) {
     event.preventDefault();
@@ -192,10 +212,13 @@ function DeckList() {
       {/* Nie ma synchronizacji ani kont: kopia to jedyne, co dzieli tę
           kolekcję od zera. Pasek pokazuje się dopiero, gdy jest o czym
           przypominać - codzienne straszenie przestaje działać po tygodniu. */}
+      {/* Klikniecie od razu pobiera plik - bez szukania w Ustawieniach. */}
       {odKopii !== undefined && (odKopii === null || odKopii >= 7) && (
-        <Link
-          href="/ustawienia"
-          className={`flex items-center justify-between gap-3 rounded-lg border px-3.5 py-2.5 text-[13px] ${
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() => void zrobKopie()}
+          className={`flex w-full items-center justify-between gap-3 rounded-lg border px-3.5 py-2.5 text-left text-[13px] disabled:opacity-60 ${
             odKopii === null || odKopii >= 14
               ? "border-again-line bg-again-bg text-again"
               : "border-hard-line bg-hard-bg text-hard"
@@ -206,8 +229,13 @@ function DeckList() {
               ? "Nie masz kopii zapasowej — historia nauki żyje tylko w tym telefonie"
               : `Ostatnia kopia: ${odKopii} ${odmien(odKopii, "dzień", "dni", "dni")} temu`}
           </span>
-          <span className="shrink-0 font-medium">Zrób kopię →</span>
-        </Link>
+          <span className="shrink-0 font-medium">Zrób kopię ↓</span>
+        </button>
+      )}
+      {kopiaInfo && (
+        <p className="rounded-lg border border-good-line bg-good-bg px-3.5 py-2.5 text-[13px] text-good">
+          {kopiaInfo}
+        </p>
       )}
 
       {pace && !pace.past && pace.newCards > 0 && (

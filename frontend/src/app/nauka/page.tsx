@@ -91,15 +91,10 @@ function StudySession() {
   //: stoi wyzej w pliku niz deklaracja tamtego.
   const nasluchNaWyjsciu = useRef<ListenHandle | null>(null);
   const [sluchanie, setSluchanie] = useState(false);
-  //: Tryb sluchania: karty ida same, czytane na glos, BEZ oceniania.
-  //: To przeglad w drodze, nie sesja - stan powtorek zostaje nietkniety.
-  const [trybSluchania, setTrybSluchania] = useState(false);
 
   //  Czas odpowiedzi - wymagany w logu (ADR 0005), mierzony od pokazania karty.
   // Ustawiane przy pokazaniu karty (loadQueue/rate), nie w renderze.
   const shownAt = useRef<number>(0);
-  //: Zegary trybu sluchania - do posprzatania przy wyjsciu.
-  const zegary = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
     // Obie wartosci istnieja wylacznie w przegladarce (localStorage, window).
@@ -294,54 +289,6 @@ function StudySession() {
     }
   }
 
-  // Tryb sluchania: przod -> pauza -> tyl -> pauza -> nastepna karta.
-  // Nie zapisuje ocen i nie rusza FSRS; wychodzi sie jednym dotknieciem.
-  useEffect(() => {
-    if (!trybSluchania || !entry) return;
-    let porzucone = false;
-    const czekaj = (ms: number) =>
-      new Promise((res) => {
-        const id = setTimeout(res, ms);
-        zegary.current.push(id);
-      });
-
-    void (async () => {
-      setRevealed(false);
-      // Czytamy to, co JEST teraz na ekranie - i tylko gdy jest po angielsku.
-      // Wczesniejsza wersja czytala zawsze Front, wiec przy karcie tyl->przod
-      // (a takich jest wiekszosc) telefon wypowiadal odpowiedz, zanim padlo
-      // pytanie. Polskiej strony nie czytamy: glos jest angielski, a tlumaczenie
-      // i tak znamy.
-      const { question: pytanie, answer: odpowiedz } = renderCard(
-        entry.note,
-        entry.card.templateOrd,
-      );
-      const pytaniePoAngielsku = entry.card.templateOrd !== 1;
-      if (pytaniePoAngielsku) speak(pytanie);
-      // Tyle, ile trwa przypomnienie sobie odpowiedzi - dluzej niz odczyt.
-      await czekaj(pytaniePoAngielsku ? 3200 : 2400);
-      if (porzucone) return;
-      setRevealed(true);
-      if (entry.card.templateOrd !== 0) speak(odpowiedz);
-      await czekaj(2600);
-      if (porzucone) return;
-      // Kolejna karta albo koniec: kolejki nie dociagamy, bo nic nie ocenilismy
-      // i dostalibysmy w kolko te sama.
-      if (queue && index + 1 < queue.cards.length) setIndex(index + 1);
-      else setTrybSluchania(false);
-    })();
-
-    return () => {
-      porzucone = true;
-      for (const id of zegary.current) clearTimeout(id);
-      zegary.current = [];
-      stopSpeaking();
-      // Bez tego pierwsza ocena po wyjsciu z trybu sluchania zapisalaby
-      // do logu czas liczony od wejscia w tryb - wartosc fikcyjna.
-      shownAt.current = Date.now();
-    };
-  }, [trybSluchania, entry, englishText, index, queue]);
-
   // Skroty klawiszowe: spacja odslania, 1-4 ocenia.
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -434,6 +381,9 @@ function StudySession() {
   const total = Math.max(sessionSize, reviewedCount + queue.cards.length - index);
   const done = Math.min(reviewedCount, total);
   const ocena = wantsTyping && revealed ? compareAnswer(typed, englishText) : null;
+  //: Angielski stoi na ekranie od razu tylko przy karcie ang -> pol. Przy
+  //: pozostalych glos przed odslonieciem zdradzilby odpowiedz.
+  const angielskiWidoczny = revealed || entry.card.templateOrd === 0;
 
   return (
     <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col">
@@ -464,12 +414,6 @@ function StudySession() {
         </span>
       </div>
 
-      {trybSluchania && (
-        <p className="mx-5 mt-3 rounded-lg border border-line bg-surface px-3 py-2 text-center text-[12px] text-ink-2">
-          Tryb słuchania — karty idą same i nie są oceniane. Stan powtórek bez zmian.
-        </p>
-      )}
-
       {/* Srodek ekranu nalezy do fiszki. */}
       <div className="flex flex-1 flex-col justify-center px-7 py-6 text-center">
         <p className="mb-5 text-[11px] uppercase tracking-[0.08em] text-ink-4">
@@ -491,6 +435,28 @@ function StudySession() {
             >
               {question}
             </p>
+            {canSpeak && angielskiWidoczny && (
+              <button
+                type="button"
+                onClick={() => speak(englishText)}
+                aria-label="Przeczytaj na głos"
+                className="mx-auto mt-3 text-ink-3 hover:text-accent"
+              >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.7"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M11 5L6 9H2v6h4l5 4V5z" />
+                  <path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14" />
+                </svg>
+              </button>
+            )}
             {/* Kontekst bez podpowiedzi: sam zwrot jest ze zdania wyciety. */}
             {cloze && (
               <p className="tresc mx-auto mt-5 max-w-md whitespace-pre-wrap border-l-2 border-line pl-3.5 text-left text-[15px] italic leading-[1.55] text-ink-3">
@@ -646,15 +612,7 @@ function StudySession() {
 
       <div className="px-5 pb-8">
         <ErrorBanner message={error} />
-        {trybSluchania ? (
-          <button
-            type="button"
-            onClick={() => setTrybSluchania(false)}
-            className="mt-2 w-full rounded-[10px] border border-line px-3 py-4 text-base font-medium hover:border-field"
-          >
-            Zatrzymaj i wróć do oceniania
-          </button>
-        ) : !revealed ? (
+        {!revealed ? (
           <button
             type="button"
             onClick={reveal}
@@ -699,14 +657,15 @@ function StudySession() {
           >
             Odłóż na bok
           </button>
+          {/* Jedno odtworzenie biezacego zwrotu - bez przechodzenia dalej. */}
           {canSpeak && (
             <button
               type="button"
-              onClick={() => setTrybSluchania((tak) => !tak)}
-              aria-pressed={trybSluchania}
-              className={trybSluchania ? "font-medium text-accent" : "hover:text-ink-2"}
+              disabled={!angielskiWidoczny}
+              onClick={() => speak(englishText)}
+              className="hover:text-ink-2 disabled:opacity-40"
             >
-              {trybSluchania ? "■ Zatrzymaj słuchanie" : "▸ Słuchaj"}
+              ▸ Słuchaj
             </button>
           )}
         </div>

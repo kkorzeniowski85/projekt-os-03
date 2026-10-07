@@ -9,11 +9,10 @@ import {
   inputClass,
   secondaryButtonClass,
 } from "@/components/AppShell";
+import { opiszKopie as describe, pobierzKopie } from "@/lib/backup-download";
 import {
   backupCounts,
-  backupFilename,
   currentCounts,
-  exportBackup,
   parseBackup,
   restoreBackup,
   type BackupCounts,
@@ -35,15 +34,6 @@ import { DEFAULT_PREFS, loadPrefs, savePrefs, type StudyPrefs } from "@/lib/pref
 import { recognitionAvailable } from "@/lib/listen";
 import { englishVoiceReady, speak, speechAvailable } from "@/lib/speech";
 import { odmien } from "@/lib/types";
-
-function describe(counts: BackupCounts): string {
-  return (
-    `${counts.decks} ${odmien(counts.decks, "talia", "talie", "talii")} · ` +
-    `${counts.notes} ${odmien(counts.notes, "fiszka", "fiszki", "fiszek")} · ` +
-    `${counts.cards} ${odmien(counts.cards, "karta", "karty", "kart")} · ` +
-    `${counts.reviews} ${odmien(counts.reviews, "powtórka", "powtórki", "powtórek")}`
-  );
-}
 
 export default function SettingsPage() {
   return (
@@ -212,27 +202,11 @@ function Settings() {
     setBusy(true);
     setError(null);
     try {
-      const now = new Date();
-      const payload = await exportBackup(now);
-      const blob = new Blob([JSON.stringify(payload)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = backupFilename(now);
-      // Link w dokumencie i adres zwalniany z opoznieniem: czesc przegladarek
-      // rozwiazuje blob: asynchronicznie i natychmiastowe zwolnienie urywa
-      // pobieranie, mimo ze komunikat mowilby o zapisanej kopii.
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 60_000);
-      await updateSettings({ lastBackupAt: now.toISOString() });
+      const { counts } = await pobierzKopie();
       // "Pobrano", nie "zapisano": klikniecie linku nie mowi nam, czy plik
       // doszedl na dysk. Obietnica, ktorej nie da sie sprawdzic, jest gorsza
       // niz jej brak - zwlaszcza ta.
-      setMessage(
-        `Pobrano kopię: ${describe(backupCounts(payload))}. Przenieś plik poza telefon.`,
-      );
+      setMessage(`Pobrano kopię: ${describe(counts)}. Przenieś plik poza telefon.`);
       await refresh();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Nie udało się zapisać kopii");

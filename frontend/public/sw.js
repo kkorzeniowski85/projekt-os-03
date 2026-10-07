@@ -14,9 +14,17 @@
  *   - /_next/static -> najpierw pamiec; te pliki maja hash w nazwie, wiec
  *                   ich tresc nigdy sie nie zmienia
  *   - reszta     -> najpierw pamiec, w tle odswiezenie
+ *
+ * Wersja: kazde wdrozenie to nowy worker (VERSION stemplowane przy
+ * budowaniu). Przy przejeciu strony worker mowi jej swoja wersje - strona
+ * ze starszego wydania (np. podana z pamieci po slabym zasiegu) pokazuje
+ * wtedy pasek "Jest nowa wersja" zamiast czekac na drugie otwarcie.
  */
 
-const VERSION = "v5";
+//: Podmieniane przy budowaniu (scripts/sw-version.mjs) na identyfikator
+//: wydania - ten sam, ktory aplikacja ma w NEXT_PUBLIC_BUILD_ID. Lokalnie
+//: zostaje "dev".
+const VERSION = "dev";
 const SHELL = `fiszki-shell-${VERSION}`;
 const ASSETS = `fiszki-assets-${VERSION}`;
 
@@ -62,8 +70,22 @@ self.addEventListener("activate", (event) => {
           keys.filter((key) => key !== SHELL && key !== ASSETS).map((key) => caches.delete(key)),
         ),
       )
-      .then(() => self.clients.claim()),
+      .then(() => self.clients.claim())
+      .then(() => self.clients.matchAll({ type: "window" }))
+      .then((clients) => {
+        // Strony otwarte w chwili przejecia: te ze starszego wydania
+        // pokaza pasek "Jest nowa wersja".
+        for (const client of clients) client.postMessage({ type: "wersja", wersja: VERSION });
+      }),
   );
+});
+
+// Strona pyta o wersje przy starcie - na wypadek, gdyby przejecie nastapilo,
+// zanim zdazyla zalozyc nasluch. Odpowiadamy tylko pytajacemu.
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "wersja?" && event.source) {
+    event.source.postMessage({ type: "wersja", wersja: VERSION });
+  }
 });
 
 self.addEventListener("fetch", (event) => {

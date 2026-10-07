@@ -45,6 +45,11 @@ jobs:
       - run: npm run build
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+          # Identyfikator wydania - do sw.js (postbuild) i do aplikacji,
+          # zeby strona poznala, ze przejal ja worker z nowszego wydania.
+          # Numer przebiegu, nie sha: rosnie z kazdym wdrozeniem, wiec da sie
+          # porownac, KTORE wydanie jest nowsze (CDN bywa chwilowo niespojny).
+          NEXT_PUBLIC_BUILD_ID: ${{ github.run_id }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

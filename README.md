@@ -133,6 +133,9 @@ i utrwalony, rozbicie na kategorie (słowo / fraza / wyrażenie / zdanie) i tagi
 pijawki, prognoza obciążenia, mapa dni nauki, tempo pod datę egzaminu.
 
 **Offline** — service worker trzyma całą aplikację, dane żyją w IndexedDB.
+Każde wdrożenie to nowy worker (wersja stemplowana przy budowaniu); strona
+ze starszego wydania dostaje pasek „Jest nowa wersja — Odśwież" zamiast
+czekać na drugie otwarcie.
 Kopia zapasowa do pliku i przywracanie „wszystko albo nic".
 
 ## Czego świadomie nie ma

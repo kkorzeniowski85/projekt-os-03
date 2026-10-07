@@ -3,22 +3,22 @@
   "files": [
     {
       "path": "oet-codziennosc.json",
-      "sha256": "39a897680dc62febce9289c9231173220315e327ffebab28ce5334ff307cd446",
+      "sha256": "86dca13e83b6c8128f0a1e8cc1af2402c4bc444435505687811025ffd769c458",
       "notes": 64
     },
     {
       "path": "oet-core.json",
-      "sha256": "15d2aa0c9b5e6971e353484a3031e4d3d5a9d41841ec17f07443bb3c458d33af",
+      "sha256": "10b7480ac8704d8a29b5c40ce993a7fa9c530ccbe7fb76110c1b345481ad083a",
       "notes": 126
     },
     {
       "path": "oet-cwiczenia.json",
-      "sha256": "4e38c4e4ac1846589a29db97979e9e59b3d33b392e282c7360047714771e4305",
+      "sha256": "ebce21dcb72824765a67f073e3ba37fcf845def5892d61d01ac6d921bbba9250",
       "notes": 84
     },
     {
       "path": "oet-nhs.json",
-      "sha256": "e65e11b6a78d50bfe3fa371755a3fcf48c8969691a4ffe2940f731be28a9044c",
+      "sha256": "1842000d55286fecaa8b9ed4b37b8729e9aceca988cb5d97a9b1d00d75233ba5",
       "notes": 30
     },
     {
@@ -38,7 +38,7 @@
     },
     {
       "path": "oet-terminologia.json",
-      "sha256": "5b07ed10ea739ab6e9455e1ac7503e14ebf95ad5a29650079b60a15595b7d731",
+      "sha256": "5f060f6bbb0368622f7114c798c147400595b224bdc706801986319785200c60",
       "notes": 56
     }
   ]

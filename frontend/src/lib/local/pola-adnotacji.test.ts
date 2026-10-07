@@ -13,7 +13,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { FIELD_FORMAL, FIELD_SYNONYMS, contentHash } from "./content";
 import { closeAndDeleteDb, db } from "./db";
-import { splitLegacyExample } from "./legacy-example";
+import { hasLegacyParts, splitLegacyExample } from "./legacy-example";
 import { cueOf, exampleOf, renderCard, templateLabel } from "./render";
 import {
   CUE_TEMPLATE_ORD,
@@ -233,40 +233,48 @@ describe("karta opisowa", () => {
 
 const PAKIET = resolve(__dirname, "../../../public/slownik");
 const pakietJest = existsSync(PAKIET);
-
 describe.skipIf(!pakietJest)("caly pakiet wbudowany", () => {
-  it("rozbiera sie bez reszty - zadna fiszka nie traci zdan", () => {
+  it("nie ma sklejonych przykladow - kazda adnotacja stoi we wlasnym polu", () => {
+    // Pliki pakietu rozklejono 2026-10-07 (wczesniej robil to przy odczycie
+    // splitLegacyExample). Generator manifestu odmawia teraz sklejonego
+    // example; ten test pilnuje tego samego tym rozbiorem, ktorego uzywa
+    // naprawPrzyklady - gdyby sie rozjechaly, pakiet przeszedlby budowanie,
+    // a aplikacja i tak cos by wyciela.
     let razem = 0;
     let zSynonimami = 0;
     let zFormalnym = 0;
     let zWymowa = 0;
+    const sklejone: string[] = [];
     const bezZdan: string[] = [];
-    const zostalNaglowek: string[] = [];
 
     for (const nazwa of readdirSync(PAKIET)) {
       if (!nazwa.endsWith(".json") || nazwa === "manifest.json") continue;
       const plik = JSON.parse(readFileSync(join(PAKIET, nazwa), "utf8")) as {
-        notes: Array<{ front: string; example?: string }>;
+        notes: Array<{
+          front: string;
+          example?: string;
+          pronunciation?: string;
+          synonyms?: string;
+          formal?: string;
+        }>;
       };
       for (const pozycja of plik.notes) {
         razem += 1;
-        const podzial = splitLegacyExample(pozycja.example);
-        if (podzial.synonyms) zSynonimami += 1;
-        if (podzial.formal) zFormalnym += 1;
-        if (podzial.pronunciation) zWymowa += 1;
-        if (pozycja.example && !podzial.example) bezZdan.push(pozycja.front);
-        if (/^(synonimy|formalnie)/im.test(podzial.example)) zostalNaglowek.push(pozycja.front);
+        if (hasLegacyParts(pozycja.example)) sklejone.push(`${nazwa}: ${pozycja.front}`);
+        if (pozycja.example !== undefined && !pozycja.example.trim()) bezZdan.push(pozycja.front);
+        if (pozycja.synonyms) zSynonimami += 1;
+        if (pozycja.formal) zFormalnym += 1;
+        if (pozycja.pronunciation) zWymowa += 1;
       }
     }
 
+    expect(sklejone).toEqual([]);
+    expect(bezZdan).toEqual([]);
     // Niezmienniki, nie konkretne liczby: pakiet ma rosnac bez lamania testu.
-    // Pierwsza wersja asertowala 229 i padla przy dolozeniu pliku ze skrotami -
-    // test pilnowal wtedy rozmiaru pakietu zamiast poprawnosci rozbioru.
-    expect(bezZdan).toEqual([]); // zadne zdanie nie ginie
-    expect(zostalNaglowek).toEqual([]); // nic nie zostaje sklejone
     expect(razem).toBeGreaterThanOrEqual(229);
     expect(zSynonimami).toBeGreaterThanOrEqual(143);
     expect(zFormalnym).toBeGreaterThanOrEqual(86);
-    expect(zWymowa).toBeGreaterThanOrEqual(86);
+    // Od 2026-10-07 wymowe ma kazda fiszka pakietu.
+    expect(zWymowa).toBe(razem);
   });
 });

@@ -77,6 +77,22 @@ export function buildManifest(dir) {
       // Literowka w kluczu ("synonims") przechodzilaby bez slowa, a importer
       // po cichu wyrzucilby wartosc - dokladnie ten rodzaj cichej porazki,
       // przed ktorym ten skrypt istnieje.
+      // Stare naglowki w example (wymowa w slashach, "Synonimy:",
+      // "Formalnie (OET):") rozklejono 2026-10-07. Od tej pory kazda
+      // adnotacja ma wlasne pole, a sklejony przyklad to blad zrodla -
+      // przepuszczony po cichu wrocilby jako zdanie z naglowkiem w srodku.
+      const pierwszaLinia =
+        String(note.example ?? "").split("\n").map((l) => l.trim()).find(Boolean) ?? "";
+      if (
+        /^(synonimy|synonyms|formalnie\s*\(oet\)|formalnie|formally)\s*:/i.test(pierwszaLinia) ||
+        /^(\/.+\/|\[.+\])$/.test(pierwszaLinia)
+      ) {
+        throw new Error(
+          `${name}: fiszka "${note.front}" ma w example sklejony naglowek ` +
+            `("${pierwszaLinia.slice(0, 40)}") - wymowa, synonimy i odpowiednik ` +
+            "formalny maja wlasne pola (pronunciation, synonyms, formal)",
+        );
+      }
       for (const klucz of ["pronunciation", "synonyms", "formal", "register"]) {
         const wartosc = note[klucz];
         if (wartosc === undefined || wartosc === null) continue;

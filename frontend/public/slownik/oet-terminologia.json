@@ -6,8 +6,9 @@
     {
       "front": "exacerbation",
       "back": "zaostrzenie (choroby)",
-      "example": "Synonimy: acute deterioration / worsening / decompensation\n\nThe patient was admitted with an acute exacerbation of COPD.\nThere has been an exacerbation of her symptoms over the past week.\nWe managed to prevent further exacerbation with early intervention.",
+      "example": "The patient was admitted with an acute exacerbation of COPD.\nThere has been an exacerbation of her symptoms over the past week.\nWe managed to prevent further exacerbation with early intervention.",
       "pronunciation": "/ɪɡˌzæsəˈbeɪʃən/",
+      "synonyms": "acute deterioration / worsening / decompensation",
       "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
@@ -22,8 +23,9 @@
     {
       "front": "contraindication",
       "back": "przeciwwskazanie",
-      "example": "Synonimy: reason to avoid / precaution / absolute bar to\n\nRenal impairment is a contraindication to this contrast agent.\nThere are no absolute contraindications to this procedure.\nPregnancy is an important contraindication for this medication.",
+      "example": "Renal impairment is a contraindication to this contrast agent.\nThere are no absolute contraindications to this procedure.\nPregnancy is an important contraindication for this medication.",
       "pronunciation": "/ˌkɒntrəˌɪndɪˈkeɪʃən/",
+      "synonyms": "reason to avoid / precaution / absolute bar to",
       "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
@@ -38,8 +40,9 @@
     {
       "front": "prognosis",
       "back": "rokowanie",
-      "example": "Synonimy: outlook / expected course / likely outcome / clinical trajectory\n\nThe prognosis for stage III disease is guarded.\nWe discussed a more favourable prognosis if he loses weight.\nThe overall prognosis remains uncertain at this stage.",
+      "example": "The prognosis for stage III disease is guarded.\nWe discussed a more favourable prognosis if he loses weight.\nThe overall prognosis remains uncertain at this stage.",
       "pronunciation": "/prɒɡˈnəʊsɪs/",
+      "synonyms": "outlook / expected course / likely outcome / clinical trajectory",
       "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
@@ -54,8 +57,9 @@
     {
       "front": "palliative",
       "back": "paliatywny / objawowy",
-      "example": "Synonimy: symptomatic / supportive / comfort-focused / non-curative\n\nThe patient has been referred for palliative care input.\nWe're taking a palliative approach given his advanced disease.\nPalliative treatment focuses on symptom control rather than cure.",
+      "example": "The patient has been referred for palliative care input.\nWe're taking a palliative approach given his advanced disease.\nPalliative treatment focuses on symptom control rather than cure.",
       "pronunciation": "/ˈpæliətɪv/",
+      "synonyms": "symptomatic / supportive / comfort-focused / non-curative",
       "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
@@ -70,8 +74,9 @@
     {
       "front": "comorbidity",
       "back": "choroba współistniejąca / choroby towarzyszące",
-      "example": "Synonimy: coexisting condition / concurrent illness / associated condition\n\nHe has multiple comorbidities including diabetes and hypertension.\nSignificant comorbidity was noted on examination.\nHer comorbidities will impact the choice of treatment.",
+      "example": "He has multiple comorbidities including diabetes and hypertension.\nSignificant comorbidity was noted on examination.\nHer comorbidities will impact the choice of treatment.",
       "pronunciation": "/ˌkəʊmɔːˈbɪdəti/",
+      "synonyms": "coexisting condition / concurrent illness / associated condition",
       "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
@@ -86,8 +91,9 @@
     {
       "front": "Test indicates that…",
       "back": "Badanie wskazuje, że… / Wynik pokazuje, że…",
-      "example": "Synonimy: findings suggest / imaging demonstrates / results reveal / the investigation confirms\n\nThe CT scan indicates that there is a small effusion.\nBlood tests indicate that his clotting is significantly prolonged.\nRecent imaging indicates a degree of stenosis in the left artery.",
+      "example": "The CT scan indicates that there is a small effusion.\nBlood tests indicate that his clotting is significantly prolonged.\nRecent imaging indicates a degree of stenosis in the left artery.",
       "pronunciation": "/test ˈɪndɪkeɪts ðət/",
+      "synonyms": "findings suggest / imaging demonstrates / results reveal / the investigation confirms",
       "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
@@ -102,8 +108,9 @@
     {
       "front": "Benefits and harms",
       "back": "Korzyści i ryzyko / Zalety i wady zabiegu",
-      "example": "Synonimy: risks and benefits / potential advantages and disadvantages / the risk-benefit profile\n\nI explained the benefits and harms of the proposed treatment.\nWe discussed the benefits and harms of continuing versus stopping the medication.\nThe benefits clearly outweigh the potential harms in this case.",
+      "example": "I explained the benefits and harms of the proposed treatment.\nWe discussed the benefits and harms of continuing versus stopping the medication.\nThe benefits clearly outweigh the potential harms in this case.",
       "pronunciation": "/ˈbenɪfɪts ənd hɑːmz/",
+      "synonyms": "risks and benefits / potential advantages and disadvantages / the risk-benefit profile",
       "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
@@ -118,8 +125,9 @@
     {
       "front": "No evidence of…",
       "back": "Brak dowodów na… / Nie stwierdzono…",
-      "example": "Synonimy: no features of / no signs of / there is an absence of / we found no indication of\n\nThere is no evidence of acute pathology on imaging.\nNo evidence of infection was found on the blood cultures.\nNo evidence of metastatic disease is present.",
+      "example": "There is no evidence of acute pathology on imaging.\nNo evidence of infection was found on the blood cultures.\nNo evidence of metastatic disease is present.",
       "pronunciation": "/nəʊ ˈevɪdəns əv/",
+      "synonyms": "no features of / no signs of / there is an absence of / we found no indication of",
       "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
@@ -133,8 +141,9 @@
     {
       "front": "In keeping with",
       "back": "Zgodnie z… / Sugerujący / Przy założeniu…",
-      "example": "Synonimy: consistent with / suggestive of / compatible with / in line with\n\nThe findings are in keeping with viral hepatitis.\nThese results are in keeping with our clinical suspicion.\nThe presentation is in keeping with acute pancreatitis.",
+      "example": "The findings are in keeping with viral hepatitis.\nThese results are in keeping with our clinical suspicion.\nThe presentation is in keeping with acute pancreatitis.",
       "pronunciation": "/ɪn ˈkiːpɪŋ wɪð/",
+      "synonyms": "consistent with / suggestive of / compatible with / in line with",
       "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
@@ -148,8 +157,9 @@
     {
       "front": "Consistent with",
       "back": "Zgodnie z… / Wskazujący na…",
-      "example": "Synonimy: in keeping with / suggestive of / compatible with / supportive of\n\nThe clinical picture is consistent with sepsis.\nThe radiological features are consistent with cirrhosis.\nHis symptoms are consistent with a viral prodrome.",
+      "example": "The clinical picture is consistent with sepsis.\nThe radiological features are consistent with cirrhosis.\nHis symptoms are consistent with a viral prodrome.",
       "pronunciation": "/kənˈsɪstənt wɪð/",
+      "synonyms": "in keeping with / suggestive of / compatible with / supportive of",
       "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
@@ -163,8 +173,9 @@
     {
       "front": "On examination",
       "back": "Podczas badania / Przy badaniu fizykalnym",
-      "example": "Synonimy: upon assessment / at clinical review / on clinical assessment\n\nOn examination, the patient was pyrexial and tachycardic.\nOn examination, there was marked abdominal distension.\nOn examination, we found a palpable mass in the right upper quadrant.",
+      "example": "On examination, the patient was pyrexial and tachycardic.\nOn examination, there was marked abdominal distension.\nOn examination, we found a palpable mass in the right upper quadrant.",
       "pronunciation": "/ɒn ɪɡˌzæmɪˈneɪʃən/",
+      "synonyms": "upon assessment / at clinical review / on clinical assessment",
       "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
@@ -179,8 +190,9 @@
     {
       "front": "It is recommended that…",
       "back": "Rekomenduje się… / Zaleca się…",
-      "example": "Synonimy: we advise / we suggest / the recommendation is / our guidance is that\n\nIt is recommended that he continues on current antibiotic therapy.\nIt is recommended that she undergoes further imaging.\nIt is recommended that a follow-up appointment is arranged within two weeks.",
+      "example": "It is recommended that he continues on current antibiotic therapy.\nIt is recommended that she undergoes further imaging.\nIt is recommended that a follow-up appointment is arranged within two weeks.",
       "pronunciation": "/ɪt ɪz ˌrekəˈmendɪd ðət/",
+      "synonyms": "we advise / we suggest / the recommendation is / our guidance is that",
       "register": "formalne · bardzo częste — listy i raporty",
       "tags": [
         "oet",
@@ -194,8 +206,9 @@
     {
       "front": "We propose to…",
       "back": "Proponujemy… / Zamierzamy…",
-      "example": "Synonimy: we plan to / we intend to / our management plan is to / we would suggest\n\nWe propose to start him on a trial of beta-blockers.\nWe propose to review the imaging with radiology before proceeding.\nWe propose to monitor him closely over the next 48 hours.",
+      "example": "We propose to start him on a trial of beta-blockers.\nWe propose to review the imaging with radiology before proceeding.\nWe propose to monitor him closely over the next 48 hours.",
       "pronunciation": "/wiː prəˈpəʊz tə/",
+      "synonyms": "we plan to / we intend to / our management plan is to / we would suggest",
       "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
@@ -210,8 +223,9 @@
     {
       "front": "Unremarkable",
       "back": "Bez widocznych zmian / Prawidłowy / Bez cech patologicznych",
-      "example": "Synonimy: normal / within normal limits / without abnormality / showing no significant findings\n\nThe abdominal examination was unremarkable.\nCardiovascular examination was unremarkable.\nBaseline imaging was unremarkable apart from mild degenerative changes.",
+      "example": "The abdominal examination was unremarkable.\nCardiovascular examination was unremarkable.\nBaseline imaging was unremarkable apart from mild degenerative changes.",
       "pronunciation": "/ˌʌnrɪˈmɑːkəbəl/",
+      "synonyms": "normal / within normal limits / without abnormality / showing no significant findings",
       "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
@@ -225,8 +239,9 @@
     {
       "front": "Deranged (results)",
       "back": "Zaburzony / Nie w normie (np. wyniki)",
-      "example": "Synonimy: abnormal / out of range / elevated / impaired / significantly altered\n\nHis liver function tests were significantly deranged.\nWe found deranged coagulation and thrombocytopenia.\nBiochemistry showed deranged renal function.",
+      "example": "His liver function tests were significantly deranged.\nWe found deranged coagulation and thrombocytopenia.\nBiochemistry showed deranged renal function.",
       "pronunciation": "/dɪˈreɪndʒd/",
+      "synonyms": "abnormal / out of range / elevated / impaired / significantly altered",
       "register": "żargon szpitalny · bardzo częste — mowa personelu na oddziale; nie w liście",
       "tags": [
         "oet",
@@ -241,8 +256,9 @@
     {
       "front": "Surrogate outcome",
       "back": "Punkt końcowy zastępczy / Miernik zastępczy",
-      "example": "Synonimy: indirect endpoint / proxy measure / intermediate outcome / surrogate marker\n\nWe need to be careful — improving the surrogate outcome doesn't guarantee better patient outcomes.\nThe trial used blood pressure as a surrogate outcome for cardiovascular events.\nSurrogate outcomes can be misleading if they don't correlate with true clinical benefit.",
+      "example": "We need to be careful — improving the surrogate outcome doesn't guarantee better patient outcomes.\nThe trial used blood pressure as a surrogate outcome for cardiovascular events.\nSurrogate outcomes can be misleading if they don't correlate with true clinical benefit.",
       "pronunciation": "/ˈsʌrəɡət ˈaʊtkʌm/",
+      "synonyms": "indirect endpoint / proxy measure / intermediate outcome / surrogate marker",
       "register": "fachowe · rzadkie — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
@@ -257,8 +273,9 @@
     {
       "front": "Steeped in complexity",
       "back": "Pełne złożoności / Wysoce złożone",
-      "example": "Synonimy: highly complex / multifaceted / nuanced / fraught with complexity\n\nThe ethical considerations surrounding this case are steeped in complexity.\nDecision-making in palliative care is often steeped in complexity.\nThe management of this condition is steeped in complexity and requires an MDT approach.",
+      "example": "The ethical considerations surrounding this case are steeped in complexity.\nDecision-making in palliative care is often steeped in complexity.\nThe management of this condition is steeped in complexity and requires an MDT approach.",
       "pronunciation": "/stiːpt ɪn kəmˈpleksəti/",
+      "synonyms": "highly complex / multifaceted / nuanced / fraught with complexity",
       "register": "formalne · rzadkie — listy i raporty",
       "tags": [
         "oet",
@@ -275,8 +292,8 @@
       "back": "dekompensacja (niewydolność wcześniej wyrównanego narządu)",
       "example": "She was admitted with acute cardiac decompensation following a chest infection.\nSigns of hepatic decompensation included ascites and new-onset confusion.\nClose monitoring is needed to detect early decompensation in patients with cirrhosis.",
       "pronunciation": "/ˌdiːkɒmpenˈseɪʃən/",
-      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "acute deterioration / failure of a previously stable condition",
+      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -292,8 +309,8 @@
       "back": "następstwo choroby, odległe powikłanie",
       "example": "Chronic pain is a recognised sequela of shingles.\nThe long-term sequelae of meningitis can include hearing loss.\nShe has been left with neurological sequelae following the stroke.",
       "pronunciation": "/sɪˈkwiːlə (sɪˈkwiːliː)/",
-      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "long-term consequence / after-effect / late complication",
+      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -309,8 +326,8 @@
       "back": "jatrogenny (spowodowany leczeniem)",
       "example": "The bleed was considered iatrogenic, secondary to anticoagulation.\nIatrogenic infection is a recognised risk of central line insertion.\nWe reviewed her medication to rule out an iatrogenic cause of the confusion.",
       "pronunciation": "/aɪˌætrəˈdʒenɪk/",
-      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "treatment-induced / caused by medical intervention",
+      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -326,8 +343,8 @@
       "back": "dążyć do czegoś",
       "example": "We should strive for an HbA1c of 53 mmol/mol or less, provided this can be achieved without hypoglycaemia.\nThe unit strives for the shortest possible door-to-needle time in acute stroke.\nIn rehabilitation, Mrs Evans is striving for independence in washing and dressing.",
       "pronunciation": "/tə straɪv fɔː/",
-      "register": "formalne · częste — listy i raporty",
       "synonyms": "to aim for / to work towards / to seek to achieve",
+      "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -343,8 +360,8 @@
       "back": "tymczasem, w międzyczasie",
       "example": "The MRI of your knee is booked for next week. In the meantime, please continue taking ibuprofen as before.\nI would be grateful for your assessment of Mr Hall's palpitations. In the meantime, I have advised him to limit caffeine.\nShe is on the waiting list for cataract surgery; in the meantime, her vision is checked every three months.",
       "pronunciation": "/ɪn ðə ˈmiːntaɪm/",
-      "register": "codzienne · bardzo częste — pasuje wszędzie",
       "synonyms": "meanwhile / for the time being / until then",
+      "register": "codzienne · bardzo częste — pasuje wszędzie",
       "tags": [
         "oet",
         "terminologia",
@@ -360,8 +377,8 @@
       "back": "zwracać uwagę na problemy, zgłaszać je",
       "example": "Nurses are often the first to highlight problems with a patient's fluid balance.\nIt is important to highlight problems with medication adherence early, before the patient is discharged.\nThe audit helped us to highlight problems in the referral process.",
       "pronunciation": "/tə ˈhaɪlaɪt ˈprɒbləmz/",
-      "register": "formalne · częste — listy i raporty",
       "synonyms": "to flag up problems / to raise concerns / to draw attention to problems",
+      "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -377,8 +394,8 @@
       "back": "ścieżka opieki (ustalona sekwencja postępowania z pacjentem)",
       "example": "Mr Singh has been placed on the stroke care pathway and will be reviewed daily by the physiotherapist.\nThe hip fracture care pathway aims for surgery on the day of admission or the day after.\nIf a patient deteriorates, staff should follow the agreed care pathway for suspected sepsis.",
       "pronunciation": "/ˈkeə ˌpɑːθweɪ/",
-      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "clinical pathway / treatment pathway / agreed plan of care",
+      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -394,8 +411,8 @@
       "back": "doznać, odnieść (uraz)",
       "example": "He sustained a fracture of the left wrist in a fall from his bicycle.\nThe patient sustained a head injury during a road traffic accident.\nWhich injuries did you sustain in the accident?",
       "pronunciation": "/tə səˈsteɪn (ən ˈɪndʒəri)/",
-      "register": "formalne · bardzo częste — listy i raporty",
       "synonyms": "to suffer / to incur",
+      "register": "formalne · bardzo częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -411,8 +428,8 @@
       "back": "utrata mobilności",
       "example": "The stroke resulted in a significant loss of mobility on the right side.\nLoss of mobility in the elderly increases the risk of pressure ulcers.\nShe complained of pain and a gradual loss of mobility in her left hip.",
       "pronunciation": "/lɒs əv məʊˈbɪləti/",
-      "register": "codzienne · częste — pasuje wszędzie",
       "synonyms": "unable to move freely / restricted movement / reduced mobility",
+      "register": "codzienne · częste — pasuje wszędzie",
       "tags": [
         "oet",
         "terminologia",
@@ -429,8 +446,8 @@
       "back": "drętwienie w obszarze dotkniętym chorobą",
       "example": "The patient reports numbness in the affected area, which has persisted for two weeks.\nNumbness in the affected area may indicate nerve damage.\nOn examination there was numbness in the affected area, with no motor weakness.",
       "pronunciation": "/ˈnʌmnəs ɪn ði əˈfektɪd ˈeəriə/",
-      "register": "codzienne · częste — pasuje wszędzie",
       "synonyms": "loss of sensation / reduced feeling",
+      "register": "codzienne · częste — pasuje wszędzie",
       "tags": [
         "oet",
         "terminologia",
@@ -447,8 +464,8 @@
       "back": "stan przedcukrzycowy (w brytyjskim systemie: non-diabetic hyperglycaemia)",
       "example": "Her HbA1c of 46 mmol/mol is consistent with a pre-diabetic state.\nPatients in a pre-diabetic state should be offered advice on diet and exercise.\nA pre-diabetic state does not always progress to type 2 diabetes.",
       "pronunciation": "/ˌpriːdaɪəˈbetɪk steɪt/",
-      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "pre-diabetes / non-diabetic hyperglycaemia",
+      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -465,8 +482,8 @@
       "back": "insulinooporność",
       "example": "Obesity is a major risk factor for insulin resistance.\nInsulin resistance often precedes the development of type 2 diabetes.\nWeight loss and regular exercise can improve insulin resistance.",
       "pronunciation": "/ˈɪnsjəlɪn rɪˈzɪstəns/",
-      "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "reduced response to insulin / impaired insulin sensitivity",
+      "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -482,8 +499,8 @@
       "back": "stan kataboliczny (przewaga rozpadu tkanek nad syntezą)",
       "example": "Severe burns put the body in a catabolic state, so nutritional support is essential.\nProlonged fasting leads to a catabolic state, with breakdown of muscle protein.\nCritically ill patients are often in a catabolic state and lose muscle mass quickly.",
       "pronunciation": "/ˌkætəˈbɒlɪk steɪt/",
-      "register": "fachowe · rzadkie — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "state of tissue breakdown",
+      "register": "fachowe · rzadkie — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -499,8 +516,8 @@
       "back": "aktywacja mitochondrialna",
       "example": "Regular exercise promotes mitochondrial activation in skeletal muscle.\nThe study measured mitochondrial activation in muscle biopsies taken before and after training.\nMitochondrial activation increases the cell's capacity to produce energy.",
       "pronunciation": "/ˌmaɪtəʊˈkɒndriəl ˌæktɪˈveɪʃən/",
-      "register": "fachowe · rzadkie — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "stimulation of the cell's energy producers",
+      "register": "fachowe · rzadkie — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -516,8 +533,8 @@
       "back": "zmiana paradygmatu (zmiana modelu myślenia lub podejścia)",
       "example": "The move from hospital-based to community care represents a paradigm shift.\nEarly rehabilitation after surgery marked a paradigm shift in postoperative care.\nThe introduction of antibiotics caused a paradigm shift in the treatment of infection.",
       "pronunciation": "/ˈpærədaɪm ʃɪft/",
-      "register": "formalne · rzadkie — listy i raporty",
       "synonyms": "fundamental change in approach",
+      "register": "formalne · rzadkie — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -533,8 +550,8 @@
       "back": "neuroprzekaźniki",
       "example": "Serotonin and dopamine are neurotransmitters involved in the regulation of mood.\nAntidepressants work by altering the levels of neurotransmitters in the brain.\nAn imbalance of neurotransmitters has been linked to anxiety and low mood.",
       "pronunciation": "/ˌnjʊərəʊtrænzˈmɪtəz/",
-      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "chemical messengers in the nervous system",
+      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -550,8 +567,8 @@
       "back": "początkowe wprowadzenie (np. sondy nosowo-żołądkowej)",
       "example": "Initial insertion of the NG tube must be confirmed by a pH test or an X-ray.\nPain and gagging are common during initial insertion.\nAfter initial insertion, the cannula should be secured with a transparent dressing.",
       "pronunciation": "/ɪˈnɪʃəl ɪnˈsɜːʃən/",
-      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "first placement",
+      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -567,8 +584,8 @@
       "back": "ocena kliniczna",
       "example": "A full clinical assessment is needed before any treatment is started.\nThe clinical assessment revealed tenderness over the right iliac fossa.\nFollowing clinical assessment, the patient was referred for an urgent CT scan.",
       "pronunciation": "/ˈklɪnɪkəl əˈsesmənt/",
-      "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "doctor's evaluation of the patient",
+      "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -585,8 +602,8 @@
       "back": "stosowanie leków przeciwkrzepliwych",
       "example": "Anticoagulant use increases the risk of bleeding after minor trauma.\nLong-term anticoagulant use requires regular monitoring of the INR.\nPlease record any recent anticoagulant use before the procedure.",
       "pronunciation": "/ˌæntikəʊˈæɡjələnt juːs/",
-      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "taking blood thinners",
+      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -603,8 +620,8 @@
       "back": "zakres ruchów (w stawie)",
       "example": "Range of movement at the left shoulder was limited by pain.\nPhysiotherapy aims to restore the full range of movement after surgery.\nShe has a full range of movement in both knees.",
       "pronunciation": "/reɪndʒ əv ˈmuːvmənt/",
-      "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "how far a joint can move",
+      "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -620,8 +637,8 @@
       "back": "unieruchomić szyną, usztywnić (np. miejsce złamania)",
       "example": "Splint the site of the fracture before moving the patient.\nThe paramedic splinted the injured leg with a rigid board.\nThe finger was splinted to the neighbouring finger for support.",
       "pronunciation": "/tə splɪnt/",
-      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "to support with a rigid brace / to hold still",
+      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -637,8 +654,8 @@
       "back": "podać leki przeciwbólowe",
       "example": "Administer analgesia before moving the patient.\nThe nurse administered analgesia as prescribed.\nStaff must administer analgesia promptly to patients in severe pain.",
       "pronunciation": "/tə ədˈmɪnɪstər ˌænəlˈdʒiːziə/",
-      "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "to give pain relief / to give painkillers",
+      "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -654,8 +671,8 @@
       "back": "depresja oddechowa",
       "example": "Opioids can cause respiratory depression, especially in older patients.\nMonitor the respiratory rate closely for signs of respiratory depression.\nNaloxone is used to reverse respiratory depression caused by an opioid overdose.",
       "pronunciation": "/rɪˈspɪrətri dɪˈpreʃən/",
-      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "dangerously slow, shallow breathing",
+      "register": "fachowe · częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -671,8 +688,8 @@
       "back": "ciągłe monitorowanie",
       "example": "The patient was transferred to the high dependency unit for continuous monitoring.\nContinuous monitoring of oxygen saturation is advised after the procedure.\nContinuous monitoring of the heart rhythm showed episodes of atrial fibrillation.",
       "pronunciation": "/kənˈtɪnjuəs ˈmɒnɪtərɪŋ/",
-      "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "synonyms": "constant observation",
+      "register": "fachowe · bardzo częste — między personelem; pacjentowi wyjaśnij prościej",
       "tags": [
         "oet",
         "terminologia",
@@ -688,8 +705,8 @@
       "back": "skierowanie na dalsze badania",
       "example": "Referral for further investigation is recommended because of the persistent weight loss.\nThe GP arranged referral for further investigation of the abnormal blood results.\nI am writing to request referral for further investigation of his dysphagia.",
       "pronunciation": "/rɪˈfɜːrəl fə ˈfɜːðər ɪnˌvestɪˈɡeɪʃən/",
-      "register": "formalne · bardzo częste — listy i raporty",
       "synonyms": "being sent for more tests",
+      "register": "formalne · bardzo częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -705,8 +722,8 @@
       "back": "ujawniać lub wykorzystywać (np. informacje poufne)",
       "example": "Staff must not disclose or use confidential information about patients for personal gain.\nIt is a breach of policy to disclose or use patient records without consent.\nYou may not disclose or use any information obtained in the course of your work.",
       "pronunciation": "/tə dɪsˈkləʊz ɔː juːz/",
-      "register": "formalne · częste — listy i raporty",
       "synonyms": "to reveal or exploit",
+      "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -722,8 +739,8 @@
       "back": "według uznania, zależnie od decyzji (kogoś)",
       "example": "Additional sick leave may be granted at the discretion of the manager.\nRelease of the records is at the discretion of the consultant.\nThe dose may be adjusted at the discretion of the prescribing doctor.",
       "pronunciation": "/ət ðə dɪˈskreʃən əv/",
-      "register": "formalne · częste — listy i raporty",
       "synonyms": "as decided by / according to the choice of",
+      "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -740,8 +757,8 @@
       "back": "działania dyscyplinarne, postępowanie dyscyplinarne",
       "example": "A breach of patient confidentiality may lead to disciplinary action.\nThe nurse faced disciplinary action after the medication error.\nNo disciplinary action was taken against the junior doctor.",
       "pronunciation": "/ˌdɪsəˈplɪnəri ˈækʃən/",
-      "register": "formalne · częste — listy i raporty",
       "synonyms": "formal punishment by an employer",
+      "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -757,8 +774,8 @@
       "back": "błąd w sztuce lekarskiej, nieprawidłowe postępowanie zawodowe",
       "example": "The surgeon was accused of malpractice after the wrong limb was operated on.\nMedical malpractice claims can follow a missed diagnosis.\nThe hospital was investigated for alleged malpractice.",
       "pronunciation": "/mælˈpræktɪs/",
-      "register": "formalne · częste — listy i raporty",
       "synonyms": "professional negligence / improper treatment",
+      "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -774,8 +791,8 @@
       "back": "wprowadzić kolegę w sytuację, zreferować mu stan pacjenta",
       "example": "Before going off duty, she briefed her colleague on the patient's overnight observations.\nIt is important to brief a colleague thoroughly at handover.\nThe registrar briefed his colleague about the change in the patient's condition.",
       "pronunciation": "/tə briːf ə ˈkɒliːɡ/",
-      "register": "codzienne · częste — pasuje wszędzie",
       "synonyms": "to update a colleague / to fill someone in",
+      "register": "codzienne · częste — pasuje wszędzie",
       "tags": [
         "oet",
         "terminologia",
@@ -791,8 +808,8 @@
       "back": "osąd zawodowy, ocena specjalisty",
       "example": "Nurses are expected to use professional judgement when prioritising care.\nThe final decision rests on the doctor's professional judgement.\nGuidelines support, but do not replace, professional judgement.",
       "pronunciation": "/prəˈfeʃənəl ˈdʒʌdʒmənt/",
-      "register": "formalne · częste — listy i raporty",
       "synonyms": "informed decision based on expertise",
+      "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -809,8 +826,8 @@
       "back": "wyraźnie udokumentowany",
       "example": "The patient's refusal of treatment must be clearly documented in the notes.\nAllergies should be clearly documented on the drug chart.\nThe reason for the delay was clearly documented.",
       "pronunciation": "/ˈklɪəli ˈdɒkjəmentɪd/",
-      "register": "formalne · częste — listy i raporty",
       "synonyms": "recorded in detail",
+      "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -827,8 +844,8 @@
       "back": "udzielić zaleceń",
       "example": "The dietitian will provide recommendations on how to increase your protein intake.\nIn this letter I provide recommendations for ongoing management.\nThe committee was asked to provide recommendations on staffing levels.",
       "pronunciation": "/tə prəˈvaɪd ˌrekəmenˈdeɪʃənz/",
-      "register": "formalne · częste — listy i raporty",
       "synonyms": "to give advice / to make suggestions",
+      "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -845,8 +862,8 @@
       "back": "aby, w celu (+ bezokolicznik)",
       "example": "I would be grateful if you could see him in order to rule out a malignancy.\nThe dose was reduced in order to minimise the side effects.\nPlease arrange a CT scan in order to clarify the diagnosis.",
       "pronunciation": "/ɪn ˈɔːdə tə/",
-      "register": "formalne · bardzo częste — listy i raporty",
       "synonyms": "so as to / with the aim of",
+      "register": "formalne · bardzo częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -862,8 +879,8 @@
       "back": "Kluczowe jest odróżnienie… od…",
       "example": "It is crucial to differentiate between a viral and a bacterial infection before prescribing antibiotics.\nIt is crucial to differentiate between angina and a heart attack, as the management differs.\nIt is crucial to differentiate between the two types of diabetes when advising the patient.",
       "pronunciation": "/ɪt ɪz ˈkruːʃəl tə ˌdɪfəˈrenʃieɪt bɪˈtwiːn/",
-      "register": "formalne · częste — listy i raporty",
       "synonyms": "It is vital to tell apart",
+      "register": "formalne · częste — listy i raporty",
       "tags": [
         "oet",
         "terminologia",
@@ -897,8 +914,8 @@
       "back": "stopniowo zwiększać aktywność fizyczną (ćwiczyć coraz więcej)",
       "example": "Start with a ten-minute walk and gradually do more exercise each week.\nAfter your operation, you should gradually do more exercise as you feel able.\nI would like you to gradually do more exercise, rather than trying to do too much at once.",
       "pronunciation": "/ˈɡrædʒuəli duː mɔːr ˈeksəsaɪz/",
-      "register": "codzienne · częste — rozmowa z pacjentem",
       "synonyms": "to build up activity slowly",
+      "register": "codzienne · częste — rozmowa z pacjentem",
       "tags": [
         "oet",
         "terminologia",
@@ -914,8 +931,8 @@
       "back": "być gotowym fizycznie i emocjonalnie",
       "example": "You should only return to work when you feel physically and emotionally ready.\nIt is important to be physically and emotionally ready before starting a cardiac rehabilitation programme.\nTake your time; there is no need to rush until you are physically and emotionally ready.",
       "pronunciation": "/bi ˈfɪzɪkli ənd ɪˈməʊʃənəli ˈredi/",
-      "register": "codzienne · częste — rozmowa z pacjentem",
       "synonyms": "fit and mentally prepared",
+      "register": "codzienne · częste — rozmowa z pacjentem",
       "tags": [
         "oet",
         "terminologia",
@@ -931,8 +948,8 @@
       "back": "dążyć do poprawy koncentracji",
       "example": "Mindfulness exercises seek to improve focus and reduce anxiety.\nMany patients seek to improve focus by cutting down on caffeine.\nThe programme will seek to improve focus and attention in children with ADHD.",
       "pronunciation": "/siːk tə ɪmˈpruːv ˈfəʊkəs/",
-      "register": "formalne · rzadkie — listy i raporty",
       "synonyms": "to try to sharpen concentration",
+      "register": "formalne · rzadkie — listy i raporty",
       "tags": [
         "oet",
         "terminologia",

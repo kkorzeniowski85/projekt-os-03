@@ -151,3 +151,14 @@ z etykietą „użycie".
 - **Bez aliasów nagłówków CSV.** „usage"/„użycie" już mapują się na przykład,
   a „register"/„rejestr" w trackerze OET oznaczało oś aktywny/pasywny.
   Pole czyta tylko format `fiszki/v1` (klucz `register`) i ręczne mapowanie.
+
+## Uzupełnienie (2026-10-07): pliki pakietu rozklejone
+
+Zapowiedziane wyżej „osobne wdrożenie" wykonane: wszystkie 229 sklejonych
+przykładów w `public/slownik/*.json` rozbite na pola `pronunciation`,
+`synonyms`, `formal` — tym samym rozbiorem, który robi `naprawPrzyklady`
+(równoważność sprawdzona testem przed commitem). Generator manifestu
+**odmawia** teraz pliku ze sklejonym `example`, a test pakietu w
+`pola-adnotacji.test.ts` pilnuje tego od strony aplikacji. Rozbiór przy
+odczycie (`splitLegacyExample`) zostaje — broni baz sprzed zmiany i baz
+przywróconych z kopii.

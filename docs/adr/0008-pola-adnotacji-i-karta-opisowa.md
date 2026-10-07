@@ -136,3 +136,18 @@ udane przywrócenie w nieudane.
 - `ReviewLogRecord.templateOrd` (opcjonalne) pozwoli sprawdzić, czy karty
   opisowe są trudniejsze od zwykłych. Bez tego pytanie byłoby nierozstrzygalne
   po fakcie.
+
+## Uzupełnienie (2026-10-07): pole „użycie" (`register`)
+
+Siódme pole `Register`, dopisane na końcu `KNOWN_FIELDS`: rejestr i częstość
+zwrotu, np. `formalne · częste — listy i raporty`. Pokazywane pod odpowiedzią
+z etykietą „użycie".
+
+- **Pole, nie tag.** Pakiet tagi wyłącznie dopisuje (`mergeNote` sumuje), więc
+  poprawiona etykieta zostawiłaby starą obok nowej. Pole pakiet nadpisuje.
+- **Zamknięty słownik etykiet.** Sześć rejestrów × trzy częstości; wskazówka
+  po myślniku jest dowolna. Test `rejestr.test.ts` odrzuca fiszkę pakietu bez
+  etykiety albo z etykietą spoza słownika.
+- **Bez aliasów nagłówków CSV.** „usage"/„użycie" już mapują się na przykład,
+  a „register"/„rejestr" w trackerze OET oznaczało oś aktywny/pasywny.
+  Pole czyta tylko format `fiszki/v1` (klucz `register`) i ręczne mapowanie.

@@ -3,42 +3,42 @@
   "files": [
     {
       "path": "oet-codziennosc.json",
-      "sha256": "e9ff26f069eb885c994c2cf1bc6874bca5cd9b977373e1c03962c9d9ff43f0df",
+      "sha256": "7f23c8088cbdae093a3ca9e52b7bfd3218b6311d021727861b316cb65559da50",
       "notes": 56
     },
     {
       "path": "oet-core.json",
-      "sha256": "28784ea3075bd354f24fd43929c5726d10fd875a2b6d960baa801a698a01d10a",
+      "sha256": "15d2aa0c9b5e6971e353484a3031e4d3d5a9d41841ec17f07443bb3c458d33af",
       "notes": 126
     },
     {
       "path": "oet-cwiczenia.json",
-      "sha256": "0974927d5e0bbdb52253e43634b777fae13370c80e91600f02940ecf1dbffed1",
+      "sha256": "4e38c4e4ac1846589a29db97979e9e59b3d33b392e282c7360047714771e4305",
       "notes": 84
     },
     {
       "path": "oet-nhs.json",
-      "sha256": "131c2e409ccd73c2490a2959b57ce399dbeccd6d8aa1f70172ade00445adacd7",
+      "sha256": "e65e11b6a78d50bfe3fa371755a3fcf48c8969691a4ffe2940f731be28a9044c",
       "notes": 30
     },
     {
       "path": "oet-pisownia-uk.json",
-      "sha256": "80a9d46a54c8c2cd0371cfc48100a5377d9b00d12b17a84318029c7d684d822e",
+      "sha256": "6b354b45883e9068f97fdb062fb089898dabed5667f9b9e384f4f13b88e3f307",
       "notes": 9
     },
     {
       "path": "oet-rozmowa.json",
-      "sha256": "513d363baa1af33f030899006883043fea41d712019904610fc5a9804fedd279",
+      "sha256": "cad7911cce5466e3e01e922b479b8a0428af860d1a4d1d71f6bbfb51f88bd73a",
       "notes": 14
     },
     {
       "path": "oet-skroty.json",
-      "sha256": "cc9ddb839d5add549a4ee42e6c4d46474ec0542f5d234af435dfe33328125d29",
+      "sha256": "2ce3c6221e022891b450d4aa07de70c2caf9c8e3e4a59d18ef3f681995cec654",
       "notes": 76
     },
     {
       "path": "oet-terminologia.json",
-      "sha256": "d271ecef6895843321d7dec0863019d8ecfe8372fbe01ccf3f61c14ae2ff4bfe",
+      "sha256": "5b07ed10ea739ab6e9455e1ac7503e14ebf95ad5a29650079b60a15595b7d731",
       "notes": 56
     }
   ]

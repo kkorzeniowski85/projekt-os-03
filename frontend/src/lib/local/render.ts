@@ -15,6 +15,7 @@ import {
   FIELD_BACK,
   FIELD_EXAMPLE,
   FIELD_FORMAL,
+  FIELD_REGISTER,
   FIELD_FRONT,
   FIELD_PRONUNCIATION,
   FIELD_SYNONYMS,
@@ -45,6 +46,11 @@ export function pronunciationOf(note: NoteRecord): string {
 
 export function formalOf(note: NoteRecord): string {
   return note.fields[FIELD_FORMAL] || splitLegacyExample(note.fields[FIELD_EXAMPLE]).formal;
+}
+
+/** Rejestr i czestosc - bez odpowiednika w starych przykladach. */
+export function registerOf(note: NoteRecord): string {
+  return note.fields[FIELD_REGISTER] ?? "";
 }
 
 export function renderCard(

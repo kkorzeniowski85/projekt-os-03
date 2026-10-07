@@ -14,6 +14,7 @@ import {
   cueOf,
   exampleOf,
   formalOf,
+  registerOf,
   pronunciationOf,
   renderCard,
   templateLabel,
@@ -575,6 +576,7 @@ function StudySession() {
               wymowa={pronunciationOf(entry.note)}
               synonimy={entry.card.templateOrd === 2 ? "" : cueOf(entry.note)}
               formalnie={formalOf(entry.note)}
+              uzycie={registerOf(entry.note)}
               polski={entry.card.templateOrd === 2 ? entry.note.fields.Back : ""}
             />
 
@@ -675,7 +677,8 @@ function StudySession() {
 }
 
 /**
- * Wymowa, synonimy i odpowiednik formalny pod odpowiedzia.
+ * Wymowa, uzycie (rejestr i czestosc), synonimy i odpowiednik formalny
+ * pod odpowiedzia.
  *
  * Bez ramki i bez koloru: kolor w tej aplikacji niesie znaczenie wylacznie
  * przy ocenach. Etykiety mikroskopijne, tresc czytelna - to material
@@ -686,13 +689,15 @@ function Adnotacje({
   synonimy,
   formalnie,
   polski,
+  uzycie,
 }: {
   wymowa: string;
   synonimy: string;
   formalnie: string;
   polski: string;
+  uzycie: string;
 }) {
-  if (!wymowa && !synonimy && !formalnie && !polski) return null;
+  if (!wymowa && !synonimy && !formalnie && !polski && !uzycie) return null;
   const etykieta = "text-[11px] uppercase tracking-[0.08em] text-ink-4";
 
   return (
@@ -702,6 +707,11 @@ function Adnotacje({
         <p className="text-[14px] text-ink-2">
           <span className={etykieta}>wymowa</span>{" "}
           <span className="tabular-nums">{wymowa}</span>
+        </p>
+      )}
+      {uzycie && (
+        <p className="text-[14px] text-ink-2">
+          <span className={etykieta}>użycie</span> {uzycie}
         </p>
       )}
       {synonimy && (

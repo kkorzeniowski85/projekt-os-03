@@ -77,7 +77,7 @@ export function buildManifest(dir) {
       // Literowka w kluczu ("synonims") przechodzilaby bez slowa, a importer
       // po cichu wyrzucilby wartosc - dokladnie ten rodzaj cichej porazki,
       // przed ktorym ten skrypt istnieje.
-      for (const klucz of ["pronunciation", "synonyms", "formal"]) {
+      for (const klucz of ["pronunciation", "synonyms", "formal", "register"]) {
         const wartosc = note[klucz];
         if (wartosc === undefined || wartosc === null) continue;
         const dobre =

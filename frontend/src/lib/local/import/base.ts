@@ -12,6 +12,7 @@ import { FIELD_BACK, FIELD_EXAMPLE, FIELD_FRONT,
   FIELD_PRONUNCIATION,
   FIELD_SYNONYMS,
   FIELD_FORMAL,
+  FIELD_REGISTER,
 } from "../content";
 
 //: Cele mapowania: pola aplikacji + role specjalne.
@@ -25,6 +26,7 @@ export const MAPPING_TARGETS = [
   FIELD_PRONUNCIATION,
   FIELD_SYNONYMS,
   FIELD_FORMAL,
+  FIELD_REGISTER,
   TARGET_TAGS,
   TARGET_KIND,
   TARGET_IGNORE,

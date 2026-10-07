@@ -20,6 +20,7 @@ mapowania.
       "pronunciation": "/juːˈbɪkwɪtəs/",
       "synonyms": "omnipresent / found everywhere",
       "formal": "prevalent throughout",
+      "register": "formalne · częste — listy i raporty",
       "tags": ["b2", "przymiotnik"],
       "kind": "word",
       "source_ref": "oxford-3000/ubiquitous"
@@ -38,6 +39,7 @@ mapowania.
 | `pronunciation` | nie | Zapis wymowy, np. `/juːˈbɪkwɪtəs/` |
 | `synonyms` | nie | Wyrażenia **wymienne w zdaniu**. Z nich powstaje pytanie karty „opis → termin", więc definicja zawierająca sam termin zdradziłaby odpowiedź |
 | `formal` | nie | Odpowiednik formalny (rejestr, którego wymaga OET) |
+| `register` | nie | Użycie zwrotu: rejestr (`potoczne` / `codzienne` / `formalne` / `fachowe` / `żargon szpitalny` / `skrót`) i częstość (`bardzo częste` / `częste` / `rzadkie`), oddzielone ` · `, po myślniku wskazówka, gdzie pasuje. W pakiecie wbudowanym **wymagane** — pilnuje tego test `rejestr.test.ts` |
 | `tags` | nie | Lista tagów |
 | `kind` | nie | `word` \| `phrase` \| `expression` \| `sentence` \| `other`. Bez tego kategoria jest zgadywana z treści `front` |
 | `note_type` | nie | `basic` (1 karta) albo `basic_reversed` (2 karty). **Wygrywa z typem wybranym na ekranie importu** — patrz niżej. Bez tego obowiązuje typ z importu |

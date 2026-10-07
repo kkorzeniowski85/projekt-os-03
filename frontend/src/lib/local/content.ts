@@ -9,6 +9,12 @@ export const FIELD_EXAMPLE = "Example";
 export const FIELD_PRONUNCIATION = "Pronunciation";
 export const FIELD_SYNONYMS = "Synonyms";
 export const FIELD_FORMAL = "Formal";
+/**
+ * Uzycie zwrotu: rejestr i czestosc, np. "formalne · częste — listy i raporty".
+ * Pole, nie tag: pakiet tylko DOPISUJE tagi, wiec poprawiona etykieta
+ * zostawilaby stara obok nowej.
+ */
+export const FIELD_REGISTER = "Register";
 
 /**
  * NOWE POLA DOPISUJEMY ZAWSZE NA KONCU.
@@ -28,6 +34,7 @@ export const KNOWN_FIELDS = [
   FIELD_PRONUNCIATION,
   FIELD_SYNONYMS,
   FIELD_FORMAL,
+  FIELD_REGISTER,
 ] as const;
 
 /** Jedyne miejsce ustalajace kolejnosc i czystosc kluczy w rekordzie. */

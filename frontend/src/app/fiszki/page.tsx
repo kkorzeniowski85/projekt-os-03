@@ -22,6 +22,7 @@ interface Draft {
   pronunciation: string;
   synonyms: string;
   formal: string;
+  register: string;
   tags: string;
   noteType: NoteType;
 }
@@ -33,6 +34,7 @@ const EMPTY: Draft = {
   pronunciation: "",
   synonyms: "",
   formal: "",
+  register: "",
   tags: "",
   noteType: "basic",
 };
@@ -45,6 +47,7 @@ function toDraft(note: NoteRecord): Draft {
     pronunciation: note.fields.Pronunciation ?? "",
     synonyms: note.fields.Synonyms ?? "",
     formal: note.fields.Formal ?? "",
+    register: note.fields.Register ?? "",
     tags: note.tags.join(", "),
     noteType: note.noteType,
   };
@@ -128,6 +131,7 @@ function NotesManager() {
         Pronunciation: draft.pronunciation.trim(),
         Synonyms: draft.synonyms.trim(),
         Formal: draft.formal.trim(),
+        Register: draft.register.trim(),
       };
       const tags = parseTags(draft.tags);
       if (editingId) {
@@ -166,6 +170,7 @@ function NotesManager() {
       note.fields.Pronunciation ?? "",
       note.fields.Synonyms ?? "",
       note.fields.Formal ?? "",
+      note.fields.Register ?? "",
       ...note.tags,
     ]
       .join(" ")
@@ -253,7 +258,7 @@ function NotesManager() {
             }}
             className="cursor-pointer px-3 py-2 text-[13px] text-ink-2 hover:text-ink"
           >
-            Przykład, wymowa, synonimy, forma oficjalna
+            Przykład, wymowa, synonimy, forma oficjalna, użycie
           </summary>
           <div className="space-y-2.5 p-3 pt-0">
             <textarea
@@ -280,6 +285,12 @@ function NotesManager() {
               value={draft.formal}
               onChange={(e) => setDraft({ ...draft, formal: e.target.value })}
               placeholder="odpowiednik formalny (OET)"
+              className={`${inputClass} text-[13px]`}
+            />
+            <input
+              value={draft.register}
+              onChange={(e) => setDraft({ ...draft, register: e.target.value })}
+              placeholder="użycie, np. formalne · częste — listy i raporty"
               className={`${inputClass} text-[13px]`}
             />
           </div>
@@ -381,7 +392,11 @@ function NotesManager() {
                         // widzac tresci, ktora zmienia.
                         setSzczegoly(
                           Boolean(
-                            szkic.example || szkic.pronunciation || szkic.synonyms || szkic.formal,
+                            szkic.example ||
+                              szkic.pronunciation ||
+                              szkic.synonyms ||
+                              szkic.formal ||
+                              szkic.register,
                           ),
                         );
                         window.scrollTo({ top: 0, behavior: "smooth" });

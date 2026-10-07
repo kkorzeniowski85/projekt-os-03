@@ -50,6 +50,7 @@ export const MAPPING_TARGET_LABELS: Record<string, string> = {
   Pronunciation: "Wymowa",
   Synonyms: "Synonimy",
   Formal: "Formalnie (OET)",
+  Register: "Użycie",
   tags: "Tagi",
   kind: "Kategoria",
   ignore: "— pomiń —",

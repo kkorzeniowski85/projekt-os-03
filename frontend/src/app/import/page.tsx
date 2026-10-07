@@ -62,6 +62,7 @@ const CLAUDE_PROMPT = `Zrób z tego fiszki w formacie JSON "fiszki/v1". Zasady:
       "pronunciation": "/wymowa IPA/ — opcjonalne",
       "synonyms": "synonim / inny synonim — opcjonalne",
       "formal": "odpowiednik formalny — opcjonalne",
+      "register": "rejestr · częstość — opcjonalne, np. formalne · częste",
       "tags": ["tag1", "tag2"],
       "kind": "word | phrase | expression | sentence",
       "note_type": "basic | basic_reversed"
@@ -81,6 +82,10 @@ const CLAUDE_PROMPT = `Zrób z tego fiszki w formacie JSON "fiszki/v1". Zasady:
 - "synonyms" to wyrażenia WYMIENNE w zdaniu, nie definicje — z tego pola
   powstaje pytanie karty „opis → termin", więc definicja zawierająca sam
   termin zdradza odpowiedź.
+- "register" opisuje użycie zwrotu: rejestr (potoczne / codzienne / formalne /
+  fachowe / żargon szpitalny / skrót) i częstość (bardzo częste / częste /
+  rzadkie), oddzielone " · ". Po myślniku można dodać, gdzie pasuje, np.
+  "formalne · częste — listy i raporty".
 - NIE dodawaj pola "deck" ani nie wymyślaj nazw talii — materiał trafia do
   jednej wspólnej bazy.
 - "kind": pojedyncze słowo → word; kilka słów dosłownie → phrase; idiom albo

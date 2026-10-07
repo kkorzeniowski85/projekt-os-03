@@ -11,6 +11,7 @@ import { FIELD_BACK, FIELD_EXAMPLE, FIELD_FRONT,
   FIELD_PRONUNCIATION,
   FIELD_SYNONYMS,
   FIELD_FORMAL,
+  FIELD_REGISTER,
 } from "../content";
 import {
   ImportParseError,
@@ -31,6 +32,7 @@ const KEYS: Record<string, string> = {
   pronunciation: FIELD_PRONUNCIATION,
   synonyms: FIELD_SYNONYMS,
   formal: FIELD_FORMAL,
+  register: FIELD_REGISTER,
   tags: TARGET_TAGS,
   kind: TARGET_KIND,
 };

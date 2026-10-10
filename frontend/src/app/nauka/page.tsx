@@ -659,17 +659,6 @@ function StudySession() {
           >
             Odłóż na bok
           </button>
-          {/* Jedno odtworzenie biezacego zwrotu - bez przechodzenia dalej. */}
-          {canSpeak && (
-            <button
-              type="button"
-              disabled={!angielskiWidoczny}
-              onClick={() => speak(englishText)}
-              className="hover:text-ink-2 disabled:opacity-40"
-            >
-              ▸ Słuchaj
-            </button>
-          )}
         </div>
       </div>
     </div>

@@ -3,8 +3,8 @@
   "files": [
     {
       "path": "oet-codziennosc.json",
-      "sha256": "86dca13e83b6c8128f0a1e8cc1af2402c4bc444435505687811025ffd769c458",
-      "notes": 64
+      "sha256": "bd2107927b33e84b038d99512f7d6639c46fb543ccf5eabf207943c5fdebbc52",
+      "notes": 65
     },
     {
       "path": "oet-core.json",
@@ -15,6 +15,11 @@
       "path": "oet-cwiczenia.json",
       "sha256": "ebce21dcb72824765a67f073e3ba37fcf845def5892d61d01ac6d921bbba9250",
       "notes": 84
+    },
+    {
+      "path": "oet-konsultacja.json",
+      "sha256": "92bba32075a634f6fc76209c83501c38c1b4c00f7f6673737a037bd7d03a7de1",
+      "notes": 56
     },
     {
       "path": "oet-nhs.json",

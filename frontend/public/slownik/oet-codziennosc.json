@@ -1033,6 +1033,22 @@
       "kind": "word",
       "note_type": "basic_reversed",
       "source_ref": "oet-frazy/l64/wary"
+    },
+    {
+      "front": "to clear the decks",
+      "back": "uporać się z bieżącymi sprawami przed nowym zadaniem",
+      "example": "The registrar asked us to clear the decks on the ward so that we could take new admissions from A&E.\nI'm trying to clear the decks this week so that I can concentrate on my OET writing.\nWe need to clear the decks before the on-call team arrives.",
+      "pronunciation": "/tə klɪə ðə deks/",
+      "formal": "to free up capacity / to make the necessary preparations",
+      "register": "potoczne · częste — swobodna rozmowa; nie w liście",
+      "tags": [
+        "oet",
+        "nieformalne",
+        "codziennosc"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l65/to-clear-the-decks"
     }
   ]
 }

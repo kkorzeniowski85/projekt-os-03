@@ -1,0 +1,1178 @@
+{
+  "format": "fiszki/v1",
+  "deck": "OET — konsultacja (Speaking)",
+  "default_note_type": "basic_reversed",
+  "notes": [
+    {
+      "front": "I'm Dr [name], and I understand you've come in with some concerns.",
+      "back": "Jestem doktor [nazwisko] i rozumiem, że ma Pan/Pani pewne obawy.",
+      "example": "Hi, I'm Dr Thompson, and I understand you've come in with some concerns. Can you tell me more about them?\nGood morning, I'm Dr Patel. I understand you've come in with concerns about your knee pain. Shall we discuss that?\nI'm Dr Chen, and I understand you've come in with concerns about your medication. Let me hear what's worrying you.",
+      "pronunciation": "/aɪm ˈdɒktə [...] ənd aɪ ˌʌndəˈstænd juːv kʌm ɪn wɪð səm kənˈsɜːnz/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k36/come-in-with-some-concerns"
+    },
+    {
+      "front": "Before we start, may I confirm your name, please?",
+      "back": "Zanim zaczniemy, czy mogę potwierdzić Pana/Pani nazwisko?",
+      "example": "Hello, I'm Dr Roberts. Before we start, may I confirm your name, please?\nGood morning. Before we start the consultation, may I confirm your name, please?\nJust before we begin, may I confirm your full name, please?",
+      "pronunciation": "/bɪˈfɔː wiː stɑːt meɪ aɪ kənˈfɜːm jɔː neɪm pliːz/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k37/may-i-confirm-your-name"
+    },
+    {
+      "front": "Could you please confirm your full name and date of birth?",
+      "back": "Czy może Pan/Pani potwierdzić swoje imię i nazwisko oraz datę urodzenia?",
+      "example": "Could you please confirm your full name and date of birth for me?\nI'll just need to confirm your full name and date of birth with you.\nBefore we go any further, could you please confirm your full name and date of birth?",
+      "pronunciation": "/kʊd juː pliːz kənˈfɜːm jɔː fʊl neɪm ənd deɪt əv bɜːθ/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k38/confirm-name-and-date-of-birth"
+    },
+    {
+      "front": "How would you like me to address you?",
+      "back": "Jak mam się do Pana/Pani zwracać?",
+      "example": "How would you like me to address you – do you prefer Mr, Mrs, or your first name?\nHow would you like me to address you during our consultation?",
+      "pronunciation": "/haʊ wʊd juː laɪk miː tu əˈdres juː/",
+      "synonyms": [
+        "I want to make sure I address you correctly – what would you prefer?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k39/how-would-you-like-me-to-address-you"
+    },
+    {
+      "front": "Which name do you prefer to go by?",
+      "back": "Jakiego imienia używa Pan/Pani na co dzień?",
+      "example": "I see you have several names on your file – which name do you prefer to go by?\nWhich name do you prefer to go by, Robert or Bob?",
+      "pronunciation": "/wɪtʃ neɪm də juː prɪˈfɜː tə ɡəʊ baɪ/",
+      "synonyms": [
+        "Which name would you prefer me to use?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k40/which-name-do-you-prefer-to-go-by"
+    },
+    {
+      "front": "Thank you for confirming that – nice to meet you.",
+      "back": "Dziękuję za potwierdzenie, miło mi Pana/Panią poznać.",
+      "example": "Nice to meet you, Mr Thompson. Thank you for confirming that.\nRight, thank you for confirming that – nice to meet you, Sarah.\nThank you for confirming that with me. It's good to meet you.",
+      "pronunciation": "/ˈθæŋk juː fə kənˈfɜːmɪŋ ðæt naɪs tə miːt juː/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k41/thank-you-for-confirming-that"
+    },
+    {
+      "front": "I can see from your notes that you've been experiencing some symptoms. Would you mind explaining them in your own words?",
+      "back": "Widzę w dokumentacji, że ma Pan/Pani pewne objawy. Czy może je Pan/Pani opisać własnymi słowami?",
+      "example": "I can see from your file you've been having chest pain. Could you describe it in your own words?",
+      "pronunciation": "/aɪ kən siː frəm jɔː nəʊts ðət juːv bɪn ɪkˈspɪəriənsɪŋ səm ˈsɪmptəmz wʊd juː maɪnd ɪkˈspleɪnɪŋ ðəm ɪn jɔːr əʊn wɜːdz/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k42/in-your-own-words"
+    },
+    {
+      "front": "I understand you've come in today because of [symptom]. Is that correct?",
+      "back": "Rozumiem, że przychodzi Pan/Pani dzisiaj z powodu [objaw]. Zgadza się?",
+      "example": "I understand you've come in today because of shortness of breath. Is that correct?\nSo you've come in today because of persistent headaches – is that right?\nI understand you've come in because of abdominal pain. Have I got that right?",
+      "pronunciation": "/aɪ ˌʌndəˈstænd juːv kʌm ɪn təˈdeɪ bɪˈkɒz əv [...] ɪz ðæt kəˈrekt/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k43/come-in-today-because-of"
+    },
+    {
+      "front": "Before we begin, do you have any particular concerns you'd like to address first?",
+      "back": "Zanim zaczniemy, czy jest coś, co szczególnie Pana/Panią niepokoi i chciałby/chciałaby Pan/Pani omówić najpierw?",
+      "example": "Before we start, are there any particular concerns you'd like to bring up first?",
+      "pronunciation": "/bɪˈfɔː wiː bɪˈɡɪn də juː hæv ˈeni pəˈtɪkjələ kənˈsɜːnz juːd laɪk tu əˈdres fɜːst/",
+      "synonyms": [
+        "Is there anything specific worrying you that you'd like me to focus on?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k44/particular-concerns-first"
+    },
+    {
+      "front": "I'd like to gather some details about your condition before we discuss the best course of action.",
+      "back": "Chciałbym zebrać kilka informacji o Pana/Pani stanie, zanim omówimy najlepszy sposób postępowania.",
+      "pronunciation": "/aɪd laɪk tə ˈɡæðə səm ˈdiːteɪlz əˈbaʊt jɔː kənˈdɪʃən bɪˈfɔː wiː dɪˈskʌs ðə best kɔːs əv ˈækʃən/",
+      "synonyms": [
+        "Let me ask you a few questions about your symptoms, and then we can talk about treatment options.",
+        "I'll need to understand more about what's been happening before we decide on the best way forward."
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k45/gather-some-details"
+    },
+    {
+      "front": "Is it okay if I ask you a few questions to better understand your situation?",
+      "back": "Czy mogę zadać kilka pytań, żeby lepiej zrozumieć Pana/Pani sytuację?",
+      "pronunciation": "/ɪz ɪt əʊˈkeɪ ɪf aɪ ɑːsk juː ə fjuː ˈkwestʃənz tə ˈbetər ˌʌndəˈstænd jɔː ˌsɪtʃuˈeɪʃən/",
+      "synonyms": [
+        "Would you mind if I asked you a few more questions about your symptoms?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k46/is-it-okay-if-i-ask-you-a-few-questions"
+    },
+    {
+      "front": "Would you be comfortable if I conducted a brief examination?",
+      "back": "Czy zgodzi się Pan/Pani, żebym przeprowadził krótkie badanie?",
+      "pronunciation": "/wʊd juː bi ˈkʌmftəbəl ɪf aɪ kənˈdʌktɪd ə briːf ɪɡˌzæmɪˈneɪʃən/",
+      "synonyms": [
+        "Is it alright if I do a quick physical examination?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k47/would-you-be-comfortable-examination"
+    },
+    {
+      "front": "Shall we go ahead and discuss your treatment options?",
+      "back": "Czy możemy przejść do omówienia możliwości leczenia?",
+      "pronunciation": "/ʃəl wiː ɡəʊ əˈhed ənd dɪˈskʌs jɔː ˈtriːtmənt ˈɒpʃənz/",
+      "synonyms": [
+        "Now I've got a clearer picture, shall we talk through the different treatments available?",
+        "Right then, shall we discuss what we can do to help you?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k48/discuss-your-treatment-options"
+    },
+    {
+      "front": "How can I help you today?",
+      "back": "W czym mogę dzisiaj pomóc?",
+      "example": "So, how can I help you?",
+      "pronunciation": "/haʊ kən aɪ help juː təˈdeɪ/",
+      "synonyms": [
+        "What can I do for you this morning?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k49/how-can-i-help-you-today"
+    },
+    {
+      "front": "What brings you in today?",
+      "back": "Co Pana/Panią dzisiaj do nas sprowadza?",
+      "example": "What brought you to the surgery today?\nTell me, what brings you in today?",
+      "pronunciation": "/wɒt brɪŋz juː ɪn təˈdeɪ/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k50/what-brings-you-in-today"
+    },
+    {
+      "front": "Can you tell me a little about what's been going on?",
+      "back": "Czy może mi Pan/Pani trochę opowiedzieć, co się działo?",
+      "example": "Start by telling me a bit about what's been going on.",
+      "pronunciation": "/kən juː tel miː ə ˈlɪtəl əˈbaʊt wɒts bɪn ˈɡəʊɪŋ ɒn/",
+      "synonyms": [
+        "Can you tell me what's been happening recently?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k51/whats-been-going-on"
+    },
+    {
+      "front": "What seems to be the problem?",
+      "back": "Co Panu/Pani dolega?",
+      "example": "So, what seems to be the problem?",
+      "pronunciation": "/wɒt siːmz tə bi ðə ˈprɒbləm/",
+      "synonyms": [
+        "What seems to be troubling you?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k52/what-seems-to-be-the-problem"
+    },
+    {
+      "front": "What concerns do you have about your health today?",
+      "back": "Jakie ma Pan/Pani dzisiaj obawy dotyczące zdrowia?",
+      "example": "Tell me – what concerns do you have about your health?",
+      "pronunciation": "/wɒt kənˈsɜːnz də juː hæv əˈbaʊt jɔː helθ təˈdeɪ/",
+      "synonyms": [
+        "What health concerns have brought you in?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "otwarcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k53/concerns-about-your-health"
+    },
+    {
+      "front": "When did your symptoms start?",
+      "back": "Kiedy zaczęły się objawy?",
+      "example": "So, when did your symptoms first start?",
+      "pronunciation": "/wen dɪd jɔː ˈsɪmptəmz stɑːt/",
+      "synonyms": [
+        "When did this begin?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wywiad"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k54/when-did-your-symptoms-start"
+    },
+    {
+      "front": "How long have you been experiencing this issue?",
+      "back": "Od jak dawna ma Pan/Pani ten problem?",
+      "example": "And how long have you been experiencing this?",
+      "pronunciation": "/haʊ lɒŋ həv juː bɪn ɪkˈspɪəriənsɪŋ ðɪs ˈɪʃuː/",
+      "synonyms": [
+        "How long has this been going on?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wywiad"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k55/how-long-experiencing-this"
+    },
+    {
+      "front": "Has the pain been constant, or does it come and go?",
+      "back": "Czy ból jest stały, czy pojawia się i znika?",
+      "example": "Is it constant or does it come and go?",
+      "pronunciation": "/həz ðə peɪn bɪn ˈkɒnstənt ɔː dəz ɪt kʌm ənd ɡəʊ/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wywiad"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k56/constant-or-come-and-go"
+    },
+    {
+      "front": "Would you say your symptoms are getting better, worse, or staying the same?",
+      "back": "Czy, Pana/Pani zdaniem, objawy się zmniejszają, nasilają, czy są bez zmian?",
+      "example": "Are they getting better, worse, or staying about the same?",
+      "pronunciation": "/wʊd juː seɪ jɔː ˈsɪmptəmz ə ˈɡetɪŋ ˈbetə wɜːs ɔː ˈsteɪɪŋ ðə seɪm/",
+      "synonyms": [
+        "In your view, are things improving, worsening, or staying the same?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wywiad"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k57/better-worse-or-the-same"
+    },
+    {
+      "front": "On a scale of 1 to 10, how severe would you say the pain is?",
+      "back": "W skali od 1 do 10, jak silny jest ten ból?",
+      "example": "On a pain scale of 1 to 10, with 10 being the worst, how would you rate it?",
+      "pronunciation": "/ɒn ə skeɪl əv wʌn tə ten haʊ sɪˈvɪə wʊd juː seɪ ðə peɪn ɪz/",
+      "synonyms": [
+        "If 1 is mild and 10 is the worst possible, where would you say the pain is now?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wywiad"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k58/on-a-scale-of-1-to-10"
+    },
+    {
+      "front": "How has this problem been affecting your daily activities?",
+      "back": "Jak ten problem wpływa na Pana/Pani codzienne czynności?",
+      "example": "How has it been affecting your day-to-day life?\nTell me – how has this been affecting your daily activities?",
+      "pronunciation": "/haʊ həz ðɪs ˈprɒbləm bɪn əˈfektɪŋ jɔː ˈdeɪli ækˈtɪvətiz/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wywiad"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k59/affecting-your-daily-activities"
+    },
+    {
+      "front": "Has it impacted your ability to work or exercise?",
+      "back": "Czy to wpłynęło na Pana/Pani zdolność do pracy lub ćwiczeń?",
+      "pronunciation": "/həz ɪt ɪmˈpæktɪd jɔːr əˈbɪləti tə wɜːk ɔːr ˈeksəsaɪz/",
+      "synonyms": [
+        "Has it stopped you from working or exercising?",
+        "Are you still able to work or exercise?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wywiad"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k60/ability-to-work-or-exercise"
+    },
+    {
+      "front": "Are you able to sleep well, or has this been disturbing your rest?",
+      "back": "Czy dobrze Pan/Pani śpi, czy to zakłóca sen?",
+      "pronunciation": "/ɑː juː ˈeɪbəl tə sliːp wel ɔː həz ðɪs bɪn dɪˈstɜːbɪŋ jɔː rest/",
+      "synonyms": [
+        "Have you been having any trouble sleeping?",
+        "Is your sleep being affected by this?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wywiad"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k61/able-to-sleep-well"
+    },
+    {
+      "front": "Is there anything specific that makes your symptoms better or worse?",
+      "back": "Czy jest coś konkretnego, co łagodzi albo nasila objawy?",
+      "pronunciation": "/ɪz ðeər ˈeniθɪŋ spəˈsɪfɪk ðət meɪks jɔː ˈsɪmptəmz ˈbetər ɔː wɜːs/",
+      "synonyms": [
+        "What makes it better or worse?",
+        "Does anything make it better or worse?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wywiad"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k62/better-or-worse"
+    },
+    {
+      "front": "What do you think might be causing this problem?",
+      "back": "Co, Pana/Pani zdaniem, może powodować ten problem?",
+      "pronunciation": "/wɒt də juː θɪŋk maɪt bi ˈkɔːzɪŋ ðɪs ˈprɒbləm/",
+      "synonyms": [
+        "Do you have any ideas about what's causing it?",
+        "What do you think might be going on?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "obawy-i-oczekiwania"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k63/what-might-be-causing-this"
+    },
+    {
+      "front": "Is there anything in particular you're worried about?",
+      "back": "Czy coś konkretnego Pana/Panią niepokoi?",
+      "pronunciation": "/ɪz ðeər ˈeniθɪŋ ɪn pəˈtɪkjələ jɔː ˈwʌrid əˈbaʊt/",
+      "synonyms": [
+        "What specifically are you worried about?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "obawy-i-oczekiwania"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k64/anything-in-particular-worried-about"
+    },
+    {
+      "front": "Have you experienced anything similar before?",
+      "back": "Czy miał(a) Pan/Pani wcześniej coś podobnego?",
+      "pronunciation": "/həv juː ɪkˈspɪəriənst ˈeniθɪŋ ˈsɪmələ bɪˈfɔː/",
+      "synonyms": [
+        "Has anything like this happened to you before?",
+        "Is this the first time you've had symptoms like this?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "obawy-i-oczekiwania"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k65/anything-similar-before"
+    },
+    {
+      "front": "Is there a specific treatment or test you were hoping to discuss today?",
+      "back": "Czy jest jakieś konkretne leczenie albo badanie, które chciał(a)by Pan/Pani dzisiaj omówić?",
+      "pronunciation": "/ɪz ðeər ə spəˈsɪfɪk ˈtriːtmənt ɔː test juː wə ˈhəʊpɪŋ tə dɪˈskʌs təˈdeɪ/",
+      "synonyms": [
+        "Were you hoping for any particular tests or treatments?",
+        "Is there something specific you were hoping we might do?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "obawy-i-oczekiwania"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k66/treatment-or-test-hoping-to-discuss"
+    },
+    {
+      "front": "What outcome were you expecting from this consultation?",
+      "back": "Czego oczekiwał(a) Pan/Pani po tej wizycie?",
+      "pronunciation": "/wɒt ˈaʊtkʌm wə juː ɪkˈspektɪŋ frəm ðɪs ˌkɒnsəlˈteɪʃən/",
+      "synonyms": [
+        "What were you hoping I could help you with?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "obawy-i-oczekiwania"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k67/outcome-expecting-from-consultation"
+    },
+    {
+      "front": "Just to make sure I understand correctly, you've been experiencing [symptom] for [duration], and it's been affecting your [daily activity]. Is that right?",
+      "back": "Chcę się upewnić, że dobrze rozumiem: od [okres] ma Pan/Pani [objaw] i wpływa to na [codzienna czynność]. Zgadza się?",
+      "example": "Just to make sure I understand correctly, you've been experiencing chest pain for about two weeks, and it's been affecting your ability to exercise. Is that right?",
+      "pronunciation": "/dʒʌst tə meɪk ʃɔːr aɪ ˌʌndəˈstænd kəˈrektli juːv bɪn ɪkˈspɪəriənsɪŋ [...] fə [...] ənd ɪts bɪn əˈfektɪŋ jɔː [...] ɪz ðæt raɪt/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "podsumowanie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k68/just-to-make-sure-i-understand"
+    },
+    {
+      "front": "So, you're mainly concerned about whether this could be something serious. Is that correct?",
+      "back": "Czyli najbardziej martwi się Pan/Pani, czy to nie jest coś poważnego. Zgadza się?",
+      "pronunciation": "/səʊ jɔː ˈmeɪnli kənˈsɜːnd əˈbaʊt ˈweðə ðɪs kʊd bi ˈsʌmθɪŋ ˈsɪəriəs ɪz ðæt kəˈrekt/",
+      "synonyms": [
+        "Your main worry is that this might be something serious – is that right?",
+        "If I've understood correctly, what's worrying you most is whether this could be serious?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "podsumowanie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k69/mainly-concerned-something-serious"
+    },
+    {
+      "front": "If I understand correctly, you've noticed [symptom], which started [timeframe], and it gets worse when [trigger]?",
+      "back": "Jeśli dobrze rozumiem, zauważył(a) Pan/Pani [objaw], który zaczął się [kiedy], i nasila się, gdy [czynnik]?",
+      "example": "If I understand correctly, you've noticed shortness of breath, which started after your accident, and it gets worse when you climb stairs?",
+      "pronunciation": "/ɪf aɪ ˌʌndəˈstænd kəˈrektli juːv ˈnəʊtɪst [...] wɪtʃ ˈstɑːtɪd [...] ənd ɪt ɡets wɜːs wen [...]/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "podsumowanie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k70/gets-worse-when"
+    },
+    {
+      "front": "So to recap, this has been happening on and off since [timeframe], but it's particularly bad when [circumstance]. Is that fair?",
+      "back": "Podsumowując: to pojawia się od czasu do czasu od [kiedy], ale szczególnie nasila się, gdy [okoliczność]. Czy tak?",
+      "example": "So to recap, this has been happening on and off since January, but it's particularly bad when you're stressed. Is that fair?",
+      "pronunciation": "/səʊ tə ˈriːkæp ðɪs həz bɪn ˈhæpənɪŋ ɒn ənd ɒf sɪns [...] bət ɪts pəˈtɪkjələli bæd wen [...] ɪz ðæt feə/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "podsumowanie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k71/so-to-recap-on-and-off"
+    },
+    {
+      "front": "And alongside the [symptom A], you've also had [symptom B], which started at the same time. Have I got that right?",
+      "back": "I oprócz [objaw A] ma Pan/Pani też [objaw B], który zaczął się w tym samym czasie. Dobrze rozumiem?",
+      "example": "And alongside the back pain, you've also had pins and needles in your legs, which started at the same time. Have I got that right?",
+      "pronunciation": "/ənd əˌlɒŋˈsaɪd ðə [...] juːv ˈɔːlsəʊ hæd [...] wɪtʃ ˈstɑːtɪd ət ðə seɪm taɪm həv aɪ ɡɒt ðæt raɪt/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "podsumowanie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k72/alongside-you-have-also-had"
+    },
+    {
+      "front": "What you're really looking for today, then, is to understand what's causing this and find a way to manage it. Is that a fair summary?",
+      "back": "Czyli dzisiaj zależy Panu/Pani przede wszystkim na tym, żeby zrozumieć, co to powoduje, i znaleźć sposób, żeby sobie z tym radzić. Czy to trafne podsumowanie?",
+      "pronunciation": "/wɒt jɔː ˈrɪəli ˈlʊkɪŋ fə təˈdeɪ ðen ɪz tu ˌʌndəˈstænd wɒts ˈkɔːzɪŋ ðɪs ənd faɪnd ə weɪ tə ˈmænɪdʒ ɪt ɪz ðæt ə feə ˈsʌməri/",
+      "synonyms": [
+        "So you want to know what's bringing this on and get it sorted. Is that right?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "podsumowanie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k73/is-that-a-fair-summary"
+    },
+    {
+      "front": "Right then, now that I've got a clearer picture of what's going on, let me examine you and we can discuss where we go from here.",
+      "back": "Dobrze, teraz, kiedy mam już jaśniejszy obraz sytuacji, zbadam Pana/Panią, a potem omówimy, co dalej.",
+      "pronunciation": "/raɪt ðen naʊ ðət aɪv ɡɒt ə ˈklɪərə ˈpɪktʃər əv wɒts ˈɡəʊɪŋ ɒn let miː ɪɡˈzæmɪn juː ənd wiː kən dɪˈskʌs weə wiː ɡəʊ frəm hɪə/",
+      "synonyms": [
+        "Okay, so now I understand the situation better – shall we proceed with an examination?",
+        "Good – I think I have a better understanding now. Let me examine you and then we'll talk about what we can do."
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "podsumowanie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k74/clearer-picture-where-we-go-from-here"
+    },
+    {
+      "front": "I see – that must have been difficult for you.",
+      "back": "Rozumiem – to musiało być dla Pana/Pani trudne.",
+      "pronunciation": "/aɪ siː ðæt məst həv bɪn ˈdɪfɪkəlt fə juː/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "aktywne-sluchanie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k75/i-see-must-have-been-difficult"
+    },
+    {
+      "front": "So what I'm hearing is that [...]. Have I got that right?",
+      "back": "Czyli, jak rozumiem, [...]. Dobrze rozumiem?",
+      "example": "So what I'm hearing is that the pain started after your fall. Have I got that right?",
+      "pronunciation": "/səʊ wɒt aɪm ˈhɪərɪŋ ɪz ðət [...] həv aɪ ɡɒt ðæt raɪt/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "aktywne-sluchanie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k76/so-what-im-hearing-is"
+    },
+    {
+      "front": "Take your time – I'm listening.",
+      "back": "Proszę się nie spieszyć – słucham.",
+      "pronunciation": "/teɪk jɔː taɪm aɪm ˈlɪsənɪŋ/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "aktywne-sluchanie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k77/take-your-time-im-listening"
+    },
+    {
+      "front": "I'm really sorry to hear that you've been feeling this way.",
+      "back": "Bardzo mi przykro, że czuje się Pan/Pani w ten sposób.",
+      "example": "I'm really sorry to hear that you've been feeling this way. That must be difficult.",
+      "pronunciation": "/aɪm ˈrɪəli ˈsɒri tə hɪə ðət juːv bɪn ˈfiːlɪŋ ðɪs weɪ/",
+      "synonyms": [
+        "I'm really sorry you've been going through this."
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "empatia"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k78/sorry-to-hear-feeling-this-way"
+    },
+    {
+      "front": "That sounds like a very difficult experience.",
+      "back": "To musiało być bardzo trudne przeżycie.",
+      "example": "That sounds like a very difficult experience. Anyone would find that worrying.",
+      "pronunciation": "/ðæt saʊndz laɪk ə ˈveri ˈdɪfɪkəlt ɪkˈspɪəriəns/",
+      "synonyms": [
+        "It sounds like you've been through a difficult time with this.",
+        "That must have been very difficult for you."
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "empatia"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k79/sounds-like-a-very-difficult-experience"
+    },
+    {
+      "front": "I can understand why this has been worrying you.",
+      "back": "Rozumiem, dlaczego to Pana/Panią niepokoiło.",
+      "example": "I can understand why this has been worrying you – it's a frightening symptom.\nI can certainly understand why that would be concerning for you.",
+      "pronunciation": "/aɪ kən ˌʌndəˈstænd waɪ ðɪs həz bɪn ˈwʌriɪŋ juː/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "empatia"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k80/understand-why-worrying-you"
+    },
+    {
+      "front": "That must have been frustrating for you.",
+      "back": "To musiało być dla Pana/Pani frustrujące.",
+      "example": "That must have been frustrating for you, not being able to do the things you enjoy.\nThat must be frustrating – waiting this long for an answer.",
+      "pronunciation": "/ðæt məst həv bɪn frʌˈstreɪtɪŋ fə juː/",
+      "synonyms": [
+        "I can imagine that's been very frustrating, dealing with this for so long."
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "empatia"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k81/must-have-been-frustrating"
+    },
+    {
+      "front": "I can see how much this is affecting your daily life.",
+      "back": "Widzę, jak bardzo to wpływa na Pana/Pani codzienne życie.",
+      "example": "I can see how much this is affecting your daily life. That's a real concern.",
+      "pronunciation": "/aɪ kən siː haʊ mʌtʃ ðɪs ɪz əˈfektɪŋ jɔː ˈdeɪli laɪf/",
+      "synonyms": [
+        "It's clear this is affecting you quite significantly.",
+        "I can see that this is having quite an impact on your everyday activities."
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "empatia"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k82/affecting-your-daily-life"
+    },
+    {
+      "front": "I want to reassure you that we are here to help you.",
+      "back": "Chcę Pana/Panią zapewnić, że jesteśmy tu, żeby pomóc.",
+      "example": "I want to reassure you that we are here to help you through this.",
+      "pronunciation": "/aɪ wɒnt tə ˌriːəˈʃʊə juː ðət wiː ə hɪə tə help juː/",
+      "synonyms": [
+        "Please be reassured that we're here to support you and find answers.",
+        "I want you to know that we are here to help and to get to the bottom of this."
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wsparcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k83/here-to-help-you"
+    },
+    {
+      "front": "You're not alone in this. We'll find the best way to manage your condition.",
+      "back": "Nie jest Pan/Pani z tym sam/sama. Znajdziemy najlepszy sposób, żeby sobie z tym poradzić.",
+      "example": "You're not alone in this. We'll work together to find the best way to manage your condition.",
+      "pronunciation": "/jɔː nɒt əˈləʊn ɪn ðɪs wiːl faɪnd ðə best weɪ tə ˈmænɪdʒ jɔː kənˈdɪʃən/",
+      "synonyms": [
+        "You're not dealing with this alone – we'll find the best way forward together."
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wsparcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k84/not-alone-in-this"
+    },
+    {
+      "front": "The good news is that there are effective treatments available.",
+      "back": "Dobra wiadomość jest taka, że są skuteczne metody leczenia.",
+      "example": "The good news is that there are effective treatments available for this condition.",
+      "pronunciation": "/ðə ɡʊd njuːz ɪz ðət ðeər ər ɪˈfektɪv ˈtriːtmənts əˈveɪləbəl/",
+      "synonyms": [
+        "I'm pleased to tell you that there are very effective treatments for this."
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wsparcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k85/effective-treatments-available"
+    },
+    {
+      "front": "We'll work together to find a solution that suits you best.",
+      "back": "Wspólnie znajdziemy rozwiązanie, które będzie dla Pana/Pani najlepsze.",
+      "pronunciation": "/wiːl wɜːk təˈɡeðə tə faɪnd ə səˈluːʃən ðət suːts juː best/",
+      "synonyms": [
+        "Let's work as a team to find what works for your situation."
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wsparcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k86/solution-that-suits-you-best"
+    },
+    {
+      "front": "I understand that this might be overwhelming, but let's take it step by step.",
+      "back": "Rozumiem, że to może przytłaczać, ale przejdźmy przez to krok po kroku.",
+      "example": "I understand that this might be overwhelming, but let's take it step by step and tackle one thing at a time.\nThis might seem overwhelming right now, but let's break it down step by step.",
+      "pronunciation": "/aɪ ˌʌndəˈstænd ðət ðɪs maɪt bi ˌəʊvəˈwelmɪŋ bət lets teɪk ɪt step baɪ step/",
+      "synonyms": [
+        "I know this feels like a lot, but we'll work through it gradually together."
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "wsparcie"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k87/take-it-step-by-step"
+    },
+    {
+      "front": "Would you like to share more about how this has been affecting you?",
+      "back": "Czy chciałby/chciałaby Pan/Pani powiedzieć więcej o tym, jak to na Pana/Panią wpływa?",
+      "pronunciation": "/wʊd juː laɪk tə ʃeə mɔːr əˈbaʊt haʊ ðɪs həz bɪn əˈfektɪŋ juː/",
+      "synonyms": [
+        "Is there anything else you'd like to tell me about how it's impacting you?",
+        "I'd like to hear more – how has this been affecting you?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "zaangazowanie-pacjenta"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k88/share-more-about-how-affecting-you"
+    },
+    {
+      "front": "What concerns you the most about this situation?",
+      "back": "Co Pana/Panią najbardziej martwi w tej sytuacji?",
+      "pronunciation": "/wɒt kənˈsɜːnz juː ðə məʊst əˈbaʊt ðɪs ˌsɪtʃuˈeɪʃən/",
+      "synonyms": [
+        "What's your biggest worry about all of this?",
+        "Of all the things you're dealing with, what worries you most?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "zaangazowanie-pacjenta"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k90/what-concerns-you-the-most"
+    },
+    {
+      "front": "I want to make sure we address all of your concerns – please feel free to ask anything.",
+      "back": "Chcę mieć pewność, że omówimy wszystkie Pana/Pani obawy – proszę śmiało pytać o wszystko.",
+      "pronunciation": "/aɪ wɒnt tə meɪk ʃɔː wiː əˈdres ɔːl əv jɔː kənˈsɜːnz pliːz fiːl friː tu ɑːsk ˈeniθɪŋ/",
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "zaangazowanie-pacjenta"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k91/please-feel-free-to-ask-anything"
+    },
+    {
+      "front": "Is there anything specific you were hoping to get out of today's consultation?",
+      "back": "Czy jest coś konkretnego, czego oczekuje Pan/Pani po dzisiejszej wizycie?",
+      "pronunciation": "/ɪz ðeər ˈeniθɪŋ spəˈsɪfɪk juː wə ˈhəʊpɪŋ tə ɡet aʊt əv təˈdeɪz ˌkɒnsəlˈteɪʃən/",
+      "synonyms": [
+        "Was there anything in particular you were hoping we might discuss today?"
+      ],
+      "register": "codzienne · częste — rozmowa z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "nhs",
+        "rozmowa-z-pacjentem",
+        "speaking",
+        "konsultacja",
+        "zaangazowanie-pacjenta"
+      ],
+      "kind": "sentence",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-konsultacja/k92/hoping-to-get-out-of-todays-consultation"
+    }
+  ]
+}

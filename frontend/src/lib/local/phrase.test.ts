@@ -74,3 +74,8 @@ it("bierze pierwsze zdanie przykladu, pomijajac linie synonimow", () => {
   // Same synonimy nie daja luki.
   expect(firstClozeLine("Synonimy: to exclude", "to rule out")).toBeNull();
 });
+
+it("someone's w zwrocie dopasowuje dowolny zaimek", () => {
+  expect(findPhrase("The smell turned my stomach.", "to turn someone's stomach")).not.toBeNull();
+  expect(clozeSentence("It really turns her stomach.", "to turn someone's stomach")).not.toBeNull();
+});

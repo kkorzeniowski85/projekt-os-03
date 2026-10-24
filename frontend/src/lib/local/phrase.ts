@@ -20,6 +20,8 @@
 //: off") albo nie niosa tresci. Nie szukamy ich w zdaniu.
 const PUSTE = new Set([
   "someone", "something", "somebody", "oneself", "one's", "sb", "sth",
+  // Dzierzawcze placeholdery: "to turn someone's stomach" -> "turned my stomach".
+  "someone's", "somebody's",
   "a", "an", "the", "to", "of", "in", "on", "at", "with", "and", "for",
   "any", "be", "is", "are", "your", "his", "her", "my",
 ]);

@@ -3,8 +3,8 @@
   "files": [
     {
       "path": "oet-codziennosc.json",
-      "sha256": "bd2107927b33e84b038d99512f7d6639c46fb543ccf5eabf207943c5fdebbc52",
-      "notes": 65
+      "sha256": "526da78bf6cadcbb39b20f936f620c28493470a8f20993ea4d5b37d5517b8cd2",
+      "notes": 71
     },
     {
       "path": "oet-core.json",

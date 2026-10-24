@@ -1049,6 +1049,103 @@
       "kind": "expression",
       "note_type": "basic",
       "source_ref": "oet-frazy/l65/to-clear-the-decks"
+    },
+    {
+      "front": "egregious",
+      "back": "rażący, skandaliczny (o błędzie, nadużyciu, kłamstwie)",
+      "example": "Prescribing ten times the intended dose was an egregious error.\nThe report described an egregious abuse of power by the hospital board.\nFalsifying the patient's notes was an egregious breach of trust.",
+      "pronunciation": "/ɪˈɡriːdʒiəs/",
+      "synonyms": "flagrant / glaring / outrageous",
+      "register": "formalne · rzadkie — publicystyka i Reading C; do rozpoznawania",
+      "tags": [
+        "oet",
+        "codziennosc",
+        "opinia"
+      ],
+      "kind": "word",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l66/egregious"
+    },
+    {
+      "front": "unctuous",
+      "back": "służalczo uprzejmy, nieszczerze słodki",
+      "example": "The sales representative's unctuous manner made the doctors suspicious.\nHe gave an unctuous speech praising the minister.\nHer unctuous smile disappeared as soon as the cameras were switched off.",
+      "pronunciation": "/ˈʌŋktʃuəs/",
+      "synonyms": "oily / smarmy / ingratiating",
+      "register": "formalne · rzadkie — ocena z dezaprobatą; do rozpoznawania",
+      "tags": [
+        "oet",
+        "codziennosc",
+        "opinia"
+      ],
+      "kind": "word",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l67/unctuous"
+    },
+    {
+      "front": "to suck up to somebody",
+      "back": "podlizywać się komuś (dla korzyści)",
+      "example": "He's always sucking up to the consultant in the hope of a good reference.\nI'm not going to suck up to the manager just to get better shifts.\nShe sucked up to the board members all evening.",
+      "pronunciation": "/tə sʌk ˈʌp tə ˈsʌmbədi/",
+      "synonyms": "to toady to / to curry favour with / to crawl to",
+      "register": "potoczne · częste — z dezaprobatą; rzeczownik suck-up raczej amerykański; nie w liście",
+      "tags": [
+        "oet",
+        "codziennosc",
+        "opinia"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l68/to-suck-up-to-somebody"
+    },
+    {
+      "front": "to turn someone's stomach",
+      "back": "budzić obrzydzenie, przyprawiać o mdłości (także w sensie moralnym)",
+      "example": "The smell from the infected wound turned my stomach.\nThe way they treated the staff turned my stomach.\nReading about the neglect of those patients really turns my stomach.",
+      "pronunciation": "/tə tɜːn ˈsʌmwʌnz ˈstʌmək/",
+      "synonyms": "to make someone feel sick / to disgust",
+      "register": "codzienne · częste — mowa i publicystyka; nie w liście",
+      "tags": [
+        "oet",
+        "codziennosc",
+        "opinia"
+      ],
+      "kind": "expression",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l69/to-turn-someone-s-stomach"
+    },
+    {
+      "front": "to (not) register",
+      "back": "(nie) docierać do świadomości, (nie) zostać zauważonym",
+      "example": "I told her my name, but it didn't register.\nI could see the diagnosis hadn't really registered, so I went over it again more slowly.\nIt only registered later that he had stopped taking his tablets.",
+      "pronunciation": "/tə ˈredʒɪstə/",
+      "synonyms": "to sink in / to be taken in / to dawn on someone",
+      "register": "codzienne · bardzo częste — pasuje wszędzie, także w rozmowie z pacjentem",
+      "tags": [
+        "oet",
+        "aktywny",
+        "codziennosc",
+        "opinia"
+      ],
+      "kind": "expression",
+      "note_type": "basic_reversed",
+      "source_ref": "oet-frazy/l70/to-register"
+    },
+    {
+      "front": "depravity",
+      "back": "zepsucie moralne, deprawacja",
+      "example": "The trial revealed the depravity of the doctor who harmed his patients.\nCritics described the treatment of the prisoners as moral depravity.\nThe novel explores the depravity of life in Victorian London.",
+      "pronunciation": "/dɪˈprævəti/",
+      "synonyms": "moral corruption / wickedness",
+      "register": "formalne · rzadkie — kontekst moralny i prawniczy; do rozpoznawania",
+      "tags": [
+        "oet",
+        "codziennosc",
+        "opinia"
+      ],
+      "kind": "word",
+      "note_type": "basic",
+      "source_ref": "oet-frazy/l71/depravity"
     }
   ]
 }

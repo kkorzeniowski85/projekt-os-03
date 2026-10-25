@@ -116,7 +116,18 @@ export function buildManifest(dir) {
       seen.set(key, name);
     }
 
-    files.push({ path: name, sha256: fileHash(text), notes: payload.notes.length });
+    // Talia docelowa pliku: domyslnie Slownik; "ogolny" = Angielski ogolny
+    // (slownictwo spoza OET, wlasny przycisk nauki, poza tempem egzaminu).
+    const deck = payload.bundle_deck ?? "slownik";
+    if (!["slownik", "ogolny"].includes(deck)) {
+      throw new Error(`${name}: bundle_deck "${deck}" - dozwolone: slownik, ogolny`);
+    }
+    files.push({
+      path: name,
+      sha256: fileHash(text),
+      notes: payload.notes.length,
+      ...(deck !== "slownik" ? { deck } : {}),
+    });
   }
 
   return { format: MANIFEST_FORMAT, files };

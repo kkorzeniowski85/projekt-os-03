@@ -53,6 +53,7 @@ mapowania.
 | `format` | nie | `"fiszki/v1"`. Inna wartość daje ostrzeżenie, nie błąd |
 | `deck` | nie | Informacyjna nazwa źródła. **Nie tworzy talii** — materiał trafia domyślnie do Słownika (bazy głównej); nazwa służy tylko jako podpowiedź, gdy użytkownik świadomie wybierze osobną talię |
 | `default_note_type` | nie | Domyślny typ notatki. Domyślnie `basic` |
+| `bundle_deck` | nie | **Tylko pakiet wbudowany** (`public/slownik/`): talia docelowa pliku — `slownik` (domyślnie) albo `ogolny` (talia „Angielski ogólny": słownictwo spoza OET, poza kolejką „wszystko" i tempem egzaminu). Import ręczny pole ignoruje |
 | `notes` | **tak** | Lista notatek |
 
 Przyjmowana jest też naga lista notatek bez koperty — wtedy obowiązują wartości

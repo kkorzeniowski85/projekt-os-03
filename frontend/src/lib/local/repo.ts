@@ -104,6 +104,80 @@ export function isDictionary(deckId: string): boolean {
   return deckId === DICTIONARY_DECK_ID;
 }
 
+//: Druga talia, ktora dostarcza pakiet: slownictwo ogolne (prasa, codziennosc)
+//: spoza OET. Osobno, zeby przed egzaminem nie zjadalo powtorek: nie wchodzi
+//: do "Ucz sie" ze wszystkich talii ani do tempa przed egzaminem - uczy sie
+//: jej wlasnym przyciskiem.
+export const GENERAL_DECK_ID = "ogolny";
+export const GENERAL_NAME = "Angielski ogólny";
+
+/** Talie zasilane przez pakiet wbudowany - chronione przed skasowaniem i laczeniem. */
+export function isBundledDeck(deckId: string): boolean {
+  return deckId === DICTIONARY_DECK_ID || deckId === GENERAL_DECK_ID;
+}
+
+/** Zwraca talie "Angielski ogolny", tworzac ja przy pierwszej dostawie. */
+export async function ensureGeneralDeck(now: Date = new Date()): Promise<DeckRecord> {
+  const database = await db();
+  const existing = await database.get("decks", GENERAL_DECK_ID);
+  if (existing) return existing;
+  const iso = now.toISOString();
+  const deck: DeckRecord = {
+    id: GENERAL_DECK_ID,
+    name: GENERAL_NAME,
+    description: "Słownictwo spoza OET: prasa, codzienność.",
+    newPerDay: 10,
+    maxReviewsPerDay: 100,
+    createdAt: iso,
+    updatedAt: iso,
+  };
+  await database.put("decks", deck);
+  return deck;
+}
+
+/**
+ * Przenosi fiszki pakietu do talii, ktora wskazuje dla nich pakiet - razem
+ * z kartami i historia powtorek, wiec stan nauki zostaje nietkniety.
+ *
+ * Commit importu odnajduje fiszke po sourceRef w CALEJ bazie i aktualizuje
+ * ja tam, gdzie stoi; bez tego kroku slowo przesuniete w pakiecie do innej
+ * talii zostaloby na urzadzeniu w starej. Ruszamy tylko fiszki z talii
+ * pakietu - te, ktore uzytkownik sam przeniosl do wlasnej talii, zostaja.
+ */
+export async function przeniesZPakietu(
+  sourceRefs: string[],
+  targetDeckId: string,
+  now: Date = new Date(),
+): Promise<number> {
+  const refs = new Set(sourceRefs);
+  if (refs.size === 0) return 0;
+  const iso = now.toISOString();
+  const database = await db();
+  const tx = database.transaction(["notes", "cards", "reviewLog"], "readwrite");
+  const notes = tx.objectStore("notes");
+  const cards = tx.objectStore("cards");
+  const log = tx.objectStore("reviewLog");
+  let przeniesione = 0;
+
+  for (const note of await notes.getAll()) {
+    if (!note.sourceRef || !refs.has(note.sourceRef)) continue;
+    if (note.deckId === targetDeckId || !isBundledDeck(note.deckId)) continue;
+    const zTalii = note.deckId;
+    await notes.put({ ...note, deckId: targetDeckId, updatedAt: iso });
+    const karty = await cards.index("by-note").getAll(note.id);
+    const idKart = new Set(karty.map((k) => k.id));
+    for (const karta of karty) await cards.put({ ...karta, deckId: targetDeckId, updatedAt: iso });
+    for (const wpis of await log.index("by-deck-time").getAll(
+      IDBKeyRange.bound([zTalii, ""], [zTalii, "\uffff"]),
+    )) {
+      if (idKart.has(wpis.cardId)) await log.put({ ...wpis, deckId: targetDeckId });
+    }
+    przeniesione += 1;
+  }
+  await tx.done;
+  return przeniesione;
+}
+
 /** Zwraca Slownik, tworzac go przy pierwszym uzyciu. */
 export async function ensureDictionary(now: Date = new Date()): Promise<DeckRecord> {
   const database = await db();
@@ -220,6 +294,10 @@ export async function deleteDeck(id: string): Promise<void> {
     // calosc. Ta linia ma chronic takze przed przyszlym kodem, nie tylko
     // przed dzisiejszym interfejsem.
     throw new Error("Słownik jest bazą główną i nie można go usunąć — kasuj pojedyncze fiszki");
+  }
+  if (isBundledDeck(id)) {
+    // Talie pakietu odtwarza tylko zmiana pliku - skasowana zniknelaby na dobre.
+    throw new Error(`Talia „${GENERAL_NAME}” przychodzi z pakietu — kasuj pojedyncze fiszki`);
   }
   const database = await db();
   const tx = database.transaction(["decks", "notes", "cards"], "readwrite");
@@ -425,7 +503,7 @@ export async function deleteNote(id: string): Promise<void> {
   const cards = await tx.objectStore("cards").index("by-note").getAllKeys(id);
   for (const key of cards) await tx.objectStore("cards").delete(key);
   await tx.objectStore("notes").delete(id);
-  if (note?.sourceRef && isDictionary(note.deckId)) {
+  if (note?.sourceRef && isBundledDeck(note.deckId)) {
     const settings = tx.objectStore("settings");
     const state = asBundledState(await settings.get(BUNDLED_STATE_ID));
     const removed = new Set(state.removed);
@@ -659,11 +737,15 @@ export async function mergeDecks(
 ): Promise<MergeResult> {
   const sources = sourceIds.filter((id) => id !== targetId);
   if (sources.length === 0) throw new Error("Wskaz co najmniej jedna inna talie do polaczenia");
-  if (sources.some(isDictionary)) {
+  if (sources.some(isBundledDeck)) {
     // Laczenie kasuje talie zrodlowe - a Slownik zniknac nie moze. W druga
     // strone wolno zawsze: wchlanianie talii do Slownika to wlasnie glowny
     // sposob "znikania osobnych czesci" w bazie glownej.
-    throw new Error("Słownik nie może zniknąć — wybierz go jako talię docelową");
+    throw new Error(
+      sources.some(isDictionary)
+        ? "Słownik nie może zniknąć — wybierz go jako talię docelową"
+        : `Talia „${GENERAL_NAME}” przychodzi z pakietu i nie może zniknąć`,
+    );
   }
 
   const database = await db();
@@ -746,7 +828,10 @@ export interface StudyQueueResult {
 export async function resolveDecks(selection: DeckSelection): Promise<DeckRecord[]> {
   const database = await db();
   if (selection === "all") {
-    return (await database.getAll("decks")).sort((a, b) => a.name.localeCompare(b.name, "pl"));
+    // "Wszystkie" to material do egzaminu - talia ogolna ma wlasny przycisk.
+    return (await database.getAll("decks"))
+      .filter((deck) => deck.id !== GENERAL_DECK_ID)
+      .sort((a, b) => a.name.localeCompare(b.name, "pl"));
   }
   const ids = Array.isArray(selection) ? selection : [selection];
   const decks: DeckRecord[] = [];

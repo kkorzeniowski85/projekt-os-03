@@ -23,7 +23,9 @@ import { parseSource } from "./import";
 import { commitImport, normalize } from "./import/service";
 import {
   DICTIONARY_DECK_ID,
+  GENERAL_DECK_ID,
   createNote,
+  deleteDeck,
   deleteNote,
   ensureDictionary,
   listNotes,
@@ -42,13 +44,21 @@ beforeEach(async () => {
 type Site = Record<string, string>;
 
 /** Buduje "hosting": pliki pakietu plus manifest z prawdziwymi odciskami. */
-async function site(files: Record<string, unknown[]>): Promise<Site> {
+async function site(
+  files: Record<string, unknown[]>,
+  decks: Record<string, string> = {},
+): Promise<Site> {
   const pages: Site = {};
   const entries = [];
   for (const [path, notes] of Object.entries(files)) {
     const text = JSON.stringify({ format: "fiszki/v1", notes });
     pages[`${BUNDLED_DIR}/${path}`] = text;
-    entries.push({ path, sha256: await fileHash(text), notes: notes.length });
+    entries.push({
+      path,
+      sha256: await fileHash(text),
+      notes: notes.length,
+      ...(decks[path] ? { deck: decks[path] } : {}),
+    });
   }
   pages[MANIFEST_URL] = JSON.stringify({ format: MANIFEST_FORMAT, files: entries });
   return pages;
@@ -268,4 +278,61 @@ it("fiszka dopisana recznie jest chroniona jak poprawiona recznie", async () => 
   const note = (await slownik())[0].note;
   expect(note.fields.Example).toBe("Mój kot śpi."); // przyklad uzytkownika zostal
   expect(note.sourceRef).toBe("demo/kot"); // ale tozsamosc z pakietu doszla
+});
+
+// --- talia "Angielski ogolny" -----------------------------------------------
+
+it("plik z talia ogolna trafia do osobnej talii, poza nauka ze wszystkich talii", async () => {
+  const pages = await site({ "a.json": [KOT], "og.json": [PIES] }, { "og.json": GENERAL_DECK_ID });
+  const result = await applyBundled({ now: NOW, fetchFn: fetchFrom(pages) });
+  expect(result).toMatchObject({ status: "applied", imported: 2 });
+  expect(await fronty()).toEqual(["kot"]);
+  expect((await listNotes(GENERAL_DECK_ID)).map((n) => n.note.fields.Front)).toEqual(["pies"]);
+
+  // "Ucz sie" ze wszystkich talii = material do egzaminu, bez talii ogolnej.
+  const wszystkie = await studyQueue("all", { now: NOW });
+  expect(wszystkie.deckIds).not.toContain(GENERAL_DECK_ID);
+  // Wlasnym przyciskiem uczy sie normalnie.
+  expect((await studyQueue(GENERAL_DECK_ID, { now: NOW })).cards.length).toBeGreaterThan(0);
+  // Talii pakietu nie da sie skasowac - odtworzylaby ja dopiero zmiana pliku.
+  await expect(deleteDeck(GENERAL_DECK_ID)).rejects.toThrow();
+});
+
+it("fiszka przesunieta w pakiecie do talii ogolnej przenosi sie ze stanem nauki", async () => {
+  await applyBundled({ now: NOW, fetchFn: fetchFrom(await site({ "a.json": [KOT, PIES] })) });
+  const [kot] = (await listNotes(DICTIONARY_DECK_ID)).filter((n) => n.note.fields.Front === "kot");
+  const karta = kot.cards[0];
+  const po = await submitReview({ cardId: karta.id, rating: 3, durationMs: 800, now: NOW });
+
+  const v2 = await site({ "a.json": [PIES], "og.json": [KOT] }, { "og.json": GENERAL_DECK_ID });
+  const result = await applyBundled({ now: LATER, fetchFn: fetchFrom(v2) });
+  expect(result.status).toBe("applied");
+  expect(result.imported).toBe(0); // przeniesiona, nie zdublowana
+
+  expect(await fronty()).toEqual(["pies"]);
+  const [wOgolnej] = await listNotes(GENERAL_DECK_ID);
+  expect(wOgolnej.note.id).toBe(kot.note.id);
+  const database = await db();
+  const kartaPo = (await database.get("cards", karta.id))!;
+  expect(kartaPo.deckId).toBe(GENERAL_DECK_ID);
+  expect(kartaPo.fsrs.reps).toBe(1);
+  expect(kartaPo.due).toBe(po.card.due);
+  const log = await database.getAll("reviewLog");
+  expect(log.filter((w) => w.cardId === karta.id).map((w) => w.deckId)).toEqual([GENERAL_DECK_ID]);
+});
+
+it("fiszki przeniesionej recznie do wlasnej talii pakiet nie zabiera", async () => {
+  await applyBundled({ now: NOW, fetchFn: fetchFrom(await site({ "a.json": [KOT] })) });
+  const database = await db();
+  const [kot] = await listNotes(DICTIONARY_DECK_ID);
+  await database.put("decks", {
+    id: "moja", name: "Moja", description: "", newPerDay: 20, maxReviewsPerDay: 200,
+    createdAt: NOW.toISOString(), updatedAt: NOW.toISOString(),
+  });
+  await database.put("notes", { ...kot.note, deckId: "moja" });
+
+  const v2 = await site({ "og.json": [KOT] }, { "og.json": GENERAL_DECK_ID });
+  await applyBundled({ now: LATER, fetchFn: fetchFrom(v2) });
+  expect((await database.get("notes", kot.note.id))!.deckId).toBe("moja");
+  expect(await listNotes(GENERAL_DECK_ID)).toEqual([]);
 });

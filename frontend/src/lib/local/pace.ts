@@ -12,6 +12,7 @@
  */
 
 import { db } from "./db";
+import { GENERAL_DECK_ID } from "./repo";
 import { isNew } from "./scheduler";
 import { dayStart } from "./time";
 
@@ -65,11 +66,16 @@ export async function examPace(
   const database = await db();
 
   let newCards = 0;
+  // Talia "Angielski ogolny" nie jest materialem do egzaminu - nie liczy sie
+  // ani do zaleglosci, ani do dziennego limitu.
   for (const card of await database.getAll("cards")) {
+    if (card.deckId === GENERAL_DECK_ID) continue;
     if (isNew(card.fsrs) && card.suspended !== true) newCards += 1;
   }
   let limitPerDay = 0;
-  for (const deck of await database.getAll("decks")) limitPerDay += deck.newPerDay;
+  for (const deck of await database.getAll("decks")) {
+    if (deck.id !== GENERAL_DECK_ID) limitPerDay += deck.newPerDay;
+  }
 
   // Realne tempo: ile RÓŻNYCH kart zobaczylo sie po raz pierwszy w ciagu
   // ostatnich siedmiu dni nauki. Liczone z logu, bo tylko on wie, co sie

@@ -16,6 +16,7 @@ import { examPace, type PaceInfo } from "@/lib/local/pace";
 import {
   getSettings,
   DICTIONARY_DECK_ID,
+  GENERAL_DECK_ID,
   createDeck,
   ensureDictionary,
   isDictionary,
@@ -168,8 +169,16 @@ function DeckList() {
     }
   }
 
-  // Bez zaznaczenia liczymy calosc; z zaznaczeniem tylko wybrane talie.
-  const scope = decks?.filter((deck) => selected.size === 0 || selected.has(deck.id)) ?? [];
+  // Bez zaznaczenia liczymy material do egzaminu - bez talii "Angielski
+  // ogolny", tak jak kolejka "wszystko". Z zaznaczeniem tylko wybrane talie.
+  const scope =
+    decks?.filter((deck) =>
+      selected.size === 0 ? deck.id !== GENERAL_DECK_ID : selected.has(deck.id),
+    ) ?? [];
+  //: Panel "Wszystko razem" ma sens przy co najmniej dwoch taliach do OET
+  //: albo przy recznym wyborze - inaczej dublowalby przycisk jedynej talii.
+  const pokazRazem =
+    selected.size > 0 || (decks ?? []).filter((deck) => deck.id !== GENERAL_DECK_ID).length > 1;
   const totals = scope.reduce(
     (sum, deck) => ({
       new: sum.new + deck.counts.new,
@@ -271,7 +280,7 @@ function DeckList() {
         </Link>
       )}
 
-      {decks !== null && decks.length > 1 && (
+      {decks !== null && pokazRazem && (
         <section className="rounded-xl border border-line bg-surface p-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -424,6 +433,11 @@ function DeckList() {
                         {isDictionary(deck.id) && (
                           <span className="rounded bg-accent-soft px-[7px] py-0.5 text-[11px] font-medium text-accent">
                             baza główna
+                          </span>
+                        )}
+                        {deck.id === GENERAL_DECK_ID && (
+                          <span className="rounded bg-chip px-[7px] py-0.5 text-[11px] font-medium text-ink-3">
+                            poza OET
                           </span>
                         )}
                       </p>

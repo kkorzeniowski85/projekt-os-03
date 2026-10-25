@@ -3,8 +3,8 @@
   "files": [
     {
       "path": "oet-codziennosc.json",
-      "sha256": "526da78bf6cadcbb39b20f936f620c28493470a8f20993ea4d5b37d5517b8cd2",
-      "notes": 71
+      "sha256": "dba9ac9247ae5fe7d84c9e9bcc6666bb3317eecc502da5a267cf56111a98b48c",
+      "notes": 58
     },
     {
       "path": "oet-core.json",
@@ -45,6 +45,12 @@
       "path": "oet-terminologia.json",
       "sha256": "5f060f6bbb0368622f7114c798c147400595b224bdc706801986319785200c60",
       "notes": 56
+    },
+    {
+      "path": "ogolny.json",
+      "sha256": "643f75d704373fbbfdf67df314927e39ab58e4c1f215b1696973e81d0ed773c1",
+      "notes": 13,
+      "deck": "ogolny"
     }
   ]
 }

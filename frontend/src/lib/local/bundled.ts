@@ -25,7 +25,13 @@ import { BUNDLED_STATE_ID, DANE_WERSJA, asBundledState } from "./bundled-state";
 import { db } from "./db";
 import { parseSource } from "./import";
 import { commitImport, normalize } from "./import/service";
-import { DICTIONARY_DECK_ID, ensureDictionary } from "./repo";
+import {
+  DICTIONARY_DECK_ID,
+  GENERAL_DECK_ID,
+  ensureDictionary,
+  ensureGeneralDeck,
+  przeniesZPakietu,
+} from "./repo";
 import type { BundledStateRecord } from "./types";
 
 export const MANIFEST_FORMAT = "slownik-manifest/v1";
@@ -42,7 +48,13 @@ export interface BundledFile {
   path: string;
   sha256: string;
   notes: number;
+  /** Talia docelowa: Slownik (domyslnie) albo "Angielski ogolny". */
+  deck: string;
 }
+
+//: Talie, do ktorych pakiet moze dostarczac. Nieznana wartosc (manifest
+//: z nowszej wersji) - Slownik, jak przed wprowadzeniem tego pola.
+const TALIE_PAKIETU = new Set([DICTIONARY_DECK_ID, GENERAL_DECK_ID]);
 
 export interface BundledManifest {
   format: typeof MANIFEST_FORMAT;
@@ -84,7 +96,7 @@ export function parseManifest(raw: unknown): BundledManifest {
 
   const files: BundledFile[] = [];
   for (const entry of candidate.files as unknown[]) {
-    const file = entry as { path?: unknown; sha256?: unknown; notes?: unknown };
+    const file = entry as { path?: unknown; sha256?: unknown; notes?: unknown; deck?: unknown };
     // Sciezka to sama nazwa pliku - manifest nie moze wyslac nas poza katalog.
     if (
       typeof file.path !== "string" ||
@@ -97,6 +109,10 @@ export function parseManifest(raw: unknown): BundledManifest {
       path: file.path,
       sha256: file.sha256,
       notes: typeof file.notes === "number" ? file.notes : 0,
+      deck:
+        typeof file.deck === "string" && TALIE_PAKIETU.has(file.deck)
+          ? file.deck
+          : DICTIONARY_DECK_ID,
     });
   }
   return { format: MANIFEST_FORMAT, files };
@@ -212,13 +228,21 @@ async function runBundled(
           !removed.has(draft.contentHash) &&
           !(draft.sourceRef !== null && removed.has(draft.sourceRef)),
       );
-      const stats = await commitImport(DICTIONARY_DECK_ID, drafts, {
+      if (file.deck === GENERAL_DECK_ID) await ensureGeneralDeck(now);
+      const stats = await commitImport(file.deck, drafts, {
         noteType: "basic_reversed",
         authoritative: true,
         now,
       });
+      // Fiszka przesunieta w pakiecie do innej talii jedzie za nim - razem
+      // ze stanem nauki. Commit wyzej zaktualizowal ja tam, gdzie stala.
+      const przeniesione = await przeniesZPakietu(
+        drafts.map((draft) => draft.sourceRef).filter((ref): ref is string => ref !== null),
+        file.deck,
+        now,
+      );
       result.imported += stats.imported;
-      result.updated += stats.updated;
+      result.updated += stats.updated + przeniesione;
       result.files += 1;
       files[file.path] = file.sha256;
     } catch (error) {

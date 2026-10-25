@@ -70,3 +70,25 @@ kopia zapasowa.
   — rozpoznaje go odcisk treści (pilnuje tego test).
 - Service worker (v4) wyłącza `slownik/` z pamięci podręcznej. Bez tego
   przycisk pokazywałby stan sprzed jednego otwarcia.
+
+## Uzupełnienie (2026-10-25): druga talia pakietu — „Angielski ogólny"
+
+Na prośbę użytkownika słownictwo spoza OET (prasa, codzienność: *anxious*,
+*egregious*, *depravity*…) ma osobne miejsce. Plik pakietu deklaruje talię
+docelową polem koperty `"bundle_deck": "ogolny"`; generator przenosi je do
+manifestu jako `deck`, a `applyBundled` importuje plik do talii o stałym id
+`ogolny`, tworzonej przy pierwszej dostawie.
+
+- **Poza egzaminem.** Kolejka „wszystko" (Ucz się ze wszystkich talii,
+  szybka sesja) i tempo przed egzaminem pomijają tę talię — uczy się jej
+  własnym przyciskiem. Zaznaczona ręcznie wchodzi normalnie.
+- **Przenoszenie ze stanem nauki.** Commit importu odnajduje fiszkę po
+  `sourceRef` w całej bazie i aktualizuje ją tam, gdzie stoi; po nim
+  `przeniesZPakietu` przesuwa notatkę, karty i wpisy logu do talii pliku.
+  Rusza tylko fiszki z talii pakietu — przeniesione ręcznie do własnej talii
+  zostają.
+- **Chroniona jak Słownik.** Nie da się jej skasować ani wchłonąć (odtworzy
+  ją dopiero zmiana pliku), a usunięta z niej fiszka zostaje zapamiętana
+  jako odrzucona, tak jak w Słowniku.
+- Manifest bez pola `deck` (albo z nieznaną wartością) = Słownik — stare
+  wersje aplikacji pole ignorują.

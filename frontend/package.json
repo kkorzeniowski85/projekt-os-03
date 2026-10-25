@@ -13,7 +13,8 @@
     "gen:api": "npx --yes openapi-typescript http://localhost:8000/openapi.json -o src/lib/api-types.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "slownik": "node scripts/slownik-manifest.mjs"
+    "slownik": "node scripts/slownik-manifest.mjs",
+    "sprawdz-nowe": "vitest run src/lib/local/nowe-fiszki.test.ts"
   },
   "dependencies": {
     "idb": "^8.0.3",

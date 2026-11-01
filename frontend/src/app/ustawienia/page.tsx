@@ -32,7 +32,15 @@ import {
 import type { BundledStateRecord } from "@/lib/local/types";
 import { DEFAULT_PREFS, loadPrefs, savePrefs, type StudyPrefs } from "@/lib/prefs";
 import { recognitionAvailable } from "@/lib/listen";
-import { englishVoiceReady, speak, speechAvailable } from "@/lib/speech";
+import {
+  britishVoices,
+  currentVoiceUri,
+  englishVoiceReady,
+  isNaturalVoice,
+  setPreferredVoice,
+  speak,
+  speechAvailable,
+} from "@/lib/speech";
 import { odmien } from "@/lib/types";
 
 export default function SettingsPage() {
@@ -54,6 +62,8 @@ function Settings() {
   const [pace, setPace] = useState<PaceInfo | null>(null);
   const [karty, setKarty] = useState<{ gotowe: number; wlaczone: number } | null>(null);
   const [prefs, setPrefs] = useState<StudyPrefs>(DEFAULT_PREFS);
+  const [glosy, setGlosy] = useState<{ uri: string; nazwa: string; naturalny: boolean }[]>([]);
+  const [glos, setGlos] = useState<string>("");
   //: Sprawdzane w przegladarce, nie w renderze - patrz ekran nauki.
   const [mowa, setMowa] = useState<{ dostepna: boolean; angielski: boolean; mikrofon: boolean }>({
     dostepna: false,
@@ -87,12 +97,21 @@ function Settings() {
     // strone bez okna.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrefs(loadPrefs());
-    const sprawdz = () =>
+    const sprawdz = () => {
       setMowa({
         dostepna: speechAvailable(),
         angielski: englishVoiceReady(),
         mikrofon: recognitionAvailable(),
       });
+      setGlosy(
+        britishVoices().map((g) => ({
+          uri: g.voiceURI,
+          nazwa: g.name.replace(/^Microsoft\s+/i, "").replace(/\s*-\s*English \(United Kingdom\)/i, ""),
+          naturalny: isNaturalVoice(g),
+        })),
+      );
+      setGlos(currentVoiceUri() ?? "");
+    };
     sprawdz();
     if (!speechAvailable()) return;
     window.speechSynthesis.addEventListener("voiceschanged", sprawdz);
@@ -357,6 +376,32 @@ function Settings() {
               </span>
             </span>
           </label>
+          {mowa.dostepna && glosy.length > 0 && (
+            <label className="block text-[13px] leading-relaxed">
+              <span className="text-ink">Głos lektora</span>
+              <select
+                value={glos}
+                onChange={(e) => {
+                  setPreferredVoice(e.target.value);
+                  setGlos(e.target.value);
+                  speak("Have you been able to keep any fluids down?");
+                }}
+                className={`${inputClass} mt-1 text-[13px]`}
+              >
+                {glosy.map((g) => (
+                  <option key={g.uri} value={g.uri}>
+                    {g.nazwa}
+                    {g.naturalny ? " ★" : ""}
+                  </option>
+                ))}
+              </select>
+              <span className="mt-1 block text-ink-3">
+                {glosy.some((g) => g.naturalny)
+                  ? "★ = głos naturalny. Wybór obowiązuje na tym urządzeniu."
+                  : "Są tylko głosy systemowe – brzmią mechanicznie. Naturalne brytyjskie głosy ma Edge (Sonia, Ryan – „Natural”) i Chrome (Google UK English)."}
+              </span>
+            </label>
+          )}
           {mowa.dostepna && (
             <button
               type="button"
